@@ -63,7 +63,7 @@ public class RegisterController : MonoBehaviour
             default: return false;
         }
 
-        hairLibraries = GameObject.Find(nameSchool).GetComponent<SpriteController>().GetHair();
+        hairLibraries = GameObject.Find(nameSchool).GetComponent<SpriteController>().GetListHair();
         EquipHair(idHair[idSchool - 1]);
         UpdateNameHair();
         return true;

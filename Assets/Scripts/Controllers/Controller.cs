@@ -1,5 +1,7 @@
-﻿using UnityEngine;
+﻿using Newtonsoft.Json;
 using System.Collections;
+using System.Threading.Tasks;
+using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class Controller : MonoBehaviour, IUpdatable
@@ -14,18 +16,26 @@ public class Controller : MonoBehaviour, IUpdatable
     private Animator animator;
     private MenuController menu;
     private bool isBusy = false;
+    private SpriteController spriteController;
+
+    private float syncInterval = 0.05f;
+    private float syncTimer = 0f;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         menu = FindAnyObjectByType<MenuController>(FindObjectsInactive.Include);
+        spriteController = GetComponent<SpriteController>();
     }
+
     private void OnEnable()
     {
         GameManager.Instance.Register(this);
         animator.SetFloat("LastHorizontal", 0);
         animator.SetFloat("LastVertical", -1);
     }
+
     private void OnDisable()
     {
         if (GameManager.Instance != null)
@@ -33,59 +43,83 @@ public class Controller : MonoBehaviour, IUpdatable
             GameManager.Instance.Unregister(this);
         }
     }
+
     public virtual void OnUpdate()
     {
         MoveKeyboard();
         MoveMouse();
         UpdateAnimation();
-    }
-    public virtual void OnLateUpdate()
-    {
 
+        syncTimer += Time.deltaTime;
+        if (syncTimer >= syncInterval)
+        {
+            syncTimer = 0;
+            _ = SendSyncData();
+        }
     }
+
+    public virtual void OnLateUpdate() { }
+
     public virtual void OnFixedUpdate()
     {
         rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime);
     }
+
     public void RegisterDontDestroyOnLoad()
     {
         GameManager.Instance.RegisterPersistent(this);
     }
 
+    private async Task SendSyncData()
+    {
+        // Tạo object sync
+        SyncModels data = new SyncModels();
+
+        // Gán đúng data Movement của bạn
+        data.posX = transform.position.x;
+        data.posY = transform.position.y;
+        data.lastPosX = lastMove.x;
+        data.lastPosY = lastMove.y;
+
+        data.weapon = spriteController.GetWeaponData();
+        data.helmet = spriteController.GetHelmetData();
+        data.armor = spriteController.GetArmorData();
+        data.legArmor = spriteController.GetLegArmorData();
+        data.hair = spriteController.GetHairData();
+
+        data.idAccount = LogInController.GetIDAccount() ?? 0;
+        data.school = LogInController.GetIDSchool();
+
+        string json = JsonConvert.SerializeObject(data);
+        await SocketManager.Instance.SendSyncDataToServer(json);
+    }
+
     protected virtual void LeftClick()
     {
         if (Input.GetMouseButtonDown(0))
-        {
-            // Lấy vị trí chuột trong thế giới
+        { 
             Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Vector2 clickPos = new Vector2(mouseWorldPos.x, mouseWorldPos.y);
-
-            RaycastHit2D hit = Physics2D.Raycast(clickPos, Vector2.zero);
-
-            if (hit.collider != null)
-            {
-                // Nếu collider có tag "Mob" thì chỉ debug, không di chuyển
-                if (hit.collider.CompareTag("Mob"))
+            Vector2 clickPos = new Vector2(mouseWorldPos.x, mouseWorldPos.y); 
+            RaycastHit2D hit = Physics2D.Raycast(clickPos, Vector2.zero); 
+            if (hit.collider != null) 
+            { 
+                //Nếu collider có tag "Mob" thì chỉ debug, không di chuyển
+                if (hit.collider.CompareTag("Mob")) 
                 {
-                    Debug.Log($"Clicked on Mob: {hit.collider.name}");
-                    isMovingToTarget = false;
-                    return;
-                }
-            }
-
+                    Debug.Log($"Clicked on Mob: {hit.collider.name}"); 
+                    isMovingToTarget = false; 
+                    return; 
+                } 
+            } 
             // Nếu không click vào mob thì tiến hành di chuyển đến vị trí click
-            targetPosition = clickPos;
-
+            targetPosition = clickPos; 
             // Quyết định hướng ưu tiên
-            float deltaX = Mathf.Abs(targetPosition.x - rb.position.x);
-            float deltaY = Mathf.Abs(targetPosition.y - rb.position.y);
-            movingHorizontalFirst = deltaX > deltaY;
-
-            isMovingToTarget = true;
-        }
+            float deltaX = Mathf.Abs(targetPosition.x - rb.position.x); 
+            float deltaY = Mathf.Abs(targetPosition.y - rb.position.y); 
+            movingHorizontalFirst = deltaX > deltaY; 
+            isMovingToTarget = true; 
+        } 
     }
-
-    //Hàm di chuyển có thể override trong Demo.cs
     protected virtual void MoveKeyboard()
     {
         if (isBusy)
@@ -124,12 +158,10 @@ public class Controller : MonoBehaviour, IUpdatable
             float deltaX = targetPosition.x - currentPos.x;
             float deltaY = targetPosition.y - currentPos.y;
 
-            // Nếu còn khoảng cách đáng kể thì tiếp tục di chuyển
             if (Mathf.Abs(deltaX) > 0.1f || Mathf.Abs(deltaY) > 0.1f)
             {
                 if (movingHorizontalFirst)
                 {
-                    // Đi ngang trước
                     if (Mathf.Abs(deltaX) > 0.1f)
                     {
                         movement = new Vector2(Mathf.Sign(deltaX), 0);
@@ -141,7 +173,6 @@ public class Controller : MonoBehaviour, IUpdatable
                 }
                 else
                 {
-                    // Đi dọc trước
                     if (Mathf.Abs(deltaY) > 0.1f)
                     {
                         movement = new Vector2(0, Mathf.Sign(deltaY));
@@ -169,7 +200,6 @@ public class Controller : MonoBehaviour, IUpdatable
         }
     }
 
-    //Getter - Setter cho các biến chuyển động
     public Vector2 GetMovement()
     {
         return movement;
@@ -191,7 +221,6 @@ public class Controller : MonoBehaviour, IUpdatable
         return isMovingToTarget;
     }
 
-    //Cập nhật các thông số chuyển động cho animator
     private void UpdateMoveToAnimator()
     {
         animator.SetFloat("Horizontal", movement.x);
@@ -216,32 +245,27 @@ public class Controller : MonoBehaviour, IUpdatable
         isBusy = false;
     }
 
-    //Cập nhật animation tạm thời trước khi có hệ thống animation tương tác hoàn chỉnh
     protected virtual void UpdateAnimation()
     {
         if (isBusy)
         {
             return;
         }
-        // Stand
         if (movement.x == 0 && movement.y == 0)
         {
             animator.SetBool("isMove", false);
             UpdateLastMoveToAnimator();
         }
-        // Move
         if (movement.x != 0 || movement.y != 0)
         {
             animator.SetBool("isMove", true);
             UpdateMoveToAnimator();
         }
-        // Atk
         if (Input.GetKeyDown(KeyCode.J))
         {
             TriggerAnimation("Atk", 0.25f);
             UpdateLastMoveToAnimator();
         }
-        // Injured
         if (Input.GetKeyDown(KeyCode.K))
         {
             TriggerAnimation("Injured", 0.3f);

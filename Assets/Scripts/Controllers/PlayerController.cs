@@ -18,35 +18,6 @@ public class PlayerController : MonoBehaviour, IUpdatable
             phapSu = player.transform.Find("PhapSu").gameObject;
             //xaThu = player.transform.Find("XaThu").gameObject;
         }
-    }
-    private void OnEnable()
-    {
-        GameManager.Instance.Register(this);
-        RegisterDontDestroyOnLoad();
-    }
-    private void OnDisable()
-    {
-        if (GameManager.Instance != null)
-        {
-            GameManager.Instance.Unregister(this);
-        }
-    }
-    public void OnUpdate()
-    {
-    }
-    public void OnLateUpdate()
-    {
-    }
-    public void OnFixedUpdate()
-    {
-    }
-    public void RegisterDontDestroyOnLoad()
-    {
-        GameManager.Instance.RegisterPersistent(this);
-    }
-
-    private void Start()
-    {
         if (GameObject.Find("Player"))
         {
             var idSchool = LogInController.GetIDSchool();
@@ -72,5 +43,30 @@ public class PlayerController : MonoBehaviour, IUpdatable
                     break;
             }
         }
+    }
+    private void OnEnable()
+    {
+        GameManager.Instance.Register(this);
+        RegisterDontDestroyOnLoad();
+    }
+    private void OnDisable()
+    {
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.Unregister(this);
+        }
+    }
+    public void OnUpdate()
+    {
+    }
+    public void OnLateUpdate()
+    {
+    }
+    public void OnFixedUpdate()
+    {
+    }
+    public void RegisterDontDestroyOnLoad()
+    {
+        GameManager.Instance.RegisterPersistent(this);
     }
 }

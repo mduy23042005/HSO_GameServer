@@ -1,18 +1,16 @@
-﻿using Newtonsoft.Json;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.U2D.Animation;
 
-public class SpriteController : MonoBehaviour, IUpdatable
+public class SyncSpriteController : MonoBehaviour, IUpdatable
 {
     private List<SpriteResolver> resolvers;
     private Animator animator;
     private int lastFrame = -1;
     private string lastState = "";
-    private Controller controller;
+    private SyncController syncController;
 
     [Header("Chỉ định sprite nào của player sẽ bị thay thế")]
     [SerializeField] private List<SpriteLibrary> spriteLibrary;
@@ -25,26 +23,30 @@ public class SpriteController : MonoBehaviour, IUpdatable
     [SerializeField] private List<HairLibraries> hairLibraries;
     [SerializeField] private List<WeaponLibraries> weaponLibraries;
 
+    // index của trang bị đang sử dụng trong List trên inspector
     private int currentLegArmor = 0;
     private int currentArmor = 0;
-    private int currentHead = 0;
     private int currentHelmet = 0;
     private int currentHair = 0;
     private int currentWeapon = 0;
 
-    private APIManager api;
+    // id của trang bị thực tế từ database
+    int weaponData = 0;
+    int helmetData = 0;
+    int armorData = 0;
+    int legArmorData = 0;
+    int hairData;
 
     void Awake()
     {
         // Lấy tất cả SpriteResolver trong object con
         resolvers = GetComponentsInChildren<SpriteResolver>().ToList();
         animator = GetComponent<Animator>();
-        controller = GetComponent<Controller>();
-        api = Object.FindFirstObjectByType<APIManager>();
+        syncController = GetComponent<SyncController>();
     }
     void Start()
     {
-        _ = ReadDatabase();
+        _ = ReadDataFromServer();
     }
 
     private void OnEnable()
@@ -69,31 +71,17 @@ public class SpriteController : MonoBehaviour, IUpdatable
     }
     public void OnFixedUpdate() { }
 
-    public void NextHead()
-    {
-        EquipHead(currentHead + 1);
-    }
-    public List<HairLibraries> GetHair()
-    {
-        return hairLibraries;
-    }
-
-    private void EquipLegArmor(int legArmorIndex)
+    public void EquipLegArmor(int legArmorIndex)
     {
         currentLegArmor = legArmorIndex;
         spriteLibrary[0].spriteLibraryAsset = legArmorLibraries[legArmorIndex].legArmorLibrariesAsset;
     }
-    private void EquipArmor(int armorIndex)
+    public void EquipArmor(int armorIndex)
     {
         currentArmor = armorIndex;
         spriteLibrary[1].spriteLibraryAsset = armorLibraries[armorIndex].armorLibrariesAsset;
     }
-    private void EquipHead(int headIndex)
-    {
-        currentHead = headIndex;
-        spriteLibrary[2].spriteLibraryAsset = headLibraries[headIndex].headLibrariesAsset;
-    }
-    private void EquipHelmet(int helmetIndex)
+    public void EquipHelmet(int helmetIndex)
     {
         currentHelmet = helmetIndex;
         spriteLibrary[3].spriteLibraryAsset = helmetLibraries[helmetIndex].helmetLibrariesAsset;
@@ -107,54 +95,31 @@ public class SpriteController : MonoBehaviour, IUpdatable
             spriteLibrary[4].gameObject.SetActive(true);
         }
     }
-    private void EquipHair(int hairIndex)
+    public void EquipHair(int hairIndex)
     {
         currentHair = hairIndex;
         spriteLibrary[4].spriteLibraryAsset = hairLibraries[hairIndex].hairLibrariesAsset;
     }
-    private void EquipWeapon(int weaponIndex)
+    public void EquipWeapon(int weaponIndex)
     {
         currentWeapon = weaponIndex;
         spriteLibrary[5].spriteLibraryAsset = weaponLibraries[weaponIndex].weaponFrontLibraries;
         spriteLibrary[6].spriteLibraryAsset = weaponLibraries[weaponIndex].weaponBackLibraries;
     }
 
-    private async Task ReadDatabase()
+    private async Task ReadDataFromServer()
     {
-        int idAccount = LogInController.GetIDAccount() ?? 0; // Bấm vào nút Đăng ký thì gán idAccount = 0 để chạy PlayerDemo phần chọn School trong Register
-
-        if (idAccount == 0)
-        {
-            currentWeapon = weaponLibraries.FindIndex(w => w.idWeapon == 0);
-            currentHelmet = helmetLibraries.FindIndex(h => h.idHelmet == 0);
-            currentArmor = armorLibraries.FindIndex(a => a.idArmor == 0);
-            currentLegArmor = legArmorLibraries.FindIndex(la => la.idLegArmor == 0);
-
-            EquipLegArmor(currentLegArmor);
-            EquipArmor(currentArmor);
-            EquipHelmet(currentHelmet);
-            EquipWeapon(currentWeapon);
-            EquipHair(currentHair);
-
-            return;
-        }
-
         try
         {
-            string urlItems = $"{api.GetApiUrl()}/api/account/{idAccount}/equipment?idAccount={idAccount}";
-            HttpResponseMessage res = await api.GetHttpClient().GetAsync(urlItems);
-            string json = await res.Content.ReadAsStringAsync();
-            List<Account_Equipment> equipment = JsonConvert.DeserializeObject<List<Account_Equipment>>(json);
+            await Task.Yield();
 
-            var weaponData = equipment[0].IDItem0_1;
-            var helmetData = equipment[1].IDItem0_1;
-            var armorData = equipment[2].IDItem0_1;
-            var legArmorData = equipment[3].IDItem0_1;
+            SyncModels otherPlayerData = SyncManager.Instance.GetPlayerData();
 
-            string urlGetHair = $"{api.GetApiUrl()}/api/account/{idAccount}/getHair?idAccount={idAccount}";
-            res = await api.GetHttpClient().GetAsync(urlGetHair);
-            json = await res.Content.ReadAsStringAsync();
-            int hairData = JsonConvert.DeserializeObject<int>(json);
+            weaponData = otherPlayerData.weapon;
+            helmetData = otherPlayerData.helmet;
+            armorData = otherPlayerData.armor;
+            legArmorData = otherPlayerData.legArmor;
+            hairData = otherPlayerData.hair;
 
             currentWeapon = weaponLibraries.FindIndex(w => w.idWeapon == weaponData);
             currentHelmet = helmetLibraries.FindIndex(h => h.idHelmet == helmetData);
@@ -211,16 +176,9 @@ public class SpriteController : MonoBehaviour, IUpdatable
 
         float h;
         float v;
-        if (controller.GetIsMovingToTarget())
-        {
-            h = controller.GetMovement().x;
-            v = controller.GetMovement().y;
-        }
-        else
-        {
-            h = controller.GetLastMovement().x;
-            v = controller.GetLastMovement().y;
-        }
+
+        h = syncController.GetLastMovement().x;
+        v = syncController.GetLastMovement().y;
 
         string direction = GetDirection(h, v);
 
@@ -239,15 +197,15 @@ public class SpriteController : MonoBehaviour, IUpdatable
                 lastState = "Stand" + direction;
                 SetAllResolvers("Stand", $"Stand{direction}");
             }
-                foreach (var r in resolvers)
+            foreach (var r in resolvers)
+            {
+                if (r != null && r.spriteLibrary != null && r.gameObject.name == "4_0_0")
                 {
-                    if (r != null && r.spriteLibrary != null && r.gameObject.name == "4_0_0")
-                    {
-                        r.SetCategoryAndLabel("Stand", $"Stand{direction}Frame{frame}");
-                        r.ResolveSpriteToSpriteRenderer();
-                    }
+                    r.SetCategoryAndLabel("Stand", $"Stand{direction}Frame{frame}");
+                    r.ResolveSpriteToSpriteRenderer();
                 }
-            
+            }
+
         }
         // Move
         if (state.IsName("Move"))
@@ -317,7 +275,7 @@ public class SpriteController : MonoBehaviour, IUpdatable
     }
     public void RefreshCharacterSprite()
     {
-        _ = ReadDatabase(); // Gọi lại logic load item từ database
+        _ = ReadDataFromServer(); // Gọi lại logic load item từ database
     }
     private void SetAllResolvers(string category, string label)
     {

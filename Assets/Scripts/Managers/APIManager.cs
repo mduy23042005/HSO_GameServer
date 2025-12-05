@@ -6,7 +6,7 @@ using UnityEngine;
 public class APIManager : MonoBehaviour, IUpdatable
 {
     private readonly HttpClient client = new HttpClient();
-    private const string apiUrl = "https://localhost:44394";
+    private const string apiUrl = "https://localhost:55555";
 
     private void OnEnable()
     {

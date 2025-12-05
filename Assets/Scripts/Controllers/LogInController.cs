@@ -42,7 +42,7 @@ public class LogInController : MonoBehaviour
         if (acc != null)
         {
             textMessage.color = Color.green;
-            textMessage.text = $"Đăng nhập {acc.NameChar} thành công!";
+            textMessage.text = $"Đăng nhập {acc.NameChar} thành công.";
 
             idSchool = acc.IDSchool;
             idAccount = acc.IDAccount;

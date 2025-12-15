@@ -14767,13 +14767,13 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 449
+    iconItem0: {fileID: 21300000, guid: 37fd7ffee5bf7934f8cdff75ce49daca, type: 3}
+    typeItem0: 0
     weapon:
       idWeapon: 0
-      weaponBackLibraries: {fileID: 0}
-      weaponFrontLibraries: {fileID: 0}
+      weaponBackLibraries: {fileID: 7108339969198208228, guid: fe2af06d3c3c0f04e91937adc7f68149, type: 3}
+      weaponFrontLibraries: {fileID: 7108339969198208228, guid: 1ecd2d44f8c822f4cb2137578fa9f3a2, type: 3}
     helmet:
       idHelmet: 0
       helmetLibrariesAsset: {fileID: 7108339969198208228, guid: db1edd019d9764d418d066a86368391e, type: 3}
@@ -14786,13 +14786,13 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 450
+    iconItem0: {fileID: 21300000, guid: 56a5c647b52c27b4498efa3b678a4754, type: 3}
+    typeItem0: 0
     weapon:
       idWeapon: 0
-      weaponBackLibraries: {fileID: 0}
-      weaponFrontLibraries: {fileID: 0}
+      weaponBackLibraries: {fileID: 7108339969198208228, guid: a16c805539fbbda47ba214c6ee0a55ec, type: 3}
+      weaponFrontLibraries: {fileID: 7108339969198208228, guid: d6f722d1aaca32d49ba591e37cbada95, type: 3}
     helmet:
       idHelmet: 0
       helmetLibrariesAsset: {fileID: 7108339969198208228, guid: db1edd019d9764d418d066a86368391e, type: 3}
@@ -14805,13 +14805,13 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 451
+    iconItem0: {fileID: 21300000, guid: 45911bcb90bf0ca409abc85bff1546a3, type: 3}
+    typeItem0: 0
     weapon:
       idWeapon: 0
-      weaponBackLibraries: {fileID: 0}
-      weaponFrontLibraries: {fileID: 0}
+      weaponBackLibraries: {fileID: 7108339969198208228, guid: 97860b2719e88b645b1ed35d246c5260, type: 3}
+      weaponFrontLibraries: {fileID: 7108339969198208228, guid: 870c1d49073b5014e83904f6a37ba644, type: 3}
     helmet:
       idHelmet: 0
       helmetLibrariesAsset: {fileID: 7108339969198208228, guid: db1edd019d9764d418d066a86368391e, type: 3}
@@ -14824,9 +14824,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 452
+    iconItem0: {fileID: 21300000, guid: 7a639e1b957eece4fac7e8e1493c47dc, type: 3}
+    typeItem0: 0
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -14843,13 +14843,13 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 453
+    iconItem0: {fileID: 21300000, guid: 6709cc098435b8d47843179c182d7f24, type: 3}
+    typeItem0: 0
     weapon:
       idWeapon: 0
-      weaponBackLibraries: {fileID: 0}
-      weaponFrontLibraries: {fileID: 0}
+      weaponBackLibraries: {fileID: 7108339969198208228, guid: 63c8ec8c8cc6e3c4c88fed131ba0ffb3, type: 3}
+      weaponFrontLibraries: {fileID: 7108339969198208228, guid: e182c9f8aac42e547bd352d9484baf29, type: 3}
     helmet:
       idHelmet: 0
       helmetLibrariesAsset: {fileID: 7108339969198208228, guid: db1edd019d9764d418d066a86368391e, type: 3}
@@ -14862,13 +14862,13 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 454
+    iconItem0: {fileID: 21300000, guid: 2076ba204c728be44a18399a510b580c, type: 3}
+    typeItem0: 0
     weapon:
       idWeapon: 0
-      weaponBackLibraries: {fileID: 0}
-      weaponFrontLibraries: {fileID: 0}
+      weaponBackLibraries: {fileID: 7108339969198208228, guid: aaa8187a6ab5cf8438442424f11a1a47, type: 3}
+      weaponFrontLibraries: {fileID: 7108339969198208228, guid: b0dab7c4818cd124f9c6c261791c0a31, type: 3}
     helmet:
       idHelmet: 0
       helmetLibrariesAsset: {fileID: 7108339969198208228, guid: db1edd019d9764d418d066a86368391e, type: 3}
@@ -14881,13 +14881,13 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 455
+    iconItem0: {fileID: 21300000, guid: cfdcba11fc1e06e4f8cc628769c3dbd9, type: 3}
+    typeItem0: 0
     weapon:
       idWeapon: 0
-      weaponBackLibraries: {fileID: 0}
-      weaponFrontLibraries: {fileID: 0}
+      weaponBackLibraries: {fileID: 7108339969198208228, guid: 2efae5d0f955fec4ca5f43c53d5286b7, type: 3}
+      weaponFrontLibraries: {fileID: 7108339969198208228, guid: 0ed6a4c1225a2b54d8d964e6a29511de, type: 3}
     helmet:
       idHelmet: 0
       helmetLibrariesAsset: {fileID: 7108339969198208228, guid: db1edd019d9764d418d066a86368391e, type: 3}
@@ -14900,9 +14900,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 456
+    iconItem0: {fileID: 21300000, guid: 676d447de0e881745b701b30af4d9436, type: 3}
+    typeItem0: 0
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -14919,8 +14919,8 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
+  - idItem0: 457
+    iconItem0: {fileID: 21300000, guid: e869c6f0b6e4cd94cb5db2a8e5baaf66, type: 3}
     typeItem0: 1
     weapon:
       idWeapon: 0
@@ -14928,7 +14928,7 @@ MonoBehaviour:
       weaponFrontLibraries: {fileID: 0}
     helmet:
       idHelmet: 0
-      helmetLibrariesAsset: {fileID: 7108339969198208228, guid: db1edd019d9764d418d066a86368391e, type: 3}
+      helmetLibrariesAsset: {fileID: 7108339969198208228, guid: d89e4dbe81fcf214ab9686b152114c9d, type: 3}
       isHiddenHair: 0
     armor:
       idArmor: 0
@@ -14938,8 +14938,8 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
+  - idItem0: 458
+    iconItem0: {fileID: 21300000, guid: 424301c4547c99e4d8c9a83451917e19, type: 3}
     typeItem0: 1
     weapon:
       idWeapon: 0
@@ -14947,7 +14947,7 @@ MonoBehaviour:
       weaponFrontLibraries: {fileID: 0}
     helmet:
       idHelmet: 0
-      helmetLibrariesAsset: {fileID: 7108339969198208228, guid: db1edd019d9764d418d066a86368391e, type: 3}
+      helmetLibrariesAsset: {fileID: 7108339969198208228, guid: b35c5e83617c085499c331190bfad60c, type: 3}
       isHiddenHair: 0
     armor:
       idArmor: 0
@@ -14957,8 +14957,8 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
+  - idItem0: 459
+    iconItem0: {fileID: 21300000, guid: 0e73fa78f7de1ec47ba56637a2f6ae02, type: 3}
     typeItem0: 1
     weapon:
       idWeapon: 0
@@ -14966,7 +14966,7 @@ MonoBehaviour:
       weaponFrontLibraries: {fileID: 0}
     helmet:
       idHelmet: 0
-      helmetLibrariesAsset: {fileID: 7108339969198208228, guid: db1edd019d9764d418d066a86368391e, type: 3}
+      helmetLibrariesAsset: {fileID: 7108339969198208228, guid: b8189e4c58407614fb445b682a220f27, type: 3}
       isHiddenHair: 0
     armor:
       idArmor: 0
@@ -14976,8 +14976,8 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
+  - idItem0: 460
+    iconItem0: {fileID: 21300000, guid: 15f5b20344ac5e14c8dbc38e7370d218, type: 3}
     typeItem0: 1
     weapon:
       idWeapon: 0
@@ -14985,7 +14985,7 @@ MonoBehaviour:
       weaponFrontLibraries: {fileID: 0}
     helmet:
       idHelmet: 0
-      helmetLibrariesAsset: {fileID: 7108339969198208228, guid: db1edd019d9764d418d066a86368391e, type: 3}
+      helmetLibrariesAsset: {fileID: 0}
       isHiddenHair: 0
     armor:
       idArmor: 0
@@ -14995,8 +14995,8 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
+  - idItem0: 461
+    iconItem0: {fileID: 21300000, guid: a21b4c7b436cc6147a31834b01a0a365, type: 3}
     typeItem0: 1
     weapon:
       idWeapon: 0
@@ -15004,7 +15004,7 @@ MonoBehaviour:
       weaponFrontLibraries: {fileID: 0}
     helmet:
       idHelmet: 0
-      helmetLibrariesAsset: {fileID: 7108339969198208228, guid: db1edd019d9764d418d066a86368391e, type: 3}
+      helmetLibrariesAsset: {fileID: 7108339969198208228, guid: d89e4dbe81fcf214ab9686b152114c9d, type: 3}
       isHiddenHair: 0
     armor:
       idArmor: 0
@@ -15014,8 +15014,8 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
+  - idItem0: 462
+    iconItem0: {fileID: 21300000, guid: 086913b00d079cb41a80e7aaab6756d2, type: 3}
     typeItem0: 1
     weapon:
       idWeapon: 0
@@ -15023,7 +15023,7 @@ MonoBehaviour:
       weaponFrontLibraries: {fileID: 0}
     helmet:
       idHelmet: 0
-      helmetLibrariesAsset: {fileID: 7108339969198208228, guid: db1edd019d9764d418d066a86368391e, type: 3}
+      helmetLibrariesAsset: {fileID: 7108339969198208228, guid: b35c5e83617c085499c331190bfad60c, type: 3}
       isHiddenHair: 0
     armor:
       idArmor: 0
@@ -15033,8 +15033,8 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
+  - idItem0: 463
+    iconItem0: {fileID: 21300000, guid: db884d5bdf0472b42804c8bea255559f, type: 3}
     typeItem0: 1
     weapon:
       idWeapon: 0
@@ -15042,7 +15042,7 @@ MonoBehaviour:
       weaponFrontLibraries: {fileID: 0}
     helmet:
       idHelmet: 0
-      helmetLibrariesAsset: {fileID: 7108339969198208228, guid: db1edd019d9764d418d066a86368391e, type: 3}
+      helmetLibrariesAsset: {fileID: 7108339969198208228, guid: b8189e4c58407614fb445b682a220f27, type: 3}
       isHiddenHair: 0
     armor:
       idArmor: 0
@@ -15052,8 +15052,8 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
+  - idItem0: 464
+    iconItem0: {fileID: 21300000, guid: 202dd3f3b17fb544cb40c24220cd61c2, type: 3}
     typeItem0: 1
     weapon:
       idWeapon: 0
@@ -15061,7 +15061,7 @@ MonoBehaviour:
       weaponFrontLibraries: {fileID: 0}
     helmet:
       idHelmet: 0
-      helmetLibrariesAsset: {fileID: 7108339969198208228, guid: db1edd019d9764d418d066a86368391e, type: 3}
+      helmetLibrariesAsset: {fileID: 0}
       isHiddenHair: 0
     armor:
       idArmor: 0
@@ -15071,9 +15071,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 465
+    iconItem0: {fileID: 21300000, guid: 91bdaca2d6fd5ec48bfd1c5c53c74ef4, type: 3}
+    typeItem0: 2
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -15084,15 +15084,15 @@ MonoBehaviour:
       isHiddenHair: 0
     armor:
       idArmor: 0
-      armorLibrariesAsset: {fileID: 0}
+      armorLibrariesAsset: {fileID: 7108339969198208228, guid: adbf8521c7a4d804f9b357dfc059a503, type: 3}
     legArmor:
       idLegArmor: 0
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 466
+    iconItem0: {fileID: 21300000, guid: 785a9d21a4ab66847aadc8b0dc6e8c0c, type: 3}
+    typeItem0: 2
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -15103,15 +15103,15 @@ MonoBehaviour:
       isHiddenHair: 0
     armor:
       idArmor: 0
-      armorLibrariesAsset: {fileID: 0}
+      armorLibrariesAsset: {fileID: 7108339969198208228, guid: dae3c7b71f283da49baaa387bb241904, type: 3}
     legArmor:
       idLegArmor: 0
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 467
+    iconItem0: {fileID: 21300000, guid: 5f89364d2e8c1b3468e27f29a2c55f5f, type: 3}
+    typeItem0: 2
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -15122,15 +15122,15 @@ MonoBehaviour:
       isHiddenHair: 0
     armor:
       idArmor: 0
-      armorLibrariesAsset: {fileID: 0}
+      armorLibrariesAsset: {fileID: 7108339969198208228, guid: 47ad5b9f114a36943b16f4b02a32f3c0, type: 3}
     legArmor:
       idLegArmor: 0
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 468
+    iconItem0: {fileID: 21300000, guid: 1ee2942d79f6a6343beae423a94a02a3, type: 3}
+    typeItem0: 2
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -15147,9 +15147,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 469
+    iconItem0: {fileID: 21300000, guid: 734841e40d0a4b140ad5ddc34170e012, type: 3}
+    typeItem0: 2
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -15160,15 +15160,15 @@ MonoBehaviour:
       isHiddenHair: 0
     armor:
       idArmor: 0
-      armorLibrariesAsset: {fileID: 0}
+      armorLibrariesAsset: {fileID: 7108339969198208228, guid: adbf8521c7a4d804f9b357dfc059a503, type: 3}
     legArmor:
       idLegArmor: 0
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 470
+    iconItem0: {fileID: 21300000, guid: 9a39cf6f1a6232c449b5ee8cc3f3d108, type: 3}
+    typeItem0: 2
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -15179,15 +15179,15 @@ MonoBehaviour:
       isHiddenHair: 0
     armor:
       idArmor: 0
-      armorLibrariesAsset: {fileID: 0}
+      armorLibrariesAsset: {fileID: 7108339969198208228, guid: dae3c7b71f283da49baaa387bb241904, type: 3}
     legArmor:
       idLegArmor: 0
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 471
+    iconItem0: {fileID: 21300000, guid: 22c777faf993acc40a92e59f53351f18, type: 3}
+    typeItem0: 2
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -15198,15 +15198,15 @@ MonoBehaviour:
       isHiddenHair: 0
     armor:
       idArmor: 0
-      armorLibrariesAsset: {fileID: 0}
+      armorLibrariesAsset: {fileID: 7108339969198208228, guid: 47ad5b9f114a36943b16f4b02a32f3c0, type: 3}
     legArmor:
       idLegArmor: 0
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 472
+    iconItem0: {fileID: 21300000, guid: 7502eaf04d0d05b4ca82a9167616edb1, type: 3}
+    typeItem0: 2
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -15223,9 +15223,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 473
+    iconItem0: {fileID: 21300000, guid: eb0f4f8f66c81ae42b71eb18b7e2d888, type: 3}
+    typeItem0: 3
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -15239,12 +15239,12 @@ MonoBehaviour:
       armorLibrariesAsset: {fileID: 0}
     legArmor:
       idLegArmor: 0
-      legArmorLibrariesAsset: {fileID: 0}
+      legArmorLibrariesAsset: {fileID: 7108339969198208228, guid: b6a6f650101482b4ca50704655dfb6cd, type: 3}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 474
+    iconItem0: {fileID: 21300000, guid: eb65fc1ff1967ad4db08441899ddeb1b, type: 3}
+    typeItem0: 3
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -15258,12 +15258,12 @@ MonoBehaviour:
       armorLibrariesAsset: {fileID: 0}
     legArmor:
       idLegArmor: 0
-      legArmorLibrariesAsset: {fileID: 0}
+      legArmorLibrariesAsset: {fileID: 7108339969198208228, guid: 8186dc9dbfb71a24fb279d9aced6f1a3, type: 3}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 475
+    iconItem0: {fileID: 21300000, guid: ffe0515c7c623fc42b675b3d0905ca7f, type: 3}
+    typeItem0: 3
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -15277,12 +15277,12 @@ MonoBehaviour:
       armorLibrariesAsset: {fileID: 0}
     legArmor:
       idLegArmor: 0
-      legArmorLibrariesAsset: {fileID: 0}
+      legArmorLibrariesAsset: {fileID: 7108339969198208228, guid: fef493e38778428498431a3548fb0710, type: 3}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 476
+    iconItem0: {fileID: 21300000, guid: 62520f99cde8ab342b85adf2d0c07903, type: 3}
+    typeItem0: 3
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -15299,9 +15299,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 477
+    iconItem0: {fileID: 21300000, guid: 6545f44016cb2724e9b9cce56b76cda0, type: 3}
+    typeItem0: 3
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -15315,12 +15315,12 @@ MonoBehaviour:
       armorLibrariesAsset: {fileID: 0}
     legArmor:
       idLegArmor: 0
-      legArmorLibrariesAsset: {fileID: 0}
+      legArmorLibrariesAsset: {fileID: 7108339969198208228, guid: b6a6f650101482b4ca50704655dfb6cd, type: 3}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 478
+    iconItem0: {fileID: 21300000, guid: 9063a411b0c99fa49b7898bdde93bd67, type: 3}
+    typeItem0: 3
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -15334,12 +15334,12 @@ MonoBehaviour:
       armorLibrariesAsset: {fileID: 0}
     legArmor:
       idLegArmor: 0
-      legArmorLibrariesAsset: {fileID: 0}
+      legArmorLibrariesAsset: {fileID: 7108339969198208228, guid: 8186dc9dbfb71a24fb279d9aced6f1a3, type: 3}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 479
+    iconItem0: {fileID: 21300000, guid: 57a7fb5fe6477c540b4d392e657373f0, type: 3}
+    typeItem0: 3
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -15353,12 +15353,12 @@ MonoBehaviour:
       armorLibrariesAsset: {fileID: 0}
     legArmor:
       idLegArmor: 0
-      legArmorLibrariesAsset: {fileID: 0}
+      legArmorLibrariesAsset: {fileID: 7108339969198208228, guid: fef493e38778428498431a3548fb0710, type: 3}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 480
+    iconItem0: {fileID: 21300000, guid: 11b4258ddf663b64cbd9408c781c7457, type: 3}
+    typeItem0: 3
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -15375,9 +15375,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 481
+    iconItem0: {fileID: 21300000, guid: 38222ebee37d6e444a08c2dbc6e4f269, type: 3}
+    typeItem0: 5
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -15394,9 +15394,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 482
+    iconItem0: {fileID: 21300000, guid: 4d74b56cd036d7d479e7beef3fb16e3e, type: 3}
+    typeItem0: 5
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -15413,9 +15413,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 483
+    iconItem0: {fileID: 21300000, guid: d45ab1232d50aa24ea44f310740e5ce0, type: 3}
+    typeItem0: 5
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -15432,9 +15432,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 484
+    iconItem0: {fileID: 21300000, guid: 2036971108c6cf241b5b6e342b1876aa, type: 3}
+    typeItem0: 5
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -15451,9 +15451,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 485
+    iconItem0: {fileID: 21300000, guid: 587e0f773d4b11d468377737fdbf2577, type: 3}
+    typeItem0: 5
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -15470,9 +15470,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 486
+    iconItem0: {fileID: 21300000, guid: 2f769c429c55681419e19411a389de64, type: 3}
+    typeItem0: 5
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -15489,9 +15489,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 487
+    iconItem0: {fileID: 21300000, guid: 37e4011977cc0184eadfe6ee85567b26, type: 3}
+    typeItem0: 5
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -15508,9 +15508,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 488
+    iconItem0: {fileID: 21300000, guid: 49d2f1ce094a6d74dbc4739ee2130922, type: 3}
+    typeItem0: 5
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -15527,9 +15527,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 489
+    iconItem0: {fileID: 21300000, guid: 48003d1616687e444b556ae727af0d77, type: 3}
+    typeItem0: 6
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -15546,9 +15546,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 490
+    iconItem0: {fileID: 21300000, guid: f9dd44bf5afb66644b4c3a19fb9ff834, type: 3}
+    typeItem0: 6
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -15565,9 +15565,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 491
+    iconItem0: {fileID: 21300000, guid: b94abb0d4365fed42a2d39536562a555, type: 3}
+    typeItem0: 6
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -15584,9 +15584,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 492
+    iconItem0: {fileID: 21300000, guid: 1a2a552a2dac1d84994ac68f2aa52592, type: 3}
+    typeItem0: 6
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -15603,9 +15603,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 493
+    iconItem0: {fileID: 21300000, guid: cf610a6fbcfef5146af7523b22917508, type: 3}
+    typeItem0: 6
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -15622,9 +15622,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 494
+    iconItem0: {fileID: 21300000, guid: 8ac3f759cea5c9c47a359da55befd5ed, type: 3}
+    typeItem0: 6
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -15641,9 +15641,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 495
+    iconItem0: {fileID: 21300000, guid: b1ed7e7a2e3a34f4c94e3ebe48ef66b0, type: 3}
+    typeItem0: 6
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -15660,9 +15660,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 496
+    iconItem0: {fileID: 21300000, guid: 414d939eed51ed247a25d8e6f23eb10f, type: 3}
+    typeItem0: 6
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -15679,9 +15679,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 497
+    iconItem0: {fileID: 21300000, guid: e3ac784e41a44564a929d1a2f8f7a750, type: 3}
+    typeItem0: 7
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -15698,9 +15698,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 498
+    iconItem0: {fileID: 21300000, guid: 4f4f4aa3de4556d4cb1eb48a85efcd9a, type: 3}
+    typeItem0: 7
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -15717,9 +15717,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 499
+    iconItem0: {fileID: 21300000, guid: ce1c4a96467dbd242b254a7f50150cce, type: 3}
+    typeItem0: 7
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -15736,9 +15736,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 500
+    iconItem0: {fileID: 21300000, guid: 743dba00231c0d944abcfa0fb6ed4cbe, type: 3}
+    typeItem0: 7
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -15755,9 +15755,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 501
+    iconItem0: {fileID: 21300000, guid: 76cee9f2df7d79e41a2943306c914a35, type: 3}
+    typeItem0: 7
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -15774,9 +15774,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 502
+    iconItem0: {fileID: 21300000, guid: b50a6dfb45a791d40a56dae1dbb499f9, type: 3}
+    typeItem0: 7
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -15793,9 +15793,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 503
+    iconItem0: {fileID: 21300000, guid: fc713b4ddc62f78478bfb767d4b4cab8, type: 3}
+    typeItem0: 7
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -15812,9 +15812,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 504
+    iconItem0: {fileID: 21300000, guid: a5e6edc8a05cdf747bcf0feb836e7345, type: 3}
+    typeItem0: 7
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -15831,9 +15831,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 505
+    iconItem0: {fileID: 21300000, guid: 70a6415102cc7d34e82f4c2890f1cf57, type: 3}
+    typeItem0: 8
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -15850,9 +15850,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 506
+    iconItem0: {fileID: 21300000, guid: be35f359125f9084ab20cb8adfc37d5f, type: 3}
+    typeItem0: 8
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -15869,9 +15869,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 507
+    iconItem0: {fileID: 21300000, guid: b5804b32ad3bbc24fa5de5a3aa34b5e2, type: 3}
+    typeItem0: 8
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -15888,9 +15888,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 508
+    iconItem0: {fileID: 21300000, guid: f5e253d6c285637438effe0e83c9c6d0, type: 3}
+    typeItem0: 8
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -15907,9 +15907,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 509
+    iconItem0: {fileID: 21300000, guid: f8cd563268d168240bb39e0e5a6a32c2, type: 3}
+    typeItem0: 8
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -15926,9 +15926,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 510
+    iconItem0: {fileID: 21300000, guid: 9c741b25f7f991a4a8ddb9f69acf28bb, type: 3}
+    typeItem0: 8
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -15945,9 +15945,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 511
+    iconItem0: {fileID: 21300000, guid: c039923ba9830d04db49359a5002db12, type: 3}
+    typeItem0: 8
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -15964,9 +15964,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 512
+    iconItem0: {fileID: 21300000, guid: 88768c153b4b5d846b04bc7399a0545f, type: 3}
+    typeItem0: 8
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -15983,13 +15983,13 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 513
+    iconItem0: {fileID: 21300000, guid: 6341a67b7dca3be4b9b11d2e229ea851, type: 3}
+    typeItem0: 0
     weapon:
       idWeapon: 0
-      weaponBackLibraries: {fileID: 0}
-      weaponFrontLibraries: {fileID: 0}
+      weaponBackLibraries: {fileID: 7108339969198208228, guid: 95353a52bf04afe4dbb8cf664849ea28, type: 3}
+      weaponFrontLibraries: {fileID: 7108339969198208228, guid: 259380531f9703240a7a6c6134e2c794, type: 3}
     helmet:
       idHelmet: 0
       helmetLibrariesAsset: {fileID: 7108339969198208228, guid: db1edd019d9764d418d066a86368391e, type: 3}
@@ -16002,13 +16002,13 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 514
+    iconItem0: {fileID: 21300000, guid: 39d72476afe090c45973cab69c411ae4, type: 3}
+    typeItem0: 0
     weapon:
       idWeapon: 0
-      weaponBackLibraries: {fileID: 0}
-      weaponFrontLibraries: {fileID: 0}
+      weaponBackLibraries: {fileID: 7108339969198208228, guid: 200a6064bdf5d7844ba85f566b2baccf, type: 3}
+      weaponFrontLibraries: {fileID: 7108339969198208228, guid: 8ce365edc7a116b449c5712661892106, type: 3}
     helmet:
       idHelmet: 0
       helmetLibrariesAsset: {fileID: 7108339969198208228, guid: db1edd019d9764d418d066a86368391e, type: 3}
@@ -16021,13 +16021,13 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 515
+    iconItem0: {fileID: 21300000, guid: 8ee8a4851b891cb4cab0cd4149ea97cb, type: 3}
+    typeItem0: 0
     weapon:
       idWeapon: 0
-      weaponBackLibraries: {fileID: 0}
-      weaponFrontLibraries: {fileID: 0}
+      weaponBackLibraries: {fileID: 7108339969198208228, guid: 70bf859737512b7478d7f2690f791770, type: 3}
+      weaponFrontLibraries: {fileID: 7108339969198208228, guid: 202d15d89cdb994459fb10b8653730df, type: 3}
     helmet:
       idHelmet: 0
       helmetLibrariesAsset: {fileID: 7108339969198208228, guid: db1edd019d9764d418d066a86368391e, type: 3}
@@ -16040,9 +16040,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 516
+    iconItem0: {fileID: 21300000, guid: c7d366ae4e93f1e4394e08ce46c4d91a, type: 3}
+    typeItem0: 0
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -16059,13 +16059,13 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 517
+    iconItem0: {fileID: 21300000, guid: 47f696191538afe4e8693e49ba169767, type: 3}
+    typeItem0: 0
     weapon:
       idWeapon: 0
-      weaponBackLibraries: {fileID: 0}
-      weaponFrontLibraries: {fileID: 0}
+      weaponBackLibraries: {fileID: 7108339969198208228, guid: 4e7e8e90ccd4d7c4dbfc75201cb5e67b, type: 3}
+      weaponFrontLibraries: {fileID: 7108339969198208228, guid: 0ee57f610aafef84cad8de700e276077, type: 3}
     helmet:
       idHelmet: 0
       helmetLibrariesAsset: {fileID: 7108339969198208228, guid: db1edd019d9764d418d066a86368391e, type: 3}
@@ -16078,13 +16078,13 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 518
+    iconItem0: {fileID: 21300000, guid: 88d085e18adf13847bb957b7d4972c9c, type: 3}
+    typeItem0: 0
     weapon:
       idWeapon: 0
-      weaponBackLibraries: {fileID: 0}
-      weaponFrontLibraries: {fileID: 0}
+      weaponBackLibraries: {fileID: 7108339969198208228, guid: 36221cf8e5a5a6648afce4d8ff9d1b0f, type: 3}
+      weaponFrontLibraries: {fileID: 7108339969198208228, guid: 2a6c6595890d3ba4b9dd22f46907d03a, type: 3}
     helmet:
       idHelmet: 0
       helmetLibrariesAsset: {fileID: 7108339969198208228, guid: db1edd019d9764d418d066a86368391e, type: 3}
@@ -16097,13 +16097,13 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 519
+    iconItem0: {fileID: 21300000, guid: 6c13c31590dd7ab4fbed20ce555becb7, type: 3}
+    typeItem0: 0
     weapon:
       idWeapon: 0
-      weaponBackLibraries: {fileID: 0}
-      weaponFrontLibraries: {fileID: 0}
+      weaponBackLibraries: {fileID: 7108339969198208228, guid: ee724cce073deaf4cace7e82d78b1051, type: 3}
+      weaponFrontLibraries: {fileID: 7108339969198208228, guid: 6aa840075bdab944891d1ef5208b34fa, type: 3}
     helmet:
       idHelmet: 0
       helmetLibrariesAsset: {fileID: 7108339969198208228, guid: db1edd019d9764d418d066a86368391e, type: 3}
@@ -16116,9 +16116,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 520
+    iconItem0: {fileID: 21300000, guid: aab074b3e166ab441b296456cd35665a, type: 3}
+    typeItem0: 0
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -16135,8 +16135,8 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
+  - idItem0: 521
+    iconItem0: {fileID: 21300000, guid: 03f84d51889888b44b4b1d168d19e633, type: 3}
     typeItem0: 1
     weapon:
       idWeapon: 0
@@ -16144,8 +16144,8 @@ MonoBehaviour:
       weaponFrontLibraries: {fileID: 0}
     helmet:
       idHelmet: 0
-      helmetLibrariesAsset: {fileID: 7108339969198208228, guid: db1edd019d9764d418d066a86368391e, type: 3}
-      isHiddenHair: 0
+      helmetLibrariesAsset: {fileID: 7108339969198208228, guid: 170c92498788f6347a93e6c76f509b17, type: 3}
+      isHiddenHair: 1
     armor:
       idArmor: 0
       armorLibrariesAsset: {fileID: 0}
@@ -16154,8 +16154,8 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
+  - idItem0: 522
+    iconItem0: {fileID: 21300000, guid: a59ee8b8c6bc48348845d30bc2b4c0f6, type: 3}
     typeItem0: 1
     weapon:
       idWeapon: 0
@@ -16163,8 +16163,8 @@ MonoBehaviour:
       weaponFrontLibraries: {fileID: 0}
     helmet:
       idHelmet: 0
-      helmetLibrariesAsset: {fileID: 7108339969198208228, guid: db1edd019d9764d418d066a86368391e, type: 3}
-      isHiddenHair: 0
+      helmetLibrariesAsset: {fileID: 7108339969198208228, guid: 23163aee08bc32943a91a2be5739d805, type: 3}
+      isHiddenHair: 1
     armor:
       idArmor: 0
       armorLibrariesAsset: {fileID: 0}
@@ -16173,8 +16173,8 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
+  - idItem0: 523
+    iconItem0: {fileID: 21300000, guid: 252d7bea30711ff4bb5eb87713fc5938, type: 3}
     typeItem0: 1
     weapon:
       idWeapon: 0
@@ -16182,7 +16182,7 @@ MonoBehaviour:
       weaponFrontLibraries: {fileID: 0}
     helmet:
       idHelmet: 0
-      helmetLibrariesAsset: {fileID: 7108339969198208228, guid: db1edd019d9764d418d066a86368391e, type: 3}
+      helmetLibrariesAsset: {fileID: 7108339969198208228, guid: 63b17275c93bb4943a0bc87dd0cd422a, type: 3}
       isHiddenHair: 0
     armor:
       idArmor: 0
@@ -16192,8 +16192,8 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
+  - idItem0: 524
+    iconItem0: {fileID: 21300000, guid: efce6e7d616f3de459e515aa650a5d4f, type: 3}
     typeItem0: 1
     weapon:
       idWeapon: 0
@@ -16201,7 +16201,7 @@ MonoBehaviour:
       weaponFrontLibraries: {fileID: 0}
     helmet:
       idHelmet: 0
-      helmetLibrariesAsset: {fileID: 7108339969198208228, guid: db1edd019d9764d418d066a86368391e, type: 3}
+      helmetLibrariesAsset: {fileID: 0}
       isHiddenHair: 0
     armor:
       idArmor: 0
@@ -16211,8 +16211,8 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
+  - idItem0: 525
+    iconItem0: {fileID: 21300000, guid: eba0e13463a8c954b9911c8076228a7b, type: 3}
     typeItem0: 1
     weapon:
       idWeapon: 0
@@ -16220,8 +16220,8 @@ MonoBehaviour:
       weaponFrontLibraries: {fileID: 0}
     helmet:
       idHelmet: 0
-      helmetLibrariesAsset: {fileID: 7108339969198208228, guid: db1edd019d9764d418d066a86368391e, type: 3}
-      isHiddenHair: 0
+      helmetLibrariesAsset: {fileID: 7108339969198208228, guid: 170c92498788f6347a93e6c76f509b17, type: 3}
+      isHiddenHair: 1
     armor:
       idArmor: 0
       armorLibrariesAsset: {fileID: 0}
@@ -16230,8 +16230,8 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
+  - idItem0: 526
+    iconItem0: {fileID: 21300000, guid: beae110eea0ffee4883c120a2c73972c, type: 3}
     typeItem0: 1
     weapon:
       idWeapon: 0
@@ -16239,8 +16239,8 @@ MonoBehaviour:
       weaponFrontLibraries: {fileID: 0}
     helmet:
       idHelmet: 0
-      helmetLibrariesAsset: {fileID: 7108339969198208228, guid: db1edd019d9764d418d066a86368391e, type: 3}
-      isHiddenHair: 0
+      helmetLibrariesAsset: {fileID: 7108339969198208228, guid: 23163aee08bc32943a91a2be5739d805, type: 3}
+      isHiddenHair: 1
     armor:
       idArmor: 0
       armorLibrariesAsset: {fileID: 0}
@@ -16249,8 +16249,8 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
+  - idItem0: 527
+    iconItem0: {fileID: 21300000, guid: dfc79a86544951443bd7ab7c0be1f39c, type: 3}
     typeItem0: 1
     weapon:
       idWeapon: 0
@@ -16258,7 +16258,7 @@ MonoBehaviour:
       weaponFrontLibraries: {fileID: 0}
     helmet:
       idHelmet: 0
-      helmetLibrariesAsset: {fileID: 7108339969198208228, guid: db1edd019d9764d418d066a86368391e, type: 3}
+      helmetLibrariesAsset: {fileID: 7108339969198208228, guid: 63b17275c93bb4943a0bc87dd0cd422a, type: 3}
       isHiddenHair: 0
     armor:
       idArmor: 0
@@ -16268,8 +16268,8 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
+  - idItem0: 528
+    iconItem0: {fileID: 21300000, guid: 02e42b3a959b5c04a8c5d0be0edf9f50, type: 3}
     typeItem0: 1
     weapon:
       idWeapon: 0
@@ -16277,7 +16277,7 @@ MonoBehaviour:
       weaponFrontLibraries: {fileID: 0}
     helmet:
       idHelmet: 0
-      helmetLibrariesAsset: {fileID: 7108339969198208228, guid: db1edd019d9764d418d066a86368391e, type: 3}
+      helmetLibrariesAsset: {fileID: 0}
       isHiddenHair: 0
     armor:
       idArmor: 0
@@ -16287,9 +16287,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 529
+    iconItem0: {fileID: 21300000, guid: c7b314ec3b4022449b77bcea60fb4ee2, type: 3}
+    typeItem0: 2
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -16300,15 +16300,15 @@ MonoBehaviour:
       isHiddenHair: 0
     armor:
       idArmor: 0
-      armorLibrariesAsset: {fileID: 0}
+      armorLibrariesAsset: {fileID: 7108339969198208228, guid: ae91d3c845362d346913dc8e751563be, type: 3}
     legArmor:
       idLegArmor: 0
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 530
+    iconItem0: {fileID: 21300000, guid: c984a0fbed048f54cbbaebf81fd84ae7, type: 3}
+    typeItem0: 2
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -16319,15 +16319,15 @@ MonoBehaviour:
       isHiddenHair: 0
     armor:
       idArmor: 0
-      armorLibrariesAsset: {fileID: 0}
+      armorLibrariesAsset: {fileID: 7108339969198208228, guid: 0676cee9a82335b44b32fa76c5a5e870, type: 3}
     legArmor:
       idLegArmor: 0
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 531
+    iconItem0: {fileID: 21300000, guid: f4049a8797499d845a36c3afba454315, type: 3}
+    typeItem0: 2
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -16338,15 +16338,15 @@ MonoBehaviour:
       isHiddenHair: 0
     armor:
       idArmor: 0
-      armorLibrariesAsset: {fileID: 0}
+      armorLibrariesAsset: {fileID: 7108339969198208228, guid: aab178a6722f05f42b132c942e5ad026, type: 3}
     legArmor:
       idLegArmor: 0
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 532
+    iconItem0: {fileID: 21300000, guid: 8da65dceb55b7144faa7d915d3b1356b, type: 3}
+    typeItem0: 2
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -16363,9 +16363,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 533
+    iconItem0: {fileID: 21300000, guid: f51e8b2d958bf124898d7c5c3f219625, type: 3}
+    typeItem0: 2
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -16376,15 +16376,15 @@ MonoBehaviour:
       isHiddenHair: 0
     armor:
       idArmor: 0
-      armorLibrariesAsset: {fileID: 0}
+      armorLibrariesAsset: {fileID: 7108339969198208228, guid: ae91d3c845362d346913dc8e751563be, type: 3}
     legArmor:
       idLegArmor: 0
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 534
+    iconItem0: {fileID: 21300000, guid: 979ee01344ea1384b900f2a7622aa8f3, type: 3}
+    typeItem0: 2
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -16395,15 +16395,15 @@ MonoBehaviour:
       isHiddenHair: 0
     armor:
       idArmor: 0
-      armorLibrariesAsset: {fileID: 0}
+      armorLibrariesAsset: {fileID: 7108339969198208228, guid: 0676cee9a82335b44b32fa76c5a5e870, type: 3}
     legArmor:
       idLegArmor: 0
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 535
+    iconItem0: {fileID: 21300000, guid: b5fa497c1f0fc4844a590d74f01ad10b, type: 3}
+    typeItem0: 2
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -16414,15 +16414,15 @@ MonoBehaviour:
       isHiddenHair: 0
     armor:
       idArmor: 0
-      armorLibrariesAsset: {fileID: 0}
+      armorLibrariesAsset: {fileID: 7108339969198208228, guid: aab178a6722f05f42b132c942e5ad026, type: 3}
     legArmor:
       idLegArmor: 0
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 536
+    iconItem0: {fileID: 21300000, guid: 991dfb95f859ff7439915e2dd36f5078, type: 3}
+    typeItem0: 2
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -16439,9 +16439,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 537
+    iconItem0: {fileID: 21300000, guid: a3b5508de7bbbc84196bd56b56f555e5, type: 3}
+    typeItem0: 3
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -16455,12 +16455,12 @@ MonoBehaviour:
       armorLibrariesAsset: {fileID: 0}
     legArmor:
       idLegArmor: 0
-      legArmorLibrariesAsset: {fileID: 0}
+      legArmorLibrariesAsset: {fileID: 7108339969198208228, guid: a05efd87f87d45a4c82b7a2326b63b0f, type: 3}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 538
+    iconItem0: {fileID: 21300000, guid: 44cef1c0f4ca43c4a86b357998b1c15a, type: 3}
+    typeItem0: 3
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -16474,12 +16474,12 @@ MonoBehaviour:
       armorLibrariesAsset: {fileID: 0}
     legArmor:
       idLegArmor: 0
-      legArmorLibrariesAsset: {fileID: 0}
+      legArmorLibrariesAsset: {fileID: 7108339969198208228, guid: 4b96d6752223f1a41aa13db138cf8c96, type: 3}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 539
+    iconItem0: {fileID: 21300000, guid: 6eb2e80344592ed47aba70a56f329e32, type: 3}
+    typeItem0: 3
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -16493,12 +16493,12 @@ MonoBehaviour:
       armorLibrariesAsset: {fileID: 0}
     legArmor:
       idLegArmor: 0
-      legArmorLibrariesAsset: {fileID: 0}
+      legArmorLibrariesAsset: {fileID: 7108339969198208228, guid: 132059aec4eeaf942931a91448297127, type: 3}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 540
+    iconItem0: {fileID: 21300000, guid: 8d7de5bf015183a4b8d7a692bdba9299, type: 3}
+    typeItem0: 3
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -16515,9 +16515,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 541
+    iconItem0: {fileID: 21300000, guid: d4f230d30a4e6544a97b045beb16dfb7, type: 3}
+    typeItem0: 3
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -16531,12 +16531,12 @@ MonoBehaviour:
       armorLibrariesAsset: {fileID: 0}
     legArmor:
       idLegArmor: 0
-      legArmorLibrariesAsset: {fileID: 0}
+      legArmorLibrariesAsset: {fileID: 7108339969198208228, guid: a05efd87f87d45a4c82b7a2326b63b0f, type: 3}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 542
+    iconItem0: {fileID: 21300000, guid: 776603b3aae7e3d45b32bf5d9bd635e7, type: 3}
+    typeItem0: 3
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -16550,12 +16550,12 @@ MonoBehaviour:
       armorLibrariesAsset: {fileID: 0}
     legArmor:
       idLegArmor: 0
-      legArmorLibrariesAsset: {fileID: 0}
+      legArmorLibrariesAsset: {fileID: 7108339969198208228, guid: 4b96d6752223f1a41aa13db138cf8c96, type: 3}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 543
+    iconItem0: {fileID: 21300000, guid: 11dc43042b1bb184ab163c903564d39d, type: 3}
+    typeItem0: 3
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -16569,12 +16569,12 @@ MonoBehaviour:
       armorLibrariesAsset: {fileID: 0}
     legArmor:
       idLegArmor: 0
-      legArmorLibrariesAsset: {fileID: 0}
+      legArmorLibrariesAsset: {fileID: 7108339969198208228, guid: 132059aec4eeaf942931a91448297127, type: 3}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 544
+    iconItem0: {fileID: 21300000, guid: 2b68c6031f0b33d44b666125c4503878, type: 3}
+    typeItem0: 3
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -16591,9 +16591,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 545
+    iconItem0: {fileID: 21300000, guid: 6495b0d19eed0464a80240d84e9e899f, type: 3}
+    typeItem0: 5
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -16610,9 +16610,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 546
+    iconItem0: {fileID: 21300000, guid: 39ff29e4050a5ab438bc30f60d5a7682, type: 3}
+    typeItem0: 5
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -16629,9 +16629,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 547
+    iconItem0: {fileID: 21300000, guid: 5f89a460a27fbb646814438d6b530897, type: 3}
+    typeItem0: 5
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -16648,9 +16648,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 548
+    iconItem0: {fileID: 21300000, guid: 57b27178a2b20ea45b2bd6d503b46aa4, type: 3}
+    typeItem0: 5
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -16667,9 +16667,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 549
+    iconItem0: {fileID: 21300000, guid: 27d3b367942be9e4892de4600101f31c, type: 3}
+    typeItem0: 5
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -16686,9 +16686,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 550
+    iconItem0: {fileID: 21300000, guid: e17873ab3209cc449ad0938b19ea2514, type: 3}
+    typeItem0: 5
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -16705,9 +16705,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 551
+    iconItem0: {fileID: 21300000, guid: 874ec8606d82e66479870c59a01f5de5, type: 3}
+    typeItem0: 5
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -16724,9 +16724,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 552
+    iconItem0: {fileID: 21300000, guid: 47be1df64cc05084ca82abaab9eac2b0, type: 3}
+    typeItem0: 5
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -16743,9 +16743,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 553
+    iconItem0: {fileID: 21300000, guid: 406ce1c432f52f64ea2806cce81dba57, type: 3}
+    typeItem0: 6
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -16762,9 +16762,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 554
+    iconItem0: {fileID: 21300000, guid: 0b0f9b75bd51d9041b71f47d2dc1b5e7, type: 3}
+    typeItem0: 6
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -16781,9 +16781,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 555
+    iconItem0: {fileID: 21300000, guid: 58418da1e65a7734c862c6c85f8cb681, type: 3}
+    typeItem0: 6
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -16800,9 +16800,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 556
+    iconItem0: {fileID: 21300000, guid: 7f1fb45f5590aa64da2bd8609c3f309d, type: 3}
+    typeItem0: 6
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -16819,9 +16819,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 557
+    iconItem0: {fileID: 21300000, guid: b5d60f38da2c5c349825440e2b47fec8, type: 3}
+    typeItem0: 6
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -16838,9 +16838,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 558
+    iconItem0: {fileID: 21300000, guid: 8e5992e88153a574084676239981fc7f, type: 3}
+    typeItem0: 6
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -16857,9 +16857,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 559
+    iconItem0: {fileID: 21300000, guid: 6f00f1a2a6e5e404fa5e7f5de789e87b, type: 3}
+    typeItem0: 6
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -16876,9 +16876,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 560
+    iconItem0: {fileID: 21300000, guid: 5cc7e50aec72c374badef433608e0576, type: 3}
+    typeItem0: 6
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -16895,9 +16895,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 561
+    iconItem0: {fileID: 21300000, guid: 0f90c32f25a13e343b2a9d82d91fedcf, type: 3}
+    typeItem0: 7
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -16914,9 +16914,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 562
+    iconItem0: {fileID: 21300000, guid: 407518e461086c242b70d14c30e61677, type: 3}
+    typeItem0: 7
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -16933,9 +16933,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 563
+    iconItem0: {fileID: 21300000, guid: acbc714cdc7e9c64c9b5ce8891e1a6b4, type: 3}
+    typeItem0: 7
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -16952,9 +16952,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 564
+    iconItem0: {fileID: 21300000, guid: fad0e87769d8b9242a5edf96708495b1, type: 3}
+    typeItem0: 7
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -16971,9 +16971,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 565
+    iconItem0: {fileID: 21300000, guid: 15e9ea09298ab7d48ab865f596dea3b0, type: 3}
+    typeItem0: 7
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -16990,9 +16990,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 566
+    iconItem0: {fileID: 21300000, guid: 8e9a0985d5485164e9c9bad726aace5b, type: 3}
+    typeItem0: 7
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -17009,9 +17009,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 567
+    iconItem0: {fileID: 21300000, guid: fb708b22a9f14f9409204a450ec5e4ca, type: 3}
+    typeItem0: 7
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -17028,9 +17028,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 568
+    iconItem0: {fileID: 21300000, guid: fcdb5c9e30931054a8a66ac73cddc78e, type: 3}
+    typeItem0: 7
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -17047,9 +17047,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 569
+    iconItem0: {fileID: 21300000, guid: a974a1827e0beb540b42893013c65e0b, type: 3}
+    typeItem0: 8
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -17066,9 +17066,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 570
+    iconItem0: {fileID: 21300000, guid: 43b77ad6d1ee76342a6705aecf85faa0, type: 3}
+    typeItem0: 8
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -17085,9 +17085,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 571
+    iconItem0: {fileID: 21300000, guid: 31fa2bac161288a4baf30eb88e466c10, type: 3}
+    typeItem0: 8
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -17104,9 +17104,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 572
+    iconItem0: {fileID: 21300000, guid: 6e0d9cd956aa79a4b833988589c57f90, type: 3}
+    typeItem0: 8
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -17123,9 +17123,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 573
+    iconItem0: {fileID: 21300000, guid: decfa6d5631460e459216a0974926a3e, type: 3}
+    typeItem0: 8
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -17142,9 +17142,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 574
+    iconItem0: {fileID: 21300000, guid: 5742f69780bbee44d9a96d5a8e0493a1, type: 3}
+    typeItem0: 8
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -17161,9 +17161,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 575
+    iconItem0: {fileID: 21300000, guid: 35139a35f4249604d889010260e1b992, type: 3}
+    typeItem0: 8
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -17180,9 +17180,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 576
+    iconItem0: {fileID: 21300000, guid: 3fb75c7054e360545960c022c827a06c, type: 3}
+    typeItem0: 8
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -17199,13 +17199,13 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 577
+    iconItem0: {fileID: 21300000, guid: a79cf9a9bf6898742b4c183411da9406, type: 3}
+    typeItem0: 0
     weapon:
       idWeapon: 0
-      weaponBackLibraries: {fileID: 0}
-      weaponFrontLibraries: {fileID: 0}
+      weaponBackLibraries: {fileID: 7108339969198208228, guid: e4cbb5315b69c8f44be3419d49c53ff2, type: 3}
+      weaponFrontLibraries: {fileID: 7108339969198208228, guid: ea7f59e51a148a74ebe85f402ffcc079, type: 3}
     helmet:
       idHelmet: 0
       helmetLibrariesAsset: {fileID: 7108339969198208228, guid: db1edd019d9764d418d066a86368391e, type: 3}
@@ -17218,13 +17218,13 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 578
+    iconItem0: {fileID: 21300000, guid: 65d525c4e44953648920eef2db0fc026, type: 3}
+    typeItem0: 0
     weapon:
       idWeapon: 0
-      weaponBackLibraries: {fileID: 0}
-      weaponFrontLibraries: {fileID: 0}
+      weaponBackLibraries: {fileID: 7108339969198208228, guid: db8ea6c7bb7d242428aa87deb4b362b0, type: 3}
+      weaponFrontLibraries: {fileID: 7108339969198208228, guid: 0f50ed1940c17504685898140bb89248, type: 3}
     helmet:
       idHelmet: 0
       helmetLibrariesAsset: {fileID: 7108339969198208228, guid: db1edd019d9764d418d066a86368391e, type: 3}
@@ -17237,13 +17237,13 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 579
+    iconItem0: {fileID: 21300000, guid: 017730fd6c67e6141ad4e727064c2228, type: 3}
+    typeItem0: 0
     weapon:
       idWeapon: 0
-      weaponBackLibraries: {fileID: 0}
-      weaponFrontLibraries: {fileID: 0}
+      weaponBackLibraries: {fileID: 7108339969198208228, guid: fa91300eb86b4be46a1da089eb5f9455, type: 3}
+      weaponFrontLibraries: {fileID: 7108339969198208228, guid: 4048e9b1c1239cd4897116ef4748961f, type: 3}
     helmet:
       idHelmet: 0
       helmetLibrariesAsset: {fileID: 7108339969198208228, guid: db1edd019d9764d418d066a86368391e, type: 3}
@@ -17256,9 +17256,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 580
+    iconItem0: {fileID: 21300000, guid: ccb3103534030cf44b3657046dce122c, type: 3}
+    typeItem0: 0
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -17275,13 +17275,13 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 581
+    iconItem0: {fileID: 21300000, guid: a79cf9a9bf6898742b4c183411da9406, type: 3}
+    typeItem0: 0
     weapon:
       idWeapon: 0
-      weaponBackLibraries: {fileID: 0}
-      weaponFrontLibraries: {fileID: 0}
+      weaponBackLibraries: {fileID: 7108339969198208228, guid: e4cbb5315b69c8f44be3419d49c53ff2, type: 3}
+      weaponFrontLibraries: {fileID: 7108339969198208228, guid: ea7f59e51a148a74ebe85f402ffcc079, type: 3}
     helmet:
       idHelmet: 0
       helmetLibrariesAsset: {fileID: 7108339969198208228, guid: db1edd019d9764d418d066a86368391e, type: 3}
@@ -17294,13 +17294,13 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 582
+    iconItem0: {fileID: 21300000, guid: 65d525c4e44953648920eef2db0fc026, type: 3}
+    typeItem0: 0
     weapon:
       idWeapon: 0
-      weaponBackLibraries: {fileID: 0}
-      weaponFrontLibraries: {fileID: 0}
+      weaponBackLibraries: {fileID: 7108339969198208228, guid: db8ea6c7bb7d242428aa87deb4b362b0, type: 3}
+      weaponFrontLibraries: {fileID: 7108339969198208228, guid: 0f50ed1940c17504685898140bb89248, type: 3}
     helmet:
       idHelmet: 0
       helmetLibrariesAsset: {fileID: 7108339969198208228, guid: db1edd019d9764d418d066a86368391e, type: 3}
@@ -17313,13 +17313,13 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 583
+    iconItem0: {fileID: 21300000, guid: 017730fd6c67e6141ad4e727064c2228, type: 3}
+    typeItem0: 0
     weapon:
       idWeapon: 0
-      weaponBackLibraries: {fileID: 0}
-      weaponFrontLibraries: {fileID: 0}
+      weaponBackLibraries: {fileID: 7108339969198208228, guid: fa91300eb86b4be46a1da089eb5f9455, type: 3}
+      weaponFrontLibraries: {fileID: 7108339969198208228, guid: 4048e9b1c1239cd4897116ef4748961f, type: 3}
     helmet:
       idHelmet: 0
       helmetLibrariesAsset: {fileID: 7108339969198208228, guid: db1edd019d9764d418d066a86368391e, type: 3}
@@ -17332,9 +17332,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 584
+    iconItem0: {fileID: 21300000, guid: ccb3103534030cf44b3657046dce122c, type: 3}
+    typeItem0: 0
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -17351,8 +17351,8 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
+  - idItem0: 585
+    iconItem0: {fileID: 21300000, guid: a1b8f968bbeccc640bb4cc0b8c8cf7e1, type: 3}
     typeItem0: 1
     weapon:
       idWeapon: 0
@@ -17360,8 +17360,8 @@ MonoBehaviour:
       weaponFrontLibraries: {fileID: 0}
     helmet:
       idHelmet: 0
-      helmetLibrariesAsset: {fileID: 7108339969198208228, guid: db1edd019d9764d418d066a86368391e, type: 3}
-      isHiddenHair: 0
+      helmetLibrariesAsset: {fileID: 7108339969198208228, guid: 162fafc789281d5419ed8945eab61e16, type: 3}
+      isHiddenHair: 1
     armor:
       idArmor: 0
       armorLibrariesAsset: {fileID: 0}
@@ -17370,8 +17370,8 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
+  - idItem0: 586
+    iconItem0: {fileID: 21300000, guid: 7572c8ab25d076b4eb7f880f329827b1, type: 3}
     typeItem0: 1
     weapon:
       idWeapon: 0
@@ -17379,8 +17379,8 @@ MonoBehaviour:
       weaponFrontLibraries: {fileID: 0}
     helmet:
       idHelmet: 0
-      helmetLibrariesAsset: {fileID: 7108339969198208228, guid: db1edd019d9764d418d066a86368391e, type: 3}
-      isHiddenHair: 0
+      helmetLibrariesAsset: {fileID: 7108339969198208228, guid: 7b30d32b22593af40bb7ea806b6dec91, type: 3}
+      isHiddenHair: 1
     armor:
       idArmor: 0
       armorLibrariesAsset: {fileID: 0}
@@ -17389,8 +17389,8 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
+  - idItem0: 587
+    iconItem0: {fileID: 21300000, guid: 0edbe7b6f85e6b448b6c46a119d435b0, type: 3}
     typeItem0: 1
     weapon:
       idWeapon: 0
@@ -17398,7 +17398,7 @@ MonoBehaviour:
       weaponFrontLibraries: {fileID: 0}
     helmet:
       idHelmet: 0
-      helmetLibrariesAsset: {fileID: 7108339969198208228, guid: db1edd019d9764d418d066a86368391e, type: 3}
+      helmetLibrariesAsset: {fileID: 7108339969198208228, guid: f5b7a8b4b8b49ab41a82df9fda9a1726, type: 3}
       isHiddenHair: 0
     armor:
       idArmor: 0
@@ -17408,8 +17408,8 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
+  - idItem0: 588
+    iconItem0: {fileID: 21300000, guid: cfa722b3664d72241a4ece3dbd212717, type: 3}
     typeItem0: 1
     weapon:
       idWeapon: 0
@@ -17417,7 +17417,7 @@ MonoBehaviour:
       weaponFrontLibraries: {fileID: 0}
     helmet:
       idHelmet: 0
-      helmetLibrariesAsset: {fileID: 7108339969198208228, guid: db1edd019d9764d418d066a86368391e, type: 3}
+      helmetLibrariesAsset: {fileID: 0}
       isHiddenHair: 0
     armor:
       idArmor: 0
@@ -17427,8 +17427,8 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
+  - idItem0: 589
+    iconItem0: {fileID: 21300000, guid: a1b8f968bbeccc640bb4cc0b8c8cf7e1, type: 3}
     typeItem0: 1
     weapon:
       idWeapon: 0
@@ -17436,8 +17436,8 @@ MonoBehaviour:
       weaponFrontLibraries: {fileID: 0}
     helmet:
       idHelmet: 0
-      helmetLibrariesAsset: {fileID: 7108339969198208228, guid: db1edd019d9764d418d066a86368391e, type: 3}
-      isHiddenHair: 0
+      helmetLibrariesAsset: {fileID: 7108339969198208228, guid: 162fafc789281d5419ed8945eab61e16, type: 3}
+      isHiddenHair: 1
     armor:
       idArmor: 0
       armorLibrariesAsset: {fileID: 0}
@@ -17446,8 +17446,8 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
+  - idItem0: 590
+    iconItem0: {fileID: 21300000, guid: 7572c8ab25d076b4eb7f880f329827b1, type: 3}
     typeItem0: 1
     weapon:
       idWeapon: 0
@@ -17455,8 +17455,8 @@ MonoBehaviour:
       weaponFrontLibraries: {fileID: 0}
     helmet:
       idHelmet: 0
-      helmetLibrariesAsset: {fileID: 7108339969198208228, guid: db1edd019d9764d418d066a86368391e, type: 3}
-      isHiddenHair: 0
+      helmetLibrariesAsset: {fileID: 7108339969198208228, guid: 7b30d32b22593af40bb7ea806b6dec91, type: 3}
+      isHiddenHair: 1
     armor:
       idArmor: 0
       armorLibrariesAsset: {fileID: 0}
@@ -17465,8 +17465,8 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
+  - idItem0: 591
+    iconItem0: {fileID: 21300000, guid: 0edbe7b6f85e6b448b6c46a119d435b0, type: 3}
     typeItem0: 1
     weapon:
       idWeapon: 0
@@ -17474,7 +17474,7 @@ MonoBehaviour:
       weaponFrontLibraries: {fileID: 0}
     helmet:
       idHelmet: 0
-      helmetLibrariesAsset: {fileID: 7108339969198208228, guid: db1edd019d9764d418d066a86368391e, type: 3}
+      helmetLibrariesAsset: {fileID: 7108339969198208228, guid: f5b7a8b4b8b49ab41a82df9fda9a1726, type: 3}
       isHiddenHair: 0
     armor:
       idArmor: 0
@@ -17484,8 +17484,8 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
+  - idItem0: 592
+    iconItem0: {fileID: 21300000, guid: cfa722b3664d72241a4ece3dbd212717, type: 3}
     typeItem0: 1
     weapon:
       idWeapon: 0
@@ -17493,7 +17493,7 @@ MonoBehaviour:
       weaponFrontLibraries: {fileID: 0}
     helmet:
       idHelmet: 0
-      helmetLibrariesAsset: {fileID: 7108339969198208228, guid: db1edd019d9764d418d066a86368391e, type: 3}
+      helmetLibrariesAsset: {fileID: 0}
       isHiddenHair: 0
     armor:
       idArmor: 0
@@ -17503,9 +17503,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 593
+    iconItem0: {fileID: 21300000, guid: 8e40a266188fd9f4fb45a9173613629d, type: 3}
+    typeItem0: 2
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -17516,15 +17516,15 @@ MonoBehaviour:
       isHiddenHair: 0
     armor:
       idArmor: 0
-      armorLibrariesAsset: {fileID: 0}
+      armorLibrariesAsset: {fileID: 7108339969198208228, guid: f9fbe54f6941c414ab9b375a68e89f01, type: 3}
     legArmor:
       idLegArmor: 0
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 594
+    iconItem0: {fileID: 21300000, guid: 0f14906701a3de949ba8d8e0f9a6be0c, type: 3}
+    typeItem0: 2
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -17535,15 +17535,15 @@ MonoBehaviour:
       isHiddenHair: 0
     armor:
       idArmor: 0
-      armorLibrariesAsset: {fileID: 0}
+      armorLibrariesAsset: {fileID: 7108339969198208228, guid: 2057d5eef7e36fb418da9f5fd57a9df4, type: 3}
     legArmor:
       idLegArmor: 0
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 595
+    iconItem0: {fileID: 21300000, guid: 0613ade003ce1544eba6391ca738415e, type: 3}
+    typeItem0: 2
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -17554,15 +17554,15 @@ MonoBehaviour:
       isHiddenHair: 0
     armor:
       idArmor: 0
-      armorLibrariesAsset: {fileID: 0}
+      armorLibrariesAsset: {fileID: 7108339969198208228, guid: 50e48db5e68898c4885722597902ffa6, type: 3}
     legArmor:
       idLegArmor: 0
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 596
+    iconItem0: {fileID: 21300000, guid: 125d00024b401354282fe17fff412689, type: 3}
+    typeItem0: 2
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -17579,9 +17579,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 597
+    iconItem0: {fileID: 21300000, guid: 8e40a266188fd9f4fb45a9173613629d, type: 3}
+    typeItem0: 2
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -17592,15 +17592,15 @@ MonoBehaviour:
       isHiddenHair: 0
     armor:
       idArmor: 0
-      armorLibrariesAsset: {fileID: 0}
+      armorLibrariesAsset: {fileID: 7108339969198208228, guid: f9fbe54f6941c414ab9b375a68e89f01, type: 3}
     legArmor:
       idLegArmor: 0
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 598
+    iconItem0: {fileID: 21300000, guid: 0f14906701a3de949ba8d8e0f9a6be0c, type: 3}
+    typeItem0: 2
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -17611,15 +17611,15 @@ MonoBehaviour:
       isHiddenHair: 0
     armor:
       idArmor: 0
-      armorLibrariesAsset: {fileID: 0}
+      armorLibrariesAsset: {fileID: 7108339969198208228, guid: 2057d5eef7e36fb418da9f5fd57a9df4, type: 3}
     legArmor:
       idLegArmor: 0
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 599
+    iconItem0: {fileID: 21300000, guid: 0613ade003ce1544eba6391ca738415e, type: 3}
+    typeItem0: 2
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -17630,15 +17630,15 @@ MonoBehaviour:
       isHiddenHair: 0
     armor:
       idArmor: 0
-      armorLibrariesAsset: {fileID: 0}
+      armorLibrariesAsset: {fileID: 7108339969198208228, guid: 50e48db5e68898c4885722597902ffa6, type: 3}
     legArmor:
       idLegArmor: 0
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 600
+    iconItem0: {fileID: 21300000, guid: 125d00024b401354282fe17fff412689, type: 3}
+    typeItem0: 2
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -17655,9 +17655,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 601
+    iconItem0: {fileID: 21300000, guid: 678013045a706064ea3b2d529d28d5b7, type: 3}
+    typeItem0: 3
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -17671,12 +17671,12 @@ MonoBehaviour:
       armorLibrariesAsset: {fileID: 0}
     legArmor:
       idLegArmor: 0
-      legArmorLibrariesAsset: {fileID: 0}
+      legArmorLibrariesAsset: {fileID: 7108339969198208228, guid: 46d7c9fe7f672944481e03573710b1a2, type: 3}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 602
+    iconItem0: {fileID: 21300000, guid: 6dbb5f8e7e31eeb4f915fbd5152889d0, type: 3}
+    typeItem0: 3
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -17690,12 +17690,12 @@ MonoBehaviour:
       armorLibrariesAsset: {fileID: 0}
     legArmor:
       idLegArmor: 0
-      legArmorLibrariesAsset: {fileID: 0}
+      legArmorLibrariesAsset: {fileID: 7108339969198208228, guid: 3dbe1cba224607541a835d08418d0c63, type: 3}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 603
+    iconItem0: {fileID: 21300000, guid: 2365b3f348c3b2740b020fa401f9cf37, type: 3}
+    typeItem0: 3
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -17709,12 +17709,12 @@ MonoBehaviour:
       armorLibrariesAsset: {fileID: 0}
     legArmor:
       idLegArmor: 0
-      legArmorLibrariesAsset: {fileID: 0}
+      legArmorLibrariesAsset: {fileID: 7108339969198208228, guid: 5d84584d7294d2e44bb25f797773bc3d, type: 3}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 604
+    iconItem0: {fileID: 21300000, guid: e995e8b9f57f23644816d6bce77b36a8, type: 3}
+    typeItem0: 3
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -17731,9 +17731,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 605
+    iconItem0: {fileID: 21300000, guid: 678013045a706064ea3b2d529d28d5b7, type: 3}
+    typeItem0: 3
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -17747,12 +17747,12 @@ MonoBehaviour:
       armorLibrariesAsset: {fileID: 0}
     legArmor:
       idLegArmor: 0
-      legArmorLibrariesAsset: {fileID: 0}
+      legArmorLibrariesAsset: {fileID: 7108339969198208228, guid: 46d7c9fe7f672944481e03573710b1a2, type: 3}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 606
+    iconItem0: {fileID: 21300000, guid: 6dbb5f8e7e31eeb4f915fbd5152889d0, type: 3}
+    typeItem0: 3
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -17766,12 +17766,12 @@ MonoBehaviour:
       armorLibrariesAsset: {fileID: 0}
     legArmor:
       idLegArmor: 0
-      legArmorLibrariesAsset: {fileID: 0}
+      legArmorLibrariesAsset: {fileID: 7108339969198208228, guid: 3dbe1cba224607541a835d08418d0c63, type: 3}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 607
+    iconItem0: {fileID: 21300000, guid: 2365b3f348c3b2740b020fa401f9cf37, type: 3}
+    typeItem0: 3
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -17785,12 +17785,12 @@ MonoBehaviour:
       armorLibrariesAsset: {fileID: 0}
     legArmor:
       idLegArmor: 0
-      legArmorLibrariesAsset: {fileID: 0}
+      legArmorLibrariesAsset: {fileID: 7108339969198208228, guid: 5d84584d7294d2e44bb25f797773bc3d, type: 3}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 608
+    iconItem0: {fileID: 21300000, guid: e995e8b9f57f23644816d6bce77b36a8, type: 3}
+    typeItem0: 3
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -17807,9 +17807,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 609
+    iconItem0: {fileID: 21300000, guid: 21442235bd68d23448d6787588ee0209, type: 3}
+    typeItem0: 5
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -17826,9 +17826,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 610
+    iconItem0: {fileID: 21300000, guid: 21442235bd68d23448d6787588ee0209, type: 3}
+    typeItem0: 5
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -17845,9 +17845,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 611
+    iconItem0: {fileID: 21300000, guid: c95f74abba3da4542bfd898308d7bced, type: 3}
+    typeItem0: 5
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -17864,9 +17864,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 612
+    iconItem0: {fileID: 21300000, guid: c95f74abba3da4542bfd898308d7bced, type: 3}
+    typeItem0: 5
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -17883,9 +17883,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 613
+    iconItem0: {fileID: 21300000, guid: 8a37d0c2b71e6134f881a03ec3907341, type: 3}
+    typeItem0: 5
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -17902,9 +17902,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 614
+    iconItem0: {fileID: 21300000, guid: 8a37d0c2b71e6134f881a03ec3907341, type: 3}
+    typeItem0: 5
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -17921,9 +17921,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 615
+    iconItem0: {fileID: 21300000, guid: 255b60bc19e7d1e438370c893a5063af, type: 3}
+    typeItem0: 5
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -17940,9 +17940,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 616
+    iconItem0: {fileID: 21300000, guid: 255b60bc19e7d1e438370c893a5063af, type: 3}
+    typeItem0: 5
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -17959,9 +17959,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 617
+    iconItem0: {fileID: 21300000, guid: 55e7d263e90f04542b35b08279226480, type: 3}
+    typeItem0: 6
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -17978,9 +17978,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 618
+    iconItem0: {fileID: 21300000, guid: 55e7d263e90f04542b35b08279226480, type: 3}
+    typeItem0: 6
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -17997,9 +17997,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 619
+    iconItem0: {fileID: 21300000, guid: 9b0f4f4bd91af4a4390a96680746390c, type: 3}
+    typeItem0: 6
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -18016,9 +18016,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 620
+    iconItem0: {fileID: 21300000, guid: 9b0f4f4bd91af4a4390a96680746390c, type: 3}
+    typeItem0: 6
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -18035,9 +18035,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 621
+    iconItem0: {fileID: 21300000, guid: fa25d76ab634d1944a0a0dd68f3de61b, type: 3}
+    typeItem0: 6
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -18054,9 +18054,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 622
+    iconItem0: {fileID: 21300000, guid: fa25d76ab634d1944a0a0dd68f3de61b, type: 3}
+    typeItem0: 6
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -18073,9 +18073,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 623
+    iconItem0: {fileID: 21300000, guid: ed01bccd98a6baf48a733ce9002ee785, type: 3}
+    typeItem0: 6
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -18092,9 +18092,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 624
+    iconItem0: {fileID: 21300000, guid: ed01bccd98a6baf48a733ce9002ee785, type: 3}
+    typeItem0: 6
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -18111,9 +18111,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 625
+    iconItem0: {fileID: 21300000, guid: 1aafee1c69c365149b006a2a259080f7, type: 3}
+    typeItem0: 7
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -18130,9 +18130,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 626
+    iconItem0: {fileID: 21300000, guid: 1aafee1c69c365149b006a2a259080f7, type: 3}
+    typeItem0: 7
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -18149,9 +18149,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 627
+    iconItem0: {fileID: 21300000, guid: 8a3aa6df774af834585d5ee006f9d200, type: 3}
+    typeItem0: 7
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -18168,9 +18168,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 628
+    iconItem0: {fileID: 21300000, guid: 8a3aa6df774af834585d5ee006f9d200, type: 3}
+    typeItem0: 7
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -18187,9 +18187,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 629
+    iconItem0: {fileID: 21300000, guid: 30fc1a32d87d7ce47a70043c0934b494, type: 3}
+    typeItem0: 7
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -18206,9 +18206,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 630
+    iconItem0: {fileID: 21300000, guid: 30fc1a32d87d7ce47a70043c0934b494, type: 3}
+    typeItem0: 7
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -18225,9 +18225,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 631
+    iconItem0: {fileID: 21300000, guid: 9a23380ef6ef4144f8280c8ca30b9b01, type: 3}
+    typeItem0: 7
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -18244,9 +18244,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 632
+    iconItem0: {fileID: 21300000, guid: 9a23380ef6ef4144f8280c8ca30b9b01, type: 3}
+    typeItem0: 7
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -18263,9 +18263,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 633
+    iconItem0: {fileID: 21300000, guid: 7cdb2176dcc4eb346af776d2e1b7103c, type: 3}
+    typeItem0: 8
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -18282,9 +18282,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 634
+    iconItem0: {fileID: 21300000, guid: ff5840a5be36b2840956aea8e493873c, type: 3}
+    typeItem0: 8
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -18301,9 +18301,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 635
+    iconItem0: {fileID: 21300000, guid: 911c4f527c5307444b06b79db5caaa31, type: 3}
+    typeItem0: 8
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -18320,9 +18320,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 636
+    iconItem0: {fileID: 21300000, guid: ea3f9c3bc6b2eba43af9b03ed15672fc, type: 3}
+    typeItem0: 8
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -18339,9 +18339,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 637
+    iconItem0: {fileID: 21300000, guid: 0944f41a8bc29114fb73e19fc3a9cd23, type: 3}
+    typeItem0: 8
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -18358,9 +18358,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 638
+    iconItem0: {fileID: 21300000, guid: dedd27d838670b641bd4ddd6bddcb3a6, type: 3}
+    typeItem0: 8
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -18377,9 +18377,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 639
+    iconItem0: {fileID: 21300000, guid: 53666c88daad66141a1a21075f7b77bf, type: 3}
+    typeItem0: 8
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -18396,9 +18396,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 640
+    iconItem0: {fileID: 21300000, guid: 911183a6dad7a4f488aa4d0851dcced7, type: 3}
+    typeItem0: 8
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -18415,13 +18415,13 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 641
+    iconItem0: {fileID: 21300000, guid: 23fc79bd86969e74facfe56080689ac0, type: 3}
+    typeItem0: 0
     weapon:
       idWeapon: 0
-      weaponBackLibraries: {fileID: 0}
-      weaponFrontLibraries: {fileID: 0}
+      weaponBackLibraries: {fileID: 7108339969198208228, guid: fd5af378947b29d4cad73ed10947df66, type: 3}
+      weaponFrontLibraries: {fileID: 7108339969198208228, guid: 946cac65c8e246c4eb46032f40e7fda2, type: 3}
     helmet:
       idHelmet: 0
       helmetLibrariesAsset: {fileID: 7108339969198208228, guid: db1edd019d9764d418d066a86368391e, type: 3}
@@ -18434,13 +18434,13 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 642
+    iconItem0: {fileID: 21300000, guid: 0286a368fcd7b384786a02a45e92aa86, type: 3}
+    typeItem0: 0
     weapon:
       idWeapon: 0
-      weaponBackLibraries: {fileID: 0}
-      weaponFrontLibraries: {fileID: 0}
+      weaponBackLibraries: {fileID: 7108339969198208228, guid: 4098c8eda30ba7949bd8a788cc520997, type: 3}
+      weaponFrontLibraries: {fileID: 7108339969198208228, guid: 8dd4798281c9de64285f5e8cfa4e6959, type: 3}
     helmet:
       idHelmet: 0
       helmetLibrariesAsset: {fileID: 7108339969198208228, guid: db1edd019d9764d418d066a86368391e, type: 3}
@@ -18453,13 +18453,13 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 643
+    iconItem0: {fileID: 21300000, guid: 1d08f76331afa9e4f99a86fe3c28c5a2, type: 3}
+    typeItem0: 0
     weapon:
       idWeapon: 0
-      weaponBackLibraries: {fileID: 0}
-      weaponFrontLibraries: {fileID: 0}
+      weaponBackLibraries: {fileID: 7108339969198208228, guid: 8e3f689fe8d3a634aaeba1745643ce76, type: 3}
+      weaponFrontLibraries: {fileID: 7108339969198208228, guid: 5705c39a95bac15438194bb211f70fd6, type: 3}
     helmet:
       idHelmet: 0
       helmetLibrariesAsset: {fileID: 7108339969198208228, guid: db1edd019d9764d418d066a86368391e, type: 3}
@@ -18472,9 +18472,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 644
+    iconItem0: {fileID: 21300000, guid: 3bbac09323d36774d807fc6614b052a3, type: 3}
+    typeItem0: 0
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -18491,13 +18491,13 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 645
+    iconItem0: {fileID: 21300000, guid: dd41bf94fc41e3b489836b831ae816b5, type: 3}
+    typeItem0: 0
     weapon:
       idWeapon: 0
-      weaponBackLibraries: {fileID: 0}
-      weaponFrontLibraries: {fileID: 0}
+      weaponBackLibraries: {fileID: 7108339969198208228, guid: 9cba10e4053fb6c4784fc5ecb3b0d9f7, type: 3}
+      weaponFrontLibraries: {fileID: 7108339969198208228, guid: f968325a57fd6654297010f1b2c69b65, type: 3}
     helmet:
       idHelmet: 0
       helmetLibrariesAsset: {fileID: 7108339969198208228, guid: db1edd019d9764d418d066a86368391e, type: 3}
@@ -18510,13 +18510,13 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 646
+    iconItem0: {fileID: 21300000, guid: 54e1d05d14020e8488f735dad0f1f0b8, type: 3}
+    typeItem0: 0
     weapon:
       idWeapon: 0
-      weaponBackLibraries: {fileID: 0}
-      weaponFrontLibraries: {fileID: 0}
+      weaponBackLibraries: {fileID: 7108339969198208228, guid: 238920945d5653243b2ad79e32a3ec04, type: 3}
+      weaponFrontLibraries: {fileID: 7108339969198208228, guid: cdd7ad3b76113b74bab58bfdfb7f2fc8, type: 3}
     helmet:
       idHelmet: 0
       helmetLibrariesAsset: {fileID: 7108339969198208228, guid: db1edd019d9764d418d066a86368391e, type: 3}
@@ -18529,13 +18529,13 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 647
+    iconItem0: {fileID: 21300000, guid: b88cae8c7df89e140ab583afd069e829, type: 3}
+    typeItem0: 0
     weapon:
       idWeapon: 0
-      weaponBackLibraries: {fileID: 0}
-      weaponFrontLibraries: {fileID: 0}
+      weaponBackLibraries: {fileID: 7108339969198208228, guid: 046eba351b3c82147a340679113e8615, type: 3}
+      weaponFrontLibraries: {fileID: 7108339969198208228, guid: 94a47d258b75fb648a5b1a54f470cfd0, type: 3}
     helmet:
       idHelmet: 0
       helmetLibrariesAsset: {fileID: 7108339969198208228, guid: db1edd019d9764d418d066a86368391e, type: 3}
@@ -18548,9 +18548,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 648
+    iconItem0: {fileID: 21300000, guid: 33009d8cc70c426438a0883080976cf3, type: 3}
+    typeItem0: 0
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -18567,8 +18567,8 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
+  - idItem0: 649
+    iconItem0: {fileID: 21300000, guid: aeaa43073b426dd4e9c3602a7e704bce, type: 3}
     typeItem0: 1
     weapon:
       idWeapon: 0
@@ -18576,8 +18576,8 @@ MonoBehaviour:
       weaponFrontLibraries: {fileID: 0}
     helmet:
       idHelmet: 0
-      helmetLibrariesAsset: {fileID: 7108339969198208228, guid: db1edd019d9764d418d066a86368391e, type: 3}
-      isHiddenHair: 0
+      helmetLibrariesAsset: {fileID: 7108339969198208228, guid: 298e20b2898740a4dbc52ba412467bbf, type: 3}
+      isHiddenHair: 1
     armor:
       idArmor: 0
       armorLibrariesAsset: {fileID: 0}
@@ -18586,8 +18586,8 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
+  - idItem0: 650
+    iconItem0: {fileID: 21300000, guid: 884ba656998d72c40a8291b0f9099a8c, type: 3}
     typeItem0: 1
     weapon:
       idWeapon: 0
@@ -18595,8 +18595,8 @@ MonoBehaviour:
       weaponFrontLibraries: {fileID: 0}
     helmet:
       idHelmet: 0
-      helmetLibrariesAsset: {fileID: 7108339969198208228, guid: db1edd019d9764d418d066a86368391e, type: 3}
-      isHiddenHair: 0
+      helmetLibrariesAsset: {fileID: 7108339969198208228, guid: f6449ddde6f88d3489348d14b87c42f5, type: 3}
+      isHiddenHair: 1
     armor:
       idArmor: 0
       armorLibrariesAsset: {fileID: 0}
@@ -18605,8 +18605,8 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
+  - idItem0: 651
+    iconItem0: {fileID: 21300000, guid: 7df74a7f33db5e34880723e09afdf62d, type: 3}
     typeItem0: 1
     weapon:
       idWeapon: 0
@@ -18614,7 +18614,7 @@ MonoBehaviour:
       weaponFrontLibraries: {fileID: 0}
     helmet:
       idHelmet: 0
-      helmetLibrariesAsset: {fileID: 7108339969198208228, guid: db1edd019d9764d418d066a86368391e, type: 3}
+      helmetLibrariesAsset: {fileID: 7108339969198208228, guid: e1a24046c1bdb184595f7c1e6f7c7ec6, type: 3}
       isHiddenHair: 0
     armor:
       idArmor: 0
@@ -18624,8 +18624,8 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
+  - idItem0: 652
+    iconItem0: {fileID: 21300000, guid: 5ff4cee025ee41045bc32487cf1d58d1, type: 3}
     typeItem0: 1
     weapon:
       idWeapon: 0
@@ -18633,7 +18633,7 @@ MonoBehaviour:
       weaponFrontLibraries: {fileID: 0}
     helmet:
       idHelmet: 0
-      helmetLibrariesAsset: {fileID: 7108339969198208228, guid: db1edd019d9764d418d066a86368391e, type: 3}
+      helmetLibrariesAsset: {fileID: 0}
       isHiddenHair: 0
     armor:
       idArmor: 0
@@ -18643,8 +18643,8 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
+  - idItem0: 653
+    iconItem0: {fileID: 21300000, guid: aeaa43073b426dd4e9c3602a7e704bce, type: 3}
     typeItem0: 1
     weapon:
       idWeapon: 0
@@ -18652,8 +18652,8 @@ MonoBehaviour:
       weaponFrontLibraries: {fileID: 0}
     helmet:
       idHelmet: 0
-      helmetLibrariesAsset: {fileID: 7108339969198208228, guid: db1edd019d9764d418d066a86368391e, type: 3}
-      isHiddenHair: 0
+      helmetLibrariesAsset: {fileID: 7108339969198208228, guid: 298e20b2898740a4dbc52ba412467bbf, type: 3}
+      isHiddenHair: 1
     armor:
       idArmor: 0
       armorLibrariesAsset: {fileID: 0}
@@ -18662,8 +18662,8 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
+  - idItem0: 654
+    iconItem0: {fileID: 21300000, guid: 884ba656998d72c40a8291b0f9099a8c, type: 3}
     typeItem0: 1
     weapon:
       idWeapon: 0
@@ -18671,8 +18671,8 @@ MonoBehaviour:
       weaponFrontLibraries: {fileID: 0}
     helmet:
       idHelmet: 0
-      helmetLibrariesAsset: {fileID: 7108339969198208228, guid: db1edd019d9764d418d066a86368391e, type: 3}
-      isHiddenHair: 0
+      helmetLibrariesAsset: {fileID: 7108339969198208228, guid: f6449ddde6f88d3489348d14b87c42f5, type: 3}
+      isHiddenHair: 1
     armor:
       idArmor: 0
       armorLibrariesAsset: {fileID: 0}
@@ -18681,8 +18681,8 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
+  - idItem0: 655
+    iconItem0: {fileID: 21300000, guid: 7df74a7f33db5e34880723e09afdf62d, type: 3}
     typeItem0: 1
     weapon:
       idWeapon: 0
@@ -18690,7 +18690,7 @@ MonoBehaviour:
       weaponFrontLibraries: {fileID: 0}
     helmet:
       idHelmet: 0
-      helmetLibrariesAsset: {fileID: 7108339969198208228, guid: db1edd019d9764d418d066a86368391e, type: 3}
+      helmetLibrariesAsset: {fileID: 7108339969198208228, guid: f6449ddde6f88d3489348d14b87c42f5, type: 3}
       isHiddenHair: 0
     armor:
       idArmor: 0
@@ -18700,8 +18700,8 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
+  - idItem0: 656
+    iconItem0: {fileID: 21300000, guid: 5ff4cee025ee41045bc32487cf1d58d1, type: 3}
     typeItem0: 1
     weapon:
       idWeapon: 0
@@ -18709,7 +18709,7 @@ MonoBehaviour:
       weaponFrontLibraries: {fileID: 0}
     helmet:
       idHelmet: 0
-      helmetLibrariesAsset: {fileID: 7108339969198208228, guid: db1edd019d9764d418d066a86368391e, type: 3}
+      helmetLibrariesAsset: {fileID: 0}
       isHiddenHair: 0
     armor:
       idArmor: 0
@@ -18719,47 +18719,47 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 657
+    iconItem0: {fileID: 21300000, guid: ec3f4fb89af6eb5449aa1a36ab95f36d, type: 3}
+    typeItem0: 2
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
       weaponFrontLibraries: {fileID: 0}
     helmet:
       idHelmet: 0
-      helmetLibrariesAsset: {fileID: 7108339969198208228, guid: db1edd019d9764d418d066a86368391e, type: 3}
+      helmetLibrariesAsset: {fileID: 7108339969198208228, guid: 942e6211de3f36f48895fe5d40c1fb38, type: 3}
       isHiddenHair: 0
     armor:
       idArmor: 0
-      armorLibrariesAsset: {fileID: 0}
+      armorLibrariesAsset: {fileID: 7108339969198208228, guid: 942e6211de3f36f48895fe5d40c1fb38, type: 3}
     legArmor:
       idLegArmor: 0
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 658
+    iconItem0: {fileID: 21300000, guid: cf315be575b03564582f57b8b0438c36, type: 3}
+    typeItem0: 2
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
       weaponFrontLibraries: {fileID: 0}
     helmet:
       idHelmet: 0
-      helmetLibrariesAsset: {fileID: 7108339969198208228, guid: db1edd019d9764d418d066a86368391e, type: 3}
+      helmetLibrariesAsset: {fileID: 7108339969198208228, guid: e1f1f0bb7a6a5954bb930f999bf7ca3c, type: 3}
       isHiddenHair: 0
     armor:
       idArmor: 0
-      armorLibrariesAsset: {fileID: 0}
+      armorLibrariesAsset: {fileID: 7108339969198208228, guid: e1f1f0bb7a6a5954bb930f999bf7ca3c, type: 3}
     legArmor:
       idLegArmor: 0
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 659
+    iconItem0: {fileID: 21300000, guid: c112776aade177040954bb42659a9eb1, type: 3}
+    typeItem0: 2
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -18770,15 +18770,15 @@ MonoBehaviour:
       isHiddenHair: 0
     armor:
       idArmor: 0
-      armorLibrariesAsset: {fileID: 0}
+      armorLibrariesAsset: {fileID: 7108339969198208228, guid: d719c60a9a2f3ab4882621e83892d43f, type: 3}
     legArmor:
       idLegArmor: 0
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 660
+    iconItem0: {fileID: 21300000, guid: 643e5b468bfb15245934d0adc1789134, type: 3}
+    typeItem0: 2
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -18795,9 +18795,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 661
+    iconItem0: {fileID: 21300000, guid: ec3f4fb89af6eb5449aa1a36ab95f36d, type: 3}
+    typeItem0: 2
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -18808,15 +18808,15 @@ MonoBehaviour:
       isHiddenHair: 0
     armor:
       idArmor: 0
-      armorLibrariesAsset: {fileID: 0}
+      armorLibrariesAsset: {fileID: 7108339969198208228, guid: 942e6211de3f36f48895fe5d40c1fb38, type: 3}
     legArmor:
       idLegArmor: 0
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 662
+    iconItem0: {fileID: 21300000, guid: cf315be575b03564582f57b8b0438c36, type: 3}
+    typeItem0: 2
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -18827,15 +18827,15 @@ MonoBehaviour:
       isHiddenHair: 0
     armor:
       idArmor: 0
-      armorLibrariesAsset: {fileID: 0}
+      armorLibrariesAsset: {fileID: 7108339969198208228, guid: e1f1f0bb7a6a5954bb930f999bf7ca3c, type: 3}
     legArmor:
       idLegArmor: 0
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 663
+    iconItem0: {fileID: 21300000, guid: c112776aade177040954bb42659a9eb1, type: 3}
+    typeItem0: 2
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -18846,15 +18846,15 @@ MonoBehaviour:
       isHiddenHair: 0
     armor:
       idArmor: 0
-      armorLibrariesAsset: {fileID: 0}
+      armorLibrariesAsset: {fileID: 7108339969198208228, guid: d719c60a9a2f3ab4882621e83892d43f, type: 3}
     legArmor:
       idLegArmor: 0
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 664
+    iconItem0: {fileID: 21300000, guid: 643e5b468bfb15245934d0adc1789134, type: 3}
+    typeItem0: 2
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -18871,9 +18871,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 665
+    iconItem0: {fileID: 21300000, guid: f342061b08345474884944eabbbe26d2, type: 3}
+    typeItem0: 3
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -18887,12 +18887,12 @@ MonoBehaviour:
       armorLibrariesAsset: {fileID: 0}
     legArmor:
       idLegArmor: 0
-      legArmorLibrariesAsset: {fileID: 0}
+      legArmorLibrariesAsset: {fileID: 7108339969198208228, guid: c83ecac4b9985c64dac61189efe4ebc5, type: 3}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 666
+    iconItem0: {fileID: 21300000, guid: 89f7ca259ee1c30458192834b2c168fd, type: 3}
+    typeItem0: 3
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -18906,12 +18906,12 @@ MonoBehaviour:
       armorLibrariesAsset: {fileID: 0}
     legArmor:
       idLegArmor: 0
-      legArmorLibrariesAsset: {fileID: 0}
+      legArmorLibrariesAsset: {fileID: 7108339969198208228, guid: 5f774e001f58901468b6d2f36ffd070c, type: 3}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 667
+    iconItem0: {fileID: 21300000, guid: 339bfa7d772b4cf439dbf88fdfb701f1, type: 3}
+    typeItem0: 3
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -18925,12 +18925,12 @@ MonoBehaviour:
       armorLibrariesAsset: {fileID: 0}
     legArmor:
       idLegArmor: 0
-      legArmorLibrariesAsset: {fileID: 0}
+      legArmorLibrariesAsset: {fileID: 7108339969198208228, guid: 6a519f74b08af324ba68e24651d62f15, type: 3}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 668
+    iconItem0: {fileID: 21300000, guid: 061664ee01bc88e48b90f58198de13b0, type: 3}
+    typeItem0: 3
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -18947,9 +18947,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 669
+    iconItem0: {fileID: 21300000, guid: f342061b08345474884944eabbbe26d2, type: 3}
+    typeItem0: 3
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -18963,12 +18963,12 @@ MonoBehaviour:
       armorLibrariesAsset: {fileID: 0}
     legArmor:
       idLegArmor: 0
-      legArmorLibrariesAsset: {fileID: 0}
+      legArmorLibrariesAsset: {fileID: 7108339969198208228, guid: c83ecac4b9985c64dac61189efe4ebc5, type: 3}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 670
+    iconItem0: {fileID: 21300000, guid: 89f7ca259ee1c30458192834b2c168fd, type: 3}
+    typeItem0: 3
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -18982,12 +18982,12 @@ MonoBehaviour:
       armorLibrariesAsset: {fileID: 0}
     legArmor:
       idLegArmor: 0
-      legArmorLibrariesAsset: {fileID: 0}
+      legArmorLibrariesAsset: {fileID: 7108339969198208228, guid: 5f774e001f58901468b6d2f36ffd070c, type: 3}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 671
+    iconItem0: {fileID: 21300000, guid: 339bfa7d772b4cf439dbf88fdfb701f1, type: 3}
+    typeItem0: 3
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -19001,12 +19001,12 @@ MonoBehaviour:
       armorLibrariesAsset: {fileID: 0}
     legArmor:
       idLegArmor: 0
-      legArmorLibrariesAsset: {fileID: 0}
+      legArmorLibrariesAsset: {fileID: 7108339969198208228, guid: 6a519f74b08af324ba68e24651d62f15, type: 3}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 672
+    iconItem0: {fileID: 21300000, guid: 061664ee01bc88e48b90f58198de13b0, type: 3}
+    typeItem0: 3
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -19023,9 +19023,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 673
+    iconItem0: {fileID: 21300000, guid: 8d414002331a9a94d8dfeb648cbff825, type: 3}
+    typeItem0: 5
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -19042,9 +19042,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 674
+    iconItem0: {fileID: 21300000, guid: 97af29c0e8bcae54b8449a7509fc5c27, type: 3}
+    typeItem0: 5
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -19061,9 +19061,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 675
+    iconItem0: {fileID: 21300000, guid: 1f51655a0da9ac5499993e3e369652a3, type: 3}
+    typeItem0: 5
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -19080,9 +19080,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 676
+    iconItem0: {fileID: 21300000, guid: 662111edf11b76e48a88ac6e67d6647f, type: 3}
+    typeItem0: 5
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -19099,9 +19099,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 677
+    iconItem0: {fileID: 21300000, guid: 8d414002331a9a94d8dfeb648cbff825, type: 3}
+    typeItem0: 5
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -19118,9 +19118,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 678
+    iconItem0: {fileID: 21300000, guid: 97af29c0e8bcae54b8449a7509fc5c27, type: 3}
+    typeItem0: 5
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -19137,9 +19137,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 679
+    iconItem0: {fileID: 21300000, guid: 1f51655a0da9ac5499993e3e369652a3, type: 3}
+    typeItem0: 5
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -19156,9 +19156,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 680
+    iconItem0: {fileID: 21300000, guid: 662111edf11b76e48a88ac6e67d6647f, type: 3}
+    typeItem0: 5
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -19175,9 +19175,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 681
+    iconItem0: {fileID: 21300000, guid: f52d96c83b23e3741a656a1d97b4db32, type: 3}
+    typeItem0: 6
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -19194,9 +19194,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 682
+    iconItem0: {fileID: 21300000, guid: 7e6bd39434a366f44b4a1aa9ce6425e5, type: 3}
+    typeItem0: 6
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -19213,9 +19213,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 683
+    iconItem0: {fileID: 21300000, guid: a112e2c10bd352747bc3e9f8141d393d, type: 3}
+    typeItem0: 6
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -19232,9 +19232,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 684
+    iconItem0: {fileID: 21300000, guid: 505d1d1f65911a34ea07ec3a19c3618f, type: 3}
+    typeItem0: 6
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -19251,9 +19251,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 685
+    iconItem0: {fileID: 21300000, guid: f52d96c83b23e3741a656a1d97b4db32, type: 3}
+    typeItem0: 6
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -19270,9 +19270,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 686
+    iconItem0: {fileID: 21300000, guid: 7e6bd39434a366f44b4a1aa9ce6425e5, type: 3}
+    typeItem0: 6
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -19289,9 +19289,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 687
+    iconItem0: {fileID: 21300000, guid: a112e2c10bd352747bc3e9f8141d393d, type: 3}
+    typeItem0: 6
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -19308,9 +19308,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 688
+    iconItem0: {fileID: 21300000, guid: 505d1d1f65911a34ea07ec3a19c3618f, type: 3}
+    typeItem0: 6
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -19327,9 +19327,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 689
+    iconItem0: {fileID: 21300000, guid: 3fb3244f4ab241244922a6ad74d9e4fc, type: 3}
+    typeItem0: 7
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -19346,9 +19346,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 690
+    iconItem0: {fileID: 21300000, guid: f87775fcd70936b458bdddc9d8902316, type: 3}
+    typeItem0: 7
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -19365,9 +19365,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 691
+    iconItem0: {fileID: 21300000, guid: f32c43349033d674a9ea2d9797f0d7f5, type: 3}
+    typeItem0: 7
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -19384,9 +19384,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 692
+    iconItem0: {fileID: 21300000, guid: 77289654ea4ff654a9ae7cf935ce471a, type: 3}
+    typeItem0: 7
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -19403,9 +19403,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 693
+    iconItem0: {fileID: 21300000, guid: 3fb3244f4ab241244922a6ad74d9e4fc, type: 3}
+    typeItem0: 7
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -19422,9 +19422,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 694
+    iconItem0: {fileID: 21300000, guid: f87775fcd70936b458bdddc9d8902316, type: 3}
+    typeItem0: 7
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -19441,9 +19441,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 695
+    iconItem0: {fileID: 21300000, guid: f32c43349033d674a9ea2d9797f0d7f5, type: 3}
+    typeItem0: 7
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -19460,9 +19460,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 696
+    iconItem0: {fileID: 21300000, guid: 77289654ea4ff654a9ae7cf935ce471a, type: 3}
+    typeItem0: 7
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -19479,9 +19479,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 697
+    iconItem0: {fileID: 21300000, guid: 1832afbf2035915469b438f8407e65a9, type: 3}
+    typeItem0: 8
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -19498,9 +19498,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 698
+    iconItem0: {fileID: 21300000, guid: cc3a07bb117e03e468b905fe95ff5451, type: 3}
+    typeItem0: 8
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -19517,9 +19517,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 699
+    iconItem0: {fileID: 21300000, guid: 41c0507285cbcda4db3bcc6acc880d6d, type: 3}
+    typeItem0: 8
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -19536,9 +19536,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 700
+    iconItem0: {fileID: 21300000, guid: 2bd2a43e9afc5484fbe96de8d6c552ac, type: 3}
+    typeItem0: 8
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -19555,9 +19555,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 701
+    iconItem0: {fileID: 21300000, guid: 1832afbf2035915469b438f8407e65a9, type: 3}
+    typeItem0: 8
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -19574,9 +19574,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 702
+    iconItem0: {fileID: 21300000, guid: cc3a07bb117e03e468b905fe95ff5451, type: 3}
+    typeItem0: 8
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -19593,9 +19593,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 703
+    iconItem0: {fileID: 21300000, guid: 41c0507285cbcda4db3bcc6acc880d6d, type: 3}
+    typeItem0: 8
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}
@@ -19612,9 +19612,9 @@ MonoBehaviour:
       legArmorLibrariesAsset: {fileID: 0}
     hair:
       hairLibrariesAsset: {fileID: 0}
-  - idItem0: 10
-    iconItem0: {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-    typeItem0: 1
+  - idItem0: 704
+    iconItem0: {fileID: 21300000, guid: 2bd2a43e9afc5484fbe96de8d6c552ac, type: 3}
+    typeItem0: 8
     weapon:
       idWeapon: 0
       weaponBackLibraries: {fileID: 0}

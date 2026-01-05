@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour
             return;
         }
         instance = this;
+        Application.runInBackground = true;
         DontDestroyOnLoad(gameObject);
     }
 

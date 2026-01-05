@@ -15,7 +15,7 @@ public class CinemachineCameraController : MonoBehaviour
     }
     void Start()
     {
-        int idSchool = LogInController.GetIDSchool();
+        int idSchool = LogInView.GetIDSchool();
         Transform player = null;
         switch (idSchool)
         {

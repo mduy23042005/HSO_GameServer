@@ -1,7 +1,9 @@
-﻿using UnityEditor;
+﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.U2D.Animation;
 
-public class DemoController : Controller
+public class DemoController : MovementController
 {
     private Animator animatorChild;
     private GameObject player;
@@ -10,13 +12,18 @@ public class DemoController : Controller
     private Animator uiPickPhapSu;
     private Animator uiPickXaThu;
     private DemoController demo;
-    private RegisterController register;
+    private RegisterView register;
     private static int idSchool;
+    private List<SpriteResolver> resolvers;
+
+    private int lastFrame = -1;
+    private string lastState = "";
 
     private void Awake()
     {
         animatorChild = GetComponent<Animator>();
-        register = GameObject.Find("Register").GetComponent<RegisterController>();
+        resolvers = GetComponentsInChildren<SpriteResolver>().ToList();
+        register = GameObject.Find("Register").GetComponent<RegisterView>();
         if (GameObject.Find("CharaterSelectionUI"))
         {
             uiPickChienBinh = GameObject.Find("UIPickChienBinh").GetComponent<Animator>();
@@ -39,6 +46,7 @@ public class DemoController : Controller
     public override void OnUpdate()
     {
         LeftClick();
+        UpdateSprite();
     }
     public override void OnLateUpdate()
     {
@@ -121,5 +129,82 @@ public class DemoController : Controller
     protected override void UpdateAnimation()
     {
         animatorChild.SetTrigger("Atk");
+    }
+
+    private int GetFrameByTime(float t, float[] changeTimes)
+    {
+        t %= 1f;
+
+        for (int i = 0; i < changeTimes.Length; i++)
+        {
+            if (t < changeTimes[i])
+                return Mathf.Max(0, i - 1);
+        }
+
+        return changeTimes.Length - 1;
+    }
+    private void UpdateSprite()
+    {
+        if (animatorChild == null) return;
+
+        for (int i = 0; i < resolvers.Count; i++)
+        {
+            if (resolvers[i] == null)
+                continue;
+        }
+
+        AnimatorStateInfo state = animatorChild.GetCurrentAnimatorStateInfo(0);
+
+        // Stand
+        if (state.IsName("Stand"))
+        {
+            float t = state.normalizedTime % 1f;
+
+            float[] moveChangeTimes = { 0.0f, 0.5f }; // Clip dài 0:40 giây, đổi frame ở 0 / 0.4, 0.2 / 0.4
+
+            int frame = GetFrameByTime(t, moveChangeTimes);
+
+            if (lastState != "StandFront")
+            {
+                lastFrame = -1;
+                lastState = "StandFront";
+                SetAllResolvers("Stand", $"StandFront");
+            }
+            foreach (var r in resolvers)
+            {
+                if (r != null && r.spriteLibrary != null && r.gameObject.name == "4_0_0")
+                {
+                    r.SetCategoryAndLabel("Stand", $"StandFrontFrame{frame}");
+                    r.ResolveSpriteToSpriteRenderer();
+                }
+            }
+        }
+        // Attack
+        if (state.IsName("Atk"))
+        {
+            float t = state.normalizedTime % 1f;
+
+            float[] moveChangeTimes = { 0.0f, 0.6667f }; // Clip dài 0:15 giây, đổi frame ở 0 / 0.15, 0.1 / 0.15
+
+            int frame = GetFrameByTime(t, moveChangeTimes);
+
+            if (frame != lastFrame || lastState != "AtkFront")
+            {
+                lastFrame = frame;
+                lastState = "AtkFront";
+                SetAllResolvers("Atk", $"AtkFrontFrame{frame}");
+            }
+        }
+    }
+    protected void SetAllResolvers(string category, string label)
+    {
+        foreach (var r in resolvers)
+        {
+            if (r != null && r.spriteLibrary != null)
+            {
+                r.SetCategoryAndLabel(category, label);
+                r.ResolveSpriteToSpriteRenderer();
+            }
+        }
     }
 }

@@ -1,8 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
 using System.Threading.Tasks;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.U2D.Animation;
 
@@ -12,26 +11,16 @@ public class SpriteController : MonoBehaviour, IUpdatable
     private Animator animator;
     private int lastFrame = -1;
     private string lastState = "";
-    private Controller controller;
-    
+    private MovementController controller;
+    private Direction currentDirection;
+    private int currentFrame;
+
     [Header("Chỉ định sprite nào của player sẽ bị thay thế")]
     [SerializeField] private List<SpriteLibrary> spriteLibrary;
 
-    [Header("Danh sách sprite sẽ thay thế")]
-    [SerializeField] private List<LegArmorLibraries> legArmorLibraries;
-    [SerializeField] private List<ArmorLibraries> armorLibraries;
-    [SerializeField] private List<HeadLibraries> headLibraries;
-    [SerializeField] private List<HelmetLibraries> helmetLibraries;
-    [SerializeField] private List<HairLibraries> hairLibraries;
-    [SerializeField] private List<WeaponLibraries> weaponLibraries;
+    private ItemController listItem0;
 
-    // index của trang bị đang sử dụng trong List trên inspector
-    private int currentLegArmor = 0;
-    private int currentArmor = 0;
-    private int currentHead = 0;
-    private int currentHelmet = 0;
-    private int currentHair = 0;
-    private int currentWeapon = 0;
+    private SocketManager socketManager;
 
     // id của trang bị thực tế từ database
     private int weaponData = 0;
@@ -41,19 +30,15 @@ public class SpriteController : MonoBehaviour, IUpdatable
     private int hairData = 0;
     private int headData = 0;
 
-    private APIManager api;
-
     void Awake()
     {
-        // Lấy tất cả SpriteResolver trong object con
         resolvers = GetComponentsInChildren<SpriteResolver>().ToList();
         animator = GetComponent<Animator>();
-        controller = GetComponent<Controller>();
-        api = Object.FindFirstObjectByType<APIManager>();
-    }
-    void Start()
-    {
-        _ = ReadDatabase();
+        controller = GetComponent<MovementController>();
+        socketManager = GameManager.Instance.GetComponent<SocketManager>();
+        listItem0 = ItemController.Instance;
+
+        ReadDatabase();
     }
 
     private void OnEnable()
@@ -71,7 +56,38 @@ public class SpriteController : MonoBehaviour, IUpdatable
     {
         GameManager.Instance.RegisterPersistent(this);
     }
-    public void OnUpdate() { }
+    public void OnUpdate()
+    {
+        List<EquipmentResultPacket> listOutfitSprites;
+
+        if (EquipmentView.GetListEquipmentSlots().Count == 0)
+        {
+            string data = socketManager.GetOutfitSpritesData();
+
+            if (string.IsNullOrEmpty(data))
+                return;
+
+            Debug.Log("Equip character sprite successfully!");
+
+            listOutfitSprites = JsonConvert.DeserializeObject<List<EquipmentResultPacket>>(data);
+        }
+        else
+        {
+            listOutfitSprites = EquipmentView.GetListEquipmentSlots();
+        }
+
+        weaponData = listOutfitSprites[0].idItem0_1;
+        helmetData = listOutfitSprites[1].idItem0_1;
+        armorData = listOutfitSprites[2].idItem0_1;
+        legArmorData = listOutfitSprites[3].idItem0_1;
+        hairData = LogInView.GetHair();
+
+        EquipLegArmor(legArmorData);
+        EquipArmor(armorData);
+        EquipHelmet(helmetData);
+        EquipWeapon(weaponData);
+        EquipHair(hairData);
+    }
     public void OnLateUpdate()
     {
         UpdateSprite();
@@ -103,39 +119,30 @@ public class SpriteController : MonoBehaviour, IUpdatable
     {
         return headData;
     }
+    public Direction GetCurrentDirection()
+    {
+        return currentDirection;
+    }
+    public int GetCurrentFrame()
+    {
+        return currentFrame;
+    }
     #endregion
 
-    public void NextHead()
-    {
-        EquipHead(currentHead + 1);
-    }
-    public List<HairLibraries> GetListHair()
-    {
-        return hairLibraries;
-    }
-
     #region Sửa sprite library sau khi equip item
-    public void EquipLegArmor(int legArmorIndex)
+    public void EquipLegArmor(int id)
     {
-        currentLegArmor = legArmorIndex;
-        spriteLibrary[0].spriteLibraryAsset = legArmorLibraries[legArmorIndex].legArmorLibrariesAsset;
+        spriteLibrary[0].spriteLibraryAsset = listItem0.GetItem0(id).legArmor.legArmorLibrariesAsset;
     }
-    public void EquipArmor(int armorIndex)
+    public void EquipArmor(int id)
     {
-        currentArmor = armorIndex;
-        spriteLibrary[1].spriteLibraryAsset = armorLibraries[armorIndex].armorLibrariesAsset;
+        spriteLibrary[1].spriteLibraryAsset = listItem0.GetItem0(id).armor.armorLibrariesAsset;
     }
-    public void EquipHead(int headIndex)
+    public void EquipHelmet(int id)
     {
-        currentHead = headIndex;
-        spriteLibrary[2].spriteLibraryAsset = headLibraries[headIndex].headLibrariesAsset;
-    }
-    public void EquipHelmet(int helmetIndex)
-    {
-        currentHelmet = helmetIndex;
-        spriteLibrary[3].spriteLibraryAsset = helmetLibraries[helmetIndex].helmetLibrariesAsset;
+        spriteLibrary[3].spriteLibraryAsset = listItem0.GetItem0(id).helmet.helmetLibrariesAsset;
 
-        if (helmetLibraries[helmetIndex].isHiddenHair)
+        if (listItem0.GetItem0(id).helmet.isHiddenHair)
         {
             spriteLibrary[4].gameObject.SetActive(false);
         }
@@ -144,73 +151,46 @@ public class SpriteController : MonoBehaviour, IUpdatable
             spriteLibrary[4].gameObject.SetActive(true);
         }
     }
-    public void EquipHair(int hairIndex)
+    public void EquipHair(int id)
     {
-        currentHair = hairIndex;
-        spriteLibrary[4].spriteLibraryAsset = hairLibraries[hairIndex].hairLibrariesAsset;
+        int idSchool = LogInView.GetIDSchool();
+
+        switch (idSchool)
+        {
+            case 1: //Chiến binh
+                spriteLibrary[4].spriteLibraryAsset = listItem0.GetMaleHairLibrary(id).hairLibrariesAsset;
+                break;
+
+            case 2: //Sát thủ 
+                spriteLibrary[4].spriteLibraryAsset = listItem0.GetMaleHairLibrary(id).hairLibrariesAsset;
+                break;
+
+            case 3: //Pháp sư
+                spriteLibrary[4].spriteLibraryAsset = listItem0.GetFemaleHairLibrary(id).hairLibrariesAsset;
+                break;
+
+            case 4: //Xạ thủ 
+                spriteLibrary[4].spriteLibraryAsset = listItem0.GetFemaleHairLibrary(id).hairLibrariesAsset;
+                break;
+        }
     }
-    public void EquipWeapon(int weaponIndex)
+    public void EquipWeapon(int id)
     {
-        currentWeapon = weaponIndex;
-        spriteLibrary[5].spriteLibraryAsset = weaponLibraries[weaponIndex].weaponFrontLibraries;
-        spriteLibrary[6].spriteLibraryAsset = weaponLibraries[weaponIndex].weaponBackLibraries;
+        spriteLibrary[5].spriteLibraryAsset = listItem0.GetItem0(id).weapon.weaponFrontLibraries;
+        spriteLibrary[6].spriteLibraryAsset = listItem0.GetItem0(id).weapon.weaponBackLibraries;
     }
     #endregion
 
-    protected virtual async Task ReadDatabase()
+    private async void ReadDatabase()
     {
-        int idAccount = LogInController.GetIDAccount() ?? 0; // Bấm vào nút Đăng ký thì gán idAccount = 0 để chạy PlayerDemo phần chọn School trong Register
-
-        if (idAccount == 0)
+        int idAccount = LogInView.GetIDAccount() ?? 0;
+        EquipmentRequestPacket sendOutfitSpritesRequestPacket = new EquipmentRequestPacket
         {
-            currentWeapon = weaponLibraries.FindIndex(w => w.idWeapon == 0);
-            currentHelmet = helmetLibraries.FindIndex(h => h.idHelmet == 0);
-            currentArmor = armorLibraries.FindIndex(a => a.idArmor == 0);
-            currentLegArmor = legArmorLibraries.FindIndex(la => la.idLegArmor == 0);
-
-            EquipLegArmor(currentLegArmor);
-            EquipArmor(currentArmor);
-            EquipHelmet(currentHelmet);
-            EquipWeapon(currentWeapon);
-            EquipHair(currentHair);
-
-            return;
-        }
-
-        try
-        {
-            string urlItems = $"{api.GetApiUrl()}/api/account/{idAccount}/equipment?idAccount={idAccount}";
-            HttpResponseMessage res = await api.GetHttpClient().GetAsync(urlItems);
-            string json = await res.Content.ReadAsStringAsync();
-            List<Account_Equipment> equipment = JsonConvert.DeserializeObject<List<Account_Equipment>>(json);
-
-            weaponData = equipment[0].IDItem0_1;
-            helmetData = equipment[1].IDItem0_1;
-            armorData = equipment[2].IDItem0_1;
-            legArmorData = equipment[3].IDItem0_1;
-
-            string urlGetHair = $"{api.GetApiUrl()}/api/account/{idAccount}/getHair?idAccount={idAccount}";
-            res = await api.GetHttpClient().GetAsync(urlGetHair);
-            json = await res.Content.ReadAsStringAsync();
-            hairData = JsonConvert.DeserializeObject<int>(json);
-
-            currentWeapon = weaponLibraries.FindIndex(w => w.idWeapon == weaponData);
-            currentHelmet = helmetLibraries.FindIndex(h => h.idHelmet == helmetData);
-            currentArmor = armorLibraries.FindIndex(a => a.idArmor == armorData);
-            currentLegArmor = legArmorLibraries.FindIndex(la => la.idLegArmor == legArmorData);
-            currentHair = hairData;
-
-            EquipLegArmor(currentLegArmor);
-            EquipArmor(currentArmor);
-            EquipHelmet(currentHelmet);
-            EquipWeapon(currentWeapon);
-            EquipHair(currentHair);
-        }
-        catch (System.Exception ex)
-        {
-            Debug.LogError($"Lỗi đọc database cho sprite: {ex.Message}");
-            return;
-        }
+            cmd = "outfitSprites",
+            idAccount = idAccount,
+        };
+        string packet = JsonConvert.SerializeObject(sendOutfitSpritesRequestPacket);
+        socketManager.SendToServer(packet);
     }
 
     private string GetDirection(float h, float v)
@@ -261,6 +241,20 @@ public class SpriteController : MonoBehaviour, IUpdatable
         }
 
         string direction = GetDirection(h, v);
+        switch (direction)
+        {
+            case "Front":
+                currentDirection = Direction.Front; break;
+              
+            case "Back":
+                currentDirection = Direction.Back; break;
+
+            case "Left":
+                currentDirection = Direction.Left; break;
+
+            case "Right":
+                currentDirection = Direction.Right; break;
+        }
 
         // Stand
         if (state.IsName("Stand"))
@@ -277,15 +271,15 @@ public class SpriteController : MonoBehaviour, IUpdatable
                 lastState = "Stand" + direction;
                 SetAllResolvers("Stand", $"Stand{direction}");
             }
-                foreach (var r in resolvers)
+            foreach (var r in resolvers)
+            {
+                if (r != null && r.spriteLibrary != null && r.gameObject.name == "4_0_0")
                 {
-                    if (r != null && r.spriteLibrary != null && r.gameObject.name == "4_0_0")
-                    {
-                        r.SetCategoryAndLabel("Stand", $"Stand{direction}Frame{frame}");
-                        r.ResolveSpriteToSpriteRenderer();
-                    }
+                    r.SetCategoryAndLabel("Stand", $"Stand{direction}Frame{frame}");
+                    currentFrame = frame;
+                    r.ResolveSpriteToSpriteRenderer();
                 }
-            
+            }
         }
         // Move
         if (state.IsName("Move"))
@@ -301,6 +295,7 @@ public class SpriteController : MonoBehaviour, IUpdatable
                 lastFrame = frame;
                 lastState = "Move" + direction;
                 SetAllResolvers("Move", $"Move{direction}Frame{frame}");
+                currentFrame = frame;
             }
         }
         // Attack
@@ -317,6 +312,7 @@ public class SpriteController : MonoBehaviour, IUpdatable
                 lastFrame = frame;
                 lastState = "Atk" + direction;
                 SetAllResolvers("Atk", $"Atk{direction}Frame{frame}");
+                currentFrame = frame;
             }
         }
         //Injured
@@ -337,6 +333,7 @@ public class SpriteController : MonoBehaviour, IUpdatable
                     if (r != null && r.spriteLibrary != null && r.gameObject.name == "4_0_0")
                     {
                         r.SetCategoryAndLabel("Injured", $"Injured{direction}Frame{frame}");
+                        currentFrame = frame;
                         r.ResolveSpriteToSpriteRenderer();
                     }
                 }
@@ -354,10 +351,6 @@ public class SpriteController : MonoBehaviour, IUpdatable
         }
     }
 
-    public void RefreshCharacterSprite()
-    {
-        _ = ReadDatabase(); // Gọi lại logic load item từ database
-    }
     protected void SetAllResolvers(string category, string label)
     {
         foreach (var r in resolvers)

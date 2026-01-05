@@ -1,40 +1,50 @@
 ﻿using UnityEngine;
 
-class OtherPlayersController : MonoBehaviour
+class OtherPlayersController : MonoBehaviour, IUpdatable
 {
-    [SerializeField] private GameObject otherPlayers;
-    private GameObject chienBinh;
-    private GameObject satThu;
-    private GameObject phapSu;
+    [SerializeField] private GameObject chienBinh;
+    [SerializeField] private GameObject satThu;
+    [SerializeField] private GameObject phapSu;
     //private GameObject XaThu;
 
-    private void Awake()
+    private void Awake() { }
+    private void OnEnable()
     {
-        chienBinh = otherPlayers.transform.Find("ChienBinh").gameObject;
-        satThu = otherPlayers.transform.Find("SatThu").gameObject;
-        phapSu = otherPlayers.transform.Find("PhapSu").gameObject;
-        //xaThu = otherPlayers.transform.Find("XaThu").gameObject;
+        GameManager.Instance.Register(this);
+    }
+    private void OnDisable()
+    {
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.Unregister(this);
+        }
+    }
+    public void OnUpdate() { }
+    public virtual void OnLateUpdate() { }
+    public virtual void OnFixedUpdate() { }
+    public void RegisterDontDestroyOnLoad()
+    {
+        GameManager.Instance.RegisterPersistent(this);
+    }
 
-        SyncModels otherPlayerData = SyncManager.Instance.GetPlayerData();
-        switch (otherPlayerData.school)
+    public void Init(SyncModels data)
+    {
+        switch (data.idSchool)
         {
             case 1:
                 chienBinh.SetActive(true);
                 Destroy(satThu);
                 Destroy(phapSu);
-                //Destroy(xaThu);
                 break;
             case 2:
-                Destroy(chienBinh);
                 satThu.SetActive(true);
+                Destroy(chienBinh);
                 Destroy(phapSu);
-                //Destroy(xaThu);
                 break;
             case 3:
+                phapSu.SetActive(true);
                 Destroy(chienBinh);
                 Destroy(satThu);
-                phapSu.SetActive(true);
-                //Destroy(xaThu);
                 break;
         }
     }

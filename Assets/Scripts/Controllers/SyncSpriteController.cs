@@ -1,52 +1,30 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.U2D.Animation;
 
 public class SyncSpriteController : MonoBehaviour, IUpdatable
 {
     private List<SpriteResolver> resolvers;
-    private Animator animator;
-    private int lastFrame = -1;
-    private string lastState = "";
-    private SyncController syncController;
+    private SyncModels syncDataSprite;
+    private string direction;
 
     [Header("Chỉ định sprite nào của player sẽ bị thay thế")]
     [SerializeField] private List<SpriteLibrary> spriteLibrary;
 
-    [Header("Danh sách sprite sẽ thay thế")]
-    [SerializeField] private List<LegArmorLibraries> legArmorLibraries;
-    [SerializeField] private List<ArmorLibraries> armorLibraries;
-    [SerializeField] private List<HeadLibraries> headLibraries;
-    [SerializeField] private List<HelmetLibraries> helmetLibraries;
-    [SerializeField] private List<HairLibraries> hairLibraries;
-    [SerializeField] private List<WeaponLibraries> weaponLibraries;
-
-    // index của trang bị đang sử dụng trong List trên inspector
-    private int currentLegArmor = 0;
-    private int currentArmor = 0;
-    private int currentHelmet = 0;
-    private int currentHair = 0;
-    private int currentWeapon = 0;
+    private ItemController listItem0;
 
     // id của trang bị thực tế từ database
-    int weaponData = 0;
-    int helmetData = 0;
-    int armorData = 0;
-    int legArmorData = 0;
-    int hairData;
+    private int weaponData = 0;
+    private int helmetData = 0;
+    private int armorData = 0;
+    private int legArmorData = 0;
+    private int hairData = 0;
 
     void Awake()
     {
-        // Lấy tất cả SpriteResolver trong object con
         resolvers = GetComponentsInChildren<SpriteResolver>().ToList();
-        animator = GetComponent<Animator>();
-        syncController = GetComponent<SyncController>();
-    }
-    void Start()
-    {
-        _ = ReadDataFromServer();
+        listItem0 = ItemController.Instance;
     }
 
     private void OnEnable()
@@ -64,29 +42,55 @@ public class SyncSpriteController : MonoBehaviour, IUpdatable
     {
         GameManager.Instance.RegisterPersistent(this);
     }
-    public void OnUpdate() { }
-    public void OnLateUpdate()
+    public void ApplyServerState(SyncModels data)
     {
+        syncDataSprite = data;
+
+        if (weaponData != data.weapon)
+        {
+            weaponData = syncDataSprite.weapon;
+            EquipWeapon(weaponData);
+        }
+        if (helmetData != data.helmet)
+        {
+            helmetData = syncDataSprite.helmet;
+            EquipHelmet(helmetData);
+        }
+        if (armorData != data.armor)
+        {
+            armorData = syncDataSprite.armor;
+            EquipArmor(armorData);
+        }
+        if (legArmorData != data.legArmor)
+        {
+            legArmorData = syncDataSprite.legArmor;
+            EquipLegArmor(legArmorData);
+        }
+        if (hairData != data.hair)
+        {
+            hairData = syncDataSprite.hair;
+            EquipHair(hairData);
+        }
         UpdateSprite();
     }
+    public void OnUpdate() { }
+    public void OnLateUpdate() { }
     public void OnFixedUpdate() { }
 
-    public void EquipLegArmor(int legArmorIndex)
+    #region Sửa sprite library sau khi equip item
+    public void EquipLegArmor(int id)
     {
-        currentLegArmor = legArmorIndex;
-        spriteLibrary[0].spriteLibraryAsset = legArmorLibraries[legArmorIndex].legArmorLibrariesAsset;
+        spriteLibrary[0].spriteLibraryAsset = listItem0.GetItem0(id).legArmor.legArmorLibrariesAsset;
     }
-    public void EquipArmor(int armorIndex)
+    public void EquipArmor(int id)
     {
-        currentArmor = armorIndex;
-        spriteLibrary[1].spriteLibraryAsset = armorLibraries[armorIndex].armorLibrariesAsset;
+        spriteLibrary[1].spriteLibraryAsset = listItem0.GetItem0(id).armor.armorLibrariesAsset;
     }
-    public void EquipHelmet(int helmetIndex)
+    public void EquipHelmet(int id)
     {
-        currentHelmet = helmetIndex;
-        spriteLibrary[3].spriteLibraryAsset = helmetLibraries[helmetIndex].helmetLibrariesAsset;
+        spriteLibrary[3].spriteLibraryAsset = listItem0.GetItem0(id).helmet.helmetLibrariesAsset;
 
-        if (helmetLibraries[helmetIndex].isHiddenHair)
+        if (listItem0.GetItem0(id).helmet.isHiddenHair)
         {
             spriteLibrary[4].gameObject.SetActive(false);
         }
@@ -95,189 +99,109 @@ public class SyncSpriteController : MonoBehaviour, IUpdatable
             spriteLibrary[4].gameObject.SetActive(true);
         }
     }
-    public void EquipHair(int hairIndex)
+    public void EquipHair(int id)
     {
-        currentHair = hairIndex;
-        spriteLibrary[4].spriteLibraryAsset = hairLibraries[hairIndex].hairLibrariesAsset;
-    }
-    public void EquipWeapon(int weaponIndex)
-    {
-        currentWeapon = weaponIndex;
-        spriteLibrary[5].spriteLibraryAsset = weaponLibraries[weaponIndex].weaponFrontLibraries;
-        spriteLibrary[6].spriteLibraryAsset = weaponLibraries[weaponIndex].weaponBackLibraries;
-    }
+        int idSchool = LogInView.GetIDSchool();
 
-    private async Task ReadDataFromServer()
-    {
-        try
+        switch (idSchool)
         {
-            await Task.Yield();
+            case 1: //Chiến binh
+                spriteLibrary[4].spriteLibraryAsset = listItem0.GetMaleHairLibrary(id).hairLibrariesAsset;
+                break;
 
-            SyncModels otherPlayerData = SyncManager.Instance.GetPlayerData();
+            case 2: //Sát thủ 
+                spriteLibrary[4].spriteLibraryAsset = listItem0.GetMaleHairLibrary(id).hairLibrariesAsset;
+                break;
 
-            weaponData = otherPlayerData.weapon;
-            helmetData = otherPlayerData.helmet;
-            armorData = otherPlayerData.armor;
-            legArmorData = otherPlayerData.legArmor;
-            hairData = otherPlayerData.hair;
+            case 3: //Pháp sư
+                spriteLibrary[4].spriteLibraryAsset = listItem0.GetFemaleHairLibrary(id).hairLibrariesAsset;
+                break;
 
-            currentWeapon = weaponLibraries.FindIndex(w => w.idWeapon == weaponData);
-            currentHelmet = helmetLibraries.FindIndex(h => h.idHelmet == helmetData);
-            currentArmor = armorLibraries.FindIndex(a => a.idArmor == armorData);
-            currentLegArmor = legArmorLibraries.FindIndex(la => la.idLegArmor == legArmorData);
-            currentHair = hairData;
-
-            EquipLegArmor(currentLegArmor);
-            EquipArmor(currentArmor);
-            EquipHelmet(currentHelmet);
-            EquipWeapon(currentWeapon);
-            EquipHair(currentHair);
-        }
-        catch (System.Exception ex)
-        {
-            Debug.LogError($"Lỗi đọc database cho sprite: {ex.Message}");
-            return;
+            case 4: //Xạ thủ 
+                spriteLibrary[4].spriteLibraryAsset = listItem0.GetFemaleHairLibrary(id).hairLibrariesAsset;
+                break;
         }
     }
-
-    private string GetDirection(float h, float v)
+    public void EquipWeapon(int id)
     {
-        if (Mathf.Abs(h) == 0 && Mathf.Abs(v) == 0)
-            return "Front";
-
-        if (Mathf.Abs(v) > 0.01f)
-            return v > 0 ? "Back" : "Front";
-
-        return h > 0 ? "Right" : "Left";
+        spriteLibrary[5].spriteLibraryAsset = listItem0.GetItem0(id).weapon.weaponFrontLibraries;
+        spriteLibrary[6].spriteLibraryAsset = listItem0.GetItem0(id).weapon.weaponBackLibraries;
     }
-    private int GetFrameByTime(float t, float[] changeTimes)
-    {
-        t %= 1f;
+    #endregion
 
-        for (int i = 0; i < changeTimes.Length; i++)
-        {
-            if (t < changeTimes[i])
-                return Mathf.Max(0, i - 1);
-        }
-
-        return changeTimes.Length - 1;
-    }
     private void UpdateSprite()
     {
-        if (animator == null) return;
+        Direction syncDirection = (Direction)syncDataSprite.direction;
+        PlayerState syncState = (PlayerState)syncDataSprite.state;
 
-        for (int i = 0; i < resolvers.Count; i++)
+        switch (syncDirection)
         {
-            if (resolvers[i] == null)
-                continue;
+            case Direction.Front:
+                direction = "Front"; break;
+
+            case Direction.Back:
+                direction = "Back"; break;
+
+            case Direction.Left:
+                direction = "Left"; break;
+
+            case Direction.Right:
+                direction = "Right"; break;
+
+            default:
+                direction = "Front"; break;
         }
-
-        AnimatorStateInfo state = animator.GetCurrentAnimatorStateInfo(0);
-
-        float h;
-        float v;
-
-        h = syncController.GetLastMovement().x;
-        v = syncController.GetLastMovement().y;
-
-        string direction = GetDirection(h, v);
-
-        // Stand
-        if (state.IsName("Stand"))
+        switch (syncState)
         {
-            float t = state.normalizedTime % 1f;
-
-            float[] moveChangeTimes = { 0.0f, 0.5f }; // Clip dài 0:40 giây, đổi frame ở 0 / 0.4, 0.2 / 0.4
-
-            int frame = GetFrameByTime(t, moveChangeTimes);
-
-            if (lastState != "Stand" + direction)
-            {
-                lastFrame = -1;
-                lastState = "Stand" + direction;
-                SetAllResolvers("Stand", $"Stand{direction}");
-            }
-            foreach (var r in resolvers)
-            {
-                if (r != null && r.spriteLibrary != null && r.gameObject.name == "4_0_0")
+            case PlayerState.Stand:
                 {
-                    r.SetCategoryAndLabel("Stand", $"Stand{direction}Frame{frame}");
-                    r.ResolveSpriteToSpriteRenderer();
-                }
-            }
-
-        }
-        // Move
-        if (state.IsName("Move"))
-        {
-            float t = state.normalizedTime % 1f;
-
-            float[] moveChangeTimes = { 0.0f, 0.5f }; // Clip dài 0:40 giây, đổi frame ở 0 / 0.4, 0.2 / 0.4
-
-            int frame = GetFrameByTime(t, moveChangeTimes);
-
-            if (frame != lastFrame || lastState != "Move" + direction)
-            {
-                lastFrame = frame;
-                lastState = "Move" + direction;
-                SetAllResolvers("Move", $"Move{direction}Frame{frame}");
-            }
-        }
-        // Attack
-        if (state.IsName("Atk"))
-        {
-            float t = state.normalizedTime % 1f;
-
-            float[] moveChangeTimes = { 0.0f, 0.6667f }; // Clip dài 0:15 giây, đổi frame ở 0 / 0.15, 0.1 / 0.15
-
-            int frame = GetFrameByTime(t, moveChangeTimes);
-
-            if (frame != lastFrame || lastState != "Atk" + direction)
-            {
-                lastFrame = frame;
-                lastState = "Atk" + direction;
-                SetAllResolvers("Atk", $"Atk{direction}Frame{frame}");
-            }
-        }
-        //Injured
-        if (state.IsName("Injured"))
-        {
-            float t = state.normalizedTime % 1f;
-
-            float[] moveChangeTimes = { 0.0f, 0.5f }; // Clip dài 0:20 giây, đổi frame ở 0 / 0.2, 0.1 / 0.2
-
-            int frame = GetFrameByTime(t, moveChangeTimes);
-
-            if (frame != lastFrame || lastState != "Injured" + direction)
-            {
-                lastFrame = frame;
-                lastState = "Injured" + direction;
-                foreach (var r in resolvers)
-                {
-                    if (r != null && r.spriteLibrary != null && r.gameObject.name == "4_0_0")
+                    SetAllResolvers("Stand", $"Stand{direction}");
+                    foreach (var r in resolvers)
                     {
-                        r.SetCategoryAndLabel("Injured", $"Injured{direction}Frame{frame}");
-                        r.ResolveSpriteToSpriteRenderer();
+                        if (r != null && r.spriteLibrary != null && r.gameObject.name == "4_0_0")
+                        {
+                            r.SetCategoryAndLabel("Stand", $"Stand{direction}Frame{syncDataSprite.frame}");
+                            r.ResolveSpriteToSpriteRenderer();
+                        }
                     }
+                    break;
                 }
-            }
-        }
-        // Die
-        if (state.IsName("Die"))
-        {
-            if (lastState != "Die")
-            {
-                lastFrame = -1;
-                lastState = "Die";
-                SetAllResolvers("Die", $"DieFrame0");
-            }
+
+            case PlayerState.Move:
+                {
+                    SetAllResolvers("Move", $"Move{direction}Frame{syncDataSprite.frame}");
+                    break;
+                }
+
+            case PlayerState.Attack:
+                {
+                    SetAllResolvers("Atk", $"Atk{direction}Frame{syncDataSprite.frame}");
+                    break;
+                }
+
+            case PlayerState.Injured:
+                {
+                    SetAllResolvers("Stand", $"Stand{direction}");
+                    foreach (var r in resolvers)
+                    {
+                        if (r != null && r.spriteLibrary != null && r.gameObject.name == "4_0_0")
+                        {
+                            r.SetCategoryAndLabel("Injured", $"Injured{direction}Frame{syncDataSprite.frame}");
+                            r.ResolveSpriteToSpriteRenderer();
+                        }
+                    }
+                    break;
+                }
+
+            case PlayerState.Die:
+                {
+                    SetAllResolvers("Die", "DieFrame0");
+                    break;
+                }
         }
     }
-    public void RefreshCharacterSprite()
-    {
-        _ = ReadDataFromServer(); // Gọi lại logic load item từ database
-    }
-    private void SetAllResolvers(string category, string label)
+
+    protected void SetAllResolvers(string category, string label)
     {
         foreach (var r in resolvers)
         {

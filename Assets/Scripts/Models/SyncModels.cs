@@ -1,28 +1,48 @@
-﻿public class SyncModels
+﻿public enum PlayerState
 {
-    public float posX { get; set; }
-    public float posY { get; set; }
-    public float lastPosX { get; set; }
-    public float lastPosY { get; set; }
-    public int idAccount { get; set; }
-    public string nameChar { get; set; }
-    public int level { get; set; }
-    public int school { get; set; }
-    public int hair { get; set; }
-    public int weapon { get; set; }
-    public int helmet { get; set; }
-    public int armor { get; set; }
-    public int legArmor { get; set; }
-    public int gloves { get; set; }
-    public int shoes { get; set; }
-    public int ring1 { get; set; }
-    public int ring2 { get; set; }
-    public int necklace { get; set; }
-    public int medal { get; set; }
-    public int cloak { get; set; }
-    public int wing { get; set; }
-    public int skinWing { get; set; }
-    public int mounts { get; set; }
-    public int pet { get; set; }
-    public int skin { get; set; }
+    Stand = 0,
+    Move = 1,
+    Attack = 2,
+    Injured = 3,
+    Die = 4
+}
+public enum Direction
+{
+    Front = 0,
+    Back = 1,
+    Left = 2,
+    Right = 3,
+}
+
+public class SyncModels
+{
+    public string cmd;
+    public int idAccount;
+    public float posX;
+    public float posY;
+    public float lastPosX;
+    public float lastPosY;
+    public PlayerState state;
+    public Direction direction;
+    public int frame;
+    public string nameChar;
+    public int level;
+    public int idSchool;
+    public int hair;
+    public int weapon;
+    public int helmet;
+    public int armor;
+    public int legArmor;
+    public int gloves;
+    public int shoes;
+    public int ring1;
+    public int ring2;
+    public int necklace;
+    public int medal;
+    public int cloak;
+    public int wing;
+    public int skinWing;
+    public int mounts;
+    public int pet;
+    public int skin;
 }

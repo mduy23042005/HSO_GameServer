@@ -239,8 +239,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -371,8 +371,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -503,8 +503,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -635,8 +635,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -767,8 +767,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -899,8 +899,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -1131,739 +1131,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 359e05524512a704f8c45ce14dd6ad71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemDefault:
-  - {fileID: -6837281848967911668, guid: d881c9325d49127478df240e2a328581, type: 3}
-  - {fileID: 1286586931688081413, guid: 633768bf5d6fadb4abfcf64c422f4ae3, type: 3}
-  - {fileID: -3929797580053278427, guid: 125947e91b77d6b46b8f81975ff0e63c, type: 3}
-  - {fileID: 1141320162030276111, guid: bd4ce454eb049b045b2ef18f86de228f, type: 3}
-  - {fileID: -4373092206902308409, guid: 1a88d9658d4f0bc4c909bed0224644a9, type: 3}
-  - {fileID: -1665354755315129377, guid: eb0d6ab7b23113a449f2e77f5dbdb088, type: 3}
-  - {fileID: 8979224699922219739, guid: 034d882092e644a498313cc7bbd12e83, type: 3}
-  - {fileID: -5333017758889915851, guid: 39ad5ab66119f4040bfec15c37fcc797, type: 3}
-  - {fileID: 8571571280831362668, guid: 367618c9d0fee8b46a28f4338c6c29dc, type: 3}
-  - {fileID: 4870521211476087779, guid: a6e89580cf733f247afc46cf19087ca8, type: 3}
-  - {fileID: 7566004400679360024, guid: 1e88908ff9ce27544ae58725bba42d3b, type: 3}
-  - {fileID: -3462412046723755575, guid: 16b7b90d69c17894aa6099d3def51ea6, type: 3}
-  - {fileID: 3744237161977945495, guid: a803056d9ba0f0f49b80a8714c753b93, type: 3}
-  - {fileID: -2003435532182951070, guid: aab665e7de728f9419db1164bbbd0573, type: 3}
-  - {fileID: 855606559356611074, guid: 1e3f9c0612e3b0a4b8518e0060d8c501, type: 3}
-  - {fileID: -7279246337118292416, guid: 16b55483023fb014591b6d0320bb7ce8, type: 3}
-  item0:
-  - {fileID: 21300000, guid: 12308fa079e6c0e42889daa6c5f843aa, type: 3}
-  - {fileID: 21300000, guid: e85a209df0a01464d9ff51c25cda12ee, type: 3}
-  - {fileID: 21300000, guid: ec0b59934a4fcd449a9974a918c6a382, type: 3}
-  - {fileID: 21300000, guid: eabe755d333584e48bbf930712f220d5, type: 3}
-  - {fileID: 21300000, guid: cf875ed491cb5044894f3f8b80232243, type: 3}
-  - {fileID: 21300000, guid: afd58ca187fc3fa46adff16789bfaca0, type: 3}
-  - {fileID: 21300000, guid: 8a149cb18725b3446b23cd67dd16e05a, type: 3}
-  - {fileID: 21300000, guid: 5a4d794bcaf57b94b927d7157b6f468a, type: 3}
-  - {fileID: 21300000, guid: 608da713796c15846aa292c24c89b4b6, type: 3}
-  - {fileID: 21300000, guid: 57a0ebdb1fb16874d89f1d88dbad0654, type: 3}
-  - {fileID: 21300000, guid: b88091bc0b2bebd489c34f1a2fb89591, type: 3}
-  - {fileID: 21300000, guid: a542aa5a30d3aad46a2354f7e99ffcfe, type: 3}
-  - {fileID: 21300000, guid: d686cab9e4619c74babb0ff7af5e7c01, type: 3}
-  - {fileID: 21300000, guid: 17793cda167b80a41b869269502cf51a, type: 3}
-  - {fileID: 21300000, guid: c56c7e8290d67e8438c8ef8e2dee418d, type: 3}
-  - {fileID: 21300000, guid: 6fd8bd33a7d797d4b811b791878d02ae, type: 3}
-  - {fileID: 21300000, guid: e762bf67fa66f584981fe4d2790f304a, type: 3}
-  - {fileID: 21300000, guid: f7cff2c706d77d2448efaedefb5bc880, type: 3}
-  - {fileID: 21300000, guid: 101da1b1c72029b47802def953339ee5, type: 3}
-  - {fileID: 21300000, guid: b47420a393f8a8241b2caf24c737b453, type: 3}
-  - {fileID: 21300000, guid: 35f58ea9bcb1fe04fb9ed0bc86f7d4b6, type: 3}
-  - {fileID: 21300000, guid: e4ec32c17493b904ba162da4966800d8, type: 3}
-  - {fileID: 21300000, guid: 76e102011ab493345a9e28acc90e7bc7, type: 3}
-  - {fileID: 21300000, guid: 8329df13a2df96f40960b69b14735c8e, type: 3}
-  - {fileID: 21300000, guid: d7a0013adecc4a94b9ba19bb19d9397d, type: 3}
-  - {fileID: 21300000, guid: a6364d333c12e7e4cab1a178c2c3342f, type: 3}
-  - {fileID: 21300000, guid: 34817d34a8cc79041b555e77daa6a1ef, type: 3}
-  - {fileID: 21300000, guid: 0e51cdf4aa5346f478a74c816c7750ca, type: 3}
-  - {fileID: 21300000, guid: ef896e738a28eb649ac0289a00cc6393, type: 3}
-  - {fileID: 21300000, guid: 6c2b3ebeb6d2c6d4ebe1069dabdec5e5, type: 3}
-  - {fileID: 21300000, guid: a104118315e140348ba4c153d03a52fe, type: 3}
-  - {fileID: 21300000, guid: 58a81461bf4b50d4e90067baf562669f, type: 3}
-  - {fileID: 21300000, guid: 443fc1c645514e946b99268d80328da5, type: 3}
-  - {fileID: 21300000, guid: a6fea189e6d823c428777bfe3494f6ee, type: 3}
-  - {fileID: 21300000, guid: 3946108f841c082459681ee26afaecfe, type: 3}
-  - {fileID: 21300000, guid: e02739c8c3df3fa4b836d96001578b3b, type: 3}
-  - {fileID: 21300000, guid: 3562fcc741310d24ab14c0191bb80bea, type: 3}
-  - {fileID: 21300000, guid: b53f5dfde80cd064ba4833afb6a1bcf4, type: 3}
-  - {fileID: 21300000, guid: 6c3180364f7004143aef48c7549248dc, type: 3}
-  - {fileID: 21300000, guid: 68983b44379d36e4fafdd804ca2cbd4d, type: 3}
-  - {fileID: 21300000, guid: 00011e638b66cc845b4dac35f286b939, type: 3}
-  - {fileID: 21300000, guid: 2cd3027e6a0dabb4aa3b7dae7cdbcca1, type: 3}
-  - {fileID: 21300000, guid: c426b24bae3cb5642a138c6a293a63eb, type: 3}
-  - {fileID: 21300000, guid: 01137d842bff42f4086dc2ba49cda7ce, type: 3}
-  - {fileID: 21300000, guid: ebdef1768dca2a9479b1563450caa512, type: 3}
-  - {fileID: 21300000, guid: 8f33b4fe884ec6c4d868156f14cdd1aa, type: 3}
-  - {fileID: 21300000, guid: 9cd7fd324fcb1b64c925fd4c0e94430c, type: 3}
-  - {fileID: 21300000, guid: a1f8487eebec7304b9bf7cec8f5c724c, type: 3}
-  - {fileID: 21300000, guid: 8c259c1487dc92e4f92fbd5c6208b962, type: 3}
-  - {fileID: 21300000, guid: 2f49cbb7ad9a12d47b3f14882543e562, type: 3}
-  - {fileID: 21300000, guid: 60c59a9e6571e3b44b43230603ef6f6e, type: 3}
-  - {fileID: 21300000, guid: f63e2e89ce079084c94515b8c5c39788, type: 3}
-  - {fileID: 21300000, guid: 41cdf7a31d1f1604b86482dac2ca8de6, type: 3}
-  - {fileID: 21300000, guid: d7da0ff1dd6088e4fad3cfd1d3f15ba7, type: 3}
-  - {fileID: 21300000, guid: cc6f2cd03b01c35439a2fb191f8aaf94, type: 3}
-  - {fileID: 21300000, guid: 8a4ba375af8619543994ee77ac14d0fe, type: 3}
-  - {fileID: 21300000, guid: 5904586da8cece14ba280a8d833fb00c, type: 3}
-  - {fileID: 21300000, guid: 49338694f869fa547890105ee984d5e8, type: 3}
-  - {fileID: 21300000, guid: f091f605a4b021f4f93f0ef4f5dd5a01, type: 3}
-  - {fileID: 21300000, guid: 9bfdcde6dc975d44381676bc91380d98, type: 3}
-  - {fileID: 21300000, guid: 74c4a28628fdfcf458842bc82a0ea721, type: 3}
-  - {fileID: 21300000, guid: a458df25524f2a0488c236e5afc4b7d5, type: 3}
-  - {fileID: 21300000, guid: 5dd98cdff2a39f64d899c8c81834175a, type: 3}
-  - {fileID: 21300000, guid: 582949173eead9f44afe483b690ba3fe, type: 3}
-  - {fileID: 21300000, guid: 00b3a5561cbeb60449105c27a9d02523, type: 3}
-  - {fileID: 21300000, guid: 123341dc35bb9024e9997fd8e1543088, type: 3}
-  - {fileID: 21300000, guid: f2094b2da08e8334985546176d460792, type: 3}
-  - {fileID: 21300000, guid: 0725c7ec1cbb062458b267af08eec6cc, type: 3}
-  - {fileID: 21300000, guid: 44fe20f27513ae549b3d7fcad3b8bd77, type: 3}
-  - {fileID: 21300000, guid: 7282d46ee0fd7df4e87f9bbc416859d1, type: 3}
-  - {fileID: 21300000, guid: 59a83dfa662e5d745aaad200bb0c7805, type: 3}
-  - {fileID: 21300000, guid: 20f40334f8a5cdd41bf6561f781446f1, type: 3}
-  - {fileID: 21300000, guid: 74228fe7170498f49ab02f1481f38e32, type: 3}
-  - {fileID: 21300000, guid: 464de4d1edc5717468ffb0e71a2fde59, type: 3}
-  - {fileID: 21300000, guid: d2ce6de6fd4f67f4ca489af6e65180b9, type: 3}
-  - {fileID: 21300000, guid: d282cc538edb59949ac9d8f31610870e, type: 3}
-  - {fileID: 21300000, guid: 5fadaf79ff81f20448d117e1f4b48dc0, type: 3}
-  - {fileID: 21300000, guid: 27c385141d8866440b45ed67830bffc2, type: 3}
-  - {fileID: 21300000, guid: f9e090452a271774eb1d3e67e5de7c7b, type: 3}
-  - {fileID: 21300000, guid: 869a614331420f844a7e2f13a094a987, type: 3}
-  - {fileID: 21300000, guid: 75987f05f5ed02e4a8a7965a8fbe4820, type: 3}
-  - {fileID: 21300000, guid: ba2e43b4e1dd8064b8aba942aeae264c, type: 3}
-  - {fileID: 21300000, guid: 93e81047ea4d3b244868c19cd4832ef8, type: 3}
-  - {fileID: 21300000, guid: e09c68f14297b3743ad87bcc4174793d, type: 3}
-  - {fileID: 21300000, guid: c4fe9a27c35007d41ad3dc32075e4b11, type: 3}
-  - {fileID: 21300000, guid: 4f50d6ed8f2848a42b633909ffc1cc36, type: 3}
-  - {fileID: 21300000, guid: aac2d3284ad1179499a3a4509ebcf4c1, type: 3}
-  - {fileID: 21300000, guid: 7495ea2992d03b841950bde755ca5e2d, type: 3}
-  - {fileID: 21300000, guid: 1f353a4763133044e926fefec85ba46b, type: 3}
-  - {fileID: 21300000, guid: 74fb167a98d964547be947ea01cf2896, type: 3}
-  - {fileID: 21300000, guid: dd69fb3aa62ba664cb9ad70e9c8fbf02, type: 3}
-  - {fileID: 21300000, guid: 7887eb6143dc58d499c7ac825b794b2c, type: 3}
-  - {fileID: 21300000, guid: 3b52d3845d8d73748ba2148a3599520b, type: 3}
-  - {fileID: 21300000, guid: 2be38cd06067e6141bc5e1418cbb0797, type: 3}
-  - {fileID: 21300000, guid: 531211bed8bd52644974c37a1483b929, type: 3}
-  - {fileID: 21300000, guid: 116c6293800d3dd458d289f566071107, type: 3}
-  - {fileID: 21300000, guid: e773a6242b2f42d40998725f926be826, type: 3}
-  - {fileID: 21300000, guid: 4814b223943ca3b43b1d83035910673d, type: 3}
-  - {fileID: 21300000, guid: a9cccefd0adec52409e49e09b5814616, type: 3}
-  - {fileID: 21300000, guid: 314aeca165c08be41923e9ad60061753, type: 3}
-  - {fileID: 21300000, guid: fd7556f337ce6dd4c9651c883d0d7ef5, type: 3}
-  - {fileID: 21300000, guid: 53a1e4e21560c24409033431f8ee263f, type: 3}
-  - {fileID: 21300000, guid: c896fef7ab33869479020265b4fb0f66, type: 3}
-  - {fileID: 21300000, guid: 27b9995e45e96b04e883e4c49cb43e92, type: 3}
-  - {fileID: 21300000, guid: fc941259b75b4614bafa75e8bb6e6507, type: 3}
-  - {fileID: 21300000, guid: a943cb6f4254fc64cbffe20565f736d0, type: 3}
-  - {fileID: 21300000, guid: 52975d0770acab64996be5f7db53089b, type: 3}
-  - {fileID: 21300000, guid: 090a99e90c086c9429d3f95bf546a2fc, type: 3}
-  - {fileID: 21300000, guid: 026eaaf4bd0ec774f909530d4e49e126, type: 3}
-  - {fileID: 21300000, guid: 0782a1b99ccfa444db6479ab11f1973c, type: 3}
-  - {fileID: 21300000, guid: 7165f6d185698ef49beb6201fd7bbdbb, type: 3}
-  - {fileID: 21300000, guid: 40d6eff7e5172b14897edd5c7b9aaa90, type: 3}
-  - {fileID: 21300000, guid: ac905302beed6644194f059509a0ba5e, type: 3}
-  - {fileID: 21300000, guid: 1bec4b895c568224890177d21c669c5e, type: 3}
-  - {fileID: 21300000, guid: bee5ea4abf6a6414facaf08d3591cd37, type: 3}
-  - {fileID: 21300000, guid: c549336d93c2e9845b8b1377e549a40f, type: 3}
-  - {fileID: 21300000, guid: 558175485d585d8499ee1d3f165789c2, type: 3}
-  - {fileID: 21300000, guid: 524b35c1f59315f49be4474858eb210c, type: 3}
-  - {fileID: 21300000, guid: aa58c443591e8a74a8fefa3cb2a943a9, type: 3}
-  - {fileID: 21300000, guid: 90dba60e7c34fd444972131c0a09e5be, type: 3}
-  - {fileID: 21300000, guid: 315587333933210408941c2e8b93b94e, type: 3}
-  - {fileID: 21300000, guid: 163a1e6669390104b8a97d923bdf6e82, type: 3}
-  - {fileID: 21300000, guid: 1b9c509c299a033408677543356c1f5a, type: 3}
-  - {fileID: 21300000, guid: ed08c077ca34b834e9b6899f37f70abd, type: 3}
-  - {fileID: 21300000, guid: 19eebafd1b9343945a9179f5953e4653, type: 3}
-  - {fileID: 21300000, guid: 56184d8ea996176449b8f2a60eedfe02, type: 3}
-  - {fileID: 21300000, guid: cba5dfa134a440d4d832c465fa2296ee, type: 3}
-  - {fileID: 21300000, guid: 9980ab827e3c91d418dcbeeb58d811a8, type: 3}
-  - {fileID: 21300000, guid: e10953f18a0ba0842a2fb54e8fb61a67, type: 3}
-  - {fileID: 21300000, guid: ef699bf65c253f649a4d9ead203c09cf, type: 3}
-  - {fileID: 21300000, guid: e3e5070291bb4624c93b9bc26b65c97d, type: 3}
-  - {fileID: 21300000, guid: ef1d3decacdfdce43a58eebce32a2dfb, type: 3}
-  - {fileID: 21300000, guid: bd6dc7379bbc62d4da75c2621db47e71, type: 3}
-  - {fileID: 21300000, guid: cc952176f212a6442a2dd90120b6cbb8, type: 3}
-  - {fileID: 21300000, guid: 22a35b19ce6c60541a21d85d40ec32e0, type: 3}
-  - {fileID: 21300000, guid: 9a79af4b9eae9c74cb08df31b143f5a2, type: 3}
-  - {fileID: 21300000, guid: 3aadf18a3250d4e4087b3ea9b7e1dabf, type: 3}
-  - {fileID: 21300000, guid: 6fee721f6f5818b48a6360e1c87d5be0, type: 3}
-  - {fileID: 21300000, guid: e6681827ea796214cbb092a040e43900, type: 3}
-  - {fileID: 21300000, guid: 15966d8ac59018b44b3a3c2872f02737, type: 3}
-  - {fileID: 21300000, guid: 7058f92de08ee2a49a4fc0b438c30348, type: 3}
-  - {fileID: 21300000, guid: 2ae41923787e2a04b8cbde80bc47e28e, type: 3}
-  - {fileID: 21300000, guid: 66b40587822dc9c459eec60d8af2979d, type: 3}
-  - {fileID: 21300000, guid: 3294fbac79047a64a848720dbc861085, type: 3}
-  - {fileID: 21300000, guid: 2ddab7f8942ab5c49b6be53f83a50240, type: 3}
-  - {fileID: 21300000, guid: 7246f7cf866e86b47ba606e394529460, type: 3}
-  - {fileID: 21300000, guid: 9167761cbfab661449b0d7484b560416, type: 3}
-  - {fileID: 21300000, guid: c399c214f6599934a91cadbf14d8736b, type: 3}
-  - {fileID: 21300000, guid: 1bb0305ef0134184aad439b92cbcceb5, type: 3}
-  - {fileID: 21300000, guid: 480154bd37941d0408c2265da2bc4e58, type: 3}
-  - {fileID: 21300000, guid: 1a8834ae1ec019146bc268625bedcf22, type: 3}
-  - {fileID: 21300000, guid: 7f689a6ce7c2d3d41bfc2190762269c4, type: 3}
-  - {fileID: 21300000, guid: 4d839ffef1887d54392ffcd16756e041, type: 3}
-  - {fileID: 21300000, guid: eff8dcb5c0e2c51449548009c18d0bed, type: 3}
-  - {fileID: 21300000, guid: d836dcb646c25354e8e92209f670c159, type: 3}
-  - {fileID: 21300000, guid: d836dcb646c25354e8e92209f670c159, type: 3}
-  - {fileID: 21300000, guid: 376db9219773ec940a3fa43d3e650e32, type: 3}
-  - {fileID: 21300000, guid: 688b914950bf3214796cbad2922a3638, type: 3}
-  - {fileID: 21300000, guid: 48c2a7ca2bd906c41ae9017ae3b52b4e, type: 3}
-  - {fileID: 21300000, guid: 0ec09ec184182864aa9c8cc9902c85fe, type: 3}
-  - {fileID: 21300000, guid: e8075fde879c334479f019c1f2827c0d, type: 3}
-  - {fileID: 21300000, guid: 86ce848027ec2904c83517fce144f2a6, type: 3}
-  - {fileID: 21300000, guid: a49c2466962ea6b4585a3159b8b490f1, type: 3}
-  - {fileID: 21300000, guid: 7cee5235d9602984ea85441015f07299, type: 3}
-  - {fileID: 21300000, guid: fe22998dfa83f994d9146b0564449e8e, type: 3}
-  - {fileID: 21300000, guid: cd7dff7c33370d84886aabe36e6ca9bd, type: 3}
-  - {fileID: 21300000, guid: b8580b1bf5867b0469282ba8490813b3, type: 3}
-  - {fileID: 21300000, guid: 997237947ab5cc044bdb8f0228a4da7f, type: 3}
-  - {fileID: 21300000, guid: 012d5f260bbd94849a7f775eb7668046, type: 3}
-  - {fileID: 21300000, guid: 8c4832c6166a3514db02bdc468e903b5, type: 3}
-  - {fileID: 21300000, guid: 58b43cf04a541994893e15629fab63bf, type: 3}
-  - {fileID: 21300000, guid: ae9d8742c3aaef341a12c6d687adb664, type: 3}
-  - {fileID: 21300000, guid: c715ba0ec70f74c47aab4c5471c83324, type: 3}
-  - {fileID: 21300000, guid: cbf4b24e54c7b694fa21fac1925b0cc9, type: 3}
-  - {fileID: 21300000, guid: 38496a9abaa65c24c85ac47669c0b963, type: 3}
-  - {fileID: 21300000, guid: 27b6d236c093f7a4b9af02803a8becfc, type: 3}
-  - {fileID: 21300000, guid: f8c921f337947b14b8bf1213a45ba4dc, type: 3}
-  - {fileID: 21300000, guid: 8c01e3f48fb8285419ecb0edf229ea70, type: 3}
-  - {fileID: 21300000, guid: 32992097afbf5a54197a714ae9c51d39, type: 3}
-  - {fileID: 21300000, guid: e1aeeda0c45466d49835909d8ea2e1b0, type: 3}
-  - {fileID: 21300000, guid: 60599927cab699144a8a3814b5b8a220, type: 3}
-  - {fileID: 21300000, guid: 23ace9dace1ba9a4d8d0916f3d8af527, type: 3}
-  - {fileID: 21300000, guid: bc72b735a61d0a24887f9bf7cf841dfb, type: 3}
-  - {fileID: 21300000, guid: e27ef7675e1993245a4dd132d299a309, type: 3}
-  - {fileID: 21300000, guid: 39f3b6715c00bad41b34b43da9c3cef6, type: 3}
-  - {fileID: 21300000, guid: 7acf9a5962a8d1d45babbd5927b7a61b, type: 3}
-  - {fileID: 21300000, guid: 31dd0ffb2243d4943a6dbbae59a926b7, type: 3}
-  - {fileID: 21300000, guid: ca7f557cbedc0154c938fd42e3eaac1e, type: 3}
-  - {fileID: 21300000, guid: 1d2260174ec126a4db6d30072576b982, type: 3}
-  - {fileID: 21300000, guid: a1a6fbdfa4a613442be59b8a408619c2, type: 3}
-  - {fileID: 21300000, guid: 079f539d81e71e246b3983609a59a4b9, type: 3}
-  - {fileID: 21300000, guid: b12dcae71eb672f4a8ca25690366bbdc, type: 3}
-  - {fileID: 21300000, guid: c9df45a0e2d4ec84ca36b972213a7ac2, type: 3}
-  - {fileID: 21300000, guid: df1acd8ff13ea2947a9da2d7b2ff86f1, type: 3}
-  - {fileID: 21300000, guid: 5e2b32e5b26c25d4e8420e9c6b0fd544, type: 3}
-  - {fileID: 21300000, guid: 2ab94026a20381a4880e6d75060e96e1, type: 3}
-  - {fileID: 21300000, guid: b73dca37bfd54fa418d953bdf9b82133, type: 3}
-  - {fileID: 21300000, guid: 6e191830c565f9c49b0bd86970a3d1c8, type: 3}
-  - {fileID: 21300000, guid: 151186655e9f4bb4aa70773c801dc19f, type: 3}
-  - {fileID: 21300000, guid: bcc91842bd73c754eafe3506342d109f, type: 3}
-  - {fileID: 21300000, guid: ab6985fd4f945b34ab80528af49bdb78, type: 3}
-  - {fileID: 21300000, guid: ec059970b4dfb91468951c3ef51757ed, type: 3}
-  - {fileID: 21300000, guid: d70c3bb3c69715042a2fc281c529da7b, type: 3}
-  - {fileID: 21300000, guid: 16407a0a5cf7e2a41a9e1a60476f62d6, type: 3}
-  - {fileID: 21300000, guid: e160abb1f28d2c14d858bd0f2dc0b1a5, type: 3}
-  - {fileID: 21300000, guid: 46f345bb3a6cc4b478e4ade98530b50f, type: 3}
-  - {fileID: 21300000, guid: 6e8414770a5ac254db719c43c4d3ef5c, type: 3}
-  - {fileID: 21300000, guid: 958f022fccdaae14b8c0bcca43745f58, type: 3}
-  - {fileID: 21300000, guid: fa4b88d7a30488b46838d316463cbf6c, type: 3}
-  - {fileID: 21300000, guid: 5f2600e6124aae04eadafa42fdd7aa28, type: 3}
-  - {fileID: 21300000, guid: a94338c1c9319b44a986262cbacd4d99, type: 3}
-  - {fileID: 21300000, guid: 49e2e38229fe8e5498953576ad2d4073, type: 3}
-  - {fileID: 21300000, guid: cdfce4d6c31aee945b26ba22a904334d, type: 3}
-  - {fileID: 21300000, guid: 686aefa6a42b7d745a3144070a22f781, type: 3}
-  - {fileID: 21300000, guid: e810dfddc1980084cb13275b22eba2c1, type: 3}
-  - {fileID: 21300000, guid: 62e744472550eeb45920a7f4852e1aa6, type: 3}
-  - {fileID: 21300000, guid: a923c5f90cc2c00459edd4ace380b185, type: 3}
-  - {fileID: 21300000, guid: 36c83c0a2be93ae459115b9ff5d7bf1c, type: 3}
-  - {fileID: 21300000, guid: b53bb039ad2028b46b0e21aa850fb6e5, type: 3}
-  - {fileID: 21300000, guid: 8aab265921b9bf443b7b4b02ce88961b, type: 3}
-  - {fileID: 21300000, guid: e3e3ef5c9e90cf346b3752e5c059eecb, type: 3}
-  - {fileID: 21300000, guid: 06de58b45017ee045a2230ff55a87b23, type: 3}
-  - {fileID: 21300000, guid: cbfc80d899cd8e24a82020ee46f516b9, type: 3}
-  - {fileID: 21300000, guid: ce080f2a64eb9ff43821d7b259e1f07d, type: 3}
-  - {fileID: 21300000, guid: 926d9745ca699a34e895ddde6980806b, type: 3}
-  - {fileID: 21300000, guid: 60683783334f4904c99e3cd5d710299a, type: 3}
-  - {fileID: 21300000, guid: 447afbff23bcd2348a4a560f6b2c274e, type: 3}
-  - {fileID: 21300000, guid: 5dc2d4374a406a14c8b031113b692d4e, type: 3}
-  - {fileID: 21300000, guid: 24f4fb3ceeadb874fbf1707a3873dbaa, type: 3}
-  - {fileID: 21300000, guid: d61782a1d8d2ef64988d68db10aec11d, type: 3}
-  - {fileID: 21300000, guid: e65432daeeb103c44b3a9720e5d7f4a6, type: 3}
-  - {fileID: 21300000, guid: 7cb774ca6a710e14f84a46b357a46a2a, type: 3}
-  - {fileID: 21300000, guid: fe728fb7a6b30df4890abdb80c0f39d9, type: 3}
-  - {fileID: 21300000, guid: 4a8decbc8210d6b4ea407798a0ab7c44, type: 3}
-  - {fileID: 21300000, guid: ca67cbe0aae7e00468dbaecc96e552f9, type: 3}
-  - {fileID: 21300000, guid: fab42de491311d94f9c6ae31fd4c7511, type: 3}
-  - {fileID: 21300000, guid: ff99c819013d8f24fbcebe000199d274, type: 3}
-  - {fileID: 21300000, guid: 83d02f978487c9445905201c84516acd, type: 3}
-  - {fileID: 21300000, guid: b4c29dc8dc538564c98c6af88bb4d3c4, type: 3}
-  - {fileID: 21300000, guid: 63ac452a6ce4b324f9a4ff8c5f6997fa, type: 3}
-  - {fileID: 21300000, guid: dc495277858a4324593986e3e40c6735, type: 3}
-  - {fileID: 21300000, guid: f2fcbd569092fa942a46aa2f0879a556, type: 3}
-  - {fileID: 21300000, guid: 77d4be5bc62fb074aa2b170818a12b3b, type: 3}
-  - {fileID: 21300000, guid: 578dcf82cf794a542b1939c2a55d107b, type: 3}
-  - {fileID: 21300000, guid: c93fc2ddb8ec8864e9fa05ae528a6838, type: 3}
-  - {fileID: 21300000, guid: 40f94f2c3c7375c4f94b6cc3549054b8, type: 3}
-  - {fileID: 21300000, guid: 30a367aa105af0645b17a2a002f8d121, type: 3}
-  - {fileID: 21300000, guid: 30a367aa105af0645b17a2a002f8d121, type: 3}
-  - {fileID: 21300000, guid: 3df255d3525717b4288ca87b75ddc68e, type: 3}
-  - {fileID: 21300000, guid: adef314fcff8973498e92b19c9e68b03, type: 3}
-  - {fileID: 21300000, guid: c33a56283c59c1b49a3f32f8eb213f3c, type: 3}
-  - {fileID: 21300000, guid: 5aa9b025c2b09244b8c72f7dc1bbbeb7, type: 3}
-  - {fileID: 21300000, guid: 12611f8ed9b020e47bc1beb6bb8bf643, type: 3}
-  - {fileID: 21300000, guid: eff12e81828af00448f94a8326ffa346, type: 3}
-  - {fileID: 21300000, guid: fcff8afde8a942240802b1b5fd278515, type: 3}
-  - {fileID: 21300000, guid: 2208c18145589354e801abb02d6dce0f, type: 3}
-  - {fileID: 21300000, guid: b07258776b487b440ad423e153c195c7, type: 3}
-  - {fileID: 21300000, guid: 46d066c127105654b88809248b55e1d6, type: 3}
-  - {fileID: 21300000, guid: 9835aa98ab05a6c4ebff35001f79925e, type: 3}
-  - {fileID: 21300000, guid: f030301f132b1ce419da77495e0433f5, type: 3}
-  - {fileID: 21300000, guid: 0cf65799825c1814db2bf9c5e6c2350a, type: 3}
-  - {fileID: 21300000, guid: 74828052977ba4142badc298f1e7b677, type: 3}
-  - {fileID: 21300000, guid: 234f559a8cfa2d54683843704cf913c6, type: 3}
-  - {fileID: 21300000, guid: af41742f818ebfa4fb9f9cca3dc8826d, type: 3}
-  - {fileID: 21300000, guid: 788825447414e71409664727acd9ca8c, type: 3}
-  - {fileID: 21300000, guid: 9775dae1c58a3fc459c74142278af14f, type: 3}
-  - {fileID: 21300000, guid: 2961b1e418fe5414f91ba9e0487396e8, type: 3}
-  - {fileID: 21300000, guid: 6b4ab6f7592219841a062147f55bc5a9, type: 3}
-  - {fileID: 21300000, guid: 3a829be28e22fd74aab9419fe5130d37, type: 3}
-  - {fileID: 21300000, guid: bbbe224c1790ee44e866af3a548b38e8, type: 3}
-  - {fileID: 21300000, guid: 91a0500d7fbf65346ae8666a813d85d9, type: 3}
-  - {fileID: 21300000, guid: 060b00dd4f756db47ac369b9e0d7b4bf, type: 3}
-  - {fileID: 21300000, guid: 4711a9739d520664dae3a32e91ce99f8, type: 3}
-  - {fileID: 21300000, guid: 56a38e8e767c7624281c4a1de7457b63, type: 3}
-  - {fileID: 21300000, guid: ba1c3f15f33eb394bae452940fac023d, type: 3}
-  - {fileID: 21300000, guid: 8af80ff2b937dde45adbe54cb1140671, type: 3}
-  - {fileID: 21300000, guid: 80162745aa3585944abe356e005c76e8, type: 3}
-  - {fileID: 21300000, guid: cb77ddbe1e59ac6438c52d12272c2958, type: 3}
-  - {fileID: 21300000, guid: 0e4671221c6baee4aa25e45764a82cc4, type: 3}
-  - {fileID: 21300000, guid: 37a2aac64cf467f4d9c183e278a6abb5, type: 3}
-  - {fileID: 21300000, guid: 21b17e2aedc526d45aec0803fc559601, type: 3}
-  - {fileID: 21300000, guid: 8b96361c7362b7e429207fb9270e4d7a, type: 3}
-  - {fileID: 21300000, guid: 685450d3b48a404488060ee82bc4f885, type: 3}
-  - {fileID: 21300000, guid: 8c969f61e60df1640a9f8ca41418edd8, type: 3}
-  - {fileID: 21300000, guid: e64b2504b9baf834da23c0f26d222d68, type: 3}
-  - {fileID: 21300000, guid: e64b2504b9baf834da23c0f26d222d68, type: 3}
-  - {fileID: 21300000, guid: 086beb8f927a03b4ca81ad9bbc3f2d9b, type: 3}
-  - {fileID: 21300000, guid: 00ce41812a6cfd941adc75a52c74b527, type: 3}
-  - {fileID: 21300000, guid: dea35d2b2a8cfb7429be1527fac16343, type: 3}
-  - {fileID: 21300000, guid: 93a1273ee46b92e478ba7af066717a7b, type: 3}
-  - {fileID: 21300000, guid: 6ad43a0f9f0173a4e93ce0f50e1a2ce4, type: 3}
-  - {fileID: 21300000, guid: c1aef54b121cc654d9e2c703b39d2ef1, type: 3}
-  - {fileID: 21300000, guid: eaf34d9119068c44b8b14c06c8e45da5, type: 3}
-  - {fileID: 21300000, guid: af48d04df0f954f44b675a1b023e3f5d, type: 3}
-  - {fileID: 21300000, guid: 89eceaae8359cf745a2676441c077aae, type: 3}
-  - {fileID: 21300000, guid: f67d3735ac06a3d43b848ef77a800314, type: 3}
-  - {fileID: 21300000, guid: 5e69e0fd8feeb814384deeff5b42d51b, type: 3}
-  - {fileID: 21300000, guid: a445dd496fac4cc4598181d1304dd378, type: 3}
-  - {fileID: 21300000, guid: 9150f6f63c6644e42b5ea0e96654700e, type: 3}
-  - {fileID: 21300000, guid: e5e99d5ea4e324240859ab5a3ee552b9, type: 3}
-  - {fileID: 21300000, guid: 4c0c9153ab08d0849a48cb0baded61db, type: 3}
-  - {fileID: 21300000, guid: ed3ffad719875a740b92b9ee206a3ea8, type: 3}
-  - {fileID: 21300000, guid: aa8d3cdc98bb275409bbc665eba162fc, type: 3}
-  - {fileID: 21300000, guid: d82e4c85592915f4a9fc8d0cf9f758a7, type: 3}
-  - {fileID: 21300000, guid: 1dafec8b1396d2f4aafeac10964058b5, type: 3}
-  - {fileID: 21300000, guid: 0b721c60bd18194489b42129fa7f4550, type: 3}
-  - {fileID: 21300000, guid: 3fa5e8fab796d9446822e1c2d1bfb6af, type: 3}
-  - {fileID: 21300000, guid: e686b2ce9610f7b40a8670a92519cd98, type: 3}
-  - {fileID: 21300000, guid: 349b38efab201ad4d9ca7c1068a36e13, type: 3}
-  - {fileID: 21300000, guid: 3fd5101533f71e94cad5cb407e83d2f1, type: 3}
-  - {fileID: 21300000, guid: 032d1b2990e5f0c4bb6ad1f56d6ac97f, type: 3}
-  - {fileID: 21300000, guid: 70647228d71a3f2428b4f6c36f6ad663, type: 3}
-  - {fileID: 21300000, guid: 44c7a970e0299414f89c6c94cb2a6fd6, type: 3}
-  - {fileID: 21300000, guid: c434140168bc6884ea3e4d58488c6ebe, type: 3}
-  - {fileID: 21300000, guid: 14df5c69359eae84e84fa4f240c7dd98, type: 3}
-  - {fileID: 21300000, guid: 22126f8ef3abc0c428358d361f30f0ed, type: 3}
-  - {fileID: 21300000, guid: 0bdf4db429b4a4842a6ee58167d47a40, type: 3}
-  - {fileID: 21300000, guid: 92150d7f9ca669542a4654559167d85c, type: 3}
-  - {fileID: 21300000, guid: 430493dcb33908743b4c02975a9ea6cc, type: 3}
-  - {fileID: 21300000, guid: c68aa3a7210bb854c8868aeb2e7939c1, type: 3}
-  - {fileID: 21300000, guid: 11c70d8f03b1fd64780add4de41b307e, type: 3}
-  - {fileID: 21300000, guid: 404b2b1b8da2bd948b6e0f62417bded4, type: 3}
-  - {fileID: 21300000, guid: 076ccddead783f74ea303634e8f6b32a, type: 3}
-  - {fileID: 21300000, guid: 2b4d37b9f00554e4e90d81548b00328f, type: 3}
-  - {fileID: 21300000, guid: 558ae4a0b21aa1e4c86a3e0880238109, type: 3}
-  - {fileID: 21300000, guid: a423adb2ba8771c4ba6d5812675dc467, type: 3}
-  - {fileID: 21300000, guid: 0bc0a109fdded594cb2e35cf11715927, type: 3}
-  - {fileID: 21300000, guid: f57faf135abb63a45872ec4d3a308af0, type: 3}
-  - {fileID: 21300000, guid: 8ace6055cbe0ac8499350a1a39d1dc02, type: 3}
-  - {fileID: 21300000, guid: afa88ba7ff4b8fe45a22f080fd1db3d6, type: 3}
-  - {fileID: 21300000, guid: 1f55503e85699854fa449b44fd0de6a2, type: 3}
-  - {fileID: 21300000, guid: b45ac478c0a5ec345aa194982592d9ac, type: 3}
-  - {fileID: 21300000, guid: 31f6c63c322cbea46bbe06ce762ed327, type: 3}
-  - {fileID: 21300000, guid: 84e38b8822c2f18409123343ee82b9ab, type: 3}
-  - {fileID: 21300000, guid: 5d98144a21ba40549b0409ea5e59dc1c, type: 3}
-  - {fileID: 21300000, guid: dbc19fa81cc5b544584310a1b85e39f2, type: 3}
-  - {fileID: 21300000, guid: f8df4427f8c4fbc4a8efefa0394514f5, type: 3}
-  - {fileID: 21300000, guid: 4cf9bbd680edc4b44878cb11d37df084, type: 3}
-  - {fileID: 21300000, guid: 9c293f0986db10e4087be3af2052292f, type: 3}
-  - {fileID: 21300000, guid: cfdb9e687f905d34fb4b90c8c1c1d9de, type: 3}
-  - {fileID: 21300000, guid: 16e28fa579e708349914cb863685907f, type: 3}
-  - {fileID: 21300000, guid: 7b8dac432b837014ab620ee67ea45c2b, type: 3}
-  - {fileID: 21300000, guid: b5c2b35744eb0a849ac6b956fb6c8a71, type: 3}
-  - {fileID: 21300000, guid: 3e7bfcf8db9a38642add7d4fda865719, type: 3}
-  - {fileID: 21300000, guid: ec2176fbce86d62438bcf871a280ad51, type: 3}
-  - {fileID: 21300000, guid: e77cce27a7856a04b9595780fef595b8, type: 3}
-  - {fileID: 21300000, guid: 3853e496669714f4e997e708383b68b3, type: 3}
-  - {fileID: 21300000, guid: ec3444ebedaedb64fb9d2bc42efd0edc, type: 3}
-  - {fileID: 21300000, guid: 5032e350d0a310b44ab1297a0bdec136, type: 3}
-  - {fileID: 21300000, guid: 0a2b671c111bc904b87bdc4fe9a32024, type: 3}
-  - {fileID: 21300000, guid: e3a60cda418f4f541a6a715ed5e78277, type: 3}
-  - {fileID: 21300000, guid: 013852156e23f3c499fd7038f3f16730, type: 3}
-  - {fileID: 21300000, guid: 7f98c3562817333429f6e202a33ba49a, type: 3}
-  - {fileID: 21300000, guid: dccf9ad7f1a201246b28af10058f8e16, type: 3}
-  - {fileID: 21300000, guid: ab32cd08abe1b424bbd5f787fd0ff167, type: 3}
-  - {fileID: 21300000, guid: 589362b5969cee84dac323f7e3a19d74, type: 3}
-  - {fileID: 21300000, guid: fae93c780fbbf0b4a88bd46bd59e7232, type: 3}
-  - {fileID: 21300000, guid: 467cdafd2ab7856409e9e77c8979e1d9, type: 3}
-  - {fileID: 21300000, guid: d9fe3ea9171c4da4ea11eed12b6705e4, type: 3}
-  - {fileID: 21300000, guid: d8373d086b84878458203212f54e8c0f, type: 3}
-  - {fileID: 21300000, guid: 666f05d49d8f3bc4f9f31b2a1861c840, type: 3}
-  - {fileID: 21300000, guid: a2b35f40c3fa2ac4db07deadd7e16b8d, type: 3}
-  - {fileID: 21300000, guid: adcdafc76284a34478530f1d938c0514, type: 3}
-  - {fileID: 21300000, guid: 65298f6a3eafccb418141e61257a8316, type: 3}
-  - {fileID: 21300000, guid: c4f04ccaebcd0174ba9249733af7011d, type: 3}
-  - {fileID: 21300000, guid: fc18ecc8b26fb8142a91bbc6012dfb0b, type: 3}
-  - {fileID: 21300000, guid: 79a6466e49451844db104fcb6852ea75, type: 3}
-  - {fileID: 21300000, guid: a0a56ba6c1a41094da772aa289c2bb43, type: 3}
-  - {fileID: 21300000, guid: bad799eba0b82644992aafbecf854d36, type: 3}
-  - {fileID: 21300000, guid: 64052fa82ee08eb4d8cc97b44861cd30, type: 3}
-  - {fileID: 21300000, guid: 6bfe1cb46aac78647bdbfabeee5b39c6, type: 3}
-  - {fileID: 21300000, guid: d11f19b08f7c6d34f8e19b7d012c573d, type: 3}
-  - {fileID: 21300000, guid: 14424c4eea9d7da4c8f6a8a72485525a, type: 3}
-  - {fileID: 21300000, guid: 8b16e8efaabff924085aeb7e04eae211, type: 3}
-  - {fileID: 21300000, guid: d8416c36305ba164ea62f59e2561be12, type: 3}
-  - {fileID: 21300000, guid: 7a3aeca9940f9574da23991eed4ae1ed, type: 3}
-  - {fileID: 21300000, guid: ef6d9d1b97b02aa4b8fa54ee0305e0d6, type: 3}
-  - {fileID: 21300000, guid: c5cdbe326a2ec604aa2dc559b6c278e0, type: 3}
-  - {fileID: 21300000, guid: 6fd5270483286034da838a1c55bce46b, type: 3}
-  - {fileID: 21300000, guid: 6ee89f1a2c92489448cc2dcbea2c7903, type: 3}
-  - {fileID: 21300000, guid: 00625f27870c0a04694261232ba8bdbe, type: 3}
-  - {fileID: 21300000, guid: 7f87ba272cf6e9e4dbaa5d4c145989c1, type: 3}
-  - {fileID: 21300000, guid: 1ea6afa264e377e48a7738cf1558d6a4, type: 3}
-  - {fileID: 21300000, guid: 3ede5efdb3b65084d87f9ce40b95a32a, type: 3}
-  - {fileID: 21300000, guid: 8bde8cd93dfd49b4a86b2c97a091fce9, type: 3}
-  - {fileID: 21300000, guid: dae18706515a31646b3fc73d0bbbd002, type: 3}
-  - {fileID: 21300000, guid: 3f12b62d6e8d86947b63f88d18d24613, type: 3}
-  - {fileID: 21300000, guid: f3bb98c4fab64f8468d1da9a1b851af7, type: 3}
-  - {fileID: 21300000, guid: bab8b27ec5b883e429afe825d4d91f4c, type: 3}
-  - {fileID: 21300000, guid: 28d61f372b6f6284c919f953f2009a90, type: 3}
-  - {fileID: 21300000, guid: 994d0cf47e9137e4aa9fb2bfad808bca, type: 3}
-  - {fileID: 21300000, guid: 3444375a1c364884faa08ef8d894c7c0, type: 3}
-  - {fileID: 21300000, guid: 0a3ab2c287121ad41ac5ee6c2116c5ac, type: 3}
-  - {fileID: 21300000, guid: c7d4b2226a9079644bb988d78d63d244, type: 3}
-  - {fileID: 21300000, guid: 37ac933ce796b634a9b0134568aee581, type: 3}
-  - {fileID: 21300000, guid: c6be5db97e17ce04f83d104f3f93cff0, type: 3}
-  - {fileID: 21300000, guid: a2c1012606562e3409a3bf203dc71e93, type: 3}
-  - {fileID: 21300000, guid: b08912c0cad0ae4458160ec4e2bfaa7d, type: 3}
-  - {fileID: 21300000, guid: c1817bc0d1d02bf4ba1e7eba83acee0e, type: 3}
-  - {fileID: 21300000, guid: 97df61584419cbc4fb77e4782bf9dfba, type: 3}
-  - {fileID: 21300000, guid: effad02ffa12a6c42b7f2c74108a2ebc, type: 3}
-  - {fileID: 21300000, guid: 672f059a1cc4bb94baf7d197533fc45c, type: 3}
-  - {fileID: 21300000, guid: 00f23099890312342a9915d92a5bf16f, type: 3}
-  - {fileID: 21300000, guid: 46641163a2f577047a3cb1350ccd932d, type: 3}
-  - {fileID: 21300000, guid: 6472578634a7b594fb68f29be0710efa, type: 3}
-  - {fileID: 21300000, guid: c506a48c793d9e44589dfcec078390f1, type: 3}
-  - {fileID: 21300000, guid: 95bc06c01f42f2d4cb08a97ed06e2c76, type: 3}
-  - {fileID: 21300000, guid: 90df00b1d4c522743aa16dde5b35a70c, type: 3}
-  - {fileID: 21300000, guid: 4691926be8b41c14080b5cf86656a291, type: 3}
-  - {fileID: 21300000, guid: 8160c27acdaf08e46b6012a27a4fc08d, type: 3}
-  - {fileID: 21300000, guid: af74d349bdc3d3d46b96bc2cf6f59526, type: 3}
-  - {fileID: 21300000, guid: 3c305a10a4d717f458837eea313bd319, type: 3}
-  - {fileID: 21300000, guid: 06fc4b917c758e64388552709e0e0796, type: 3}
-  - {fileID: 21300000, guid: 146b3648673e0474fa05e7ed368947be, type: 3}
-  - {fileID: 21300000, guid: e48516ac9b84feb4d9339a625ec7af55, type: 3}
-  - {fileID: 21300000, guid: f4b1449ba90cc8340945001c74f580ac, type: 3}
-  - {fileID: 21300000, guid: de69c03986e187142b18b14580c9a997, type: 3}
-  - {fileID: 21300000, guid: a0a95e0d3644c2146811a2c7d1968aa8, type: 3}
-  - {fileID: 21300000, guid: 4438ef59f92643240927d2df2b092aa0, type: 3}
-  - {fileID: 21300000, guid: 445d5d800b380924199ff4f2e0c294b2, type: 3}
-  - {fileID: 21300000, guid: a1c7a8a0cbdc62c4694433a7c0b0c7b8, type: 3}
-  - {fileID: 21300000, guid: b7493d2b2f4ca4a419600dc143390a5f, type: 3}
-  - {fileID: 21300000, guid: 9106e92161df0344aba3dc5ff646ca9a, type: 3}
-  - {fileID: 21300000, guid: c7775d62e88ac804e800727e03de22fe, type: 3}
-  - {fileID: 21300000, guid: abf884e67fac8514a9809aa90a41811d, type: 3}
-  - {fileID: 21300000, guid: b6566c05f7a031a43a1a1ef980ebefb6, type: 3}
-  - {fileID: 21300000, guid: 33741924de1f99b4e9dbccc0ba6dfabe, type: 3}
-  - {fileID: 21300000, guid: 3430b74a7caf4e9498be76e6576ac5b4, type: 3}
-  - {fileID: 21300000, guid: 3caee42eef9914c4891116d5c57e0670, type: 3}
-  - {fileID: 21300000, guid: d79c5b2c110f26347bf9a2fae5825031, type: 3}
-  - {fileID: 21300000, guid: 1f78fdc3afc9e8a47b21fb8c8a1db686, type: 3}
-  - {fileID: 21300000, guid: 39daa0a60f21fb245a7eb15cc557ce65, type: 3}
-  - {fileID: 21300000, guid: 2cb4d75c69b002543bd4cbd4261ce59f, type: 3}
-  - {fileID: 21300000, guid: fe2d151d153d4844ab57286b1fa1766b, type: 3}
-  - {fileID: 21300000, guid: c013d34ea4714d84f8ac73cd5a59c275, type: 3}
-  - {fileID: 21300000, guid: 5d04004ee7774cc4fa82aef5b8fae0e8, type: 3}
-  - {fileID: 21300000, guid: 2d6de560b1a1b644387d0d2d9d3bcf8e, type: 3}
-  - {fileID: 21300000, guid: 2aef0b44290ba2f448bc3597ab28237e, type: 3}
-  - {fileID: 21300000, guid: f9610751e29831148bbacc3f885b1751, type: 3}
-  - {fileID: 21300000, guid: a2cbbf4f7b8c7ce4c96053708b463689, type: 3}
-  - {fileID: 21300000, guid: 2f207779a84cefc4c960c4eef30cc259, type: 3}
-  - {fileID: 21300000, guid: 0a0411743e504784d8985feea5d8dda8, type: 3}
-  - {fileID: 21300000, guid: 3f44d89efc7f6144d9daa39f1c4678eb, type: 3}
-  - {fileID: 21300000, guid: 4a92e6dcb70aee34d8c5b8290c8dfb35, type: 3}
-  - {fileID: 21300000, guid: f034e09ae6d4aba489cc6c25b9319d72, type: 3}
-  - {fileID: 21300000, guid: ab5acbe54009c5941b7ac2d50806b341, type: 3}
-  - {fileID: 21300000, guid: ecee7e0704845ba4e862e25f0f71545d, type: 3}
-  - {fileID: 21300000, guid: 4d0d360014448c342b4929a290c1e04e, type: 3}
-  - {fileID: 21300000, guid: 8acd29eed32f12e4db7519efde26ac12, type: 3}
-  - {fileID: 21300000, guid: 8afd55fb168937d439e9970a5b2ff416, type: 3}
-  - {fileID: 21300000, guid: bf11a95bf89630443b4d3b23eca97899, type: 3}
-  - {fileID: 21300000, guid: 37fd7ffee5bf7934f8cdff75ce49daca, type: 3}
-  - {fileID: 21300000, guid: 56a5c647b52c27b4498efa3b678a4754, type: 3}
-  - {fileID: 21300000, guid: 45911bcb90bf0ca409abc85bff1546a3, type: 3}
-  - {fileID: 21300000, guid: 7a639e1b957eece4fac7e8e1493c47dc, type: 3}
-  - {fileID: 21300000, guid: 6709cc098435b8d47843179c182d7f24, type: 3}
-  - {fileID: 21300000, guid: 2076ba204c728be44a18399a510b580c, type: 3}
-  - {fileID: 21300000, guid: cfdcba11fc1e06e4f8cc628769c3dbd9, type: 3}
-  - {fileID: 21300000, guid: 676d447de0e881745b701b30af4d9436, type: 3}
-  - {fileID: 21300000, guid: e869c6f0b6e4cd94cb5db2a8e5baaf66, type: 3}
-  - {fileID: 21300000, guid: 424301c4547c99e4d8c9a83451917e19, type: 3}
-  - {fileID: 21300000, guid: 0e73fa78f7de1ec47ba56637a2f6ae02, type: 3}
-  - {fileID: 21300000, guid: 15f5b20344ac5e14c8dbc38e7370d218, type: 3}
-  - {fileID: 21300000, guid: a21b4c7b436cc6147a31834b01a0a365, type: 3}
-  - {fileID: 21300000, guid: 086913b00d079cb41a80e7aaab6756d2, type: 3}
-  - {fileID: 21300000, guid: db884d5bdf0472b42804c8bea255559f, type: 3}
-  - {fileID: 21300000, guid: 202dd3f3b17fb544cb40c24220cd61c2, type: 3}
-  - {fileID: 21300000, guid: 91bdaca2d6fd5ec48bfd1c5c53c74ef4, type: 3}
-  - {fileID: 21300000, guid: 785a9d21a4ab66847aadc8b0dc6e8c0c, type: 3}
-  - {fileID: 21300000, guid: 5f89364d2e8c1b3468e27f29a2c55f5f, type: 3}
-  - {fileID: 21300000, guid: 1ee2942d79f6a6343beae423a94a02a3, type: 3}
-  - {fileID: 21300000, guid: 734841e40d0a4b140ad5ddc34170e012, type: 3}
-  - {fileID: 21300000, guid: 9a39cf6f1a6232c449b5ee8cc3f3d108, type: 3}
-  - {fileID: 21300000, guid: 22c777faf993acc40a92e59f53351f18, type: 3}
-  - {fileID: 21300000, guid: 7502eaf04d0d05b4ca82a9167616edb1, type: 3}
-  - {fileID: 21300000, guid: eb0f4f8f66c81ae42b71eb18b7e2d888, type: 3}
-  - {fileID: 21300000, guid: eb65fc1ff1967ad4db08441899ddeb1b, type: 3}
-  - {fileID: 21300000, guid: ffe0515c7c623fc42b675b3d0905ca7f, type: 3}
-  - {fileID: 21300000, guid: 62520f99cde8ab342b85adf2d0c07903, type: 3}
-  - {fileID: 21300000, guid: 6545f44016cb2724e9b9cce56b76cda0, type: 3}
-  - {fileID: 21300000, guid: 9063a411b0c99fa49b7898bdde93bd67, type: 3}
-  - {fileID: 21300000, guid: 57a7fb5fe6477c540b4d392e657373f0, type: 3}
-  - {fileID: 21300000, guid: 11b4258ddf663b64cbd9408c781c7457, type: 3}
-  - {fileID: 21300000, guid: 38222ebee37d6e444a08c2dbc6e4f269, type: 3}
-  - {fileID: 21300000, guid: 38222ebee37d6e444a08c2dbc6e4f269, type: 3}
-  - {fileID: 21300000, guid: 4d74b56cd036d7d479e7beef3fb16e3e, type: 3}
-  - {fileID: 21300000, guid: d45ab1232d50aa24ea44f310740e5ce0, type: 3}
-  - {fileID: 21300000, guid: 2036971108c6cf241b5b6e342b1876aa, type: 3}
-  - {fileID: 21300000, guid: 587e0f773d4b11d468377737fdbf2577, type: 3}
-  - {fileID: 21300000, guid: 2f769c429c55681419e19411a389de64, type: 3}
-  - {fileID: 21300000, guid: 37e4011977cc0184eadfe6ee85567b26, type: 3}
-  - {fileID: 21300000, guid: 49d2f1ce094a6d74dbc4739ee2130922, type: 3}
-  - {fileID: 21300000, guid: 48003d1616687e444b556ae727af0d77, type: 3}
-  - {fileID: 21300000, guid: f9dd44bf5afb66644b4c3a19fb9ff834, type: 3}
-  - {fileID: 21300000, guid: b94abb0d4365fed42a2d39536562a555, type: 3}
-  - {fileID: 21300000, guid: 1a2a552a2dac1d84994ac68f2aa52592, type: 3}
-  - {fileID: 21300000, guid: cf610a6fbcfef5146af7523b22917508, type: 3}
-  - {fileID: 21300000, guid: 8ac3f759cea5c9c47a359da55befd5ed, type: 3}
-  - {fileID: 21300000, guid: b1ed7e7a2e3a34f4c94e3ebe48ef66b0, type: 3}
-  - {fileID: 21300000, guid: 414d939eed51ed247a25d8e6f23eb10f, type: 3}
-  - {fileID: 21300000, guid: e3ac784e41a44564a929d1a2f8f7a750, type: 3}
-  - {fileID: 21300000, guid: 4f4f4aa3de4556d4cb1eb48a85efcd9a, type: 3}
-  - {fileID: 21300000, guid: ce1c4a96467dbd242b254a7f50150cce, type: 3}
-  - {fileID: 21300000, guid: 743dba00231c0d944abcfa0fb6ed4cbe, type: 3}
-  - {fileID: 21300000, guid: 76cee9f2df7d79e41a2943306c914a35, type: 3}
-  - {fileID: 21300000, guid: b50a6dfb45a791d40a56dae1dbb499f9, type: 3}
-  - {fileID: 21300000, guid: fc713b4ddc62f78478bfb767d4b4cab8, type: 3}
-  - {fileID: 21300000, guid: a5e6edc8a05cdf747bcf0feb836e7345, type: 3}
-  - {fileID: 21300000, guid: 70a6415102cc7d34e82f4c2890f1cf57, type: 3}
-  - {fileID: 21300000, guid: be35f359125f9084ab20cb8adfc37d5f, type: 3}
-  - {fileID: 21300000, guid: b5804b32ad3bbc24fa5de5a3aa34b5e2, type: 3}
-  - {fileID: 21300000, guid: f5e253d6c285637438effe0e83c9c6d0, type: 3}
-  - {fileID: 21300000, guid: f8cd563268d168240bb39e0e5a6a32c2, type: 3}
-  - {fileID: 21300000, guid: 9c741b25f7f991a4a8ddb9f69acf28bb, type: 3}
-  - {fileID: 21300000, guid: c039923ba9830d04db49359a5002db12, type: 3}
-  - {fileID: 21300000, guid: 88768c153b4b5d846b04bc7399a0545f, type: 3}
-  - {fileID: 21300000, guid: 6341a67b7dca3be4b9b11d2e229ea851, type: 3}
-  - {fileID: 21300000, guid: 39d72476afe090c45973cab69c411ae4, type: 3}
-  - {fileID: 21300000, guid: 8ee8a4851b891cb4cab0cd4149ea97cb, type: 3}
-  - {fileID: 21300000, guid: c7d366ae4e93f1e4394e08ce46c4d91a, type: 3}
-  - {fileID: 21300000, guid: 47f696191538afe4e8693e49ba169767, type: 3}
-  - {fileID: 21300000, guid: 88d085e18adf13847bb957b7d4972c9c, type: 3}
-  - {fileID: 21300000, guid: 6c13c31590dd7ab4fbed20ce555becb7, type: 3}
-  - {fileID: 21300000, guid: aab074b3e166ab441b296456cd35665a, type: 3}
-  - {fileID: 21300000, guid: 03f84d51889888b44b4b1d168d19e633, type: 3}
-  - {fileID: 21300000, guid: a59ee8b8c6bc48348845d30bc2b4c0f6, type: 3}
-  - {fileID: 21300000, guid: 252d7bea30711ff4bb5eb87713fc5938, type: 3}
-  - {fileID: 21300000, guid: efce6e7d616f3de459e515aa650a5d4f, type: 3}
-  - {fileID: 21300000, guid: eba0e13463a8c954b9911c8076228a7b, type: 3}
-  - {fileID: 21300000, guid: beae110eea0ffee4883c120a2c73972c, type: 3}
-  - {fileID: 21300000, guid: dfc79a86544951443bd7ab7c0be1f39c, type: 3}
-  - {fileID: 21300000, guid: 02e42b3a959b5c04a8c5d0be0edf9f50, type: 3}
-  - {fileID: 21300000, guid: c7b314ec3b4022449b77bcea60fb4ee2, type: 3}
-  - {fileID: 21300000, guid: c984a0fbed048f54cbbaebf81fd84ae7, type: 3}
-  - {fileID: 21300000, guid: f4049a8797499d845a36c3afba454315, type: 3}
-  - {fileID: 21300000, guid: 8da65dceb55b7144faa7d915d3b1356b, type: 3}
-  - {fileID: 21300000, guid: f51e8b2d958bf124898d7c5c3f219625, type: 3}
-  - {fileID: 21300000, guid: 979ee01344ea1384b900f2a7622aa8f3, type: 3}
-  - {fileID: 21300000, guid: b5fa497c1f0fc4844a590d74f01ad10b, type: 3}
-  - {fileID: 21300000, guid: 991dfb95f859ff7439915e2dd36f5078, type: 3}
-  - {fileID: 21300000, guid: a3b5508de7bbbc84196bd56b56f555e5, type: 3}
-  - {fileID: 21300000, guid: 44cef1c0f4ca43c4a86b357998b1c15a, type: 3}
-  - {fileID: 21300000, guid: 6eb2e80344592ed47aba70a56f329e32, type: 3}
-  - {fileID: 21300000, guid: 8d7de5bf015183a4b8d7a692bdba9299, type: 3}
-  - {fileID: 21300000, guid: d4f230d30a4e6544a97b045beb16dfb7, type: 3}
-  - {fileID: 21300000, guid: 776603b3aae7e3d45b32bf5d9bd635e7, type: 3}
-  - {fileID: 21300000, guid: 11dc43042b1bb184ab163c903564d39d, type: 3}
-  - {fileID: 21300000, guid: 2b68c6031f0b33d44b666125c4503878, type: 3}
-  - {fileID: 21300000, guid: 6495b0d19eed0464a80240d84e9e899f, type: 3}
-  - {fileID: 21300000, guid: 39ff29e4050a5ab438bc30f60d5a7682, type: 3}
-  - {fileID: 21300000, guid: 5f89a460a27fbb646814438d6b530897, type: 3}
-  - {fileID: 21300000, guid: 57b27178a2b20ea45b2bd6d503b46aa4, type: 3}
-  - {fileID: 21300000, guid: 27d3b367942be9e4892de4600101f31c, type: 3}
-  - {fileID: 21300000, guid: e17873ab3209cc449ad0938b19ea2514, type: 3}
-  - {fileID: 21300000, guid: 874ec8606d82e66479870c59a01f5de5, type: 3}
-  - {fileID: 21300000, guid: 47be1df64cc05084ca82abaab9eac2b0, type: 3}
-  - {fileID: 21300000, guid: 406ce1c432f52f64ea2806cce81dba57, type: 3}
-  - {fileID: 21300000, guid: 0b0f9b75bd51d9041b71f47d2dc1b5e7, type: 3}
-  - {fileID: 21300000, guid: 58418da1e65a7734c862c6c85f8cb681, type: 3}
-  - {fileID: 21300000, guid: 7f1fb45f5590aa64da2bd8609c3f309d, type: 3}
-  - {fileID: 21300000, guid: b5d60f38da2c5c349825440e2b47fec8, type: 3}
-  - {fileID: 21300000, guid: 8e5992e88153a574084676239981fc7f, type: 3}
-  - {fileID: 21300000, guid: 6f00f1a2a6e5e404fa5e7f5de789e87b, type: 3}
-  - {fileID: 21300000, guid: 5cc7e50aec72c374badef433608e0576, type: 3}
-  - {fileID: 21300000, guid: 0f90c32f25a13e343b2a9d82d91fedcf, type: 3}
-  - {fileID: 21300000, guid: 407518e461086c242b70d14c30e61677, type: 3}
-  - {fileID: 21300000, guid: acbc714cdc7e9c64c9b5ce8891e1a6b4, type: 3}
-  - {fileID: 21300000, guid: fad0e87769d8b9242a5edf96708495b1, type: 3}
-  - {fileID: 21300000, guid: 15e9ea09298ab7d48ab865f596dea3b0, type: 3}
-  - {fileID: 21300000, guid: 8e9a0985d5485164e9c9bad726aace5b, type: 3}
-  - {fileID: 21300000, guid: fb708b22a9f14f9409204a450ec5e4ca, type: 3}
-  - {fileID: 21300000, guid: fcdb5c9e30931054a8a66ac73cddc78e, type: 3}
-  - {fileID: 21300000, guid: a974a1827e0beb540b42893013c65e0b, type: 3}
-  - {fileID: 21300000, guid: 43b77ad6d1ee76342a6705aecf85faa0, type: 3}
-  - {fileID: 21300000, guid: 31fa2bac161288a4baf30eb88e466c10, type: 3}
-  - {fileID: 21300000, guid: 6e0d9cd956aa79a4b833988589c57f90, type: 3}
-  - {fileID: 21300000, guid: decfa6d5631460e459216a0974926a3e, type: 3}
-  - {fileID: 21300000, guid: 5742f69780bbee44d9a96d5a8e0493a1, type: 3}
-  - {fileID: 21300000, guid: 35139a35f4249604d889010260e1b992, type: 3}
-  - {fileID: 21300000, guid: 3fb75c7054e360545960c022c827a06c, type: 3}
-  - {fileID: 21300000, guid: 6dbb5f8e7e31eeb4f915fbd5152889d0, type: 3}
-  - {fileID: 21300000, guid: 55e7d263e90f04542b35b08279226480, type: 3}
-  - {fileID: 21300000, guid: 0f14906701a3de949ba8d8e0f9a6be0c, type: 3}
-  - {fileID: 21300000, guid: 7572c8ab25d076b4eb7f880f329827b1, type: 3}
-  - {fileID: 21300000, guid: 125d00024b401354282fe17fff412689, type: 3}
-  - {fileID: 21300000, guid: e995e8b9f57f23644816d6bce77b36a8, type: 3}
-  - {fileID: 21300000, guid: fa25d76ab634d1944a0a0dd68f3de61b, type: 3}
-  - {fileID: 21300000, guid: cfa722b3664d72241a4ece3dbd212717, type: 3}
-  - {fileID: 21300000, guid: 8e40a266188fd9f4fb45a9173613629d, type: 3}
-  - {fileID: 21300000, guid: 678013045a706064ea3b2d529d28d5b7, type: 3}
-  - {fileID: 21300000, guid: a1b8f968bbeccc640bb4cc0b8c8cf7e1, type: 3}
-  - {fileID: 21300000, guid: 9b0f4f4bd91af4a4390a96680746390c, type: 3}
-  - {fileID: 21300000, guid: 0613ade003ce1544eba6391ca738415e, type: 3}
-  - {fileID: 21300000, guid: 2365b3f348c3b2740b020fa401f9cf37, type: 3}
-  - {fileID: 21300000, guid: 0edbe7b6f85e6b448b6c46a119d435b0, type: 3}
-  - {fileID: 21300000, guid: ed01bccd98a6baf48a733ce9002ee785, type: 3}
-  - {fileID: 21300000, guid: 7cdb2176dcc4eb346af776d2e1b7103c, type: 3}
-  - {fileID: 21300000, guid: ff5840a5be36b2840956aea8e493873c, type: 3}
-  - {fileID: 21300000, guid: 911c4f527c5307444b06b79db5caaa31, type: 3}
-  - {fileID: 21300000, guid: ea3f9c3bc6b2eba43af9b03ed15672fc, type: 3}
-  - {fileID: 21300000, guid: 65d525c4e44953648920eef2db0fc026, type: 3}
-  - {fileID: 21300000, guid: a79cf9a9bf6898742b4c183411da9406, type: 3}
-  - {fileID: 21300000, guid: 017730fd6c67e6141ad4e727064c2228, type: 3}
-  - {fileID: 21300000, guid: ccb3103534030cf44b3657046dce122c, type: 3}
-  - {fileID: 21300000, guid: 7e150b86604b5a144a7af710a28209ed, type: 3}
-  - {fileID: 21300000, guid: 688647874d4e5504089ec2c6ff5320b5, type: 3}
-  - {fileID: 21300000, guid: 6dd3582aeeb684e41b5b3ad54bb403e0, type: 3}
-  - {fileID: 21300000, guid: 94c67eb805ca4aa49a4b07a5f820dee7, type: 3}
-  - {fileID: 21300000, guid: 8133fcf45c5409044a5ba5acb4f0be84, type: 3}
-  - {fileID: 21300000, guid: 0944f41a8bc29114fb73e19fc3a9cd23, type: 3}
-  - {fileID: 21300000, guid: 1aafee1c69c365149b006a2a259080f7, type: 3}
-  - {fileID: 21300000, guid: 21442235bd68d23448d6787588ee0209, type: 3}
-  - {fileID: 21300000, guid: f9b4969ccbc726247a1823ab55fa9db1, type: 3}
-  - {fileID: 21300000, guid: e0948696344cecf4aaca9ddcddce1eb4, type: 3}
-  - {fileID: 21300000, guid: dedd27d838670b641bd4ddd6bddcb3a6, type: 3}
-  - {fileID: 21300000, guid: 23fc79bd86969e74facfe56080689ac0, type: 3}
-  - {fileID: 21300000, guid: 0286a368fcd7b384786a02a45e92aa86, type: 3}
-  - {fileID: 21300000, guid: 1d08f76331afa9e4f99a86fe3c28c5a2, type: 3}
-  - {fileID: 21300000, guid: 3bbac09323d36774d807fc6614b052a3, type: 3}
-  - {fileID: 21300000, guid: dd41bf94fc41e3b489836b831ae816b5, type: 3}
-  - {fileID: 21300000, guid: 54e1d05d14020e8488f735dad0f1f0b8, type: 3}
-  - {fileID: 21300000, guid: b88cae8c7df89e140ab583afd069e829, type: 3}
-  - {fileID: 21300000, guid: 33009d8cc70c426438a0883080976cf3, type: 3}
-  - {fileID: 21300000, guid: 2dbb1415057b3d84bb1be76e4e761a5e, type: 3}
-  - {fileID: 21300000, guid: 9782731b9f30b8446827d712320a7141, type: 3}
-  - {fileID: 21300000, guid: 53666c88daad66141a1a21075f7b77bf, type: 3}
-  - {fileID: 21300000, guid: 8a3aa6df774af834585d5ee006f9d200, type: 3}
-  - {fileID: 21300000, guid: c95f74abba3da4542bfd898308d7bced, type: 3}
-  - {fileID: 21300000, guid: df84968207042a542a47d9cacaf3f761, type: 3}
-  - {fileID: 21300000, guid: 5c63308ccffc59145bcb5b9fd37407fc, type: 3}
-  - {fileID: 21300000, guid: 736c29fb489d6a94ba9ec52d0f65e492, type: 3}
-  - {fileID: 21300000, guid: 9b3b4939e2915c8458d83087eaa157d7, type: 3}
-  - {fileID: 21300000, guid: 911183a6dad7a4f488aa4d0851dcced7, type: 3}
-  - {fileID: 21300000, guid: 30fc1a32d87d7ce47a70043c0934b494, type: 3}
-  - {fileID: 21300000, guid: 8a37d0c2b71e6134f881a03ec3907341, type: 3}
-  - {fileID: 21300000, guid: ee17fb94e1e379144bdfa22ec03cf103, type: 3}
-  - {fileID: 21300000, guid: b0eca49b5b09c914bb3077265c27c894, type: 3}
-  - {fileID: 21300000, guid: 31d8761114e0a93418573822a4ea4b9e, type: 3}
-  - {fileID: 21300000, guid: d770a26b663557340878b5824028d087, type: 3}
-  - {fileID: 21300000, guid: 03ca2c6907ced8945b6fa51b16359bf4, type: 3}
-  - {fileID: 21300000, guid: 9a23380ef6ef4144f8280c8ca30b9b01, type: 3}
-  - {fileID: 21300000, guid: 255b60bc19e7d1e438370c893a5063af, type: 3}
-  - {fileID: 21300000, guid: 83d25bae9a7e62f4e9d7cc199b02d244, type: 3}
-  - {fileID: 21300000, guid: 5018f67df14ca0940bd7153d051c7e17, type: 3}
-  - {fileID: 21300000, guid: 3af561410e450ee49b14d0a89461219c, type: 3}
-  - {fileID: 21300000, guid: d00d71d6fb0558847856c323ebd7cf0b, type: 3}
-  - {fileID: 21300000, guid: aeaa43073b426dd4e9c3602a7e704bce, type: 3}
-  - {fileID: 21300000, guid: ec3f4fb89af6eb5449aa1a36ab95f36d, type: 3}
-  - {fileID: 21300000, guid: f342061b08345474884944eabbbe26d2, type: 3}
-  - {fileID: 21300000, guid: f52d96c83b23e3741a656a1d97b4db32, type: 3}
-  - {fileID: 21300000, guid: 8d414002331a9a94d8dfeb648cbff825, type: 3}
-  - {fileID: 21300000, guid: 1832afbf2035915469b438f8407e65a9, type: 3}
-  - {fileID: 21300000, guid: 3fb3244f4ab241244922a6ad74d9e4fc, type: 3}
-  - {fileID: 21300000, guid: b7c0cb3de8150144a9abfd0d15a0eec4, type: 3}
-  - {fileID: 21300000, guid: 8de51b49bdf18b24abf3c71c703958f1, type: 3}
-  - {fileID: 21300000, guid: 5016b88b8d1ab5941af61892fad8bf84, type: 3}
-  - {fileID: 21300000, guid: 9d74023f1f2b7134fb7baee2d2ec9b66, type: 3}
-  - {fileID: 21300000, guid: 01c46833013955c48af73d7fcbe37c9d, type: 3}
-  - {fileID: 21300000, guid: 028cda96e0748e441a77237215ba615a, type: 3}
-  - {fileID: 21300000, guid: 5270f2ae687b6e34ba1523006d394915, type: 3}
-  - {fileID: 21300000, guid: 884ba656998d72c40a8291b0f9099a8c, type: 3}
-  - {fileID: 21300000, guid: cf315be575b03564582f57b8b0438c36, type: 3}
-  - {fileID: 21300000, guid: 89f7ca259ee1c30458192834b2c168fd, type: 3}
-  - {fileID: 21300000, guid: 7e6bd39434a366f44b4a1aa9ce6425e5, type: 3}
-  - {fileID: 21300000, guid: 7e6bd39434a366f44b4a1aa9ce6425e5, type: 3}
-  - {fileID: 21300000, guid: cc3a07bb117e03e468b905fe95ff5451, type: 3}
-  - {fileID: 21300000, guid: 97af29c0e8bcae54b8449a7509fc5c27, type: 3}
-  - {fileID: 21300000, guid: f87775fcd70936b458bdddc9d8902316, type: 3}
-  - {fileID: 21300000, guid: 219022b630765fe4f9206281cd3c0efb, type: 3}
-  - {fileID: 21300000, guid: 990832c6ffd96d14493e84f88775599d, type: 3}
-  - {fileID: 21300000, guid: ecff8f2645b2891438a14f4c4bd72476, type: 3}
-  - {fileID: 21300000, guid: e30ba563fed1bb74493f53555d092ff5, type: 3}
-  - {fileID: 21300000, guid: d1d3395766a68c04e9be0093fb3ea410, type: 3}
-  - {fileID: 21300000, guid: 57792c1f1411578408c41be900eee194, type: 3}
-  - {fileID: 21300000, guid: 2b03dff29f0994943bdc539ab0414992, type: 3}
-  - {fileID: 21300000, guid: 7df74a7f33db5e34880723e09afdf62d, type: 3}
-  - {fileID: 21300000, guid: c112776aade177040954bb42659a9eb1, type: 3}
-  - {fileID: 21300000, guid: a112e2c10bd352747bc3e9f8141d393d, type: 3}
-  - {fileID: 21300000, guid: 339bfa7d772b4cf439dbf88fdfb701f1, type: 3}
-  - {fileID: 21300000, guid: 41c0507285cbcda4db3bcc6acc880d6d, type: 3}
-  - {fileID: 21300000, guid: 1f51655a0da9ac5499993e3e369652a3, type: 3}
-  - {fileID: 21300000, guid: f32c43349033d674a9ea2d9797f0d7f5, type: 3}
-  - {fileID: 21300000, guid: ec7131049a0d8894e86f346f7a12d847, type: 3}
-  - {fileID: 21300000, guid: 70111447fde858f4e948c188bcbbddcc, type: 3}
-  - {fileID: 21300000, guid: f8553277a06c5184fad9d768714011f9, type: 3}
-  - {fileID: 21300000, guid: 7b32b14dfe3ab354e8e02703863d603d, type: 3}
-  - {fileID: 21300000, guid: fcce59b8c44a32343a0cf87fa440514a, type: 3}
-  - {fileID: 21300000, guid: 279f15698f484d348b1f838d73d97907, type: 3}
-  - {fileID: 21300000, guid: 6e2de352399130849be279ee6338f7ca, type: 3}
-  - {fileID: 21300000, guid: 5ff4cee025ee41045bc32487cf1d58d1, type: 3}
-  - {fileID: 21300000, guid: 643e5b468bfb15245934d0adc1789134, type: 3}
-  - {fileID: 21300000, guid: 061664ee01bc88e48b90f58198de13b0, type: 3}
-  - {fileID: 21300000, guid: 505d1d1f65911a34ea07ec3a19c3618f, type: 3}
-  - {fileID: 21300000, guid: 662111edf11b76e48a88ac6e67d6647f, type: 3}
-  - {fileID: 21300000, guid: 77289654ea4ff654a9ae7cf935ce471a, type: 3}
-  - {fileID: 21300000, guid: 2bd2a43e9afc5484fbe96de8d6c552ac, type: 3}
-  - {fileID: 21300000, guid: 8d9eaea8b5dfa9c43bc1c517bc05331d, type: 3}
-  - {fileID: 21300000, guid: 84f24b9d214635546873f6b3e580a693, type: 3}
-  - {fileID: 21300000, guid: c2db8d1e4bcfbfd4595e941d446aa168, type: 3}
-  - {fileID: 21300000, guid: cbd3a13cc991d5d40ac3b1926839292d, type: 3}
-  - {fileID: 21300000, guid: d461b9990946f4f408156157d286878e, type: 3}
-  - {fileID: 21300000, guid: 2ce1ba34e3215714fbd86d652395f7ad, type: 3}
-  - {fileID: 21300000, guid: d0fbf297817576846b926a8619f1e178, type: 3}
-  - {fileID: 21300000, guid: b2150b4dd6cd78a4bb57b8b6a1952c67, type: 3}
-  - {fileID: 21300000, guid: 41989b58a0aa4c94d946a3e832de323e, type: 3}
-  - {fileID: 21300000, guid: 358c996add48f534e97c3c8204cbb315, type: 3}
-  - {fileID: 21300000, guid: 9640c87fc7dc3eb4090ff3237080815a, type: 3}
-  - {fileID: 21300000, guid: 3a9dc81ab9a92a24a8aa6f1e4543f66e, type: 3}
-  - {fileID: 21300000, guid: badf99e3547ab184280e73fd227308e3, type: 3}
-  - {fileID: 21300000, guid: f9c9b087d081b164aa973db3de5ad9ac, type: 3}
-  - {fileID: 21300000, guid: f03c4ead4663dd949ad75b78cba7e631, type: 3}
-  item1: []
-  item2: []
-  item3: []
-  item4: []
   inventorySlots:
   - {fileID: 18609081}
   - {fileID: 456184944}
@@ -1997,7 +1264,6 @@ MonoBehaviour:
   - {fileID: 1330680251}
   - {fileID: 827582888}
   - {fileID: 1181525368}
-  equipmentController: {fileID: 1014693770}
   spriteController:
   - {fileID: 717905736}
   - {fileID: 801977004}
@@ -2005,8 +1271,6 @@ MonoBehaviour:
   - {fileID: 1236571914}
   - {fileID: 1300438204}
   - {fileID: 1236571913}
-  itemInfo: {fileID: 875338181}
-  ring1Ring2Menu: {fileID: 425389027}
 --- !u!1 &50229725
 GameObject:
   m_ObjectHideFlags: 0
@@ -2127,8 +1391,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -2222,8 +1486,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickRing1Choice
         m_Mode: 1
         m_Arguments:
@@ -2392,8 +1656,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -2524,8 +1788,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -2656,8 +1920,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -2788,8 +2052,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -2920,8 +2184,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -3152,7 +2416,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &182270493
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3348,8 +2612,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -3480,8 +2744,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInEquipment
         m_Mode: 3
         m_Arguments:
@@ -3612,8 +2876,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -3744,8 +3008,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -3876,8 +3140,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -3924,7 +3188,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 225.3, y: 200.1}
+  m_AnchoredPosition: {x: 254.3, y: 207.5}
   m_SizeDelta: {x: 25, y: 25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &344046776
@@ -4173,8 +3437,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -4441,8 +3705,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -4573,8 +3837,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -4785,8 +4049,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -4917,8 +4181,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -5049,8 +4313,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -5181,8 +4445,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInEquipment
         m_Mode: 3
         m_Arguments:
@@ -5313,8 +4577,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -5445,8 +4709,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -5577,8 +4841,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -5709,8 +4973,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -6011,8 +5275,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -6368,8 +5632,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -6500,8 +5764,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -6647,8 +5911,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -6779,8 +6043,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInEquipment
         m_Mode: 3
         m_Arguments:
@@ -7047,8 +6311,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -7190,8 +6454,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -7322,8 +6586,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -7454,8 +6718,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -7477,6 +6741,10 @@ PrefabInstance:
     - target: {fileID: 720927045156854034, guid: 8e396b017fd1c324c999624ffebb9083, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 2660277532466839468, guid: 8e396b017fd1c324c999624ffebb9083, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2773494100370814840, guid: 8e396b017fd1c324c999624ffebb9083, type: 3}
       propertyPath: m_LocalPosition.x
@@ -7524,6 +6792,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5384720625039395156, guid: 8e396b017fd1c324c999624ffebb9083, type: 3}
       propertyPath: listItem0s.Array.data[0].type
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8063907948852968984, guid: 8e396b017fd1c324c999624ffebb9083, type: 3}
+      propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -7651,8 +6923,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -7783,8 +7055,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -7926,8 +7198,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -8091,8 +7363,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -8223,8 +7495,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -8355,8 +7627,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -8487,8 +7759,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -8619,8 +7891,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -8751,8 +8023,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -8774,6 +8046,7 @@ GameObject:
   - component: {fileID: 875338182}
   - component: {fileID: 875338184}
   - component: {fileID: 875338183}
+  - component: {fileID: 875338185}
   m_Layer: 5
   m_Name: ItemInfo
   m_TagString: Untagged
@@ -8793,8 +8066,10 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1020412771}
   - {fileID: 1367236229}
   - {fileID: 1852595876}
+  - {fileID: 1714581931}
   m_Father: {fileID: 182270493}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -8901,6 +8176,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 875338181}
   m_CullTransparentMesh: 1
+--- !u!114 &875338185
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 875338181}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2c56adce23de1e45a3516526b490273, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemInfo: {fileID: 875338181}
+  nameItem: {fileID: 1020412770}
+  ring1Ring2Menu: {fileID: 425389027}
+  ring1Ring2Choice:
+  - {fileID: 1271698481}
+  - {fileID: 1003378835}
 --- !u!1 &901189351
 GameObject:
   m_ObjectHideFlags: 0
@@ -9021,8 +8314,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -9153,8 +8446,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -9285,8 +8578,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -9417,8 +8710,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -9549,8 +8842,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInEquipment
         m_Mode: 3
         m_Arguments:
@@ -9700,8 +8993,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -9832,8 +9125,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -10097,8 +9390,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -10229,8 +9522,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -10361,8 +9654,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -10723,8 +10016,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -10856,10 +10149,6 @@ MonoBehaviour:
   - {fileID: 1500425118}
   - {fileID: 1641062175}
   - {fileID: 255198428}
-  inventoryController: {fileID: 42086431}
-  ring1Ring2Menu:
-  - {fileID: 1271698481}
-  - {fileID: 1003378835}
 --- !u!1 &1019732984
 GameObject:
   m_ObjectHideFlags: 0
@@ -10905,6 +10194,142 @@ Transform:
   - {fileID: 1797414049}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1020412770
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1020412771}
+  - component: {fileID: 1020412773}
+  - component: {fileID: 1020412772}
+  m_Layer: 5
+  m_Name: NameItem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1020412771
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1020412770}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 875338182}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 86.3}
+  m_SizeDelta: {x: 100, y: 16.03}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1020412772
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1020412770}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: 
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 11
+  m_fontSizeBase: 11
+  m_fontWeight: 400
+  m_enableAutoSizing: 0
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 0
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_TextWrappingMode: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 0
+  m_ActiveFontFeatures: 6e72656b
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_EmojiFallbackSupport: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!222 &1020412773
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1020412770}
+  m_CullTransparentMesh: 1
 --- !u!1 &1025715217
 GameObject:
   m_ObjectHideFlags: 0
@@ -11025,8 +10450,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -11157,8 +10582,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -11289,8 +10714,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -11489,8 +10914,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -11621,8 +11046,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -11753,8 +11178,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -11765,6 +11190,142 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!1 &1052626697
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1052626698}
+  - component: {fileID: 1052626700}
+  - component: {fileID: 1052626699}
+  m_Layer: 5
+  m_Name: Text (TMP)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1052626698
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1052626697}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1714581931}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1052626699
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1052626697}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: "V\u1EE9t"
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4281479730
+  m_fontColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 10
+  m_fontSizeBase: 10
+  m_fontWeight: 400
+  m_enableAutoSizing: 0
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 0
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_TextWrappingMode: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 0
+  m_ActiveFontFeatures: 6e72656b
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_EmojiFallbackSupport: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!222 &1052626700
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1052626697}
+  m_CullTransparentMesh: 1
 --- !u!1 &1053929739
 GameObject:
   m_ObjectHideFlags: 0
@@ -11885,8 +11446,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -12133,8 +11694,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -12265,8 +11826,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInEquipment
         m_Mode: 3
         m_Arguments:
@@ -12475,8 +12036,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -12731,8 +12292,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -12882,8 +12443,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -13014,8 +12575,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -13168,8 +12729,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -13300,8 +12861,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -13432,8 +12993,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -13730,8 +13291,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -13799,7 +13360,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "V\u1EE9t\n"
+  m_text: "Th\xE1o"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -14224,8 +13785,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInEquipment
         m_Mode: 3
         m_Arguments:
@@ -14356,8 +13917,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInEquipment
         m_Mode: 3
         m_Arguments:
@@ -14510,8 +14071,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -14642,8 +14203,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -14774,8 +14335,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -14906,8 +14467,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -15038,8 +14599,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -15170,8 +14731,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -15372,8 +14933,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickEquipItem0
         m_Mode: 1
         m_Arguments:
@@ -15678,8 +15239,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -15810,8 +15371,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -15942,8 +15503,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -16074,8 +15635,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -16206,8 +15767,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -16338,8 +15899,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -16470,8 +16031,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -16602,8 +16163,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInEquipment
         m_Mode: 3
         m_Arguments:
@@ -16734,8 +16295,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -16866,8 +16427,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -16998,8 +16559,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -17130,8 +16691,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -17262,8 +16823,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInEquipment
         m_Mode: 3
         m_Arguments:
@@ -17394,8 +16955,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -17526,8 +17087,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -17658,8 +17219,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -17790,8 +17351,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -17922,8 +17483,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -18054,8 +17615,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -18186,8 +17747,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -18318,8 +17879,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -18450,8 +18011,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -18582,8 +18143,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -18714,8 +18275,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -18846,8 +18407,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -18978,8 +18539,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -19110,8 +18671,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -19242,8 +18803,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -19374,8 +18935,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInEquipment
         m_Mode: 3
         m_Arguments:
@@ -19506,8 +19067,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -19518,6 +19079,139 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!1 &1714581930
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1714581931}
+  - component: {fileID: 1714581934}
+  - component: {fileID: 1714581933}
+  - component: {fileID: 1714581932}
+  m_Layer: 5
+  m_Name: DropItemButton
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &1714581931
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1714581930}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.9998999, y: 0.9998999, z: 0.9998999}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1052626698}
+  m_Father: {fileID: 875338182}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 27.8, y: -90}
+  m_SizeDelta: {x: 51.33, y: 20.97}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1714581932
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1714581930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 3
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 1714581933}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 42086431}
+        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+        m_MethodName: ClickTest
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1714581933
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1714581930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1714581934
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1714581930}
+  m_CullTransparentMesh: 1
 --- !u!1 &1721715802
 GameObject:
   m_ObjectHideFlags: 0
@@ -19638,8 +19332,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInEquipment
         m_Mode: 3
         m_Arguments:
@@ -19819,8 +19513,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInEquipment
         m_Mode: 3
         m_Arguments:
@@ -19951,8 +19645,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInEquipment
         m_Mode: 3
         m_Arguments:
@@ -20083,8 +19777,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -20215,8 +19909,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -20483,8 +20177,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -37626,8 +37320,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -37809,8 +37503,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -37941,8 +37635,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -38073,8 +37767,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -38205,8 +37899,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -38337,8 +38031,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -38362,7 +38056,7 @@ GameObject:
   - component: {fileID: 1852595878}
   - component: {fileID: 1852595877}
   m_Layer: 5
-  m_Name: DropItemButton
+  m_Name: UnequipItemButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -38602,8 +38296,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -38734,8 +38428,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -38866,8 +38560,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -38998,8 +38692,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -39093,8 +38787,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickRing2Choice
         m_Mode: 1
         m_Arguments:
@@ -39263,8 +38957,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -39395,8 +39089,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -39733,7 +39427,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 920487405636034984, guid: 8e396b017fd1c324c999624ffebb9083, type: 3}
-    - {fileID: 1822929452502281372, guid: 8e396b017fd1c324c999624ffebb9083, type: 3}
+    - {fileID: 8079385570538949805, guid: 8e396b017fd1c324c999624ffebb9083, type: 3}
+    - {fileID: 4705095942140783245, guid: 8e396b017fd1c324c999624ffebb9083, type: 3}
+    - {fileID: 2165803183882561797, guid: 8e396b017fd1c324c999624ffebb9083, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
@@ -39741,7 +39437,7 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1950396455}
     - targetCorrespondingSourceObject: {fileID: 7811994188224985105, guid: 8e396b017fd1c324c999624ffebb9083, type: 3}
-      insertIndex: 5
+      insertIndex: 4
       addedObject: {fileID: 1798280615}
     - targetCorrespondingSourceObject: {fileID: 1938534285299240745, guid: 8e396b017fd1c324c999624ffebb9083, type: 3}
       insertIndex: -1
@@ -39750,7 +39446,7 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1950396453}
     - targetCorrespondingSourceObject: {fileID: 8063907948852968984, guid: 8e396b017fd1c324c999624ffebb9083, type: 3}
-      insertIndex: 4
+      insertIndex: 3
       addedObject: {fileID: 1798280614}
     - targetCorrespondingSourceObject: {fileID: 307062360503220229, guid: 8e396b017fd1c324c999624ffebb9083, type: 3}
       insertIndex: -1
@@ -39759,7 +39455,7 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1954670476}
     - targetCorrespondingSourceObject: {fileID: 2660277532466839468, guid: 8e396b017fd1c324c999624ffebb9083, type: 3}
-      insertIndex: 4
+      insertIndex: 3
       addedObject: {fileID: 1798280613}
     - targetCorrespondingSourceObject: {fileID: 4543836457732485805, guid: 8e396b017fd1c324c999624ffebb9083, type: 3}
       insertIndex: -1
@@ -39988,8 +39684,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -40150,8 +39846,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -40282,8 +39978,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -40414,8 +40110,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -40546,8 +40242,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -40558,6 +40254,51 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!1 &2001389310
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2001389312}
+  - component: {fileID: 2001389311}
+  m_Layer: 0
+  m_Name: SyncManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2001389311
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2001389310}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afb47dbaaa8686c46ae9aea9370ae5c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  otherPlayersPrefab: {fileID: 4314980261677249660, guid: 230d2e2e904786f439d351ab7d33d003, type: 3}
+--- !u!4 &2001389312
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2001389310}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!224 &2011256563
 RectTransform:
   m_ObjectHideFlags: 0
@@ -40670,8 +40411,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInEquipment
         m_Mode: 3
         m_Arguments:
@@ -40810,8 +40551,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -40942,8 +40683,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -41017,8 +40758,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInEquipment
         m_Mode: 3
         m_Arguments:
@@ -41157,8 +40898,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -41289,8 +41030,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -41421,8 +41162,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -41553,8 +41294,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -41685,8 +41426,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -41817,8 +41558,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -41949,8 +41690,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -42081,8 +41822,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInInventory
         m_Mode: 3
         m_Arguments:
@@ -42213,8 +41954,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42086431}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+      - m_Target: {fileID: 875338185}
+        m_TargetAssemblyTypeName: ReadAttributesView, Assembly-CSharp
         m_MethodName: ClickReadAttributeInEquipment
         m_Mode: 3
         m_Arguments:
@@ -42237,6 +41978,14 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 42086431}
+    - target: {fileID: 117748810166589173, guid: cc6baf9c4b07b424fbb4ed03aec9e2bc, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ClickReadAttributeInEquipment
+      objectReference: {fileID: 0}
+    - target: {fileID: 117748810166589173, guid: cc6baf9c4b07b424fbb4ed03aec9e2bc, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: ReadAttributesView, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 6828991921707656999, guid: cc6baf9c4b07b424fbb4ed03aec9e2bc, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -42342,6 +42091,14 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 42086431}
+    - target: {fileID: 1237088521133400491, guid: 5878e97be58b321439473f858e992055, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ClickReadAttributeInEquipment
+      objectReference: {fileID: 0}
+    - target: {fileID: 1237088521133400491, guid: 5878e97be58b321439473f858e992055, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: ReadAttributesView, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 5291694790802146374, guid: 5878e97be58b321439473f858e992055, type: 3}
       propertyPath: m_Icon
       value: 
@@ -42447,3 +42204,4 @@ SceneRoots:
   - {fileID: 1068039649}
   - {fileID: 356304464}
   - {fileID: 768987388}
+  - {fileID: 2001389312}

@@ -1,7 +1,7 @@
 ﻿using UnityEditor;
 using UnityEngine;
 
-public class PlayerDemoController : Controller
+public class PlayerDemoController : MovementController
 {
     private void OnEnable()
     {
@@ -25,6 +25,7 @@ public class PlayerDemoController : Controller
 
     public override void OnUpdate()
     {
+        return;
     }
     public override void OnLateUpdate()
     {

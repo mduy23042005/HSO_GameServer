@@ -101,9 +101,7 @@ public class SyncSpriteController : MonoBehaviour, IUpdatable
     }
     public void EquipHair(int id)
     {
-        int idSchool = LogInView.GetIDSchool();
-
-        switch (idSchool)
+        switch (syncDataSprite.idSchool)
         {
             case 1: //Chiến binh
                 spriteLibrary[4].spriteLibraryAsset = listItem0.GetMaleHairLibrary(id).hairLibrariesAsset;

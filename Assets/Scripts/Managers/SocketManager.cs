@@ -10,7 +10,7 @@ using UnityEngine;
 public class SocketManager : MonoBehaviour
 {
     private ClientWebSocket socket;
-    private Uri serverUri = new Uri("wss://localhost:55556/");
+    private Uri serverUri = new Uri("ws://localhost:55556/");
 
     private readonly ConcurrentQueue<string> sendQueue = new ConcurrentQueue<string>();
     private readonly ConcurrentQueue<string> receiveQueue = new ConcurrentQueue<string>();
@@ -36,7 +36,6 @@ public class SocketManager : MonoBehaviour
         _ = ReceiveFromServer();
     }
 
-    // Kết nối đến WebSocket server
     public async Task TestSocket()
     {
         if (socket != null && socket.State == WebSocketState.Open)
@@ -54,7 +53,7 @@ public class SocketManager : MonoBehaviour
             Debug.LogError("Socket: Kết nối Server thất bại! " + e.Message);
         }
     }
-    // Gửi data lên server
+
     public void SendToServer(string message)
     {
         sendQueue.Enqueue(message);
@@ -258,5 +257,28 @@ public class SocketManager : MonoBehaviour
     {
         if (socket != null)
             socket.Dispose();
+    }
+
+    public void ClearAllQueues()
+    {
+        ClearQueue(sendQueue);
+        ClearQueue(receiveQueue);
+
+        ClearQueue(syncDataQueue);
+
+        ClearQueue(logInQueue);
+        ClearQueue(logOutQueue);
+        ClearQueue(registerQueue);
+
+        ClearQueue(inventoryQueue);
+        ClearQueue(inventoryAttributesQueue);
+        ClearQueue(equipmentQueue);
+        ClearQueue(equipmentAttributesQueue);
+
+        ClearQueue(outfitSpritesQueue);
+    }
+    private void ClearQueue(ConcurrentQueue<string> queue)
+    {
+        while (queue.TryDequeue(out _)) { }
     }
 }

@@ -56,15 +56,13 @@ public class PlayerController : MonoBehaviour, IUpdatable
             GameManager.Instance.Unregister(this);
         }
     }
-    public void OnUpdate()
+    public void DestroyPlayerObject()
     {
+        Destroy(gameObject);
     }
-    public void OnLateUpdate()
-    {
-    }
-    public void OnFixedUpdate()
-    {
-    }
+    public void OnUpdate() { }
+    public void OnLateUpdate() { }
+    public void OnFixedUpdate() { }
     public void RegisterDontDestroyOnLoad()
     {
         GameManager.Instance.RegisterPersistent(this);

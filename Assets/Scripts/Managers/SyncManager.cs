@@ -11,7 +11,10 @@ public class SyncManager : MonoBehaviour, IUpdatable
     private Dictionary<int, SyncModels> otherPlayersData = new Dictionary<int, SyncModels>();
 
     private SyncModels onlinePlayer;
-    private SyncModels offlinePlayer;
+    private LogOutRequestPacket offlinePlayer;
+
+    private HashSet<int> loggedOutPlayers = new HashSet<int>(); //dùng để lưu danh sách sync disconnected other players
+
     private SocketManager socketManager;
 
     private void Awake()
@@ -37,18 +40,28 @@ public class SyncManager : MonoBehaviour, IUpdatable
 
     public virtual void OnUpdate()
     {
-        string syncData = socketManager.GetSyncData();
+        string logInData = socketManager.GetSyncData(); //luôn lấy từ sync queue vì online player luôn gửi data đến server khi online
         string logOutData = socketManager.GetLogOutData();
 
-        if (!string.IsNullOrEmpty(syncData))
+        if (!string.IsNullOrEmpty(logInData))
         {
-            onlinePlayer = JsonConvert.DeserializeObject<SyncModels>(syncData);
+            onlinePlayer = JsonConvert.DeserializeObject<SyncModels>(logInData);
             if (onlinePlayer.idAccount != LogInView.GetIDAccount())
             {
+                if (loggedOutPlayers.Contains(onlinePlayer.idAccount))
+                {
+                    return;
+                }
                 OnDataFromServer(onlinePlayer);
             }
         }
-        return;
+        if (!string.IsNullOrEmpty(logOutData))
+        {
+            offlinePlayer = JsonConvert.DeserializeObject<LogOutRequestPacket>(logOutData);
+            Debug.Log($"Đã nhận được yêu cầu xóa otherplayer id: {offlinePlayer.idAccount}");
+            GameObject.Find("LogOut").GetComponent<LogOutController>().SetLogOutData(logOutData);
+            OffDataFromServer(offlinePlayer);
+        }
     }
     public virtual void OnLateUpdate() { }
     public virtual void OnFixedUpdate() { }
@@ -59,6 +72,9 @@ public class SyncManager : MonoBehaviour, IUpdatable
 
     public void OnDataFromServer(SyncModels data)
     {
+        if (loggedOutPlayers.Contains(data.idAccount))
+            return;
+
         GameObject obj;
 
         // Kiểm tra thêm nếu object đã bị destroy
@@ -76,7 +92,6 @@ public class SyncManager : MonoBehaviour, IUpdatable
             }
             obj.GetComponentInChildren<SyncMovementController>().ApplyServerState(data);
             obj.GetComponentInChildren<SyncSpriteController>().ApplyServerState(data);
-
         }
         else
         {
@@ -85,30 +100,30 @@ public class SyncManager : MonoBehaviour, IUpdatable
             obj.GetComponentInChildren<SyncSpriteController>().ApplyServerState(data);
         }
     }
-    
-    public void OffDataFromServer(SyncModels data)
+    public void OffDataFromServer(LogOutRequestPacket data)
     {
+        loggedOutPlayers.Add(data.idAccount);
+
         if (otherPlayers.TryGetValue(data.idAccount, out GameObject obj))
         {
-            // Xoá GameObject khỏi scene
-            if (obj != null)
-            {
-                Destroy(obj.gameObject);
-            }
-
-            // Xoá khỏi dictionary
+            Destroy(obj.gameObject);
             otherPlayers.Remove(data.idAccount);
             otherPlayersData.Remove(data.idAccount);
+            loggedOutPlayers.Remove(data.idAccount);
         }
     }
 
-    public SyncModels GetPlayerData(int idAccount)
+    public void PrepareForLogOut()
     {
-        if (otherPlayersData.TryGetValue(idAccount, out var data))
+        foreach (var kv in otherPlayers)
         {
-            return data;
+            if (kv.Value != null)
+            {
+                Destroy(kv.Value);
+            }
         }
-
-        return null;
+        otherPlayers.Clear();
+        otherPlayersData.Clear();
+        loggedOutPlayers.Clear();
     }
 }

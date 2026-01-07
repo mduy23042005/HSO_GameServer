@@ -203,7 +203,7 @@ public class RegisterView : MonoBehaviour, IUpdatable
     }
     #endregion ChangeBlessing
 
-    public async void ClickRegister()
+    public void ClickRegister()
     {
         idSchool = DemoController.GetIDSchool();
         if (idSchool == 0)

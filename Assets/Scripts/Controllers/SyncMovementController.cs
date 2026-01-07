@@ -9,8 +9,6 @@ public class SyncMovementController : MonoBehaviour, IUpdatable
 
     private string nextAnim = "";
     private string direction;
-    string school;
-    private AnimatorOverrideController overrideController;
 
     private SyncModels syncDataMovement;
     private PlayerState serverState = 0;
@@ -110,24 +108,6 @@ public class SyncMovementController : MonoBehaviour, IUpdatable
 
             case PlayerState.Injured:
                 nextAnim = $"Injured{direction}";
-                break;
-        }
-        switch (syncDataMovement.idSchool)
-        {
-            case 1:
-                school = "ChienBinh";
-                break;
-
-            case 2:
-                school = "SatThu";
-                break;
-
-            case 3:
-                school = "PhapSu";
-                break;
-
-            case 4:
-                school = "XaThu";
                 break;
         }
 

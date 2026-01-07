@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-public class MenuController : MonoBehaviour, IUpdatable
+public class MenuView : MonoBehaviour, IUpdatable
 {
     [SerializeField] private GameObject itemInfo;
 

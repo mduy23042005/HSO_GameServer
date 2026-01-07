@@ -14,7 +14,7 @@ public class MovementController : MonoBehaviour, IUpdatable
     private bool movingHorizontalFirst = false;
     private bool isMovingToTarget = false;
     private Animator animator;
-    private MenuController menu;
+    private MenuView menu;
     private bool isBusy = false;
     private float syncTimer;
     private const float syncInterval = 0.05f; // 20 lần / giây
@@ -27,7 +27,7 @@ public class MovementController : MonoBehaviour, IUpdatable
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-        menu = FindAnyObjectByType<MenuController>(FindObjectsInactive.Include);
+        menu = FindAnyObjectByType<MenuView>(FindObjectsInactive.Include);
         spriteController = GetComponent<SpriteController>();
         socketManager = GameManager.Instance.GetComponent<SocketManager>();
     }

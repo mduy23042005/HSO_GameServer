@@ -5,7 +5,6 @@ public class CanvasController : MonoBehaviour, IUpdatable
     private void OnEnable()
     {
         GameManager.Instance.Register(this);
-        RegisterDontDestroyOnLoad();
     }
     private void OnDisable()
     {
@@ -14,17 +13,9 @@ public class CanvasController : MonoBehaviour, IUpdatable
             GameManager.Instance.Unregister(this);
         }
     }
-    public void OnUpdate()
-    {
-
-    }
-    public void OnLateUpdate()
-    {
-
-    }
-    public void OnFixedUpdate()
-    {
-    }
+    public void OnUpdate() { }
+    public void OnLateUpdate() { }
+    public void OnFixedUpdate() { }
     public void RegisterDontDestroyOnLoad()
     {
         GameManager.Instance.RegisterPersistent(this);

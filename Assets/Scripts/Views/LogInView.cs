@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -12,7 +11,6 @@ public class LogInRequestPacket
     public string username;
     public string password;
 }
-
 [Serializable]
 public class LogInResultPacket
 {
@@ -22,12 +20,6 @@ public class LogInResultPacket
     public int idSchool;
     public string nameChar;
     public int hair;
-}
-[Serializable]
-public class LogOutRequestPacket
-{
-    public string cmd;
-    public int idAccount;
 }
 
 public class LogInView : MonoBehaviour, IUpdatable
@@ -112,17 +104,6 @@ public class LogInView : MonoBehaviour, IUpdatable
         textMessage.text = "Đang đăng nhập...";
     }
 
-    private void OnApplicationQuit()
-    {
-        LogOutRequestPacket sendLogOutRequestPacket = new LogOutRequestPacket
-        {
-            cmd = "logout",
-            idAccount = idAccount
-        };
-
-        string packet = JsonConvert.SerializeObject(sendLogOutRequestPacket);
-        socketManager.SendToServer(packet);
-    }
     public void ClickRegister()
     {
         SceneManager.LoadScene("SelectCharacterScene");

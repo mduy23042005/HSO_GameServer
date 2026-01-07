@@ -1,4 +1,4 @@
-﻿    using UnityEngine;
+﻿using UnityEngine;
 
 public class MobsController : MonoBehaviour, IUpdatable
 {
@@ -42,7 +42,6 @@ public class MobsController : MonoBehaviour, IUpdatable
     {
         if (moveArea == null)
         {
-            Debug.LogWarning($"{name} chưa có vùng moveArea!");
             return transform.position;
         }
 

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -15,7 +16,6 @@ public class GameManager : MonoBehaviour
             return instance;
         }
     }
-
     private List<IUpdatable> updatables = new List<IUpdatable>();
 
     private void Awake()
@@ -37,7 +37,6 @@ public class GameManager : MonoBehaviour
             updatables.Add(obj);
         }
     }
-
     public void Unregister(IUpdatable obj)
     {
         if (obj != null && updatables.Contains(obj))
@@ -45,7 +44,6 @@ public class GameManager : MonoBehaviour
             updatables.Remove(obj);
         }
     }
-
     public void RegisterPersistent(IUpdatable obj)
     {
         if (obj != null && obj is MonoBehaviour)

@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.U2D.Animation;
@@ -21,6 +20,7 @@ public class SpriteController : MonoBehaviour, IUpdatable
     private ItemController listItem0;
 
     private SocketManager socketManager;
+    private PacketSerializeManager packetSerializeManager;
 
     // id của trang bị thực tế từ database
     private int weaponData = 0;
@@ -30,14 +30,14 @@ public class SpriteController : MonoBehaviour, IUpdatable
     private int hairData = 0;
     private int headData = 0;
 
-    void Awake()
+    private void Awake()
     {
         resolvers = GetComponentsInChildren<SpriteResolver>().ToList();
         animator = GetComponent<Animator>();
         controller = GetComponent<MovementController>();
         socketManager = GameManager.Instance.GetComponent<SocketManager>();
+        packetSerializeManager = GameManager.Instance.GetComponent<PacketSerializeManager>();
         listItem0 = ItemController.Instance;
-
         ReadDatabase();
     }
 
@@ -67,9 +67,7 @@ public class SpriteController : MonoBehaviour, IUpdatable
             if (string.IsNullOrEmpty(data))
                 return;
 
-            Debug.Log("Equip character sprite successfully!");
-
-            listOutfitSprites = JsonConvert.DeserializeObject<List<EquipmentResultPacket>>(data);
+            listOutfitSprites = packetSerializeManager.HandleReceivedPacket<List<EquipmentResultPacket>>(data);
         }
         else
         {
@@ -189,8 +187,8 @@ public class SpriteController : MonoBehaviour, IUpdatable
             cmd = "outfitSprites",
             idAccount = idAccount,
         };
-        string packet = JsonConvert.SerializeObject(sendOutfitSpritesRequestPacket);
-        socketManager.SendToServer(packet);
+
+        packetSerializeManager.HandleSentPacket(sendOutfitSpritesRequestPacket);
     }
 
     private string GetDirection(float h, float v)

@@ -33,10 +33,12 @@ public class LogInView : MonoBehaviour, IUpdatable
     private static int idHair;
 
     private SocketManager socketManager;
+    private PacketSerializeManager packetSerializeManager;
 
     private void Awake()
     { 
         socketManager = GameManager.Instance.GetComponent<SocketManager>();
+        packetSerializeManager = GameManager.Instance.GetComponent<PacketSerializeManager>();
     }
 
     private void OnEnable()
@@ -57,10 +59,7 @@ public class LogInView : MonoBehaviour, IUpdatable
         if (string.IsNullOrEmpty(data))
             return;
 
-        LogInResultPacket logInResult = JsonConvert.DeserializeObject<LogInResultPacket>(data);
-
-        if (logInResult.cmd != "login_result")
-            return;
+        LogInResultPacket logInResult = packetSerializeManager.HandleReceivedPacket<LogInResultPacket>(data);
 
         if (logInResult.success)
         {
@@ -70,6 +69,7 @@ public class LogInView : MonoBehaviour, IUpdatable
 
             textMessage.color = Color.green;
             textMessage.text = $"Đăng nhập {logInResult.nameChar} thành công.";
+
             SceneManager.LoadScene("Map1");
         }
         else
@@ -97,8 +97,7 @@ public class LogInView : MonoBehaviour, IUpdatable
             password = password
         };
 
-        string packet = JsonConvert.SerializeObject(sendLogInRequestPacket);
-        socketManager.SendToServer(packet);
+        packetSerializeManager.HandleSentPacket(sendLogInRequestPacket);
 
         textMessage.color = Color.yellow;
         textMessage.text = "Đang đăng nhập...";
@@ -115,6 +114,10 @@ public class LogInView : MonoBehaviour, IUpdatable
     public static int? GetIDAccount() //nếu bấm vào Đăng ký thì idAccount = 0
     {
         return idAccount;
+    }
+    public static void SetIDAccount(int idAcc)
+    {
+        idAccount = idAcc;
     }
     public static int GetHair()
     {

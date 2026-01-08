@@ -1,7 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -27,12 +26,20 @@ public class EquipmentView : MonoBehaviour, IUpdatable
 
     private static List<Image> listImagesEquiment;
     private static List<EquipmentResultPacket> equipment = new List<EquipmentResultPacket>();
+
     private SocketManager socketManager;
+    private PacketSerializeManager packetSerializeManager;
 
     private void Awake()
     {
         socketManager = GameManager.Instance.GetComponent<SocketManager>();
-        ReadDatabase();
+        packetSerializeManager = GameManager.Instance.GetComponent<PacketSerializeManager>();
+
+        int idAccount = LogInView.GetIDAccount() ?? 0;
+        if (idAccount != 0)
+        {
+            ReadDatabase();
+        }
     }
 
     private void OnEnable()
@@ -56,7 +63,7 @@ public class EquipmentView : MonoBehaviour, IUpdatable
 
         Debug.Log("Received equipment data successfully!");
 
-        List<EquipmentResultPacket> equipmentResult = JsonConvert.DeserializeObject<List<EquipmentResultPacket>>(data);
+        List<EquipmentResultPacket> equipmentResult = packetSerializeManager.HandleReceivedPacket<List<EquipmentResultPacket>>(data);
 
         for (int i = 0; i < equipmentResult.Count; i++)
         {
@@ -100,8 +107,8 @@ public class EquipmentView : MonoBehaviour, IUpdatable
             cmd = "equipment",
             idAccount = idAccount,
         };
-        string packet = JsonConvert.SerializeObject(sendEquipmentRequestPacket);
-        socketManager.SendToServer(packet);
+
+        packetSerializeManager.HandleSentPacket(sendEquipmentRequestPacket);
     }
 
     public static List<EquipmentResultPacket> GetListEquipmentSlots()
@@ -111,5 +118,14 @@ public class EquipmentView : MonoBehaviour, IUpdatable
     public static List<Image> GetListImagesEquipmentSlots()
     {
         return listImagesEquiment;
+    }
+
+    public static void ClearEquipmentData()
+    {
+        equipment.Clear();
+    }
+    public static void ClearListImagesEquipmentSlots()
+    {
+        listImagesEquiment.Clear();
     }
 }

@@ -956,7 +956,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1577128899}
-        m_TargetAssemblyTypeName: LogIn, Assembly-CSharp
+        m_TargetAssemblyTypeName: LogInView, Assembly-CSharp
         m_MethodName: ClickLogIn
         m_Mode: 1
         m_Arguments:
@@ -1017,6 +1017,8 @@ GameObject:
   - component: {fileID: 918182160}
   - component: {fileID: 918182163}
   - component: {fileID: 918182164}
+  - component: {fileID: 918182165}
+  - component: {fileID: 918182166}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1075,6 +1077,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47d73b0d51dca9e428f637b89d4e59fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &918182165
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 918182158}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb6c391f6646c9144ae1a952ce24dbe5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &918182166
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 918182158}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa974be2cb6196c40abfacee2ebe40ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playersPrefab: {fileID: 720927045156854034, guid: 8e396b017fd1c324c999624ffebb9083, type: 3}
 --- !u!1 &1155686057
 GameObject:
   m_ObjectHideFlags: 0
@@ -1617,8 +1644,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -37.7}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: -1.73, y: -37.7}
+  m_SizeDelta: {x: 171.29, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1762966963
 MonoBehaviour:

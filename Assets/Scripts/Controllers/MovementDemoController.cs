@@ -1,7 +1,7 @@
 ﻿using UnityEditor;
 using UnityEngine;
 
-public class PlayerDemoController : MovementController
+public class MovementDemoController : MovementController
 {
     private void OnEnable()
     {

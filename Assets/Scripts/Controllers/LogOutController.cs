@@ -13,11 +13,13 @@ public class LogOutRequestPacket
 public class LogOutController : MonoBehaviour, IUpdatable
 {
     private SocketManager socketManager;
+    private PacketSerializeManager packetSerializeManager;
     private string logOutData;
 
     private void Awake()
     {
         socketManager = GameManager.Instance.GetComponent<SocketManager>();
+        packetSerializeManager = GameManager.Instance.GetComponent<PacketSerializeManager>();
     }
 
     private void OnEnable()
@@ -37,20 +39,34 @@ public class LogOutController : MonoBehaviour, IUpdatable
         if (string.IsNullOrEmpty(logOutData))
             return;
 
-        LogOutRequestPacket logOutResult = JsonConvert.DeserializeObject<LogOutRequestPacket>(logOutData); ;
+        LogOutRequestPacket logOutResult = packetSerializeManager.HandleReceivedPacket<LogOutRequestPacket>(logOutData);
 
         if (logOutResult.idAccount != LogInView.GetIDAccount())
         {
             return;
         }
+
         //Dọn sạch danh sách quản lý Other Players trước khi chuyển về Main Scene
-        SyncManager.Instance.PrepareForLogOut();
+        GameObject.Find("SyncManager").gameObject.GetComponent<SyncManager>().PrepareForLogOut();
 
         //Dọn sạch danh sách quản lý Queue nhận dữ liệu từ Server
         socketManager.ClearAllQueues();
 
-        //Xóa Player Object để reset đăng nhập lại
-        GameObject.Find("Player").gameObject.GetComponent<PlayerController>().DestroyPlayerObject();
+        if (EquipmentView.GetListEquipmentSlots() != null)
+        {
+            EquipmentView.ClearEquipmentData();
+        }
+        if (EquipmentView.GetListImagesEquipmentSlots() != null)
+        {
+            EquipmentView.ClearListImagesEquipmentSlots();
+        }
+
+        if (InventoryView.GetListInventorySlots() != null)
+        {
+            InventoryView.ClearInventoryData();
+        }
+
+        GameManager.Instance.GetComponent<PlayerManager>().DestroyPlayer();
 
         logOutData = string.Empty;
 
@@ -71,8 +87,7 @@ public class LogOutController : MonoBehaviour, IUpdatable
             idAccount = LogInView.GetIDAccount() ?? 0,
         };
 
-        string packet = JsonConvert.SerializeObject(sendLogOutRequestPacket);
-        socketManager.SendToServer(packet);
+        packetSerializeManager.HandleSentPacket(sendLogOutRequestPacket);
     }
 
     public void SetLogOutData(string data)
@@ -80,6 +95,5 @@ public class LogOutController : MonoBehaviour, IUpdatable
         logOutData = data;
     }
 
-    private void OnApplicationQuit() 
-    { }
+    private void OnApplicationQuit() { }
 }

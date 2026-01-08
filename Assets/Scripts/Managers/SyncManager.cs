@@ -6,7 +6,6 @@ public class SyncManager : MonoBehaviour, IUpdatable
 {
     [SerializeField] private GameObject otherPlayersPrefab;
 
-    public static SyncManager Instance;
     private Dictionary<int, GameObject> otherPlayers = new Dictionary<int, GameObject>();
     private Dictionary<int, SyncModels> otherPlayersData = new Dictionary<int, SyncModels>();
 
@@ -16,14 +15,12 @@ public class SyncManager : MonoBehaviour, IUpdatable
     private HashSet<int> loggedOutPlayers = new HashSet<int>(); //dùng để lưu danh sách sync disconnected other players
 
     private SocketManager socketManager;
+    private PacketSerializeManager packetSerializeManager;
 
     private void Awake()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-        }
         socketManager = GameManager.Instance.GetComponent<SocketManager>();
+        packetSerializeManager = GameManager.Instance.GetComponent<PacketSerializeManager>();
     }
 
     private void OnEnable()
@@ -45,7 +42,7 @@ public class SyncManager : MonoBehaviour, IUpdatable
 
         if (!string.IsNullOrEmpty(logInData))
         {
-            onlinePlayer = JsonConvert.DeserializeObject<SyncModels>(logInData);
+            onlinePlayer = packetSerializeManager.HandleReceivedPacket<SyncModels>(logInData);
             if (onlinePlayer.idAccount != LogInView.GetIDAccount())
             {
                 if (loggedOutPlayers.Contains(onlinePlayer.idAccount))
@@ -57,8 +54,7 @@ public class SyncManager : MonoBehaviour, IUpdatable
         }
         if (!string.IsNullOrEmpty(logOutData))
         {
-            offlinePlayer = JsonConvert.DeserializeObject<LogOutRequestPacket>(logOutData);
-            Debug.Log($"Đã nhận được yêu cầu xóa otherplayer id: {offlinePlayer.idAccount}");
+            offlinePlayer = packetSerializeManager.HandleReceivedPacket<LogOutRequestPacket>(logOutData);
             GameObject.Find("LogOut").GetComponent<LogOutController>().SetLogOutData(logOutData);
             OffDataFromServer(offlinePlayer);
         }
@@ -85,10 +81,10 @@ public class SyncManager : MonoBehaviour, IUpdatable
             otherPlayers.Add(data.idAccount, obj);
             otherPlayersData.Add(data.idAccount, data);
 
-            OtherPlayersController opc = obj.GetComponent<OtherPlayersController>();
-            if (opc != null)
+            OtherPlayersController otherPlayerController = obj.GetComponent<OtherPlayersController>();
+            if (otherPlayerController != null)
             {
-                opc.Init(data);
+                otherPlayerController.Init(data);
             }
             obj.GetComponentInChildren<SyncMovementController>().ApplyServerState(data);
             obj.GetComponentInChildren<SyncSpriteController>().ApplyServerState(data);

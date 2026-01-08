@@ -10,7 +10,7 @@ using UnityEngine;
 public class SocketManager : MonoBehaviour
 {
     private ClientWebSocket socket;
-    private Uri serverUri = new Uri("ws://localhost:55556/");
+    private Uri serverUri;
 
     private readonly ConcurrentQueue<string> sendQueue = new ConcurrentQueue<string>();
     private readonly ConcurrentQueue<string> receiveQueue = new ConcurrentQueue<string>();
@@ -27,6 +27,15 @@ public class SocketManager : MonoBehaviour
     private readonly ConcurrentQueue<string> equipmentAttributesQueue = new ConcurrentQueue<string>();
 
     private readonly ConcurrentQueue<string> outfitSpritesQueue = new ConcurrentQueue<string>();
+
+    private void Awake()
+    {
+#if UNITY_ANDROID
+        serverUri = new Uri("ws://192.168.100.10:55556/"); //phải khai báo rõ IP LAN của Server cho thiết bị Android 
+#elif UNITY_EDITOR || UNITY_STANDALONE
+        serverUri = new Uri($"ws://{IPV4ConfigurationManager.GetLocalIPv4()}:55556/"); // dùng IP LAN tự động khi chạy trên máy tính
+#endif
+    }
 
     private async void Start()
     {
@@ -54,6 +63,7 @@ public class SocketManager : MonoBehaviour
         }
     }
 
+    //Gửi Packet đến server
     public void SendToServer(string message)
     {
         sendQueue.Enqueue(message);
@@ -87,6 +97,7 @@ public class SocketManager : MonoBehaviour
         }
     }
 
+    //Nhận Packet từ server
     public async Task ReceiveFromServer()
     {
         var buffer = new byte[4096];
@@ -145,6 +156,7 @@ public class SocketManager : MonoBehaviour
             Debug.LogError("Error receiving messages: " + e.Message);
         }
     }
+    //Phân loại Packet nhận được từ server
     private void HandlePacket(string cmd, string json)
     {
         switch (cmd)

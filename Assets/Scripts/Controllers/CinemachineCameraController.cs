@@ -1,39 +1,67 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
+using System.Security.Principal;
 using Unity.Cinemachine;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 
-public class CinemachineCameraController : MonoBehaviour
+public class CinemachineCameraController : MonoBehaviour, IUpdatable
 {
-    [SerializeField] private List<Transform> accountTransform;
     private CinemachineCamera virtualCamera;
+    private bool hasSetTarget = false;
 
     private void Awake()
     {
         virtualCamera = GetComponent<CinemachineCamera>();
     }
-    void Start()
+    private void OnEnable()
     {
+        GameManager.Instance.Register(this);
+    }
+    private void OnDisable()
+    {
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.Unregister(this);
+        }
+    }
+
+    public void OnUpdate()
+    {
+        if (hasSetTarget)
+            return;
+
+        GameObject player = GameObject.Find("Player(Clone)");
+        if (player == null)
+            return;
+
         int idSchool = LogInView.GetIDSchool();
-        Transform player = null;
+        Transform target = null;
+
         switch (idSchool)
         {
             case 1:
-                player = accountTransform[0];
+                target = player.transform.Find("ChienBinh");
                 break;
             case 2:
-                player = accountTransform[1];
+                target = player.transform.Find("SatThu");
                 break;
             case 3:
-                player = accountTransform[2];
+                target = player.transform.Find("PhapSu");
                 break;
-                /*
-            case 4:
-                player = accountTransform[3];
-                break;
-                */
         }
-        virtualCamera.Follow = player;
+
+        if (target != null)
+        {
+            virtualCamera.Follow = target;
+            virtualCamera.LookAt = target;
+            hasSetTarget = true; // chỉ set 1 lần
+        }
+    }
+    public void OnLateUpdate() { }
+    public void OnFixedUpdate() { }
+    public void RegisterDontDestroyOnLoad()
+    {
+        GameManager.Instance.RegisterPersistent(this);
     }
 }

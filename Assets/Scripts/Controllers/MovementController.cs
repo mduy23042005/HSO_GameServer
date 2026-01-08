@@ -20,6 +20,7 @@ public class MovementController : MonoBehaviour, IUpdatable
     private const float syncInterval = 0.05f; // 20 lần / giây
 
     private SocketManager socketManager;
+    private PacketSerializeManager packetSerializeManager;
     private SpriteController spriteController;
     private PlayerState currentState;
 
@@ -30,6 +31,7 @@ public class MovementController : MonoBehaviour, IUpdatable
         menu = FindAnyObjectByType<MenuView>(FindObjectsInactive.Include);
         spriteController = GetComponent<SpriteController>();
         socketManager = GameManager.Instance.GetComponent<SocketManager>();
+        packetSerializeManager = GameManager.Instance.GetComponent<PacketSerializeManager>();
     }
 
     private void OnEnable()
@@ -103,8 +105,8 @@ public class MovementController : MonoBehaviour, IUpdatable
             armor = spriteController.GetArmorData(),
             legArmor = spriteController.GetLegArmorData(),
         };
-        string sendSyncDataPacket = JsonConvert.SerializeObject(packet);
-        socketManager.SendToServer(sendSyncDataPacket);
+
+        packetSerializeManager.HandleSentPacket(packet);
     }
 
     protected virtual void LeftClick()

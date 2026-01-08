@@ -1,7 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -26,15 +25,21 @@ public class InventoryView : MonoBehaviour, IUpdatable
 {
     [Header("Các ô hành trang")]
     [SerializeField] private List<Image> inventorySlots;
-    [SerializeField] private List<SpriteController> spriteController;
 
     private static List<InventoryResultPacket> inventoryItem0;
     private SocketManager socketManager;
+    private PacketSerializeManager packetSerializeManager;
 
     private void Awake()
     {
         socketManager = GameManager.Instance.GetComponent<SocketManager>();
-        ReadDatabase();
+        packetSerializeManager = GameManager.Instance.GetComponent<PacketSerializeManager>();
+
+        int idAccount = LogInView.GetIDAccount() ?? 0;
+        if (idAccount != 0)
+        {
+            ReadDatabase();
+        }
     }
 
     private void OnEnable()
@@ -59,7 +64,7 @@ public class InventoryView : MonoBehaviour, IUpdatable
 
         Debug.Log("Received inventory data successfully!");
 
-        List<InventoryResultPacket> inventoryResult = JsonConvert.DeserializeObject<List<InventoryResultPacket>>(data);
+        List<InventoryResultPacket> inventoryResult = packetSerializeManager.HandleReceivedPacket<List<InventoryResultPacket>>(data);
 
         if (inventoryItem0 == null)
             inventoryItem0 = new List<InventoryResultPacket>();
@@ -116,11 +121,15 @@ public class InventoryView : MonoBehaviour, IUpdatable
             cmd = "inventory",
             idAccount = idAccount,
         };
-        string packet = JsonConvert.SerializeObject(sendInventoryRequestPacket);
-        socketManager.SendToServer(packet);
+
+        packetSerializeManager.HandleSentPacket(sendInventoryRequestPacket);
     }
     public static List<InventoryResultPacket> GetListInventorySlots()
     {
         return inventoryItem0;
+    }
+    public static void ClearInventoryData()
+    {
+        inventoryItem0.Clear();
     }
 }

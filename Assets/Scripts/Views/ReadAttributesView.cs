@@ -61,6 +61,7 @@ public class EquipItem0RequestPacket
 
 class ReadAttributesView : MonoBehaviour, IUpdatable
 {
+
     [SerializeField] private GameObject itemInfo;
     [SerializeField] private GameObject nameItem;
     [SerializeField] private GameObject ring1Ring2Menu;
@@ -72,6 +73,7 @@ class ReadAttributesView : MonoBehaviour, IUpdatable
     private int indexSlot;
 
     private SocketManager socketManager;
+    private PacketSerializeManager packetSerializeManager;
     private string cmdReadAttributes;
 
     List<ReadAttributesInventoryResultPacket> inventoryAttributesResult;
@@ -79,6 +81,8 @@ class ReadAttributesView : MonoBehaviour, IUpdatable
     private void Awake()
     {
         socketManager = GameManager.Instance.GetComponent<SocketManager>();
+        packetSerializeManager = GameManager.Instance.GetComponent<PacketSerializeManager>();
+
         itemInfoText = itemInfo.GetComponent<TMP_Text>();
         nameItemText = nameItem.GetComponent<TMP_Text>();
     }
@@ -113,7 +117,7 @@ class ReadAttributesView : MonoBehaviour, IUpdatable
                 if (string.IsNullOrEmpty(data))
                     return;
 
-                List<ReadAttributesEquipmentResultPacket> equipmentAttributesResult = JsonConvert.DeserializeObject<List<ReadAttributesEquipmentResultPacket>>(data);
+                List<ReadAttributesEquipmentResultPacket> equipmentAttributesResult = packetSerializeManager.HandleReceivedPacket<List<ReadAttributesEquipmentResultPacket>>(data);
 
                 if (equipmentAttributesResult == null || equipmentAttributesResult.Count == 0)
                     return;
@@ -134,7 +138,7 @@ class ReadAttributesView : MonoBehaviour, IUpdatable
                 if (string.IsNullOrEmpty(data))
                     return;
 
-                inventoryAttributesResult = JsonConvert.DeserializeObject<List<ReadAttributesInventoryResultPacket>>(data);
+                inventoryAttributesResult = packetSerializeManager.HandleReceivedPacket<List<ReadAttributesInventoryResultPacket>>(data);
 
                 if (inventoryAttributesResult == null || inventoryAttributesResult.Count == 0)
                     return;
@@ -183,8 +187,7 @@ class ReadAttributesView : MonoBehaviour, IUpdatable
             idItem0_1 = idItem0_1
         };
 
-        string packet = JsonConvert.SerializeObject(sendEquipmentAttributesRequestPacket);
-        socketManager.SendToServer(packet);
+        packetSerializeManager.HandleSentPacket(sendEquipmentAttributesRequestPacket);
 
         itemInfo.SetActive(true);
         itemInfoText.text = "";
@@ -220,8 +223,7 @@ class ReadAttributesView : MonoBehaviour, IUpdatable
             idItem0 = inventoryInfo[idSlot].idItem0
         };
 
-        string packet = JsonConvert.SerializeObject(sendInventoryAttributesRequestPacket);
-        socketManager.SendToServer(packet);
+        packetSerializeManager.HandleSentPacket(sendInventoryAttributesRequestPacket);
 
         itemInfo.SetActive(true);
         itemInfoText.text = "";
@@ -301,8 +303,7 @@ class ReadAttributesView : MonoBehaviour, IUpdatable
                 slotName = typeItem0
             };
 
-            string packet = JsonConvert.SerializeObject(sendEquipItem0RequestPacket);
-            socketManager.SendToServer(packet);
+            packetSerializeManager.HandleSentPacket(sendEquipItem0RequestPacket);
 
             ringSlot = null;
             itemInfoText.text = "";

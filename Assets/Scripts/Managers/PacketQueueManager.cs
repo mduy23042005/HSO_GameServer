@@ -6,7 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class NetworkPacketQueueManager : MonoBehaviour
+public class PacketQueueManager : MonoBehaviour
 {
     private readonly ConcurrentQueue<string> packetQueue = new();
     private CancellationTokenSource cts;

@@ -52,7 +52,9 @@ public class RegisterView : MonoBehaviour, IUpdatable
     private int[] idHair = new int[4];
     private int idBlessing = 0;
     private string[] nameBlessing;
+
     private SocketManager socketManager;
+    private PacketSerializeManager packetSerializeManager;
 
     private void Awake()
     {
@@ -64,7 +66,9 @@ public class RegisterView : MonoBehaviour, IUpdatable
             uiPickXaThu = GameObject.Find("UIPickXaThu").GetComponent<Animator>();
         }
         nameBlessing = new string[] { "Ánh sáng", "Bóng tối" };
+
         socketManager = GameManager.Instance.GetComponent<SocketManager>();
+        packetSerializeManager = GameManager.Instance.GetComponent<PacketSerializeManager>();
     }
 
     private void OnEnable()
@@ -89,7 +93,7 @@ public class RegisterView : MonoBehaviour, IUpdatable
 
         Debug.Log("Received register data successfully!");
 
-        RegisterResultPacket registerResult = JsonConvert.DeserializeObject<RegisterResultPacket>(data);
+        RegisterResultPacket registerResult = packetSerializeManager.HandleReceivedPacket<RegisterResultPacket>(data);
 
         if (registerResult.success)
         {
@@ -230,8 +234,7 @@ public class RegisterView : MonoBehaviour, IUpdatable
             hair = hair,
             blessingPoints = blessingPoints
         };
-        string packet = JsonConvert.SerializeObject(sendRegisterRequestPacket);
-        socketManager.SendToServer(packet);
+        packetSerializeManager.HandleSentPacket(sendRegisterRequestPacket);
     }
 
     private bool CheckAllInfo(int idSchool, TMP_InputField nameChar, TMP_InputField username, TMP_InputField password)

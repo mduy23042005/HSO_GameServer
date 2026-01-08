@@ -2,44 +2,31 @@
 
 public class PlayerController : MonoBehaviour, IUpdatable
 {
-    private GameObject player;
-    private GameObject chienBinh;
-    private GameObject satThu;
-    private GameObject phapSu;
+    [SerializeField] private GameObject chienBinh;
+    [SerializeField] private GameObject satThu;
+    [SerializeField] private GameObject phapSu;
     //private GameObject XaThu;
 
-    private void Awake()
+    private void Awake() 
     {
-        if (GameObject.Find("Player"))
+        if (gameObject.name == "PlayerDemo")
         {
-            player = GameObject.Find("Player").gameObject;
-            chienBinh = player.transform.Find("ChienBinh").gameObject;
-            satThu = player.transform.Find("SatThu").gameObject;
-            phapSu = player.transform.Find("PhapSu").gameObject;
-            //xaThu = player.transform.Find("XaThu").gameObject;
-        }
-        if (GameObject.Find("Player"))
-        {
-            var idSchool = LogInView.GetIDSchool();
-            switch (idSchool)
+            switch (LogInView.GetIDSchool())
             {
                 case 1:
                     chienBinh.SetActive(true);
                     Destroy(satThu);
                     Destroy(phapSu);
-                    //Destroy(xaThu);
                     break;
                 case 2:
-                    Destroy(chienBinh);
                     satThu.SetActive(true);
+                    Destroy(chienBinh);
                     Destroy(phapSu);
-                    //Destroy(xaThu);
                     break;
                 case 3:
+                    phapSu.SetActive(true);
                     Destroy(chienBinh);
                     Destroy(satThu);
-                    phapSu.SetActive(true);
-                    //Destroy(xaThu);
                     break;
             }
         }
@@ -47,7 +34,6 @@ public class PlayerController : MonoBehaviour, IUpdatable
     private void OnEnable()
     {
         GameManager.Instance.Register(this);
-        RegisterDontDestroyOnLoad();
     }
     private void OnDisable()
     {
@@ -56,15 +42,36 @@ public class PlayerController : MonoBehaviour, IUpdatable
             GameManager.Instance.Unregister(this);
         }
     }
-    public void DestroyPlayerObject()
+
+    public void OnUpdate()
     {
-        Destroy(gameObject);
     }
-    public void OnUpdate() { }
     public void OnLateUpdate() { }
     public void OnFixedUpdate() { }
     public void RegisterDontDestroyOnLoad()
     {
         GameManager.Instance.RegisterPersistent(this);
+    }
+
+    public void SetupBySchool(int idSchool)
+    {
+        switch (idSchool)
+        {
+            case 1:
+                chienBinh.SetActive(true);
+                Destroy(satThu);
+                Destroy(phapSu);
+                break;
+            case 2:
+                satThu.SetActive(true);
+                Destroy(chienBinh);
+                Destroy(phapSu);
+                break;
+            case 3:
+                phapSu.SetActive(true);
+                Destroy(chienBinh);
+                Destroy(satThu);
+                break;
+        }
     }
 }

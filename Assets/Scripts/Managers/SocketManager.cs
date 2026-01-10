@@ -101,21 +101,43 @@ public class SocketManager : MonoBehaviour
     public async Task ReceiveFromServer()
     {
         var buffer = new byte[4096];
+        var messageBuffer = new StringBuilder();
 
         try
         {
             while (socket != null && socket.State == WebSocketState.Open)
             {
-                var result = await socket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
+                WebSocketReceiveResult result;
 
-                if (result.MessageType == WebSocketMessageType.Close)
-                    break;
+                do
+                {
+                    result = await socket.ReceiveAsync(
+                        new ArraySegment<byte>(buffer),
+                        CancellationToken.None
+                    );
 
-                string msg = Encoding.UTF8.GetString(buffer, 0, result.Count);
-                var token = JToken.Parse(msg);
+                    if (result.MessageType == WebSocketMessageType.Close)
+                        return;
+
+                    messageBuffer.Append(
+                        Encoding.UTF8.GetString(buffer, 0, result.Count)
+                    );
+
+                } while (!result.EndOfMessage);
+
+                string fullMessage = messageBuffer.ToString();
+                messageBuffer.Clear();
+
+                var token = JToken.Parse(fullMessage);
 
                 switch (token.Type)
-                {
+                { 
+                    case JTokenType.Object:
+                        {
+                            string cmd = token["cmd"]?.ToString();
+                            HandlePacket(cmd, fullMessage);
+                            break;
+                        }
                     case JTokenType.Array:
                         {
                             if (!token.HasValues)
@@ -132,22 +154,14 @@ public class SocketManager : MonoBehaviour
 
                             if (!string.IsNullOrEmpty(cmd))
                             {
-                                HandlePacket(cmd, msg);
+                                HandlePacket(cmd, fullMessage);
                             }
                             else
                             {
-                                Debug.LogWarning("cmd missing in array packet: " + msg);
+                                Debug.LogWarning("cmd missing in array packet: " + fullMessage);
                             }
                             break;
                         }
-                    case JTokenType.Object:
-                        {
-                            string cmd = token["cmd"]?.ToString();
-                            HandlePacket(cmd, msg);
-                            break;
-                        }
-                    default:
-                        break;
                 }
             }
         }

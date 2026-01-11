@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -34,6 +35,9 @@ public class LogInView : MonoBehaviour, IUpdatable
 
     private SocketManager socketManager;
     private PacketSerializeManager packetSerializeManager;
+    private const float timeOut = 10f;
+    private bool isLoggingIn = false;
+    private float startTime;
 
     private void Awake()
     { 
@@ -54,28 +58,41 @@ public class LogInView : MonoBehaviour, IUpdatable
     }
     public void OnUpdate()
     {
-        string data = socketManager.GetLogInData();
-
-        if (string.IsNullOrEmpty(data))
+        if (!isLoggingIn)
             return;
 
-        LogInResultPacket logInResult = packetSerializeManager.HandleReceivedPacket<LogInResultPacket>(data);
+        string data = socketManager.GetLogInData();
 
-        if (logInResult.success)
+        if (!string.IsNullOrEmpty(data))
         {
-            idAccount = logInResult.idAccount;
-            idSchool = logInResult.idSchool;
-            idHair = logInResult.hair;
+            LogInResultPacket logInResult = packetSerializeManager.HandleReceivedPacket<LogInResultPacket>(data);
 
-            textMessage.color = Color.green;
-            textMessage.text = $"Đăng nhập {logInResult.nameChar} thành công.";
+            if (logInResult.success)
+            {
+                idAccount = logInResult.idAccount;
+                idSchool = logInResult.idSchool;
+                idHair = logInResult.hair;
 
-            SceneManager.LoadScene("Map1");
+                textMessage.color = Color.green;
+                textMessage.text = $"Đăng nhập {logInResult.nameChar} thành công.";
+
+                isLoggingIn = false;
+                SceneManager.LoadScene("Map1");
+            }
+            else
+            {
+                textMessage.color = Color.red;
+                textMessage.text = "Username hoặc Password không đúng.";
+            }
         }
         else
         {
-            textMessage.color = Color.red;
-            textMessage.text = "Username hoặc Password không đúng.";
+            if (Time.time - startTime > timeOut)
+            {
+                textMessage.color = Color.red;
+                textMessage.text = "Không thể kết nối tới server.";
+                isLoggingIn = false;
+            }
         }
     }
     public void OnLateUpdate() { }
@@ -85,8 +102,11 @@ public class LogInView : MonoBehaviour, IUpdatable
         GameManager.Instance.RegisterPersistent(this);
     }
 
-    public void ClickLogIn()
+    private async Task LogIn()
     {
+        textMessage.text = "";
+        await socketManager.InitSocket();
+
         string username = inputUsername.text.Trim();
         string password = inputPassword.text.Trim();
 
@@ -101,6 +121,12 @@ public class LogInView : MonoBehaviour, IUpdatable
 
         textMessage.color = Color.yellow;
         textMessage.text = "Đang đăng nhập...";
+        isLoggingIn = true;
+        startTime = Time.time;
+    }
+    public void ClickLogIn()
+    {
+        _ = LogIn();
     }
 
     public void ClickRegister()

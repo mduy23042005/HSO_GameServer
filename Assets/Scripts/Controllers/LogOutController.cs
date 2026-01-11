@@ -94,6 +94,4 @@ public class LogOutController : MonoBehaviour, IUpdatable
     {
         logOutData = data;
     }
-
-    private void OnApplicationQuit() { }
 }

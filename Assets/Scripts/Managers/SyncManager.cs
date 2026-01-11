@@ -9,10 +9,11 @@ public class SyncManager : MonoBehaviour, IUpdatable
     private Dictionary<int, GameObject> otherPlayers = new Dictionary<int, GameObject>();
     private Dictionary<int, SyncModels> otherPlayersData = new Dictionary<int, SyncModels>();
 
+    private Dictionary<int, float> lastUpdateTime = new Dictionary<int, float>();
+    private const float timeOut = 0.5f;
+
     private SyncModels onlinePlayer;
     private LogOutRequestPacket offlinePlayer;
-
-    private HashSet<int> loggedOutPlayers = new HashSet<int>(); //dùng để lưu danh sách sync disconnected other players
 
     private SocketManager socketManager;
     private PacketSerializeManager packetSerializeManager;
@@ -37,6 +38,27 @@ public class SyncManager : MonoBehaviour, IUpdatable
 
     public virtual void OnUpdate()
     {
+        List<int> toRemove = new List<int>();
+
+        foreach (var kv in lastUpdateTime)
+        {
+            if (Time.time - kv.Value > timeOut)
+            {
+                toRemove.Add(kv.Key);
+            }
+        }
+
+        foreach (var id in toRemove)
+        {
+            if (otherPlayers.TryGetValue(id, out GameObject obj))
+            {
+                Destroy(obj);
+                otherPlayers.Remove(id);
+                otherPlayersData.Remove(id);
+                lastUpdateTime.Remove(id);
+            }
+        }
+
         string logInData = socketManager.GetSyncData(); //luôn lấy từ sync queue vì online player luôn gửi data đến server khi online
         string logOutData = socketManager.GetLogOutData();
 
@@ -45,10 +67,6 @@ public class SyncManager : MonoBehaviour, IUpdatable
             onlinePlayer = packetSerializeManager.HandleReceivedPacket<SyncModels>(logInData);
             if (onlinePlayer.idAccount != LogInView.GetIDAccount())
             {
-                if (loggedOutPlayers.Contains(onlinePlayer.idAccount))
-                {
-                    return;
-                }
                 OnDataFromServer(onlinePlayer);
             }
         }
@@ -68,9 +86,6 @@ public class SyncManager : MonoBehaviour, IUpdatable
 
     public void OnDataFromServer(SyncModels data)
     {
-        if (loggedOutPlayers.Contains(data.idAccount))
-            return;
-
         GameObject obj;
 
         // Kiểm tra thêm nếu object đã bị destroy
@@ -95,17 +110,15 @@ public class SyncManager : MonoBehaviour, IUpdatable
             obj.GetComponentInChildren<SyncMovementController>().ApplyServerState(data);
             obj.GetComponentInChildren<SyncSpriteController>().ApplyServerState(data);
         }
+        lastUpdateTime[data.idAccount] = Time.time;
     }
     public void OffDataFromServer(LogOutRequestPacket data)
     {
-        loggedOutPlayers.Add(data.idAccount);
-
         if (otherPlayers.TryGetValue(data.idAccount, out GameObject obj))
         {
             Destroy(obj.gameObject);
             otherPlayers.Remove(data.idAccount);
             otherPlayersData.Remove(data.idAccount);
-            loggedOutPlayers.Remove(data.idAccount);
         }
     }
 
@@ -120,6 +133,5 @@ public class SyncManager : MonoBehaviour, IUpdatable
         }
         otherPlayers.Clear();
         otherPlayersData.Clear();
-        loggedOutPlayers.Clear();
     }
 }

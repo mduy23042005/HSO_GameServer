@@ -37,15 +37,7 @@ public class SocketManager : MonoBehaviour
 #endif
     }
 
-    private async void Start()
-    {
-        await TestSocket();
-
-        _ = StartSendLoop();
-        _ = ReceiveFromServer();
-    }
-
-    public async Task TestSocket()
+    public async Task InitSocket()
     {
         if (socket != null && socket.State == WebSocketState.Open)
             return;
@@ -56,6 +48,9 @@ public class SocketManager : MonoBehaviour
         {
             await socket.ConnectAsync(serverUri, CancellationToken.None);
             Debug.Log("Socket: Kết nối Server thành công!");
+
+            _ = StartSendLoop();
+            _ = ReceiveFromServer();
         }
         catch (Exception e)
         {
@@ -279,10 +274,23 @@ public class SocketManager : MonoBehaviour
         return null;
     }
 
-    private void OnApplicationQuit()
+    private async void OnApplicationQuit()
     {
         if (socket != null)
+        {
+            if (socket.State == WebSocketState.Open)
+            {
+                try
+                {
+                    await socket.CloseAsync(WebSocketCloseStatus.NormalClosure, "Client quitting", CancellationToken.None);
+                }
+                catch (Exception e)
+                {
+                    Debug.LogWarning("Error closing WebSocket: " + e.Message);
+                }
+            }
             socket.Dispose();
+        }
     }
 
     public void ClearAllQueues()

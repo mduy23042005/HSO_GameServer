@@ -31,7 +31,7 @@ public class SocketManager : MonoBehaviour
     private void Awake()
     {
 #if UNITY_ANDROID
-        serverUri = new Uri("ws://192.168.100.10:55556/"); //phải khai báo rõ IP LAN của Server cho thiết bị Android 
+        serverUri = new Uri("ws://192.168.100.12:55556/"); //phải khai báo rõ IP LAN của Server cho thiết bị Android 
 #elif UNITY_EDITOR || UNITY_STANDALONE
         serverUri = new Uri($"ws://{IPV4ConfigurationManager.GetLocalIPv4()}:55556/"); // dùng IP LAN tự động khi chạy trên máy tính
 #endif
@@ -106,17 +106,12 @@ public class SocketManager : MonoBehaviour
 
                 do
                 {
-                    result = await socket.ReceiveAsync(
-                        new ArraySegment<byte>(buffer),
-                        CancellationToken.None
-                    );
+                    result = await socket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
 
                     if (result.MessageType == WebSocketMessageType.Close)
                         return;
 
-                    messageBuffer.Append(
-                        Encoding.UTF8.GetString(buffer, 0, result.Count)
-                    );
+                    messageBuffer.Append(Encoding.UTF8.GetString(buffer, 0, result.Count));
 
                 } while (!result.EndOfMessage);
 

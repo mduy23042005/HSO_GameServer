@@ -139,7 +139,7 @@ public class RegisterView : MonoBehaviour, IUpdatable
     }
     public void OnSelectSchool()
     {
-        idSchool = DemoController.GetIDSchool();
+        idSchool = RegisterDemoController.GetIDSchool();
         if (CheckOptionSchool())
         {
             EquipHair(idHair[idSchool - 1]);
@@ -209,7 +209,7 @@ public class RegisterView : MonoBehaviour, IUpdatable
 
     public void ClickRegister()
     {
-        idSchool = DemoController.GetIDSchool();
+        idSchool = RegisterDemoController.GetIDSchool();
         if (idSchool == 0)
         {
             SendErrorSchool();

@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
@@ -21,6 +20,7 @@ public class LogInResultPacket
     public int idSchool;
     public string nameChar;
     public int hair;
+    public string message;
 }
 
 public class LogInView : MonoBehaviour, IUpdatable
@@ -74,15 +74,16 @@ public class LogInView : MonoBehaviour, IUpdatable
                 idHair = logInResult.hair;
 
                 textMessage.color = Color.green;
-                textMessage.text = $"Đăng nhập {logInResult.nameChar} thành công.";
+                textMessage.text = logInResult.message;
 
                 isLoggingIn = false;
-                SceneManager.LoadScene("Map1");
+                SceneManager.LoadScene("Ngôi Làng Nhỏ");
             }
             else
             {
                 textMessage.color = Color.red;
-                textMessage.text = "Username hoặc Password không đúng.";
+                textMessage.text = logInResult.message;
+                isLoggingIn = false;
             }
         }
         else

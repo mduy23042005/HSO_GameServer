@@ -1101,7 +1101,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa974be2cb6196c40abfacee2ebe40ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playersPrefab: {fileID: 720927045156854034, guid: 8e396b017fd1c324c999624ffebb9083, type: 3}
+  playerPrefab:
+  - {fileID: 2686158203596186061, guid: 52493cf958f36b04b8df545038d70e57, type: 3}
+  - {fileID: 4709928625883205606, guid: f971d6e622030f64f9d65aa05b819f1c, type: 3}
+  - {fileID: 4099471368125039374, guid: e99a1d3a75702a649a0708317c7d07b2, type: 3}
 --- !u!1 &1155686057
 GameObject:
   m_ObjectHideFlags: 0
@@ -1449,7 +1452,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 199732367
-  m_SortingLayer: 3
+  m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: -7978290656511518434, guid: 3f1caeedb6f7d854b8ad550aac585168, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

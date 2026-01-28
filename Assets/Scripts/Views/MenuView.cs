@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -5,52 +6,27 @@ public class MenuView : MonoBehaviour, IUpdatable
 {
     [SerializeField] private GameObject itemInfo;
 
-    private GameObject playerDemo;
-    private GameObject chienBinhDemo;
-    private GameObject satThuDemo;
-    private GameObject phapSuDemo;
-    //private GameObject xaThuDemo;
+    [SerializeField] private List<GameObject> listDemo;
 
     private TMP_Text infoText;
 
     private bool isActive = false;
     private void Awake()
     {
-        playerDemo = GameObject.Find("PlayerDemo").gameObject;
-        chienBinhDemo = playerDemo.transform.Find("ChienBinh").gameObject;
-        satThuDemo = playerDemo.transform.Find("SatThu").gameObject;
-        phapSuDemo = playerDemo.transform.Find("PhapSu").gameObject;
-        //xaThuDemo = playerDemo.transform.Find("XaThu").gameObject;
-
         infoText = itemInfo.GetComponent<TMP_Text>();
     }
     private void Start()
     {
-        if (GameObject.Find("Player"))
+        int idSchool = LogInView.GetIDSchool();
+
+        for (int i = 0; i < listDemo.Count; i++)
         {
-            var idSchool = LogInView.GetIDSchool();
-            switch (idSchool)
+            if (i != idSchool - 1)
             {
-                case 1:
-                    chienBinhDemo.SetActive(true);
-                    Destroy(satThuDemo);
-                    Destroy(phapSuDemo);
-                    //Destroy(xaThuDemo);
-                    break;
-                case 2:
-                    Destroy(chienBinhDemo);
-                    satThuDemo.SetActive(true);
-                    Destroy(phapSuDemo);
-                    //Destroy(xaThuDemo);
-                    break;
-                case 3:
-                    Destroy(chienBinhDemo);
-                    Destroy(satThuDemo);
-                    phapSuDemo.SetActive(true);
-                    //Destroy(xaThuDemo);
-                    break;
+                Destroy(listDemo[i]);
             }
         }
+
         gameObject.SetActive(isActive);
     }
     private void OnEnable()
@@ -64,20 +40,16 @@ public class MenuView : MonoBehaviour, IUpdatable
             GameManager.Instance.Unregister(this);
         }
     }
-    public void OnUpdate()
-    {
 
-    }
-    public void OnLateUpdate()
-    {
-    }
-    public void OnFixedUpdate()
-    {
-    }
+    public void OnUpdate(){ }
+    public void OnLateUpdate() { }
+    public void OnFixedUpdate() { }
+
     public void RegisterDontDestroyOnLoad()
     {
         GameManager.Instance.RegisterPersistent(this);
     }
+
     public void OpenMenu()
     {
         isActive = true;

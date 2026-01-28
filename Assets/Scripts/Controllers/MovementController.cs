@@ -1,13 +1,59 @@
-﻿using Newtonsoft.Json;
-using System.Collections;
+﻿using System.Collections;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
+public enum PlayerState
+{
+    Stand = 0,
+    Move = 1,
+    Attack = 2,
+    Injured = 3,
+    Die = 4
+}
+public enum Direction
+{
+    Front = 0,
+    Back = 1,
+    Left = 2,
+    Right = 3,
+}
+public class SyncDataPacket
+{
+    public string cmd;
+    public int idAccount;
+    public float posX;
+    public float posY;
+    public float lastPosX;
+    public float lastPosY;
+    public PlayerState state;
+    public Direction direction;
+    public int frame;
+    public string nameChar;
+    public int level;
+    public int idSchool;
+    public int hair;
+    public int weapon;
+    public int helmet;
+    public int armor;
+    public int legArmor;
+    public int gloves;
+    public int shoes;
+    public int ring1;
+    public int ring2;
+    public int necklace;
+    public int medal;
+    public int cloak;
+    public int wing;
+    public int skinWing;
+    public int mounts;
+    public int pet;
+    public int skin;
+}
+
 public class MovementController : MonoBehaviour, IUpdatable
 {
     private float moveSpeed = 6f;
-    private Rigidbody2D rb;
     private Vector2 movement;
     private Vector2 lastMove = new Vector2(0, -1);
     private Vector2 targetPosition;
@@ -19,18 +65,15 @@ public class MovementController : MonoBehaviour, IUpdatable
     private float syncTimer;
     private const float syncInterval = 0.05f; // 20 lần / giây
 
-    private SocketManager socketManager;
     private PacketSerializeManager packetSerializeManager;
     private SpriteController spriteController;
     private PlayerState currentState;
 
     private void Awake()
     {
-        rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-        menu = FindAnyObjectByType<MenuView>(FindObjectsInactive.Include);
         spriteController = GetComponent<SpriteController>();
-        socketManager = GameManager.Instance.GetComponent<SocketManager>();
+        menu = FindAnyObjectByType<MenuView>(FindObjectsInactive.Include);
         packetSerializeManager = GameManager.Instance.GetComponent<PacketSerializeManager>();
     }
 
@@ -40,7 +83,6 @@ public class MovementController : MonoBehaviour, IUpdatable
         animator.SetFloat("LastHorizontal", 0);
         animator.SetFloat("LastVertical", -1);
     }
-
     private void OnDisable()
     {
         if (GameManager.Instance != null)
@@ -62,21 +104,15 @@ public class MovementController : MonoBehaviour, IUpdatable
             SendSyncData();
         }
     }
-
     public virtual void OnLateUpdate() { }
-
     public virtual void OnFixedUpdate()
     {
-        float speed = moveSpeed * Time.fixedDeltaTime;
-
         if (movement == Vector2.zero)
             return;
 
-        Vector2 targetPos = rb.position + movement;
+        float speed = moveSpeed * Time.fixedDeltaTime;
 
-        Vector2 newPos = Vector2.MoveTowards(rb.position, targetPos, speed);
-
-        rb.MovePosition(newPos);
+        transform.position += new Vector3(movement.x, movement.y, 0) * speed;
     }
 
     public void RegisterDontDestroyOnLoad()
@@ -86,7 +122,7 @@ public class MovementController : MonoBehaviour, IUpdatable
 
     private async Task SendSyncData()
     {
-        SyncModels packet = new SyncModels
+        SyncDataPacket packet = new SyncDataPacket
         {
             cmd = "syncData",
             idAccount = LogInView.GetIDAccount() ?? 0,
@@ -129,8 +165,8 @@ public class MovementController : MonoBehaviour, IUpdatable
             // Nếu không click vào mob thì tiến hành di chuyển đến vị trí click
             targetPosition = clickPos;
             // Quyết định hướng ưu tiên
-            float deltaX = Mathf.Abs(targetPosition.x - rb.position.x);
-            float deltaY = Mathf.Abs(targetPosition.y - rb.position.y);
+            float deltaX = Mathf.Abs(targetPosition.x - transform.position.x);
+            float deltaY = Mathf.Abs(targetPosition.y - transform.position.y);
             movingHorizontalFirst = deltaX > deltaY;
             isMovingToTarget = true;
         }
@@ -169,7 +205,7 @@ public class MovementController : MonoBehaviour, IUpdatable
         LeftClick();
         if (isMovingToTarget)
         {
-            Vector2 currentPos = rb.position;
+            Vector2 currentPos = transform.position;
             float deltaX = targetPosition.x - currentPos.x;
             float deltaY = targetPosition.y - currentPos.y;
 
@@ -223,14 +259,7 @@ public class MovementController : MonoBehaviour, IUpdatable
     {
         return lastMove;
     }
-    public void SetMovement(Vector2 value)
-    {
-        movement = value;
-    }
-    public void SetLastMovement(Vector2 value)
-    {
-        lastMove = value;
-    }
+
     public bool GetIsMovingToTarget()
     {
         return isMovingToTarget;

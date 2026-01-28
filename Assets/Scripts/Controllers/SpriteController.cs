@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.U2D.Animation;
@@ -10,7 +9,7 @@ public class SpriteController : MonoBehaviour, IUpdatable
     private Animator animator;
     private int lastFrame = -1;
     private string lastState = "";
-    private MovementController controller;
+    private MovementController movementController;
     private Direction currentDirection;
     private int currentFrame;
 
@@ -34,7 +33,7 @@ public class SpriteController : MonoBehaviour, IUpdatable
     {
         resolvers = GetComponentsInChildren<SpriteResolver>().ToList();
         animator = GetComponent<Animator>();
-        controller = GetComponent<MovementController>();
+        movementController = GetComponent<MovementController>();
         socketManager = GameManager.Instance.GetComponent<SocketManager>();
         packetSerializeManager = GameManager.Instance.GetComponent<PacketSerializeManager>();
         listItem0 = ItemController.Instance;
@@ -227,15 +226,15 @@ public class SpriteController : MonoBehaviour, IUpdatable
 
         float h;
         float v;
-        if (controller.GetIsMovingToTarget())
+        if (movementController.GetIsMovingToTarget())
         {
-            h = controller.GetMovement().x;
-            v = controller.GetMovement().y;
+            h = movementController.GetMovement().x;
+            v = movementController.GetMovement().y;
         }
         else
         {
-            h = controller.GetLastMovement().x;
-            v = controller.GetLastMovement().y;
+            h = movementController.GetLastMovement().x;
+            v = movementController.GetLastMovement().y;
         }
 
         string direction = GetDirection(h, v);

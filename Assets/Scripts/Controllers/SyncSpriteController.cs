@@ -6,7 +6,7 @@ using UnityEngine.U2D.Animation;
 public class SyncSpriteController : MonoBehaviour, IUpdatable
 {
     private List<SpriteResolver> resolvers;
-    private SyncModels syncDataSprite;
+    private SyncDataPacket syncDataSprite;
     private string direction;
 
     [Header("Chỉ định sprite nào của player sẽ bị thay thế")]
@@ -42,7 +42,7 @@ public class SyncSpriteController : MonoBehaviour, IUpdatable
     {
         GameManager.Instance.RegisterPersistent(this);
     }
-    public void ApplyServerState(SyncModels data)
+    public void ApplyServerState(SyncDataPacket data)
     {
         syncDataSprite = data;
 

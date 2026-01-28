@@ -192,6 +192,7 @@ public class SocketManager : MonoBehaviour
             case "inventoryAttributes_result":
                 inventoryAttributesQueue.Enqueue(json);
                 break;
+
             case "outfitSprites_result":
                 outfitSpritesQueue.Enqueue(json);
                 break;

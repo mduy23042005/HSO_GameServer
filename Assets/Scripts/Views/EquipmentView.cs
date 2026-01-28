@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -17,6 +16,8 @@ public class EquipmentResultPacket
     public int id;
     public int idItem0_1;
     public int category;
+    public List<Item0_Attribute> item0_Attributes;
+    public List<Attribute> nameAttributes;
 }
 
 public class EquipmentView : MonoBehaviour, IUpdatable
@@ -38,7 +39,7 @@ public class EquipmentView : MonoBehaviour, IUpdatable
         int idAccount = LogInView.GetIDAccount() ?? 0;
         if (idAccount != 0)
         {
-            ReadDatabase();
+            ReadCache();
         }
     }
 
@@ -99,7 +100,7 @@ public class EquipmentView : MonoBehaviour, IUpdatable
     }
 
     // Đọc dữ liệu từ database và hiển thị vào Equipment Slots
-    private async void ReadDatabase()
+    private async void ReadCache()
     {
         int idAccount = LogInView.GetIDAccount() ?? 0;
         EquipmentRequestPacket sendEquipmentRequestPacket = new EquipmentRequestPacket

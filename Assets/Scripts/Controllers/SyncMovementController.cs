@@ -4,21 +4,18 @@ public class SyncMovementController : MonoBehaviour, IUpdatable
 {
     private float moveSpeed = 6f;
     private Vector2 movement;
-    private Rigidbody2D rb;
     private Animator animator;
 
     private string nextAnim = "";
     private string direction;
 
-    private SyncModels syncDataMovement;
+    private SyncDataPacket syncDataMovement;
     private PlayerState serverState = 0;
     private Direction syncDirection = 0;
     private Vector2 serverDir = Vector2.down;
 
     private void Awake()
     {
-        rb = GetComponent<Rigidbody2D>();
-        rb.interpolation = RigidbodyInterpolation2D.None;
         animator = GetComponentInChildren<Animator>();
     }
 
@@ -34,7 +31,7 @@ public class SyncMovementController : MonoBehaviour, IUpdatable
         }
     }
 
-    public void ApplyServerState(SyncModels data)
+    public void ApplyServerState(SyncDataPacket data)
     {
         syncDataMovement = data;
 
@@ -64,9 +61,7 @@ public class SyncMovementController : MonoBehaviour, IUpdatable
     {
         float speed = moveSpeed * Time.fixedDeltaTime;
 
-        Vector2 newPos = Vector2.MoveTowards(rb.position, movement, speed);
-
-        rb.MovePosition(newPos);
+        transform.position = Vector2.MoveTowards(transform.position, movement, moveSpeed * Time.deltaTime);
     }
     public void RegisterDontDestroyOnLoad()
     {

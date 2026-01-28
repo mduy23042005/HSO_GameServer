@@ -1,8 +1,9 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class PlayerManager : MonoBehaviour, IUpdatable
 {
-    [SerializeField] private GameObject playersPrefab;
+    [SerializeField] private List<GameObject> playerPrefab;
 
     GameObject player;
 
@@ -34,12 +35,20 @@ public class PlayerManager : MonoBehaviour, IUpdatable
     {
         int idSchool = LogInView.GetIDSchool();
 
-        player = Instantiate(playersPrefab, new Vector2(0f, 0f), Quaternion.identity);
-
-        PlayerController playerController = player.GetComponent<PlayerController>();
-        if (playerController != null)
+        switch (idSchool)
         {
-            playerController.SetupBySchool(idSchool);
+            case 1:
+                player = Instantiate(playerPrefab[0], new Vector2(-9.5f, -4.5f), Quaternion.identity);
+                break;
+            case 2:
+                player = Instantiate(playerPrefab[1], new Vector2(-9.5f, -4.5f), Quaternion.identity);
+                break;
+            case 3:
+                player = Instantiate(playerPrefab[2], new Vector2(-9.5f, -4.5f), Quaternion.identity);
+                break;
+            case 4:
+                player = Instantiate(playerPrefab[3], new Vector2(-9.5f, -4.5f), Quaternion.identity);
+                break;
         }
     }
 

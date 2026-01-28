@@ -14,7 +14,7 @@ TagManager:
   - UI
   - Ground
   - Player
-  - 
+  - Materials
   - 
   - 
   - 
@@ -45,11 +45,20 @@ TagManager:
   - name: Ground
     uniqueID: 1583224543
     locked: 0
-  - name: Player
+  - name: Water
+    uniqueID: 326932467
+    locked: 0
+  - name: Game
     uniqueID: 1808891219
     locked: 0
+  - name: Trees
+    uniqueID: 2069750813
+    locked: 0
   - name: UI
-    uniqueID: 199732367
+    uniqueID: 116693523
+    locked: 0
+  - name: InventoryDemoPlayer
+    uniqueID: 3856214375
     locked: 0
   m_RenderingLayers:
   - Default

@@ -1,7 +1,5 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -61,7 +59,6 @@ public class EquipItem0RequestPacket
 
 class ReadAttributesView : MonoBehaviour, IUpdatable
 {
-
     [SerializeField] private GameObject itemInfo;
     [SerializeField] private GameObject nameItem;
     [SerializeField] private GameObject ring1Ring2Menu;
@@ -309,7 +306,7 @@ class ReadAttributesView : MonoBehaviour, IUpdatable
             itemInfoText.text = "";
             itemInfo.SetActive(false);
         }
-        catch (System.Exception ex)
+        catch (Exception ex)
         {
             Debug.LogError("Lỗi khi trang bị item: " + ex.Message);
             return;

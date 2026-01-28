@@ -1,18 +1,17 @@
-﻿using Newtonsoft.Json;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class SyncManager : MonoBehaviour, IUpdatable
 {
-    [SerializeField] private GameObject otherPlayersPrefab;
+    [SerializeField] private List<GameObject> otherPlayersPrefab;
 
     private Dictionary<int, GameObject> otherPlayers = new Dictionary<int, GameObject>();
-    private Dictionary<int, SyncModels> otherPlayersData = new Dictionary<int, SyncModels>();
+    private Dictionary<int, SyncDataPacket> otherPlayersData = new Dictionary<int, SyncDataPacket>();
 
     private Dictionary<int, float> lastUpdateTime = new Dictionary<int, float>();
-    private const float timeOut = 0.5f;
+    private const float timeOut = 0.55f;
 
-    private SyncModels onlinePlayer;
+    private SyncDataPacket onlinePlayer;
     private LogOutRequestPacket offlinePlayer;
 
     private SocketManager socketManager;
@@ -64,7 +63,7 @@ public class SyncManager : MonoBehaviour, IUpdatable
 
         if (!string.IsNullOrEmpty(logInData))
         {
-            onlinePlayer = packetSerializeManager.HandleReceivedPacket<SyncModels>(logInData);
+            onlinePlayer = packetSerializeManager.HandleReceivedPacket<SyncDataPacket>(logInData);
             if (onlinePlayer.idAccount != LogInView.GetIDAccount())
             {
                 OnDataFromServer(onlinePlayer);
@@ -84,23 +83,29 @@ public class SyncManager : MonoBehaviour, IUpdatable
         GameManager.Instance.RegisterPersistent(this);
     }
 
-    public void OnDataFromServer(SyncModels data)
+    public void OnDataFromServer(SyncDataPacket data)
     {
         GameObject obj;
 
         // Kiểm tra thêm nếu object đã bị destroy
         if (!otherPlayers.TryGetValue(data.idAccount, out obj))
         {
-            obj = Instantiate(otherPlayersPrefab, new Vector2(data.posX, data.posY), Quaternion.identity);
+            switch (data.idSchool)
+            {
+                case 1:
+                    obj = Instantiate(otherPlayersPrefab[0], new Vector2(data.posX, data.posY), Quaternion.identity);
+                    break;
+                case 2:
+                    obj = Instantiate(otherPlayersPrefab[1], new Vector2(data.posX, data.posY), Quaternion.identity);
+                    break;
+                case 3:
+                    obj = Instantiate(otherPlayersPrefab[2], new Vector2(data.posX, data.posY), Quaternion.identity);
+                    break;
+            }
 
             otherPlayers.Add(data.idAccount, obj);
             otherPlayersData.Add(data.idAccount, data);
 
-            OtherPlayersController otherPlayerController = obj.GetComponent<OtherPlayersController>();
-            if (otherPlayerController != null)
-            {
-                otherPlayerController.Init(data);
-            }
             obj.GetComponentInChildren<SyncMovementController>().ApplyServerState(data);
             obj.GetComponentInChildren<SyncSpriteController>().ApplyServerState(data);
         }

@@ -129,11 +129,11 @@ public class LogInView : MonoBehaviour, IUpdatable
     {
         _ = LogIn();
     }
-
     public void ClickRegister()
     {
         SceneManager.LoadScene("SelectCharacterScene");
     }
+
     public static int GetIDSchool()
     {
         return idSchool;

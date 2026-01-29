@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SocketManager : MonoBehaviour
 {
@@ -155,9 +156,32 @@ public class SocketManager : MonoBehaviour
                 }
             }
         }
-        catch (Exception e)
+        catch (Exception ex)
         {
-            Debug.LogError("Error receiving messages: " + e.Message);
+            GameObject.Find("SyncManager").gameObject.GetComponent<SyncManager>().PrepareForLogOut();
+
+            //Dọn sạch danh sách quản lý Queue nhận dữ liệu từ Server
+            ClearAllQueues();
+
+            if (EquipmentView.GetListEquipmentSlots() != null)
+            {
+                EquipmentView.ClearEquipmentData();
+            }
+            if (EquipmentView.GetListImagesEquipmentSlots() != null)
+            {
+                EquipmentView.ClearListImagesEquipmentSlots();
+            }
+
+            if (InventoryView.GetListInventorySlots() != null)
+            {
+                InventoryView.ClearInventoryData();
+            }
+
+            GameManager.Instance.GetComponent<PlayerManager>().DestroyPlayer();
+
+            Debug.Log($"Socket: Mất kết nối tới Server! {ex}");
+
+            SceneManager.LoadScene("Main");
         }
     }
     //Phân loại Packet nhận được từ server

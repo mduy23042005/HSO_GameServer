@@ -41,11 +41,6 @@ public class LogOutController : MonoBehaviour, IUpdatable
 
         LogOutRequestPacket logOutResult = packetSerializeManager.HandleReceivedPacket<LogOutRequestPacket>(logOutData);
 
-        if (logOutResult.idAccount != LogInView.GetIDAccount())
-        {
-            return;
-        }
-
         //Dọn sạch danh sách quản lý Other Players trước khi chuyển về Main Scene
         GameObject.Find("SyncManager").gameObject.GetComponent<SyncManager>().PrepareForLogOut();
 

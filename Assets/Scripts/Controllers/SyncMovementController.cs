@@ -6,11 +6,11 @@ public class SyncMovementController : MonoBehaviour, IUpdatable
     private Vector2 movement;
     private Animator animator;
 
-    private string nextAnim = "";
+    private string nextAnim;
     private string direction;
 
     private SyncDataPacket syncDataMovement;
-    private PlayerState serverState = 0;
+    private PlayerState otherPlayerState = 0;
     private Direction syncDirection = 0;
     private Vector2 serverDir = Vector2.down;
 
@@ -42,7 +42,7 @@ public class SyncMovementController : MonoBehaviour, IUpdatable
             serverDir.Normalize();
 
         // Giả định server có gửi state (bạn sẽ thêm bên SyncModels)
-        serverState = data.state;
+        otherPlayerState = data.state;
     }
 
     public void OnUpdate()
@@ -55,13 +55,10 @@ public class SyncMovementController : MonoBehaviour, IUpdatable
         syncDirection = (Direction)syncDataMovement.direction;
         UpdateAnimation();
     }
-
     public void OnLateUpdate() { }
     public void OnFixedUpdate()
     {
-        float speed = moveSpeed * Time.fixedDeltaTime;
-
-        transform.position = Vector2.MoveTowards(transform.position, movement, moveSpeed * Time.deltaTime);
+        transform.position = Vector2.MoveTowards(transform.position, movement, moveSpeed * Time.fixedDeltaTime);
     }
     public void RegisterDontDestroyOnLoad()
     {
@@ -87,7 +84,8 @@ public class SyncMovementController : MonoBehaviour, IUpdatable
             default:
                 direction = "Front"; break;
         }
-        switch (serverState)
+
+        switch (otherPlayerState)
         {
             case PlayerState.Stand:
                 nextAnim = $"Stand{direction}";
@@ -106,7 +104,7 @@ public class SyncMovementController : MonoBehaviour, IUpdatable
                 break;
         }
 
-        if (!animator.GetCurrentAnimatorStateInfo(0).IsName(nextAnim))
+        if (!animator.GetCurrentAnimatorStateInfo(0).IsName(nextAnim) || animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)
         {
             animator.Play(nextAnim);
         }

@@ -42,7 +42,7 @@ public class LogOutController : MonoBehaviour, IUpdatable
         LogOutRequestPacket logOutResult = packetSerializeManager.HandleReceivedPacket<LogOutRequestPacket>(logOutData);
 
         //Dọn sạch danh sách quản lý Other Players trước khi chuyển về Main Scene
-        GameObject.Find("SyncManager").gameObject.GetComponent<SyncManager>().PrepareForLogOut();
+        GameObject.Find("SyncManager").gameObject.GetComponent<SyncOtherPlayersManager>().PrepareForLogOut();
 
         //Dọn sạch danh sách quản lý Queue nhận dữ liệu từ Server
         socketManager.ClearAllQueues();

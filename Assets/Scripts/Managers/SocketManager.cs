@@ -17,6 +17,7 @@ public class SocketManager : MonoBehaviour
     private readonly ConcurrentQueue<string> receiveQueue = new ConcurrentQueue<string>();
 
     private readonly ConcurrentQueue<string> syncDataQueue = new ConcurrentQueue<string>();
+    private readonly ConcurrentQueue<string> syncMobsQueue = new ConcurrentQueue<string>();
 
     private readonly ConcurrentQueue<string> logInQueue = new ConcurrentQueue<string>();
     private readonly ConcurrentQueue<string> logOutQueue = new ConcurrentQueue<string>();
@@ -158,7 +159,7 @@ public class SocketManager : MonoBehaviour
         }
         catch (Exception ex)
         {
-            GameObject.Find("SyncManager").gameObject.GetComponent<SyncManager>().PrepareForLogOut();
+            GameObject.Find("SyncManager").gameObject.GetComponent<SyncOtherPlayersManager>().PrepareForLogOut();
 
             //Dọn sạch danh sách quản lý Queue nhận dữ liệu từ Server
             ClearAllQueues();
@@ -195,6 +196,9 @@ public class SocketManager : MonoBehaviour
                     syncDataQueue.Enqueue(json);
                 }
                 break;
+            case "syncMobs":
+                syncMobsQueue.Enqueue(json);
+                break;
             case "login_result":
                 logInQueue.Enqueue(json);
                 break;
@@ -226,7 +230,6 @@ public class SocketManager : MonoBehaviour
                 break;
         }
     }
-
     public string GetReceiveData()
     {
         if (receiveQueue.TryDequeue(out var data))
@@ -237,6 +240,12 @@ public class SocketManager : MonoBehaviour
     public string GetSyncData()
     {
         if (syncDataQueue.TryDequeue(out var data))
+            return data;
+        return null;
+    }
+    public string GetSyncMobsData()
+    {
+        if (syncMobsQueue.TryDequeue(out var data))
             return data;
         return null;
     }
@@ -319,6 +328,7 @@ public class SocketManager : MonoBehaviour
         ClearQueue(receiveQueue);
 
         ClearQueue(syncDataQueue);
+        ClearQueue(syncMobsQueue);
 
         ClearQueue(logInQueue);
         ClearQueue(logOutQueue);

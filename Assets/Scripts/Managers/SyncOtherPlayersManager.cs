@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class SyncManager : MonoBehaviour, IUpdatable
+public class SyncOtherPlayersManager : MonoBehaviour, IUpdatable
 {
     [SerializeField] private List<GameObject> otherPlayersPrefab;
 

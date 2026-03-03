@@ -4,16 +4,19 @@ using UnityEngine;
 
 public class MenuView : MonoBehaviour, IUpdatable
 {
+    [SerializeField] private GameObject nameItem;
     [SerializeField] private GameObject itemInfo;
 
     [SerializeField] private List<GameObject> listDemo;
 
+    private TMP_Text nameItemText;
     private TMP_Text infoText;
-
     private bool isActive = false;
+
     private void Awake()
     {
         infoText = itemInfo.GetComponent<TMP_Text>();
+        nameItemText = nameItem.GetComponent<TMP_Text>();
     }
     private void Start()
     {
@@ -62,8 +65,11 @@ public class MenuView : MonoBehaviour, IUpdatable
 
         infoText.text = "";
         itemInfo.SetActive(false);
+
+        nameItemText.text = "";
+        nameItem.SetActive(false);
     }
-    public bool getIsActive()
+    public bool GetIsActive()
     {
         return isActive;
     }

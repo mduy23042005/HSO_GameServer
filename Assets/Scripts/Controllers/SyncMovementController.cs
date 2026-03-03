@@ -9,7 +9,7 @@ public class SyncMovementController : MonoBehaviour, IUpdatable
     private string nextAnim;
     private string direction;
 
-    private SyncDataPacket syncDataMovement;
+    private PlayerData syncDataMovement;
     private PlayerState otherPlayerState = 0;
     private Direction syncDirection = 0;
     private Vector2 serverDir = Vector2.down;
@@ -31,7 +31,7 @@ public class SyncMovementController : MonoBehaviour, IUpdatable
         }
     }
 
-    public void ApplyServerState(SyncDataPacket data)
+    public void ApplyServerState(PlayerData data)
     {
         syncDataMovement = data;
 

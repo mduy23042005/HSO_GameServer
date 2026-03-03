@@ -16,7 +16,7 @@ public class SocketManager : MonoBehaviour
     private readonly ConcurrentQueue<string> sendQueue = new ConcurrentQueue<string>();
     private readonly ConcurrentQueue<string> receiveQueue = new ConcurrentQueue<string>();
 
-    private readonly ConcurrentQueue<string> syncDataQueue = new ConcurrentQueue<string>();
+    private readonly ConcurrentQueue<string> syncOtherPlayersQueue = new ConcurrentQueue<string>();
     private readonly ConcurrentQueue<string> syncMobsQueue = new ConcurrentQueue<string>();
 
     private readonly ConcurrentQueue<string> logInQueue = new ConcurrentQueue<string>();
@@ -33,7 +33,7 @@ public class SocketManager : MonoBehaviour
     private void Awake()
     {
 #if UNITY_ANDROID
-        serverUri = new Uri("ws://192.168.100.12:55556/"); //phải khai báo rõ IP LAN của Server cho thiết bị Android 
+        serverUri = new Uri("ws://192.168.100.7:55556/"); //phải khai báo rõ IP LAN của Server cho thiết bị Android 
 #elif UNITY_EDITOR || UNITY_STANDALONE
         serverUri = new Uri($"ws://{IPV4ConfigurationManager.GetLocalIPv4()}:55556/"); // dùng IP LAN tự động khi chạy trên máy tính
 #endif
@@ -52,7 +52,7 @@ public class SocketManager : MonoBehaviour
             Debug.Log("Socket: Kết nối Server thành công!");
 
             _ = StartSendLoop();
-            _ = ReceiveFromServer();
+            _ = StartReceiveLoop();
         }
         catch (Exception e)
         {
@@ -60,11 +60,6 @@ public class SocketManager : MonoBehaviour
         }
     }
 
-    //Gửi Packet đến server
-    public void SendToServer(string message)
-    {
-        sendQueue.Enqueue(message);
-    }
     private async Task StartSendLoop()
     {
         while (true)
@@ -93,9 +88,11 @@ public class SocketManager : MonoBehaviour
             }
         }
     }
-
-    //Nhận Packet từ server
-    public async Task ReceiveFromServer()
+    public void SendToServer(string message)
+    {
+        sendQueue.Enqueue(message);
+    }
+    private async Task StartReceiveLoop()
     {
         var buffer = new byte[4096];
         var messageBuffer = new StringBuilder();
@@ -173,7 +170,7 @@ public class SocketManager : MonoBehaviour
                 EquipmentView.ClearListImagesEquipmentSlots();
             }
 
-            if (InventoryView.GetListInventorySlots() != null)
+            if (InventoryView.GetListInventoryItem0Slots() != null)
             {
                 InventoryView.ClearInventoryData();
             }
@@ -185,15 +182,14 @@ public class SocketManager : MonoBehaviour
             SceneManager.LoadScene("Main");
         }
     }
-    //Phân loại Packet nhận được từ server
     private void HandlePacket(string cmd, string json)
     {
         switch (cmd)
         {
-            case "syncData":
+            case "syncOtherPlayers":
                 if (LogInView.GetIDAccount() != 0)
                 {
-                    syncDataQueue.Enqueue(json);
+                    syncOtherPlayersQueue.Enqueue(json);
                 }
                 break;
             case "syncMobs":
@@ -230,6 +226,7 @@ public class SocketManager : MonoBehaviour
                 break;
         }
     }
+
     public string GetReceiveData()
     {
         if (receiveQueue.TryDequeue(out var data))
@@ -237,9 +234,9 @@ public class SocketManager : MonoBehaviour
 
         return null;
     }
-    public string GetSyncData()
+    public string GetSyncOtherPlayersData()
     {
-        if (syncDataQueue.TryDequeue(out var data))
+        if (syncOtherPlayersQueue.TryDequeue(out var data))
             return data;
         return null;
     }
@@ -327,7 +324,7 @@ public class SocketManager : MonoBehaviour
         ClearQueue(sendQueue);
         ClearQueue(receiveQueue);
 
-        ClearQueue(syncDataQueue);
+        ClearQueue(syncOtherPlayersQueue);
         ClearQueue(syncMobsQueue);
 
         ClearQueue(logInQueue);

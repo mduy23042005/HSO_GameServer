@@ -5,7 +5,7 @@ public class PlayerManager : MonoBehaviour, IUpdatable
 {
     [SerializeField] private List<GameObject> playerPrefab;
 
-    GameObject player;
+    private GameObject player;
 
     private void OnEnable()
     {

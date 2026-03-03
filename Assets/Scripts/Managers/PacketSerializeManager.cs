@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -70,10 +69,6 @@ public class PacketSerializeManager : MonoBehaviour
 #else
         return JsonConvert.DeserializeObject<T>(json);
 #endif
-    }
-    public string GetPacket()
-    {
-        return packet;
     }
 }
 

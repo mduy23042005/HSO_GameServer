@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -18,9 +19,9 @@ public enum Direction
     Left = 2,
     Right = 3,
 }
-public class SyncDataPacket
+
+public class PlayerData
 {
-    public string cmd;
     public int idAccount;
     public float posX;
     public float posY;
@@ -49,6 +50,16 @@ public class SyncDataPacket
     public int mounts;
     public int pet;
     public int skin;
+}
+public class SyncPlayerRequestPacket
+{
+    public string cmd;
+    public PlayerData playerData;
+}
+public class SyncOtherPlayersResultPacket
+{
+    public string cmd;
+    public List<PlayerData> otherPlayersData;
 }
 
 public class MovementController : MonoBehaviour, IUpdatable
@@ -122,30 +133,33 @@ public class MovementController : MonoBehaviour, IUpdatable
 
     private async Task SendSyncData()
     {
-        SyncDataPacket packet = new SyncDataPacket
+        SyncPlayerRequestPacket packet = new SyncPlayerRequestPacket
         {
-            cmd = "syncData",
-            idAccount = LogInView.GetIDAccount() ?? 0,
-            idSchool = LogInView.GetIDSchool(),
-            posX = transform.position.x,
-            posY = transform.position.y,
-            lastPosX = lastMove.x,
-            lastPosY = lastMove.y,
-            state = currentState,
-            direction = spriteController.GetCurrentDirection(),
-            frame = spriteController.GetCurrentFrame(),
+            cmd = "syncPlayerData",
+            playerData = new PlayerData
+            {
+                idAccount = LogInView.GetIDAccount() ?? 0,
+                idSchool = LogInView.GetIDSchool(),
+                posX = transform.position.x,
+                posY = transform.position.y,
+                lastPosX = lastMove.x,
+                lastPosY = lastMove.y,
+                state = currentState,
+                direction = spriteController.GetCurrentDirection(),
+                frame = spriteController.GetCurrentFrame(),
 
-            hair = spriteController.GetHairData(),
-            weapon = spriteController.GetWeaponData(),
-            helmet = spriteController.GetHelmetData(),
-            armor = spriteController.GetArmorData(),
-            legArmor = spriteController.GetLegArmorData(),
+                hair = spriteController.GetHairData(),
+                weapon = spriteController.GetWeaponData(),
+                helmet = spriteController.GetHelmetData(),
+                armor = spriteController.GetArmorData(),
+                legArmor = spriteController.GetLegArmorData(),
+            }
         };
 
         packetSerializeManager.HandleSentPacket(packet);
     }
 
-    protected virtual void LeftClick()
+    public virtual void LeftClick()
     {
         if (Input.GetMouseButtonDown(0))
         {
@@ -171,13 +185,13 @@ public class MovementController : MonoBehaviour, IUpdatable
             isMovingToTarget = true;
         }
     }
-    protected virtual void MoveKeyboard()
+    public virtual void MoveKeyboard()
     {
         if (isBusy)
         {
             return;
         }
-        if (menu == null || !menu.getIsActive())
+        if (menu == null || !menu.GetIsActive())
         {
             movement.x = Input.GetAxisRaw("Horizontal");
             movement.y = Input.GetAxisRaw("Vertical");
@@ -196,9 +210,9 @@ public class MovementController : MonoBehaviour, IUpdatable
             return;
         }
     }
-    protected virtual void MoveMouse()
+    public virtual void MoveMouse()
     {
-        if ((menu != null && menu.getIsActive()) || EventSystem.current.IsPointerOverGameObject() || isBusy)
+        if ((menu != null && menu.GetIsActive()) || EventSystem.current.IsPointerOverGameObject() || isBusy)
         {
             return;
         }
@@ -289,7 +303,7 @@ public class MovementController : MonoBehaviour, IUpdatable
         isBusy = false;
     }
 
-    protected virtual void UpdateAnimation()
+    public virtual void UpdateAnimation()
     {
         if (isBusy)
         {

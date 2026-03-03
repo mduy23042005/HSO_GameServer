@@ -1,23 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-[Serializable]
 public class EquipmentRequestPacket
 {
     public string cmd;
     public int idAccount;
 }
-[Serializable]
+public class EquipmentData
+{
+    public int id;
+    public int idItem0_1;
+    public string nameItem0_1;
+    public int category;
+    public string slotName;
+    public List<Item0_Attribute> item0_Attributes;
+    public List<Attribute> nameAttributes;
+}
 public class EquipmentResultPacket
 {
     public string cmd;
-    public int id;
-    public int idItem0_1;
-    public int category;
-    public List<Item0_Attribute> item0_Attributes;
-    public List<Attribute> nameAttributes;
+    public List<EquipmentData> equipmentData;
 }
 
 public class EquipmentView : MonoBehaviour, IUpdatable
@@ -25,8 +28,8 @@ public class EquipmentView : MonoBehaviour, IUpdatable
     [Header("Danh sách các ô hành trang")]
     [SerializeField] private List<Image> equipmentSlots;
 
-    private static List<Image> listImagesEquiment;
-    private static List<EquipmentResultPacket> equipment = new List<EquipmentResultPacket>();
+    private static List<Image> listImagesEquipment;
+    private static List<EquipmentData> equipment = new List<EquipmentData>();
 
     private SocketManager socketManager;
     private PacketSerializeManager packetSerializeManager;
@@ -57,27 +60,21 @@ public class EquipmentView : MonoBehaviour, IUpdatable
     public void OnUpdate()
     {
         string data = socketManager.GetEquipmentData();
+
         if (string.IsNullOrEmpty(data))
-        {
             return;
-        }
 
-        Debug.Log("Received equipment data successfully!");
+        EquipmentResultPacket equipmentResult = packetSerializeManager.HandleReceivedPacket<EquipmentResultPacket>(data);
 
-        List<EquipmentResultPacket> equipmentResult = packetSerializeManager.HandleReceivedPacket<List<EquipmentResultPacket>>(data);
-
-        for (int i = 0; i < equipmentResult.Count; i++)
+        for (int i = 0; i < equipmentResult.equipmentData.Count; i++)
         {
             if (i >= equipment.Count)
             {
-                if (equipmentResult[i].cmd != "equipment_result")
-                    continue;
-
-                equipment.Add(equipmentResult[i]);
+                equipment.Add(equipmentResult.equipmentData[i]);
             }
             else
             {
-                equipment[i] = equipmentResult[i];
+                equipment[i] = equipmentResult.equipmentData[i];
             }
         }
 
@@ -90,7 +87,7 @@ public class EquipmentView : MonoBehaviour, IUpdatable
             else
                 equipmentSlots[i].sprite = ItemController.Instance.GetItem0(itemId).iconItem0;
         }
-        listImagesEquiment = equipmentSlots;
+        listImagesEquipment = equipmentSlots;
     }
     public void OnLateUpdate() { }
     public void OnFixedUpdate() { }
@@ -112,13 +109,13 @@ public class EquipmentView : MonoBehaviour, IUpdatable
         packetSerializeManager.HandleSentPacket(sendEquipmentRequestPacket);
     }
 
-    public static List<EquipmentResultPacket> GetListEquipmentSlots()
+    public static List<EquipmentData> GetListEquipmentSlots()
     {
         return equipment;
     }
     public static List<Image> GetListImagesEquipmentSlots()
     {
-        return listImagesEquiment;
+        return listImagesEquipment;
     }
 
     public static void ClearEquipmentData()
@@ -127,6 +124,6 @@ public class EquipmentView : MonoBehaviour, IUpdatable
     }
     public static void ClearListImagesEquipmentSlots()
     {
-        listImagesEquiment.Clear();
+        listImagesEquipment.Clear();
     }
 }

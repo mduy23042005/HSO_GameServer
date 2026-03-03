@@ -1,17 +1,14 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-[Serializable]
 public class LogInRequestPacket
 {
     public string cmd;
     public string username;
     public string password;
 }
-[Serializable]
 public class LogInResultPacket
 {
     public string cmd;
@@ -35,6 +32,7 @@ public class LogInView : MonoBehaviour, IUpdatable
 
     private SocketManager socketManager;
     private PacketSerializeManager packetSerializeManager;
+
     private const float timeOut = 10f;
     private bool isLoggingIn = false;
     private float startTime;

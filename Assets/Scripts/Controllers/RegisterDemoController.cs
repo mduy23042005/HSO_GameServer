@@ -57,7 +57,7 @@ public class RegisterDemoController : MovementController
         return;
     }
 
-    protected override void LeftClick()
+    public override void LeftClick()
     {
         if (Input.GetMouseButtonDown(0))
         {
@@ -126,7 +126,7 @@ public class RegisterDemoController : MovementController
     {
         return idSchool;
     }
-    protected override void UpdateAnimation()
+    public override void UpdateAnimation()
     {
         animatorChild.SetTrigger("Atk");
     }
@@ -196,7 +196,7 @@ public class RegisterDemoController : MovementController
             }
         }
     }
-    protected void SetAllResolvers(string category, string label)
+    public void SetAllResolvers(string category, string label)
     {
         foreach (var r in resolvers)
         {

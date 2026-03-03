@@ -11,11 +11,11 @@
             GameManager.Instance.Unregister(this);
         }
     }
-    protected override void MoveKeyboard()
+    public override void MoveKeyboard()
     {
         return;
     }
-    protected override void MoveMouse()
+    public override void MoveMouse()
     {
         return;
     }

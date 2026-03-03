@@ -1,12 +1,9 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.U2D.Animation;
 
-[Serializable]
 public class RegisterRequestPacket
 {
     public string cmd;
@@ -17,7 +14,6 @@ public class RegisterRequestPacket
     public int hair;
     public int blessingPoints;
 }
-[Serializable]
 public class RegisterResultPacket
 {
     public string cmd;

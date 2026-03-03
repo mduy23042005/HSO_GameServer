@@ -37,7 +37,7 @@ public class SpriteController : MonoBehaviour, IUpdatable
         socketManager = GameManager.Instance.GetComponent<SocketManager>();
         packetSerializeManager = GameManager.Instance.GetComponent<PacketSerializeManager>();
         listItem0 = ItemController.Instance;
-        ReadDatabase();
+        ReadCache();
     }
 
     private void OnEnable()
@@ -57,7 +57,7 @@ public class SpriteController : MonoBehaviour, IUpdatable
     }
     public void OnUpdate()
     {
-        List<EquipmentResultPacket> listOutfitSprites;
+        List<EquipmentData> listOutfitSprites;
 
         if (EquipmentView.GetListEquipmentSlots().Count == 0)
         {
@@ -66,7 +66,7 @@ public class SpriteController : MonoBehaviour, IUpdatable
             if (string.IsNullOrEmpty(data))
                 return;
 
-            listOutfitSprites = packetSerializeManager.HandleReceivedPacket<List<EquipmentResultPacket>>(data);
+            listOutfitSprites = packetSerializeManager.HandleReceivedPacket<EquipmentResultPacket>(data).equipmentData;
         }
         else
         {
@@ -127,15 +127,15 @@ public class SpriteController : MonoBehaviour, IUpdatable
     #endregion
 
     #region Sửa sprite library sau khi equip item
-    public void EquipLegArmor(int id)
+    private void EquipLegArmor(int id)
     {
         spriteLibrary[0].spriteLibraryAsset = listItem0.GetItem0(id).legArmor.legArmorLibrariesAsset;
     }
-    public void EquipArmor(int id)
+    private void EquipArmor(int id)
     {
         spriteLibrary[1].spriteLibraryAsset = listItem0.GetItem0(id).armor.armorLibrariesAsset;
     }
-    public void EquipHelmet(int id)
+    private void EquipHelmet(int id)
     {
         spriteLibrary[3].spriteLibraryAsset = listItem0.GetItem0(id).helmet.helmetLibrariesAsset;
 
@@ -148,7 +148,7 @@ public class SpriteController : MonoBehaviour, IUpdatable
             spriteLibrary[4].gameObject.SetActive(true);
         }
     }
-    public void EquipHair(int id)
+    private void EquipHair(int id)
     {
         int idSchool = LogInView.GetIDSchool();
 
@@ -171,14 +171,14 @@ public class SpriteController : MonoBehaviour, IUpdatable
                 break;
         }
     }
-    public void EquipWeapon(int id)
+    private void EquipWeapon(int id)
     {
         spriteLibrary[5].spriteLibraryAsset = listItem0.GetItem0(id).weapon.weaponFrontLibraries;
         spriteLibrary[6].spriteLibraryAsset = listItem0.GetItem0(id).weapon.weaponBackLibraries;
     }
     #endregion
 
-    private async void ReadDatabase()
+    private async void ReadCache()
     {
         int idAccount = LogInView.GetIDAccount() ?? 0;
         EquipmentRequestPacket sendOutfitSpritesRequestPacket = new EquipmentRequestPacket
@@ -348,7 +348,7 @@ public class SpriteController : MonoBehaviour, IUpdatable
         }
     }
 
-    protected void SetAllResolvers(string category, string label)
+    private void SetAllResolvers(string category, string label)
     {
         foreach (var r in resolvers)
         {

@@ -5,9 +5,7 @@ public class MovementMobController : MonoBehaviour, IUpdatable
     private Vector2 movement;
 
     private SyncMobData syncMobDataMovement;
-    private string lastState;
-    private int lastIDState = -1;
-    private string nextAnim;
+    private int lastIDState = -1; // nhằm phân biệt các trạng thái atk/injured khác nhau khi có nhiều packet cùng loại chỉ yêu cầu thực hiện 1 trạng thái
 
     private SpriteRenderer flipSprite;
     private Animator animator;

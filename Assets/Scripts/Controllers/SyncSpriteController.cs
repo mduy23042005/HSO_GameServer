@@ -6,7 +6,7 @@ using UnityEngine.U2D.Animation;
 public class SyncSpriteController : MonoBehaviour, IUpdatable
 {
     private List<SpriteResolver> resolvers;
-    private SyncDataPacket syncDataSprite;
+    private PlayerData syncDataSprite;
     private string direction;
 
     [Header("Chỉ định sprite nào của player sẽ bị thay thế")]
@@ -21,7 +21,7 @@ public class SyncSpriteController : MonoBehaviour, IUpdatable
     private int legArmorData = 0;
     private int hairData = 0;
 
-    void Awake()
+    private void Awake()
     {
         resolvers = GetComponentsInChildren<SpriteResolver>().ToList();
         listItem0 = ItemController.Instance;
@@ -42,7 +42,7 @@ public class SyncSpriteController : MonoBehaviour, IUpdatable
     {
         GameManager.Instance.RegisterPersistent(this);
     }
-    public void ApplyServerState(SyncDataPacket data)
+    public void ApplyServerState(PlayerData data)
     {
         syncDataSprite = data;
 
@@ -198,8 +198,7 @@ public class SyncSpriteController : MonoBehaviour, IUpdatable
                 }
         }
     }
-
-    protected void SetAllResolvers(string category, string label)
+    private void SetAllResolvers(string category, string label)
     {
         foreach (var r in resolvers)
         {

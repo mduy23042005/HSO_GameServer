@@ -1,9 +1,6 @@
-﻿using Newtonsoft.Json;
-using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
-[Serializable]
 public class LogOutRequestPacket
 {
     public string cmd;
@@ -56,7 +53,7 @@ public class LogOutController : MonoBehaviour, IUpdatable
             EquipmentView.ClearListImagesEquipmentSlots();
         }
 
-        if (InventoryView.GetListInventorySlots() != null)
+        if (InventoryView.GetListInventoryItem0Slots() != null)
         {
             InventoryView.ClearInventoryData();
         }

@@ -6,12 +6,12 @@ public class SyncOtherPlayersManager : MonoBehaviour, IUpdatable
     [SerializeField] private List<GameObject> otherPlayersPrefab;
 
     private Dictionary<int, GameObject> otherPlayers = new Dictionary<int, GameObject>();
-    private Dictionary<int, SyncDataPacket> otherPlayersData = new Dictionary<int, SyncDataPacket>();
+    private Dictionary<int, PlayerData> otherPlayersData = new Dictionary<int, PlayerData>();
 
     private Dictionary<int, float> lastUpdateTime = new Dictionary<int, float>();
     private const float timeOut = 0.55f;
 
-    private SyncDataPacket onlinePlayer;
+    private PlayerData onlinePlayer;
     private LogOutRequestPacket offlinePlayer;
 
     private SocketManager socketManager;
@@ -58,15 +58,19 @@ public class SyncOtherPlayersManager : MonoBehaviour, IUpdatable
             }
         }
 
-        string logInData = socketManager.GetSyncData(); //luôn lấy từ sync queue vì online player luôn gửi data đến server khi online
+        string logInData = socketManager.GetSyncOtherPlayersData(); //luôn lấy từ sync queue vì online player luôn gửi data đến server khi online
         string logOutData = socketManager.GetLogOutData();
 
         if (!string.IsNullOrEmpty(logInData))
         {
-            onlinePlayer = packetSerializeManager.HandleReceivedPacket<SyncDataPacket>(logInData);
-            if (onlinePlayer.idAccount != LogInView.GetIDAccount())
+            var data = packetSerializeManager.HandleReceivedPacket<SyncOtherPlayersResultPacket>(logInData);
+            foreach (var playerData in data.otherPlayersData)
             {
-                OnDataFromServer(onlinePlayer);
+                onlinePlayer = playerData;
+                if (onlinePlayer.idAccount != LogInView.GetIDAccount())
+                {
+                    OnDataFromServer(onlinePlayer);
+                }
             }
         }
         if (!string.IsNullOrEmpty(logOutData))
@@ -83,7 +87,7 @@ public class SyncOtherPlayersManager : MonoBehaviour, IUpdatable
         GameManager.Instance.RegisterPersistent(this);
     }
 
-    public void OnDataFromServer(SyncDataPacket data)
+    public void OnDataFromServer(PlayerData data)
     {
         GameObject obj;
 

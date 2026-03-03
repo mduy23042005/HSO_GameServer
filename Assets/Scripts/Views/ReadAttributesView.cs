@@ -5,7 +5,6 @@ using UnityEngine;
 using UnityEngine.UI;
 
 //Packet đọc attribute trong equipment
-[Serializable]
 public class ReadAttributesEquipmentRequestPacket
 {
     public string cmd;
@@ -13,20 +12,13 @@ public class ReadAttributesEquipmentRequestPacket
     public int id;
     public int idItem0_1;
 }
-[Serializable]
 public class ReadAttributesEquipmentResultPacket
 {
     public string cmd;
-    public int idItem0_1;
-    public int category;
-    public string nameItem;
-    public int value;
-    public int idAttribute;
-    public string attributes;
+    public EquipmentData attributesData;
 }
 
 //Packet đọc attribute trong inventory
-[Serializable]
 public class ReadAttributesInventoryRequestPacket
 {
     public string cmd;
@@ -34,16 +26,14 @@ public class ReadAttributesInventoryRequestPacket
     public int id;
     public int idItem0;
 }
-[Serializable]
 public class ReadAttributesInventoryResultPacket
 {
     public string cmd;
-    public int idItem0;
-    public int category;
-    public string nameItem;
-    public int value;
-    public int idAttribute;
-    public string attributes;
+    public InventoryItem0Data attributesItem0Data;
+    public InventoryItem1Data attributesItem1Data;
+    public InventoryItem2Data attributesItem2Data;
+    public InventoryItem3Data attributesItem3Data;
+    public InventoryItem4Data attributesItem4Data;
 }
 
 //Packet trang bị item0 từ inventory vào equipment
@@ -57,7 +47,7 @@ public class EquipItem0RequestPacket
 }
 //Sử dụng 2 packet EquipmentResultPacket và InventoryResultPacket để cập nhật lại UI sau khi trang bị
 
-class ReadAttributesView : MonoBehaviour, IUpdatable
+public class ReadAttributesView : MonoBehaviour, IUpdatable
 {
     [SerializeField] private GameObject itemInfo;
     [SerializeField] private GameObject nameItem;
@@ -72,8 +62,6 @@ class ReadAttributesView : MonoBehaviour, IUpdatable
     private SocketManager socketManager;
     private PacketSerializeManager packetSerializeManager;
     private string cmdReadAttributes;
-
-    List<ReadAttributesInventoryResultPacket> inventoryAttributesResult;
 
     private void Awake()
     {
@@ -114,18 +102,15 @@ class ReadAttributesView : MonoBehaviour, IUpdatable
                 if (string.IsNullOrEmpty(data))
                     return;
 
-                List<ReadAttributesEquipmentResultPacket> equipmentAttributesResult = packetSerializeManager.HandleReceivedPacket<List<ReadAttributesEquipmentResultPacket>>(data);
+                ReadAttributesEquipmentResultPacket equipmentAttributesResult = packetSerializeManager.HandleReceivedPacket<ReadAttributesEquipmentResultPacket>(data);
 
-                if (equipmentAttributesResult == null || equipmentAttributesResult.Count == 0)
+                if (equipmentAttributesResult == null || equipmentAttributesResult.attributesData.item0_Attributes.Count == 0)
                     return;
 
-                for (int i = 0; i < equipmentAttributesResult.Count; i++)
+                nameItemText.text = $"{equipmentAttributesResult.attributesData.nameItem0_1}";
+                for (int i = 0; i < equipmentAttributesResult.attributesData.item0_Attributes.Count; i++)
                 {
-                    if (equipmentAttributesResult[i].cmd != "equipmentAttributes_result")
-                        continue;
-
-                    nameItemText.text = $"{equipmentAttributesResult[i].nameItem}";
-                    itemInfoText.text += $"{equipmentAttributesResult[i].value} {equipmentAttributesResult[i].attributes} \n";
+                    itemInfoText.text += $"{equipmentAttributesResult.attributesData.item0_Attributes[i].Value} {equipmentAttributesResult.attributesData.nameAttributes[i].NameAttribute} \n";
                 }
                 break;
 
@@ -135,18 +120,16 @@ class ReadAttributesView : MonoBehaviour, IUpdatable
                 if (string.IsNullOrEmpty(data))
                     return;
 
-                inventoryAttributesResult = packetSerializeManager.HandleReceivedPacket<List<ReadAttributesInventoryResultPacket>>(data);
+                ReadAttributesInventoryResultPacket inventoryAttributesResult = packetSerializeManager.HandleReceivedPacket<ReadAttributesInventoryResultPacket>(data);
 
-                if (inventoryAttributesResult == null || inventoryAttributesResult.Count == 0)
+                // tạm thời chỉ xét item0
+                if (inventoryAttributesResult == null || inventoryAttributesResult.attributesItem0Data.item0_Attributes.Count == 0)
                     return;
 
-                for (int i = 0; i < inventoryAttributesResult.Count; i++)
+                nameItemText.text = $"{inventoryAttributesResult.attributesItem0Data.nameItem0}";
+                for (int i = 0; i < inventoryAttributesResult.attributesItem0Data.item0_Attributes.Count; i++)
                 {
-                    if (inventoryAttributesResult[i].cmd != "inventoryAttributes_result")
-                        continue;
-
-                    nameItemText.text = $"{inventoryAttributesResult[i].nameItem}";
-                    itemInfoText.text += $"{inventoryAttributesResult[i].value} {inventoryAttributesResult[i].attributes} \n";
+                    itemInfoText.text += $"{inventoryAttributesResult.attributesItem0Data.item0_Attributes[i].Value} {inventoryAttributesResult.attributesItem0Data.nameAttributes[i].NameAttribute} \n";
                 }
                 break;
 
@@ -166,7 +149,7 @@ class ReadAttributesView : MonoBehaviour, IUpdatable
     private async void ReadAttributeInEquipment(int idSlot)
     {
         int idAccount = LogInView.GetIDAccount() ?? 0;
-        List<EquipmentResultPacket> equipmentInfo = EquipmentView.GetListEquipmentSlots();
+        List<EquipmentData> equipmentInfo = EquipmentView.GetListEquipmentSlots();
         int idItem0_1 = equipmentInfo[idSlot].idItem0_1;
 
         if (idItem0_1 == 0 || idSlot >= equipmentInfo.Count) // Slot trống hoặc ngoài phạm vi
@@ -189,6 +172,9 @@ class ReadAttributesView : MonoBehaviour, IUpdatable
         itemInfo.SetActive(true);
         itemInfoText.text = "";
 
+        nameItem.SetActive(true);
+        nameItemText.text = "";
+
         cmdReadAttributes = "equipmentAttributes";
     }
     public void ClickReadAttributeInEquipment(int idSlot)
@@ -201,7 +187,7 @@ class ReadAttributesView : MonoBehaviour, IUpdatable
     {
         indexSlot = idSlot;
         int idAccount = LogInView.GetIDAccount() ?? 0;
-        List<InventoryResultPacket> inventoryInfo = InventoryView.GetListInventorySlots();
+        List<InventoryItem0Data> inventoryInfo = InventoryView.GetListInventoryItem0Slots();
 
         if (idSlot < 0 || idSlot >= inventoryInfo.Count)
         {
@@ -225,6 +211,9 @@ class ReadAttributesView : MonoBehaviour, IUpdatable
         itemInfo.SetActive(true);
         itemInfoText.text = "";
 
+        nameItem.SetActive(true);
+        nameItemText.text = "";
+
         cmdReadAttributes = "inventoryAttributes";
     }
     public void ClickReadAttributeInInventory(int idSlot)
@@ -239,7 +228,7 @@ class ReadAttributesView : MonoBehaviour, IUpdatable
         int idSchool = LogInView.GetIDSchool();
         try
         {
-            List<InventoryResultPacket> inventoryInfo = InventoryView.GetListInventorySlots();
+            List<InventoryItem0Data> inventoryInfo = InventoryView.GetListInventoryItem0Slots();
 
             if (idSlot < 0 || idSlot >= inventoryInfo.Count)
             {
@@ -305,6 +294,9 @@ class ReadAttributesView : MonoBehaviour, IUpdatable
             ringSlot = null;
             itemInfoText.text = "";
             itemInfo.SetActive(false);
+
+            nameItemText.text = "";
+            nameItem.SetActive(false);
         }
         catch (Exception ex)
         {

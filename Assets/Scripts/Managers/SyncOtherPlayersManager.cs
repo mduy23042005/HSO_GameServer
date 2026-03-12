@@ -1,6 +1,64 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
+public enum PlayerState
+{
+    Stand = 0,
+    Move = 1,
+    Attack = 2,
+    Injured = 3,
+    Die = 4
+}
+public enum Direction
+{
+    Front = 0,
+    Back = 1,
+    Left = 2,
+    Right = 3,
+}
+
+public class PlayerData
+{
+    public int idAccount;
+    public float posX;
+    public float posY;
+    public float lastPosX;
+    public float lastPosY;
+    public PlayerState state;
+    public Direction direction;
+    public float stateStartTime;
+    public string nameChar;
+    public int level;
+    public int idSchool;
+    public int hair;
+    public int weapon;
+    public int helmet;
+    public int armor;
+    public int legArmor;
+    public int gloves;
+    public int shoes;
+    public int ring1;
+    public int ring2;
+    public int necklace;
+    public int medal;
+    public int cloak;
+    public int wing;
+    public int skinWing;
+    public int mounts;
+    public int pet;
+    public int skin;
+}
+public class SyncPlayerRequestPacket
+{
+    public string cmd;
+    public PlayerData playerData;
+}
+public class SyncOtherPlayersResultPacket
+{
+    public string cmd;
+    public List<PlayerData> otherPlayersData;
+}
+
 public class SyncOtherPlayersManager : MonoBehaviour, IUpdatable
 {
     [SerializeField] private List<GameObject> otherPlayersPrefab;
@@ -110,14 +168,12 @@ public class SyncOtherPlayersManager : MonoBehaviour, IUpdatable
             otherPlayers.Add(data.idAccount, obj);
             otherPlayersData.Add(data.idAccount, data);
 
-            obj.GetComponentInChildren<SyncMovementController>().ApplyServerState(data);
-            obj.GetComponentInChildren<SyncSpriteController>().ApplyServerState(data);
+            obj.GetComponentInChildren<SyncSpriteController>().ApplyServerPlayerData(data);
         }
         else
         {
             obj = otherPlayers[data.idAccount];
-            obj.GetComponentInChildren<SyncMovementController>().ApplyServerState(data);
-            obj.GetComponentInChildren<SyncSpriteController>().ApplyServerState(data);
+            obj.GetComponentInChildren<SyncSpriteController>().ApplyServerPlayerData(data);
         }
         lastUpdateTime[data.idAccount] = Time.time;
     }

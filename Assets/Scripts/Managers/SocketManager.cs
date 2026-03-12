@@ -12,6 +12,12 @@ public class SocketManager : MonoBehaviour
 {
     private ClientWebSocket socket;
     private Uri serverUri;
+    private PacketSerializeManager packetSerializeManager;
+
+    private SyncPlayerRequestPacket oldPacket;
+    private PlayerState playerState;
+    private Direction direction;
+    private float stateStartTime;
 
     private readonly ConcurrentQueue<string> sendQueue = new ConcurrentQueue<string>();
     private readonly ConcurrentQueue<string> receiveQueue = new ConcurrentQueue<string>();
@@ -30,12 +36,16 @@ public class SocketManager : MonoBehaviour
 
     private readonly ConcurrentQueue<string> outfitSpritesQueue = new ConcurrentQueue<string>();
 
+    GameObject player;
+
     private void Awake()
     {
 #if UNITY_ANDROID
         serverUri = new Uri("ws://192.168.100.7:55556/"); //phải khai báo rõ IP LAN của Server cho thiết bị Android 
+        packetSerializeManager = GameManager.Instance.GetComponent<PacketSerializeManager>();
 #elif UNITY_EDITOR || UNITY_STANDALONE
         serverUri = new Uri($"ws://{IPV4ConfigurationManager.GetLocalIPv4()}:55556/"); // dùng IP LAN tự động khi chạy trên máy tính
+        packetSerializeManager = GameManager.Instance.GetComponent<PacketSerializeManager>();
 #endif
     }
 
@@ -51,7 +61,7 @@ public class SocketManager : MonoBehaviour
             await socket.ConnectAsync(serverUri, CancellationToken.None);
             Debug.Log("Socket: Kết nối Server thành công!");
 
-            _ = StartSendLoop();
+            _ = StartSyncPlayerLoop();
             _ = StartReceiveLoop();
         }
         catch (Exception e)
@@ -60,38 +70,126 @@ public class SocketManager : MonoBehaviour
         }
     }
 
-    private async Task StartSendLoop()
+    private SyncPlayerRequestPacket GetSyncDataPacket()
     {
+        switch (LogInView.GetIDSchool())
+        {
+            case 1:
+                player = GameObject.Find("ChienBinh(Clone)");
+                break;
+            case 2:
+                player = GameObject.Find("SatThu(Clone)");
+                break;
+            case 3:
+                player = GameObject.Find("PhapSu(Clone)");
+                break;
+            default:
+                player = GameObject.Find("XaThu(Clone)");
+                break;
+        }
+
+        if (player == null)
+            return null;
+
+        MovementController playerMovementController = player.GetComponent<MovementController>();
+        SpriteController playerSpriteController = player.GetComponent<SpriteController>();
+
+        if (playerState != playerMovementController.GetCurrentState() || direction != playerSpriteController.GetCurrentDirection())
+        {
+            playerState = playerMovementController.GetCurrentState();
+            direction = playerSpriteController.GetCurrentDirection();
+            stateStartTime = Time.time;
+        }
+
+        SyncPlayerRequestPacket packet = new SyncPlayerRequestPacket
+        {
+            cmd = "syncPlayerData",
+            playerData = new PlayerData
+            {
+                idAccount = LogInView.GetIDAccount() ?? 0,
+                idSchool = LogInView.GetIDSchool(),
+                posX = player.transform.position.x,
+                posY = player.transform.position.y,
+                lastPosX = playerMovementController.GetLastMovement().x,
+                lastPosY = playerMovementController.GetLastMovement().y,
+                state = playerState,
+                direction = direction,
+                stateStartTime = stateStartTime,
+
+                hair = playerSpriteController.GetHairData(),
+                weapon = playerSpriteController.GetWeaponData(),
+                helmet = playerSpriteController.GetHelmetData(),
+                armor = playerSpriteController.GetArmorData(),
+                legArmor = playerSpriteController.GetLegArmorData(),
+            }
+        };
+
+        if (oldPacket == packet)
+        {
+            return null;
+        }
+        oldPacket = packet;
+
+        return packet;
+    }
+    private async Task StartSyncPlayerLoop()
+    {
+        const int targetTickRate = 20;
+        const int tickMS = 1000 / targetTickRate;
+
+        var stopwatch = new System.Diagnostics.Stopwatch();
+
         while (true)
         {
-            if (socket == null || socket.State != WebSocketState.Open)
+            stopwatch.Restart();
+
+            try
             {
-                await Task.Delay(50);
-                continue;
+                if (socket != null && socket.State == WebSocketState.Open)
+                {
+                    SyncPlayerRequestPacket packet = GetSyncDataPacket();
+
+                    if (packet != null)
+                    {
+                        packetSerializeManager.HandleSentPacket(packet);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.LogError("StartSyncPlayerLoop error: " + e.Message);
             }
 
-            if (sendQueue.TryDequeue(out var msg))
-            {
-                try
-                {
-                    byte[] data = Encoding.UTF8.GetBytes(msg);
-                    await socket.SendAsync(new ArraySegment<byte>(data), WebSocketMessageType.Text, true, CancellationToken.None);
-                }
-                catch (Exception e)
-                {
-                    Debug.LogError("Send loop error: " + e.Message);
-                }
-            }
+            stopwatch.Stop();
+
+            int sleep = tickMS - (int)stopwatch.ElapsedMilliseconds;
+
+            if (sleep > 0)
+                await Task.Delay(sleep);
             else
-            {
-                await Task.Delay(1);
-            }
+                await Task.Yield();
         }
     }
-    public void SendToServer(string message)
+    public async Task SendToServer(string message)
     {
-        sendQueue.Enqueue(message);
+        if (socket == null)
+            return;
+
+        if (socket.State != WebSocketState.Open)
+            return;
+
+        try
+        {
+            byte[] data = Encoding.UTF8.GetBytes(message);
+
+            await socket.SendAsync(new ArraySegment<byte>(data), WebSocketMessageType.Text, true, CancellationToken.None);
+        }
+        catch (Exception e)
+        {
+            Debug.LogError("SendToServer error: " + e.Message);
+        }
     }
+
     private async Task StartReceiveLoop()
     {
         var buffer = new byte[4096];

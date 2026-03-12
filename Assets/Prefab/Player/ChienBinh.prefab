@@ -104,7 +104,7 @@ MonoBehaviour:
   m_CategoryHash: 0
   m_labelHash: 0
   m_SpriteKey: 0
-  m_SpriteHash: 0
+  m_SpriteHash: 381688382
 --- !u!114 &6460664836313341762
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1112,7 +1112,7 @@ MonoBehaviour:
   m_CategoryHash: 2.1529441e-16
   m_labelHash: 0.0000000030799954
   m_SpriteKey: 0
-  m_SpriteHash: 906396036
+  m_SpriteHash: 381688382
 --- !u!114 &1419629892187923380
 MonoBehaviour:
   m_ObjectHideFlags: 0

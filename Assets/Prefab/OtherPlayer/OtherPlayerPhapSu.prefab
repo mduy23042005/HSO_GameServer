@@ -366,7 +366,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9016623393643773847}
-  - component: {fileID: 8010672247310288120}
   - component: {fileID: 543995711869898710}
   - component: {fileID: 1022505872438381526}
   - component: {fileID: 369121675999717179}
@@ -402,28 +401,6 @@ Transform:
   - {fileID: 4298805821685673198}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &8010672247310288120
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5030301652225976667}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: abca0fb99b7333d4884751e1ab89a718, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 2
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 1
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!50 &543995711869898710
 Rigidbody2D:
   serializedVersion: 5
@@ -514,6 +491,7 @@ MonoBehaviour:
   - {fileID: 6591610387328253901}
   - {fileID: 1897967794936501632}
   - {fileID: 6756891363868546981}
+  - {fileID: 6869655999049915782}
   - {fileID: 6978951503914286514}
   - {fileID: 2708680840509589873}
   - {fileID: 3646939279414976067}

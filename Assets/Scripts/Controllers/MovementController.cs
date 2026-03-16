@@ -6,7 +6,6 @@ public class MovementController : MonoBehaviour, IUpdatable
 {
     private float moveSpeed = 6f;
     private Vector2 movement;
-    private float stateStartTime;
     private Vector2 lastMove = new Vector2(0, -1);
     private Vector2 targetPosition;
     private bool movingHorizontalFirst = false;
@@ -15,7 +14,6 @@ public class MovementController : MonoBehaviour, IUpdatable
     private MenuView menu;
     private bool isBusy = false;
 
-    private PlayerState lastState;
     private PlayerState currentState;
 
     private void Awake()

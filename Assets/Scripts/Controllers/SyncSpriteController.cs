@@ -1,39 +1,14 @@
-﻿using System.Collections.Concurrent;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.U2D.Animation;
 
-public class StateData
-{
-    public PlayerState state;
-    public Direction direction;
-    public float stateStartTime;
-}
-public class PositionData
-{
-    public float posX;
-    public float posY;
-    public float lastPosX;
-    public float lastPosY;
-}
 public class SyncSpriteController : MonoBehaviour, IUpdatable
 {
-    private ConcurrentQueue<PlayerData> stateDataQueue = new ConcurrentQueue<PlayerData>();
-    private Animator animator;
-
-    private string direction;
-    private string currentState;
-    private string lastCategory;
-    private string lastLabel;
-
-    private StateData stateData;
-    private PositionData positionData;
-
-    private float lastAnimStartTime = -1f;
+    PlayerTransformData otherPlayerTransform = new PlayerTransformData();
+    PlayerStateData otherPlayerState = new PlayerStateData();
 
     private List<SpriteResolver> resolvers;
-    private SpriteResolver faceResolver;
 
     [Header("Chỉ định sprite nào của player sẽ bị thay thế")]
     [SerializeField] private List<SpriteLibrary> spriteLibrary;
@@ -47,40 +22,10 @@ public class SyncSpriteController : MonoBehaviour, IUpdatable
     private int legArmorData = 0;
     private int hairData = 0;
 
-    private Dictionary<string, float> clipLengths = new()
-{
-    {"StandFront",0.4f},
-    {"StandBack",0.4f},
-    {"StandLeft",0.4f},
-    {"StandRight",0.4f},
-
-    {"InjuredFront",0.4f},
-    {"InjuredBack",0.4f},
-    {"InjuredLeft",0.4f},
-    {"InjuredRight",0.4f},
-
-    {"MoveFront",0.2f},
-    {"MoveBack",0.2f},
-    {"MoveLeft",0.2f},
-    {"MoveRight",0.2f},
-
-    {"AtkFront",0.15f},
-    {"AtkBack",0.15f},
-    {"AtkLeft",0.15f},
-    {"AtkRight",0.15f}
-};
-
     private void Awake()
     {
         resolvers = GetComponentsInChildren<SpriteResolver>().ToList();
-        faceResolver = resolvers.FirstOrDefault(r => r.gameObject.name == "4_0_0");
         listItem0 = ItemController.Instance;
-        animator = GetComponentInChildren<Animator>();
-
-        stateData = new StateData();
-        positionData = new PositionData();
-
-        stateData.stateStartTime = 1f;
     }
 
     private void OnEnable()
@@ -99,130 +44,52 @@ public class SyncSpriteController : MonoBehaviour, IUpdatable
         GameManager.Instance.RegisterPersistent(this);
     }
 
-    public void ApplyServerPlayerData(PlayerData data)
+    public void ApplyServerData(PlayerData serverData, PlayerTransformData serverTransform, PlayerStateData serverState)
     {
-        if (stateData.stateStartTime == data.stateStartTime && data.state == PlayerState.Attack)
-            return;
-
-        stateDataQueue.Enqueue(data);
-    }
-    private PlayerData DequeuePlayerData()
-    {
-        if (stateDataQueue.TryDequeue(out var data))
-            return data;
-
-        return null;
-    }
-
-    private void ApplyData(PlayerData data)
-    {
-        if (weaponData != data.weapon)
+        if (weaponData != serverData.weapon)
         {
-            weaponData = data.weapon;
+            weaponData = serverData.weapon;
             EquipWeapon(weaponData);
         }
-        if (helmetData != data.helmet)
+        if (helmetData != serverData.helmet)
         {
-            helmetData = data.helmet;
+            helmetData = serverData.helmet;
             EquipHelmet(helmetData);
         }
-        if (armorData != data.armor)
+        if (armorData != serverData.armor)
         {
-            armorData = data.armor;
+            armorData = serverData.armor;
             EquipArmor(armorData);
         }
-        if (legArmorData != data.legArmor)
+        if (legArmorData != serverData.legArmor)
         {
-            legArmorData = data.legArmor;
+            legArmorData = serverData.legArmor;
             EquipLegArmor(legArmorData);
         }
-        if (hairData != data.hair)
+        if (hairData != serverData.hair)
         {
-            hairData = data.hair;
-            EquipHair(hairData, data.idSchool);
+            hairData = serverData.hair;
+            EquipHair(hairData, serverData.idSchool);
         }
 
-        positionData.posX = data.posX;
-        positionData.posY = data.posY;
-        positionData.lastPosX = data.lastPosX;
-        positionData.lastPosY = data.lastPosY;
+        otherPlayerTransform = serverTransform;
+        otherPlayerState = serverState;
 
-        stateData.state = data.state;
-        stateData.direction = data.direction;
-        stateData.stateStartTime = data.stateStartTime;
-    }
-    public void OnUpdate()
-    {
-        PlayerData data = DequeuePlayerData();
-
-        if (data != null)
-        {
-            ApplyData(data);
-        }
-
-        string stateName = UpdateStateString(stateData);
-
-        float clipLength = clipLengths[stateName];
-        float elapsed = Time.time - stateData.stateStartTime;
-
-        float normalizedTime = (elapsed / clipLength) % 1f;
-
-        UpdateAnimation(stateName, normalizedTime);
-    }
-    public void OnLateUpdate() 
-    {
         UpdateSprite();
     }
+
+    public void OnUpdate() { }
+    public void OnLateUpdate() { }
     public void OnFixedUpdate()
     {
-        Vector2 targetPos = new Vector2(positionData.posX, positionData.posY);
+        Vector2 targetPos = new Vector2(otherPlayerTransform.positionData.x, otherPlayerTransform.positionData.y);
         transform.position = Vector2.MoveTowards(transform.position, targetPos, 6f * Time.fixedDeltaTime);
-    }
 
-    private string UpdateStateString(StateData data)
-    {
-        switch (stateData.direction)
-        {
-            case Direction.Front:
-                direction = "Front"; break;
-
-            case Direction.Back:
-                direction = "Back"; break;
-
-            case Direction.Left:
-                direction = "Left"; break;
-
-            case Direction.Right:
-                direction = "Right"; break;
-        }
-        switch (stateData.state)
-        {
-            case PlayerState.Stand:
-                currentState = $"Stand"; break;
-            case PlayerState.Move:
-                currentState = $"Move"; break;
-            case PlayerState.Attack:
-                currentState = $"Atk"; break;
-            case PlayerState.Injured:
-                currentState = $"Injured"; break;
-            case PlayerState.Die:
-                currentState = $"Die"; break;
-        }
-
-        return $"{currentState}{direction}";
-    }
-    private void UpdateAnimation(string currentState, float normalizedTime)
-    {
-        if (lastAnimStartTime == stateData.stateStartTime)
-            return;
-
-        var state = animator.GetCurrentAnimatorStateInfo(0);
-        if (state.IsName($"Atk{direction}") && state.normalizedTime < 1f)
-            return;
-
-        animator.Play(currentState, 0, normalizedTime);
-
-        lastAnimStartTime = stateData.stateStartTime;
+        Vector3 otherPlayerScale = transform.localScale;
+        otherPlayerScale.x = otherPlayerTransform.scaleData.x;
+        otherPlayerScale.y = otherPlayerTransform.scaleData.y;
+        otherPlayerScale.z = otherPlayerTransform.scaleData.z;
+        transform.localScale = otherPlayerScale;
     }
 
     #region Sửa sprite library sau khi equip item
@@ -240,11 +107,11 @@ public class SyncSpriteController : MonoBehaviour, IUpdatable
 
         if (listItem0.GetItem0(id).helmet.isHiddenHair)
         {
-            spriteLibrary[4].gameObject.SetActive(false);
+            spriteLibrary[5].gameObject.SetActive(false);
         }
         else
         {
-            spriteLibrary[4].gameObject.SetActive(true);
+            spriteLibrary[5].gameObject.SetActive(true);
         }
     }
     public void EquipHair(int id, int idSchool)
@@ -252,109 +119,63 @@ public class SyncSpriteController : MonoBehaviour, IUpdatable
         switch (idSchool)
         {
             case 1: //Chiến binh
-                spriteLibrary[4].spriteLibraryAsset = listItem0.GetMaleHairLibrary(id).hairLibrariesAsset;
+                spriteLibrary[5].spriteLibraryAsset = listItem0.GetMaleHairLibrary(id).hairLibrariesAsset;
                 break;
 
             case 2: //Sát thủ 
-                spriteLibrary[4].spriteLibraryAsset = listItem0.GetMaleHairLibrary(id).hairLibrariesAsset;
+                spriteLibrary[5].spriteLibraryAsset = listItem0.GetMaleHairLibrary(id).hairLibrariesAsset;
                 break;
 
             case 3: //Pháp sư
-                spriteLibrary[4].spriteLibraryAsset = listItem0.GetFemaleHairLibrary(id).hairLibrariesAsset;
+                spriteLibrary[5].spriteLibraryAsset = listItem0.GetFemaleHairLibrary(id).hairLibrariesAsset;
                 break;
 
             case 4: //Xạ thủ 
-                spriteLibrary[4].spriteLibraryAsset = listItem0.GetFemaleHairLibrary(id).hairLibrariesAsset;
+                spriteLibrary[5].spriteLibraryAsset = listItem0.GetFemaleHairLibrary(id).hairLibrariesAsset;
                 break;
         }
     }
     public void EquipWeapon(int id)
     {
-        spriteLibrary[5].spriteLibraryAsset = listItem0.GetItem0(id).weapon.weaponFrontLibraries;
-        spriteLibrary[6].spriteLibraryAsset = listItem0.GetItem0(id).weapon.weaponBackLibraries;
+        spriteLibrary[6].spriteLibraryAsset = listItem0.GetItem0(id).weapon.weaponFrontLibraries;
+        spriteLibrary[7].spriteLibraryAsset = listItem0.GetItem0(id).weapon.weaponBackLibraries;
     }
     #endregion
 
-    private int GetFrameByTime(float t, float[] changeTimes)
-    {
-        t = Mathf.Repeat(t, 1f);
 
-        for (int i = 0; i < changeTimes.Length - 1; i++)
-        {
-            if (t >= changeTimes[i] && t < changeTimes[i + 1])
-                return i;
-        }
-
-        return changeTimes.Length - 1;
-    }
     private void UpdateSprite()
     {
-        AnimatorStateInfo state = animator.GetCurrentAnimatorStateInfo(0);
-        float t = Mathf.Repeat(state.normalizedTime, 1f);
-
-        // Stand
-        if (state.IsName($"Stand{direction}"))
+        for (int i = 0; i < otherPlayerState.partBodyTransforms.Count; i++)
         {
-            float[] moveChangeTimes = { 0.0f, 0.5f, 1f }; // Clip dài 0:40 giây, đổi frame ở 0 / 0.4, 0.2 / 0.4
+            Vector3 pos = resolvers[i].transform.localPosition;
+            pos.x = otherPlayerState.partBodyTransforms[i].positionData.x;
+            pos.y = otherPlayerState.partBodyTransforms[i].positionData.y;
+            pos.z = otherPlayerState.partBodyTransforms[i].positionData.z;
+            resolvers[i].transform.localPosition = pos;
 
-            int frame = GetFrameByTime(t, moveChangeTimes);
+            var rot = otherPlayerState.partBodyTransforms[i].rotationData;
+            resolvers[i].transform.localRotation = Quaternion.Euler(rot.x, rot.y, rot.z);
 
-            SetAllResolvers("Stand", $"Stand{direction}");
-            faceResolver.SetCategoryAndLabel("Stand", $"Stand{direction}Frame{frame}");
-            return;
-        }
-        // Move
-        if (state.IsName($"Move{direction}"))
-        {
-            float[] moveChangeTimes = { 0.0f, 0.5f, 1f }; // Clip dài 0:20 giây, đổi frame ở 0 / 0.2, 0.1 / 0.2
+            Vector3 scale = resolvers[i].transform.localScale;
+            scale.x = otherPlayerState.partBodyTransforms[i].scaleData.x;
+            scale.y = otherPlayerState.partBodyTransforms[i].scaleData.y;
+            scale.z = otherPlayerState.partBodyTransforms[i].scaleData.z;
+            resolvers[i].transform.localScale = scale;
 
-            int frame = GetFrameByTime(t, moveChangeTimes);
+            Renderer renderer = resolvers[i].GetComponent<Renderer>();
+            Color color = renderer.material.color;
+            color.r = otherPlayerState.partBodyTransforms[i].colorData.r;
+            color.g = otherPlayerState.partBodyTransforms[i].colorData.g;
+            color.b = otherPlayerState.partBodyTransforms[i].colorData.b;
+            color.a = otherPlayerState.partBodyTransforms[i].colorData.a;
+            renderer.material.color = color;
 
-            SetAllResolvers("Move", $"Move{direction}Frame{frame}");
-            return;
-        }
-        // Attack
-        if (state.IsName($"Atk{direction}"))
-        {
-            float[] moveChangeTimes = { 0.0f, 0.6667f, 1f }; // Clip dài 0:15 giây, đổi frame ở 0 / 0.15, 0.1 / 0.15
-
-            int frame = GetFrameByTime(t, moveChangeTimes);
-
-            SetAllResolvers("Atk", $"Atk{direction}Frame{frame}");
-            return;
-        }
-        //Injured
-        if (state.IsName($"Injured{direction}"))
-        {
-            float[] moveChangeTimes = { 0.0f, 0.5f, 1f }; // Clip dài 0:20 giây, đổi frame ở 0 / 0.2, 0.1 / 0.2
-
-            int frame = GetFrameByTime(t, moveChangeTimes);
-
-            faceResolver.SetCategoryAndLabel("Injured", $"Injured{direction}Frame{frame}");
-            return;
-        }
-        // Die
-        if (state.IsName($"Die"))
-        {
-            SetAllResolvers("Die", $"DieFrame0");
-            return;
+            SetAllResolvers(i, otherPlayerState.partBodyTransforms[i].category, otherPlayerState.partBodyTransforms[i].label);
         }
     }
-    private void SetAllResolvers(string category, string label)
+    private void SetAllResolvers(int idResolver, string category, string label)
     {
-        if (category == lastCategory && label == lastLabel)
-            return;
-
-        lastCategory = category;
-        lastLabel = label;
-
-        foreach (var r in resolvers)
-        {
-            if (r != null && r.spriteLibrary != null)
-            {
-                r.SetCategoryAndLabel(category, label);
-                r.ResolveSpriteToSpriteRenderer();
-            }
-        }
+        resolvers[idResolver].SetCategoryAndLabel(category, label);
+        resolvers[idResolver].ResolveSpriteToSpriteRenderer();
     }
 }

@@ -1,23 +1,21 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Net.WebSockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.U2D.Animation;
 
-public class SocketManager : MonoBehaviour
+public class SocketManager : MonoBehaviour, IUpdatable
 {
     private ClientWebSocket socket;
     private Uri serverUri;
     private PacketSerializeManager packetSerializeManager;
-
-    private SyncPlayerRequestPacket oldPacket;
-    private PlayerState playerState;
-    private Direction direction;
-    private float stateStartTime;
+    private CancellationTokenSource shutdownCts = new CancellationTokenSource();
 
     private readonly ConcurrentQueue<string> sendQueue = new ConcurrentQueue<string>();
     private readonly ConcurrentQueue<string> receiveQueue = new ConcurrentQueue<string>();
@@ -61,8 +59,8 @@ public class SocketManager : MonoBehaviour
             await socket.ConnectAsync(serverUri, CancellationToken.None);
             Debug.Log("Socket: Kết nối Server thành công!");
 
-            _ = StartSyncPlayerLoop();
-            _ = StartReceiveLoop();
+            _ = StartSyncPlayerLoop(shutdownCts.Token);
+            _ = StartReceiveLoop(shutdownCts.Token);
         }
         catch (Exception e)
         {
@@ -70,7 +68,13 @@ public class SocketManager : MonoBehaviour
         }
     }
 
-    private SyncPlayerRequestPacket GetSyncDataPacket()
+    public void OnUpdate() { }
+    public void OnLateUpdate() { }
+    public void OnFixedUpdate() { }
+
+    public void RegisterDontDestroyOnLoad() { }
+
+    private PlayerSyncDataRequestPacket GetSyncPlayerDataRequestPacket()
     {
         switch (LogInView.GetIDSchool())
         {
@@ -94,80 +98,116 @@ public class SocketManager : MonoBehaviour
         MovementController playerMovementController = player.GetComponent<MovementController>();
         SpriteController playerSpriteController = player.GetComponent<SpriteController>();
 
-        if (playerState != playerMovementController.GetCurrentState() || direction != playerSpriteController.GetCurrentDirection())
-        {
-            playerState = playerMovementController.GetCurrentState();
-            direction = playerSpriteController.GetCurrentDirection();
-            stateStartTime = Time.time;
-        }
-
-        SyncPlayerRequestPacket packet = new SyncPlayerRequestPacket
+        PlayerSyncDataRequestPacket packet = new PlayerSyncDataRequestPacket
         {
             cmd = "syncPlayerData",
-            playerData = new PlayerData
+            playerSyncData = new PlayerSyncData
             {
-                idAccount = LogInView.GetIDAccount() ?? 0,
-                idSchool = LogInView.GetIDSchool(),
-                posX = player.transform.position.x,
-                posY = player.transform.position.y,
-                lastPosX = playerMovementController.GetLastMovement().x,
-                lastPosY = playerMovementController.GetLastMovement().y,
-                state = playerState,
-                direction = direction,
-                stateStartTime = stateStartTime,
-
-                hair = playerSpriteController.GetHairData(),
-                weapon = playerSpriteController.GetWeaponData(),
-                helmet = playerSpriteController.GetHelmetData(),
-                armor = playerSpriteController.GetArmorData(),
-                legArmor = playerSpriteController.GetLegArmorData(),
+                playerData = new PlayerData
+                {
+                    idAccount = LogInView.GetIDAccount() ?? 0,
+                    idSchool = LogInView.GetIDSchool(),
+                    hair = playerSpriteController.GetHairData(),
+                    weapon = playerSpriteController.GetWeaponData(),
+                    helmet = playerSpriteController.GetHelmetData(),
+                    armor = playerSpriteController.GetArmorData(),
+                    legArmor = playerSpriteController.GetLegArmorData(),
+                },
+                playerTransformData = new PlayerTransformData
+                {
+                    idAccount = LogInView.GetIDAccount() ?? 0,
+                    positionData = new PositionData
+                    {
+                        x = playerMovementController.transform.position.x,
+                        y = playerMovementController.transform.position.y,
+                        z = playerMovementController.transform.position.z
+                    },
+                    scaleData = new ScaleData
+                    {
+                        x = playerMovementController.transform.localScale.x,
+                        y = playerMovementController.transform.localScale.y,
+                        z = playerMovementController.transform.localScale.z
+                    }
+                },
+                playerStateData = new PlayerStateData
+                {
+                    idAccount = LogInView.GetIDAccount() ?? 0,
+                    stateData = playerMovementController.GetCurrentState(),
+                    directionData = playerSpriteController.GetCurrentDirection(),
+                    partBodyTransforms = new List<PartBodyData>(),
+                }
             }
         };
 
-        if (oldPacket == packet)
+        foreach (var partBody in playerSpriteController.GetListSpriteLibrary())
         {
-            return null;
+            PartBodyData partBodyData = new PartBodyData();
+
+            partBodyData.category = partBody.GetComponent<SpriteResolver>().GetCategory();
+            partBodyData.label = partBody.GetComponent<SpriteResolver>().GetLabel();
+
+            partBodyData.positionData.x = partBody.transform.localPosition.x;
+            partBodyData.positionData.y = partBody.transform.localPosition.y;
+            partBodyData.positionData.z = partBody.transform.localPosition.z;
+
+            partBodyData.rotationData.x = partBody.transform.localEulerAngles.x;
+            partBodyData.rotationData.y = partBody.transform.localEulerAngles.y;
+            partBodyData.rotationData.z = partBody.transform.localEulerAngles.z;
+
+            partBodyData.scaleData.x = partBody.transform.localScale.x;
+            partBodyData.scaleData.y = partBody.transform.localScale.y;
+            partBodyData.scaleData.z = partBody.transform.localScale.z;
+
+            partBodyData.colorData.r = partBody.GetComponent<Renderer>().material.color.r;
+            partBodyData.colorData.g = partBody.GetComponent<Renderer>().material.color.g;
+            partBodyData.colorData.b = partBody.GetComponent<Renderer>().material.color.b;
+            partBodyData.colorData.a = partBody.GetComponent<Renderer>().material.color.a;
+
+            packet.playerSyncData.playerStateData.partBodyTransforms.Add(partBodyData);
         }
-        oldPacket = packet;
 
         return packet;
     }
-    private async Task StartSyncPlayerLoop()
+    private async Task StartSyncPlayerLoop(CancellationToken token)
     {
-        const int targetTickRate = 20;
+        const int targetTickRate = 70;
         const int tickMS = 1000 / targetTickRate;
 
         var stopwatch = new System.Diagnostics.Stopwatch();
 
-        while (true)
+        try
         {
-            stopwatch.Restart();
-
-            try
+            while (!token.IsCancellationRequested)
             {
+                stopwatch.Restart();
+
                 if (socket != null && socket.State == WebSocketState.Open)
                 {
-                    SyncPlayerRequestPacket packet = GetSyncDataPacket();
+                    PlayerSyncDataRequestPacket packet = GetSyncPlayerDataRequestPacket();
 
                     if (packet != null)
                     {
                         packetSerializeManager.HandleSentPacket(packet);
                     }
                 }
+
+                stopwatch.Stop();
+
+                int sleep = tickMS - (int)stopwatch.ElapsedMilliseconds;
+
+                if (sleep > 0)
+                    await Task.Delay(sleep, token);
+                else
+                    await Task.Yield();
             }
-            catch (Exception e)
-            {
-                Debug.LogError("StartSyncPlayerLoop error: " + e.Message);
-            }
-
-            stopwatch.Stop();
-
-            int sleep = tickMS - (int)stopwatch.ElapsedMilliseconds;
-
-            if (sleep > 0)
-                await Task.Delay(sleep);
-            else
-                await Task.Yield();
+        }
+        catch (TaskCanceledException)
+        {
+            Debug.Log("SyncPlayerLoop stopped.");
+        }
+        catch (Exception e)
+        {
+            Debug.LogError("StartSyncPlayerLoop error: " + e.Message);
         }
     }
     public async Task SendToServer(string message)
@@ -190,20 +230,20 @@ public class SocketManager : MonoBehaviour
         }
     }
 
-    private async Task StartReceiveLoop()
+    private async Task StartReceiveLoop(CancellationToken token)
     {
         var buffer = new byte[4096];
         var messageBuffer = new StringBuilder();
 
         try
         {
-            while (socket != null && socket.State == WebSocketState.Open)
+            while (!token.IsCancellationRequested && socket != null && socket.State == WebSocketState.Open)
             {
                 WebSocketReceiveResult result;
 
                 do
                 {
-                    result = await socket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
+                    result = await socket.ReceiveAsync(new ArraySegment<byte>(buffer), token);
 
                     if (result.MessageType == WebSocketMessageType.Close)
                         return;
@@ -215,69 +255,40 @@ public class SocketManager : MonoBehaviour
                 string fullMessage = messageBuffer.ToString();
                 messageBuffer.Clear();
 
-                var token = JToken.Parse(fullMessage);
+                var tokenJson = JToken.Parse(fullMessage);
 
-                switch (token.Type)
-                { 
+                switch (tokenJson.Type)
+                {
                     case JTokenType.Object:
                         {
-                            string cmd = token["cmd"]?.ToString();
+                            string cmd = tokenJson["cmd"]?.ToString();
                             HandlePacket(cmd, fullMessage);
                             break;
                         }
                     case JTokenType.Array:
                         {
-                            if (!token.HasValues)
-                            {
+                            if (!tokenJson.HasValues)
                                 continue;
-                            }
 
-                            if (token[0].Type != JTokenType.Object)
-                            {
+                            if (tokenJson[0].Type != JTokenType.Object)
                                 continue;
-                            }
 
-                            string cmd = token[0]["cmd"]?.ToString();
+                            string cmd = tokenJson[0]["cmd"]?.ToString();
 
                             if (!string.IsNullOrEmpty(cmd))
-                            {
                                 HandlePacket(cmd, fullMessage);
-                            }
-                            else
-                            {
-                                Debug.LogWarning("cmd missing in array packet: " + fullMessage);
-                            }
                             break;
                         }
                 }
             }
         }
+        catch (OperationCanceledException)
+        {
+            Debug.Log("ReceiveLoop stopped.");
+        }
         catch (Exception ex)
         {
-            GameObject.Find("SyncManager").gameObject.GetComponent<SyncOtherPlayersManager>().PrepareForLogOut();
-
-            //Dọn sạch danh sách quản lý Queue nhận dữ liệu từ Server
-            ClearAllQueues();
-
-            if (EquipmentView.GetListEquipmentSlots() != null)
-            {
-                EquipmentView.ClearEquipmentData();
-            }
-            if (EquipmentView.GetListImagesEquipmentSlots() != null)
-            {
-                EquipmentView.ClearListImagesEquipmentSlots();
-            }
-
-            if (InventoryView.GetListInventoryItem0Slots() != null)
-            {
-                InventoryView.ClearInventoryData();
-            }
-
-            GameManager.Instance.GetComponent<PlayerManager>().DestroyPlayer();
-
             Debug.Log($"Socket: Mất kết nối tới Server! {ex}");
-
-            SceneManager.LoadScene("Main");
         }
     }
     private void HandlePacket(string cmd, string json)
@@ -286,10 +297,9 @@ public class SocketManager : MonoBehaviour
         {
             case "syncOtherPlayers":
                 if (LogInView.GetIDAccount() != 0)
-                {
                     syncOtherPlayersQueue.Enqueue(json);
-                }
                 break;
+
             case "syncMobs":
                 syncMobsQueue.Enqueue(json);
                 break;

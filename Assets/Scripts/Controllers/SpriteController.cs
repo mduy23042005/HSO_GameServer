@@ -121,6 +121,10 @@ public class SpriteController : MonoBehaviour, IUpdatable
     {
         return currentDirection;
     }
+    public List<SpriteLibrary> GetListSpriteLibrary()
+    {
+        return spriteLibrary;
+    }
     #endregion
 
     #region Sửa sprite library sau khi equip item
@@ -138,11 +142,11 @@ public class SpriteController : MonoBehaviour, IUpdatable
 
         if (listItem0.GetItem0(id).helmet.isHiddenHair)
         {
-            spriteLibrary[4].gameObject.SetActive(false);
+            spriteLibrary[5].gameObject.SetActive(false);
         }
         else
         {
-            spriteLibrary[4].gameObject.SetActive(true);
+            spriteLibrary[5].gameObject.SetActive(true);
         }
     }
     private void EquipHair(int id)
@@ -152,26 +156,26 @@ public class SpriteController : MonoBehaviour, IUpdatable
         switch (idSchool)
         {
             case 1: //Chiến binh
-                spriteLibrary[4].spriteLibraryAsset = listItem0.GetMaleHairLibrary(id).hairLibrariesAsset;
+                spriteLibrary[5].spriteLibraryAsset = listItem0.GetMaleHairLibrary(id).hairLibrariesAsset;
                 break;
 
             case 2: //Sát thủ 
-                spriteLibrary[4].spriteLibraryAsset = listItem0.GetMaleHairLibrary(id).hairLibrariesAsset;
+                spriteLibrary[5].spriteLibraryAsset = listItem0.GetMaleHairLibrary(id).hairLibrariesAsset;
                 break;
 
             case 3: //Pháp sư
-                spriteLibrary[4].spriteLibraryAsset = listItem0.GetFemaleHairLibrary(id).hairLibrariesAsset;
+                spriteLibrary[5].spriteLibraryAsset = listItem0.GetFemaleHairLibrary(id).hairLibrariesAsset;
                 break;
 
             case 4: //Xạ thủ 
-                spriteLibrary[4].spriteLibraryAsset = listItem0.GetFemaleHairLibrary(id).hairLibrariesAsset;
+                spriteLibrary[5].spriteLibraryAsset = listItem0.GetFemaleHairLibrary(id).hairLibrariesAsset;
                 break;
         }
     }
     private void EquipWeapon(int id)
     {
-        spriteLibrary[5].spriteLibraryAsset = listItem0.GetItem0(id).weapon.weaponFrontLibraries;
-        spriteLibrary[6].spriteLibraryAsset = listItem0.GetItem0(id).weapon.weaponBackLibraries;
+        spriteLibrary[6].spriteLibraryAsset = listItem0.GetItem0(id).weapon.weaponFrontLibraries;
+        spriteLibrary[7].spriteLibraryAsset = listItem0.GetItem0(id).weapon.weaponBackLibraries;
     }
     #endregion
 
@@ -245,7 +249,7 @@ public class SpriteController : MonoBehaviour, IUpdatable
         // Stand
         if (state.IsName($"Stand"))
         {
-            float[] moveChangeTimes = { 0.0f, 0.5f }; // Clip dài 0:40 giây, đổi frame ở 0 / 0.4, 0.2 / 0.4
+            float[] moveChangeTimes = { 0f, 0.5f, 1f }; // Clip dài 0:40 giây, đổi frame ở 0 / 0.4, 0.2 / 0.4
 
             int frame = GetFrameByTime(t, moveChangeTimes);
 
@@ -255,7 +259,7 @@ public class SpriteController : MonoBehaviour, IUpdatable
         // Move
         if (state.IsName("Move"))
         {
-            float[] moveChangeTimes = { 0.0f, 0.5f }; // Clip dài 0:40 giây, đổi frame ở 0 / 0.2, 0.1 / 0.2
+            float[] moveChangeTimes = { 0f, 0.5f, 1f }; // Clip dài 0:40 giây, đổi frame ở 0 / 0.2, 0.1 / 0.2
 
             int frame = GetFrameByTime(t, moveChangeTimes);
 
@@ -264,7 +268,7 @@ public class SpriteController : MonoBehaviour, IUpdatable
         // Attack
         if (state.IsName("Atk"))
         {
-            float[] moveChangeTimes = { 0.0f, 0.6667f }; // Clip dài 0:15 giây, đổi frame ở 0 / 0.15, 0.1 / 0.15
+            float[] moveChangeTimes = { 0f, 0.6667f, 1f }; // Clip dài 0:15 giây, đổi frame ở 0 / 0.15, 0.1 / 0.15
 
             int frame = GetFrameByTime(t, moveChangeTimes);
 
@@ -273,10 +277,11 @@ public class SpriteController : MonoBehaviour, IUpdatable
         //Injured
         if (state.IsName("Injured"))
         {
-            float[] moveChangeTimes = { 0.0f, 0.5f }; // Clip dài 0:20 giây, đổi frame ở 0 / 0.2, 0.1 / 0.2
+            float[] moveChangeTimes = { 0f, 0.5f, 1f }; // Clip dài 0:20 giây, đổi frame ở 0 / 0.2, 0.1 / 0.2
 
             int frame = GetFrameByTime(t, moveChangeTimes);
 
+            SetAllResolvers("Stand", $"Stand{direction}");
             faceResolver.SetCategoryAndLabel("Injured", $"Injured{direction}Frame{frame}");
         }
         // Die

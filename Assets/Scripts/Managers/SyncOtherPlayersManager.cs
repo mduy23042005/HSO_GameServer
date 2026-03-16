@@ -16,17 +16,56 @@ public enum Direction
     Left = 2,
     Right = 3,
 }
-
+public class PositionData
+{
+    public float x;
+    public float y;
+    public float z;
+}
+public class RotationData
+{
+    public float x;
+    public float y;
+    public float z;
+}
+public class ScaleData
+{
+    public float x;
+    public float y;
+    public float z;
+}
+public class ColorData
+{
+    public float r;
+    public float g;
+    public float b;
+    public float a;
+}
+public class PartBodyData
+{
+    public string category;
+    public string label;
+    public PositionData positionData = new PositionData();
+    public RotationData rotationData = new RotationData();
+    public ScaleData scaleData = new ScaleData();
+    public ColorData colorData = new ColorData();
+}
+public class PlayerStateData
+{
+    public int idAccount;
+    public PlayerState stateData;
+    public Direction directionData;
+    public List<PartBodyData> partBodyTransforms = new List<PartBodyData>();
+}
+public class PlayerTransformData
+{
+    public int idAccount;
+    public PositionData positionData = new PositionData();
+    public ScaleData scaleData = new ScaleData();
+}
 public class PlayerData
 {
     public int idAccount;
-    public float posX;
-    public float posY;
-    public float lastPosX;
-    public float lastPosY;
-    public PlayerState state;
-    public Direction direction;
-    public float stateStartTime;
     public string nameChar;
     public int level;
     public int idSchool;
@@ -48,28 +87,45 @@ public class PlayerData
     public int pet;
     public int skin;
 }
-public class SyncPlayerRequestPacket
+public class PlayerSyncData
+{
+    public PlayerData playerData;
+    public PlayerTransformData playerTransformData;
+    public PlayerStateData playerStateData;
+}
+public class PlayerSyncDataRequestPacket
 {
     public string cmd;
-    public PlayerData playerData;
+    public PlayerSyncData playerSyncData;
+}
+
+public class OtherPlayerSyncData
+{
+    public PlayerData otherPlayerData;
+    public PlayerTransformData otherPlayerTransformData;
+    public PlayerStateData otherPlayerStateData;
 }
 public class SyncOtherPlayersResultPacket
 {
     public string cmd;
-    public List<PlayerData> otherPlayersData;
+    public List<OtherPlayerSyncData> otherPlayersData;
 }
 
+public class OtherPlayer
+{
+    public GameObject otherPlayerObject;
+    public PlayerData otherPlayerData;
+}
 public class SyncOtherPlayersManager : MonoBehaviour, IUpdatable
 {
     [SerializeField] private List<GameObject> otherPlayersPrefab;
 
-    private Dictionary<int, GameObject> otherPlayers = new Dictionary<int, GameObject>();
-    private Dictionary<int, PlayerData> otherPlayersData = new Dictionary<int, PlayerData>();
+    private Dictionary<int, OtherPlayer> otherPlayers = new Dictionary<int, OtherPlayer>();
 
     private Dictionary<int, float> lastUpdateTime = new Dictionary<int, float>();
     private const float timeOut = 0.55f;
 
-    private PlayerData onlinePlayer;
+    private OtherPlayerSyncData onlinePlayer;
     private LogOutRequestPacket offlinePlayer;
 
     private SocketManager socketManager;
@@ -107,11 +163,10 @@ public class SyncOtherPlayersManager : MonoBehaviour, IUpdatable
 
         foreach (var id in toRemove)
         {
-            if (otherPlayers.TryGetValue(id, out GameObject obj))
+            if (otherPlayers.TryGetValue(id, out OtherPlayer obj))
             {
-                Destroy(obj);
+                Destroy(obj.otherPlayerObject);
                 otherPlayers.Remove(id);
-                otherPlayersData.Remove(id);
                 lastUpdateTime.Remove(id);
             }
         }
@@ -121,13 +176,22 @@ public class SyncOtherPlayersManager : MonoBehaviour, IUpdatable
 
         if (!string.IsNullOrEmpty(logInData))
         {
-            var data = packetSerializeManager.HandleReceivedPacket<SyncOtherPlayersResultPacket>(logInData);
-            foreach (var playerData in data.otherPlayersData)
+            var packet = packetSerializeManager.HandleReceivedPacket<SyncOtherPlayersResultPacket>(logInData);
+
+            if (packet?.otherPlayersData == null)
+                return;
+
+            foreach (var playerData in packet.otherPlayersData)
             {
-                onlinePlayer = playerData;
-                if (onlinePlayer.idAccount != LogInView.GetIDAccount())
+                if (playerData == null)
+                    continue;
+
+                if (playerData.otherPlayerData == null)
+                    continue;
+
+                if (playerData.otherPlayerData.idAccount != LogInView.GetIDAccount())
                 {
-                    OnDataFromServer(onlinePlayer);
+                    OnDataFromServer(playerData);
                 }
             }
         }
@@ -145,45 +209,44 @@ public class SyncOtherPlayersManager : MonoBehaviour, IUpdatable
         GameManager.Instance.RegisterPersistent(this);
     }
 
-    public void OnDataFromServer(PlayerData data)
+    public void OnDataFromServer(OtherPlayerSyncData data)
     {
-        GameObject obj;
+        OtherPlayer otherPlayer;
 
         // Kiểm tra thêm nếu object đã bị destroy
-        if (!otherPlayers.TryGetValue(data.idAccount, out obj))
+        if (!otherPlayers.TryGetValue(data.otherPlayerData.idAccount, out otherPlayer))
         {
-            switch (data.idSchool)
+            otherPlayer = new OtherPlayer();
+
+            switch (data.otherPlayerData.idSchool)
             {
                 case 1:
-                    obj = Instantiate(otherPlayersPrefab[0], new Vector2(data.posX, data.posY), Quaternion.identity);
+                    otherPlayer.otherPlayerObject = Instantiate(otherPlayersPrefab[0], new Vector2(data.otherPlayerTransformData.positionData.x, data.otherPlayerTransformData.positionData.y), Quaternion.identity);
                     break;
                 case 2:
-                    obj = Instantiate(otherPlayersPrefab[1], new Vector2(data.posX, data.posY), Quaternion.identity);
+                    otherPlayer.otherPlayerObject = Instantiate(otherPlayersPrefab[1], new Vector2(data.otherPlayerTransformData.positionData.x, data.otherPlayerTransformData.positionData.y), Quaternion.identity);
                     break;
                 case 3:
-                    obj = Instantiate(otherPlayersPrefab[2], new Vector2(data.posX, data.posY), Quaternion.identity);
+                    otherPlayer.otherPlayerObject = Instantiate(otherPlayersPrefab[2], new Vector2(data.otherPlayerTransformData.positionData.x, data.otherPlayerTransformData.positionData.y), Quaternion.identity);
                     break;
             }
 
-            otherPlayers.Add(data.idAccount, obj);
-            otherPlayersData.Add(data.idAccount, data);
+            otherPlayers.Add(data.otherPlayerData.idAccount, otherPlayer);
 
-            obj.GetComponentInChildren<SyncSpriteController>().ApplyServerPlayerData(data);
+            otherPlayer.otherPlayerObject.GetComponentInChildren<SyncSpriteController>().ApplyServerData(data.otherPlayerData, data.otherPlayerTransformData, data.otherPlayerStateData);
         }
         else
         {
-            obj = otherPlayers[data.idAccount];
-            obj.GetComponentInChildren<SyncSpriteController>().ApplyServerPlayerData(data);
+            otherPlayer.otherPlayerObject.GetComponentInChildren<SyncSpriteController>().ApplyServerData(data.otherPlayerData, data.otherPlayerTransformData, data.otherPlayerStateData);
         }
-        lastUpdateTime[data.idAccount] = Time.time;
+        lastUpdateTime[data.otherPlayerData.idAccount] = Time.time;
     }
     public void OffDataFromServer(LogOutRequestPacket data)
     {
-        if (otherPlayers.TryGetValue(data.idAccount, out GameObject obj))
+        if (otherPlayers.TryGetValue(data.idAccount, out OtherPlayer otherPlayer))
         {
-            Destroy(obj.gameObject);
+            Destroy(otherPlayer.otherPlayerObject);
             otherPlayers.Remove(data.idAccount);
-            otherPlayersData.Remove(data.idAccount);
         }
     }
 
@@ -193,10 +256,9 @@ public class SyncOtherPlayersManager : MonoBehaviour, IUpdatable
         {
             if (kv.Value != null)
             {
-                Destroy(kv.Value);
+                Destroy(kv.Value.otherPlayerObject);
             }
         }
         otherPlayers.Clear();
-        otherPlayersData.Clear();
     }
 }

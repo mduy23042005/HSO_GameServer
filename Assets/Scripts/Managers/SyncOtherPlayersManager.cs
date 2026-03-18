@@ -45,23 +45,21 @@ public class PartBodyData
 {
     public string category;
     public string label;
-    public PositionData positionData = new PositionData();
-    public RotationData rotationData = new RotationData();
-    public ScaleData scaleData = new ScaleData();
-    public ColorData colorData = new ColorData();
+    public PositionData positionData;
+    public RotationData rotationData;
+    public ScaleData scaleData;
+    public ColorData colorData;
 }
 public class PlayerStateData
 {
-    public int idAccount;
     public PlayerState stateData;
     public Direction directionData;
-    public List<PartBodyData> partBodyTransforms = new List<PartBodyData>();
+    public List<PartBodyData> partBodyTransforms;
 }
 public class PlayerTransformData
 {
-    public int idAccount;
-    public PositionData positionData = new PositionData();
-    public ScaleData scaleData = new ScaleData();
+    public PositionData positionData;
+    public ScaleData scaleData;
 }
 public class PlayerData
 {
@@ -124,9 +122,6 @@ public class SyncOtherPlayersManager : MonoBehaviour, IUpdatable
 
     private Dictionary<int, float> lastUpdateTime = new Dictionary<int, float>();
     private const float timeOut = 0.55f;
-
-    private OtherPlayerSyncData onlinePlayer;
-    private LogOutRequestPacket offlinePlayer;
 
     private SocketManager socketManager;
     private PacketSerializeManager packetSerializeManager;
@@ -197,7 +192,7 @@ public class SyncOtherPlayersManager : MonoBehaviour, IUpdatable
         }
         if (!string.IsNullOrEmpty(logOutData))
         {
-            offlinePlayer = packetSerializeManager.HandleReceivedPacket<LogOutRequestPacket>(logOutData);
+            var offlinePlayer = packetSerializeManager.HandleReceivedPacket<LogOutRequestPacket>(logOutData);
             GameObject.Find("LogOut").GetComponent<LogOutController>().SetLogOutData(logOutData);
             OffDataFromServer(offlinePlayer);
         }
@@ -211,33 +206,33 @@ public class SyncOtherPlayersManager : MonoBehaviour, IUpdatable
 
     public void OnDataFromServer(OtherPlayerSyncData data)
     {
-        OtherPlayer otherPlayer;
+        OtherPlayer onlinePlayer;
 
         // Kiểm tra thêm nếu object đã bị destroy
-        if (!otherPlayers.TryGetValue(data.otherPlayerData.idAccount, out otherPlayer))
+        if (!otherPlayers.TryGetValue(data.otherPlayerData.idAccount, out onlinePlayer))
         {
-            otherPlayer = new OtherPlayer();
+            onlinePlayer = new OtherPlayer();
 
             switch (data.otherPlayerData.idSchool)
             {
                 case 1:
-                    otherPlayer.otherPlayerObject = Instantiate(otherPlayersPrefab[0], new Vector2(data.otherPlayerTransformData.positionData.x, data.otherPlayerTransformData.positionData.y), Quaternion.identity);
+                    onlinePlayer.otherPlayerObject = Instantiate(otherPlayersPrefab[0], new Vector2(data.otherPlayerTransformData.positionData.x, data.otherPlayerTransformData.positionData.y), Quaternion.identity);
                     break;
                 case 2:
-                    otherPlayer.otherPlayerObject = Instantiate(otherPlayersPrefab[1], new Vector2(data.otherPlayerTransformData.positionData.x, data.otherPlayerTransformData.positionData.y), Quaternion.identity);
+                    onlinePlayer.otherPlayerObject = Instantiate(otherPlayersPrefab[1], new Vector2(data.otherPlayerTransformData.positionData.x, data.otherPlayerTransformData.positionData.y), Quaternion.identity);
                     break;
                 case 3:
-                    otherPlayer.otherPlayerObject = Instantiate(otherPlayersPrefab[2], new Vector2(data.otherPlayerTransformData.positionData.x, data.otherPlayerTransformData.positionData.y), Quaternion.identity);
+                    onlinePlayer.otherPlayerObject = Instantiate(otherPlayersPrefab[2], new Vector2(data.otherPlayerTransformData.positionData.x, data.otherPlayerTransformData.positionData.y), Quaternion.identity);
                     break;
             }
 
-            otherPlayers.Add(data.otherPlayerData.idAccount, otherPlayer);
+            otherPlayers.Add(data.otherPlayerData.idAccount, onlinePlayer);
 
-            otherPlayer.otherPlayerObject.GetComponentInChildren<SyncSpriteController>().ApplyServerData(data.otherPlayerData, data.otherPlayerTransformData, data.otherPlayerStateData);
+            onlinePlayer.otherPlayerObject.GetComponentInChildren<SyncSpriteController>().ApplyServerData(data.otherPlayerData, data.otherPlayerTransformData, data.otherPlayerStateData);
         }
         else
         {
-            otherPlayer.otherPlayerObject.GetComponentInChildren<SyncSpriteController>().ApplyServerData(data.otherPlayerData, data.otherPlayerTransformData, data.otherPlayerStateData);
+            onlinePlayer.otherPlayerObject.GetComponentInChildren<SyncSpriteController>().ApplyServerData(data.otherPlayerData, data.otherPlayerTransformData, data.otherPlayerStateData);
         }
         lastUpdateTime[data.otherPlayerData.idAccount] = Time.time;
     }

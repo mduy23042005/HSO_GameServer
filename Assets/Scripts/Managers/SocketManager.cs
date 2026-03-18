@@ -115,7 +115,6 @@ public class SocketManager : MonoBehaviour, IUpdatable
                 },
                 playerTransformData = new PlayerTransformData
                 {
-                    idAccount = LogInView.GetIDAccount() ?? 0,
                     positionData = new PositionData
                     {
                         x = playerMovementController.transform.position.x,
@@ -131,7 +130,6 @@ public class SocketManager : MonoBehaviour, IUpdatable
                 },
                 playerStateData = new PlayerStateData
                 {
-                    idAccount = LogInView.GetIDAccount() ?? 0,
                     stateData = playerMovementController.GetCurrentState(),
                     directionData = playerSpriteController.GetCurrentDirection(),
                     partBodyTransforms = new List<PartBodyData>(),
@@ -141,7 +139,13 @@ public class SocketManager : MonoBehaviour, IUpdatable
 
         foreach (var partBody in playerSpriteController.GetListSpriteLibrary())
         {
-            PartBodyData partBodyData = new PartBodyData();
+            PartBodyData partBodyData = new PartBodyData
+            {
+                positionData = new PositionData(),
+                rotationData = new RotationData(),
+                scaleData = new ScaleData(),
+                colorData = new ColorData(),
+            };
 
             partBodyData.category = partBody.GetComponent<SpriteResolver>().GetCategory();
             partBodyData.label = partBody.GetComponent<SpriteResolver>().GetLabel();

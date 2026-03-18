@@ -18,7 +18,7 @@ AnimationClip:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0.13333334
+        time: 0.15
         value: {x: 0, y: 180, z: 140}
         inSlope: {x: Infinity, y: Infinity, z: Infinity}
         outSlope: {x: Infinity, y: Infinity, z: Infinity}
@@ -146,7 +146,7 @@ AnimationClip:
         inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
-        time: 0.13333334
+        time: 0.15
         value: {x: -0.28879, y: 1.764, z: 0}
         inSlope: {x: 0, y: Infinity, z: 0}
         outSlope: {x: Infinity, y: Infinity, z: 0}
@@ -428,7 +428,7 @@ AnimationClip:
         inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
-        time: 0.13333334
+        time: 0.15
         value: {x: 0.7, y: 1, z: 1}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: Infinity, y: 0, z: 0}
@@ -471,7 +471,7 @@ AnimationClip:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0.13333334
+        time: 0.15
         value: 1
         inSlope: Infinity
         outSlope: Infinity
@@ -492,7 +492,7 @@ AnimationClip:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0.13333334
+        time: 0.15
         value: 1
         inSlope: Infinity
         outSlope: Infinity
@@ -513,7 +513,7 @@ AnimationClip:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0.13333334
+        time: 0.15
         value: 1
         inSlope: Infinity
         outSlope: Infinity
@@ -543,7 +543,7 @@ AnimationClip:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 0.13333334
+        time: 0.15
         value: 1
         inSlope: Infinity
         outSlope: Infinity
@@ -699,7 +699,7 @@ AnimationClip:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 0.13333334
+        time: 0.15
         value: 0
         inSlope: Infinity
         outSlope: Infinity
@@ -856,7 +856,7 @@ AnimationClip:
   m_PPtrCurves:
   - serializedVersion: 2
     curve:
-    - time: 0.13333334
+    - time: 0.15
       value: {fileID: -1516626704146987615, guid: 6281ca32116a56b4ba999b5f250c215b, type: 3}
     - time: 0.16666667
       value: {fileID: 3951225006537731658, guid: 6281ca32116a56b4ba999b5f250c215b, type: 3}
@@ -1243,7 +1243,7 @@ AnimationClip:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0.13333334
+        time: 0.15
         value: -0.28879
         inSlope: Infinity
         outSlope: Infinity
@@ -1282,7 +1282,7 @@ AnimationClip:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 0.13333334
+        time: 0.15
         value: 1.764
         inSlope: Infinity
         outSlope: Infinity
@@ -1321,7 +1321,7 @@ AnimationClip:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0.13333334
+        time: 0.15
         value: 0
         inSlope: Infinity
         outSlope: Infinity
@@ -1342,7 +1342,7 @@ AnimationClip:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0.13333334
+        time: 0.15
         value: 0
         inSlope: Infinity
         outSlope: Infinity
@@ -1372,7 +1372,7 @@ AnimationClip:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0.13333334
+        time: 0.15
         value: 180
         inSlope: Infinity
         outSlope: Infinity
@@ -1402,7 +1402,7 @@ AnimationClip:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0.13333334
+        time: 0.15
         value: 140
         inSlope: Infinity
         outSlope: Infinity
@@ -1432,7 +1432,7 @@ AnimationClip:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0.13333334
+        time: 0.15
         value: 0.7
         inSlope: Infinity
         outSlope: Infinity
@@ -1504,7 +1504,7 @@ AnimationClip:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0.13333334
+        time: 0.15
         value: 1
         inSlope: Infinity
         outSlope: Infinity
@@ -1525,7 +1525,7 @@ AnimationClip:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0.13333334
+        time: 0.15
         value: 1
         inSlope: Infinity
         outSlope: Infinity
@@ -1546,7 +1546,7 @@ AnimationClip:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0.13333334
+        time: 0.15
         value: 1
         inSlope: Infinity
         outSlope: Infinity
@@ -1576,7 +1576,7 @@ AnimationClip:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 0.13333334
+        time: 0.15
         value: 1
         inSlope: Infinity
         outSlope: Infinity
@@ -2362,7 +2362,7 @@ AnimationClip:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 0.13333334
+        time: 0.15
         value: 0
         inSlope: Infinity
         outSlope: Infinity
@@ -2912,7 +2912,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.z
-    path: 110_106_0
+    path: 50_0_1
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -2924,19 +2924,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.y
-    path: 110_106_0
-    classID: 4
-    script: {fileID: 0}
-    flags: 0
-  - serializedVersion: 2
-    curve:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: m_LocalEulerAngles.x
-    path: 110_106_0
+    path: 50_0_1
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -2959,8 +2947,20 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
+    attribute: m_LocalEulerAngles.x
+    path: 110_106_0
+    classID: 4
+    script: {fileID: 0}
+    flags: 0
+  - serializedVersion: 2
+    curve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalEulerAngles.y
-    path: 50_0_1
+    path: 110_106_0
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -2972,7 +2972,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.z
-    path: 50_0_1
+    path: 110_106_0
     classID: 4
     script: {fileID: 0}
     flags: 0

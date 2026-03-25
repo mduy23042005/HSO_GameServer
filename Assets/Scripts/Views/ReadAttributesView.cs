@@ -7,28 +7,28 @@ using UnityEngine.UI;
 //Packet đọc attribute trong equipment
 public class ReadAttributesEquipmentRequestPacket
 {
-    public string cmd;
+    public EnumCmdCode cmd;
     public int idAccount;
     public int id;
     public int idItem0_1;
 }
 public class ReadAttributesEquipmentResultPacket
 {
-    public string cmd;
+    public EnumCmdCode cmd;
     public EquipmentData attributesData;
 }
 
 //Packet đọc attribute trong inventory
 public class ReadAttributesInventoryRequestPacket
 {
-    public string cmd;
+    public EnumCmdCode cmd;
     public int idAccount;
     public int id;
     public int idItem0;
 }
 public class ReadAttributesInventoryResultPacket
 {
-    public string cmd;
+    public EnumCmdCode cmd;
     public InventoryItem0Data attributesItem0Data;
     public InventoryItem1Data attributesItem1Data;
     public InventoryItem2Data attributesItem2Data;
@@ -39,7 +39,7 @@ public class ReadAttributesInventoryResultPacket
 //Packet trang bị item0 từ inventory vào equipment
 public class EquipItem0RequestPacket
 {
-    public string cmd;
+    public EnumCmdCode cmd;
     public int idAccount;
     public int id;
     public int idItem0;
@@ -60,13 +60,11 @@ public class ReadAttributesView : MonoBehaviour, IUpdatable
     private int indexSlot;
 
     private SocketManager socketManager;
-    private PacketSerializeManager packetSerializeManager;
     private string cmdReadAttributes;
 
     private void Awake()
     {
         socketManager = GameManager.Instance.GetComponent<SocketManager>();
-        packetSerializeManager = GameManager.Instance.GetComponent<PacketSerializeManager>();
 
         itemInfoText = itemInfo.GetComponent<TMP_Text>();
         nameItemText = nameItem.GetComponent<TMP_Text>();
@@ -92,17 +90,46 @@ public class ReadAttributesView : MonoBehaviour, IUpdatable
 
     public void OnUpdate()
     {
-        string data;
+        PacketReaderManager reader;
+        byte[] data;
 
         switch (cmdReadAttributes)
         { 
             case "equipmentAttributes":
                 data = socketManager.GetEquipmentAttributesData();
 
-                if (string.IsNullOrEmpty(data))
+                if (data == null || data.Length == 0)
                     return;
 
-                ReadAttributesEquipmentResultPacket equipmentAttributesResult = packetSerializeManager.HandleReceivedPacket<ReadAttributesEquipmentResultPacket>(data);
+                reader = new PacketReaderManager(data);
+
+                ReadAttributesEquipmentResultPacket equipmentAttributesResult = new ReadAttributesEquipmentResultPacket();
+                equipmentAttributesResult.cmd = (EnumCmdCode)reader.ReadInt();
+                equipmentAttributesResult.attributesData = new EquipmentData();
+                equipmentAttributesResult.attributesData.id = reader.ReadInt();
+                equipmentAttributesResult.attributesData.idItem0_1 = reader.ReadInt();
+                equipmentAttributesResult.attributesData.nameItem0_1 = reader.ReadString();
+                equipmentAttributesResult.attributesData.category = reader.ReadInt();
+                equipmentAttributesResult.attributesData.slotName = reader.ReadString();
+                equipmentAttributesResult.attributesData.item0_Attributes = new List<Item0_Attribute>();
+                equipmentAttributesResult.attributesData.nameAttributes = new List<Attribute>();
+
+                int countEquipmentAttribute = reader.ReadInt();
+                for (int i = 0; i < countEquipmentAttribute; i++)
+                {
+                    equipmentAttributesResult.attributesData.item0_Attributes.Add(new Item0_Attribute
+                    {
+                        ID = reader.ReadInt(),
+                        IDItem0 = reader.ReadInt(),
+                        IDAttribute = reader.ReadInt(),
+                        Value = reader.ReadInt(),
+                        Category = reader.ReadInt()
+                    });
+                    equipmentAttributesResult.attributesData.nameAttributes.Add(new Attribute
+                    {
+                        NameAttribute = reader.ReadString()
+                    });
+                }
 
                 if (equipmentAttributesResult == null || equipmentAttributesResult.attributesData.item0_Attributes.Count == 0)
                     return;
@@ -117,10 +144,40 @@ public class ReadAttributesView : MonoBehaviour, IUpdatable
             case "inventoryAttributes":
                 data = socketManager.GetInventoryAttributesData();
 
-                if (string.IsNullOrEmpty(data))
+                if (data == null || data.Length == 0)
                     return;
 
-                ReadAttributesInventoryResultPacket inventoryAttributesResult = packetSerializeManager.HandleReceivedPacket<ReadAttributesInventoryResultPacket>(data);
+                reader = new PacketReaderManager(data);
+
+                ReadAttributesInventoryResultPacket inventoryAttributesResult = new ReadAttributesInventoryResultPacket();
+                inventoryAttributesResult.cmd = (EnumCmdCode)reader.ReadInt();
+                inventoryAttributesResult.attributesItem0Data = new InventoryItem0Data();
+                inventoryAttributesResult.attributesItem0Data.id = reader.ReadInt();
+                inventoryAttributesResult.attributesItem0Data.idItem0 = reader.ReadInt();
+                inventoryAttributesResult.attributesItem0Data.nameItem0 = reader.ReadString();
+                inventoryAttributesResult.attributesItem0Data.typeItem0 = reader.ReadString();
+                inventoryAttributesResult.attributesItem0Data.category = reader.ReadInt();
+                inventoryAttributesResult.attributesItem0Data.idSchool = reader.ReadInt();
+                inventoryAttributesResult.attributesItem0Data.level = reader.ReadInt();
+                inventoryAttributesResult.attributesItem0Data.item0_Attributes = new List<Item0_Attribute>();
+                inventoryAttributesResult.attributesItem0Data.nameAttributes = new List<Attribute>();
+
+                int countInventoryAttribute = reader.ReadInt();
+                for (int i = 0; i < countInventoryAttribute; i++)
+                {
+                    inventoryAttributesResult.attributesItem0Data.item0_Attributes.Add(new Item0_Attribute
+                    {
+                        ID = reader.ReadInt(),
+                        IDItem0 = reader.ReadInt(),
+                        IDAttribute = reader.ReadInt(),
+                        Value = reader.ReadInt(),
+                        Category = reader.ReadInt()
+                    });
+                    inventoryAttributesResult.attributesItem0Data.nameAttributes.Add(new Attribute
+                    {
+                        NameAttribute = reader.ReadString()
+                    });
+                }
 
                 // tạm thời chỉ xét item0
                 if (inventoryAttributesResult == null || inventoryAttributesResult.attributesItem0Data.item0_Attributes.Count == 0)
@@ -159,15 +216,21 @@ public class ReadAttributesView : MonoBehaviour, IUpdatable
             return;
         }
 
-        ReadAttributesEquipmentRequestPacket sendEquipmentAttributesRequestPacket = new ReadAttributesEquipmentRequestPacket
+        ReadAttributesEquipmentRequestPacket equipmentAttributesRequestPacket = new ReadAttributesEquipmentRequestPacket
         {
-            cmd = "equipmentAttributes",
+            cmd = EnumCmdCode.equipmentAttributes,
             idAccount = idAccount,
             id = equipmentInfo[idSlot].id,
             idItem0_1 = idItem0_1
         };
 
-        packetSerializeManager.HandleSentPacket(sendEquipmentAttributesRequestPacket);
+        PacketWriterManager writer = new PacketWriterManager();
+        writer.WriteInt((int)equipmentAttributesRequestPacket.cmd);
+        writer.WriteInt(equipmentAttributesRequestPacket.idAccount);
+        writer.WriteInt(equipmentAttributesRequestPacket.id);
+        writer.WriteInt(equipmentAttributesRequestPacket.idItem0_1);
+
+        await socketManager.SendToServer(writer.ToArray());
 
         itemInfo.SetActive(true);
         itemInfoText.text = "";
@@ -198,15 +261,21 @@ public class ReadAttributesView : MonoBehaviour, IUpdatable
 
         int idItem0 = inventoryInfo[idSlot].idItem0;
 
-        ReadAttributesInventoryRequestPacket sendInventoryAttributesRequestPacket = new ReadAttributesInventoryRequestPacket
+        ReadAttributesInventoryRequestPacket inventoryAttributesRequestPacket = new ReadAttributesInventoryRequestPacket
         {
-            cmd = "inventoryAttributes",
+            cmd = EnumCmdCode.inventoryAttributes,
             idAccount = idAccount,
             id = inventoryInfo[idSlot].id,
             idItem0 = inventoryInfo[idSlot].idItem0
         };
 
-        packetSerializeManager.HandleSentPacket(sendInventoryAttributesRequestPacket);
+        PacketWriterManager writer = new PacketWriterManager();
+        writer.WriteInt((int)inventoryAttributesRequestPacket.cmd);
+        writer.WriteInt(inventoryAttributesRequestPacket.idAccount);
+        writer.WriteInt(inventoryAttributesRequestPacket.id);
+        writer.WriteInt(inventoryAttributesRequestPacket.idItem0);
+
+        await socketManager.SendToServer(writer.ToArray());
 
         itemInfo.SetActive(true);
         itemInfoText.text = "";
@@ -280,17 +349,24 @@ public class ReadAttributesView : MonoBehaviour, IUpdatable
                 typeItem0 = ringSlot;
             }
 
-            EquipItem0RequestPacket sendEquipItem0RequestPacket = new EquipItem0RequestPacket
+            EquipItem0RequestPacket equipItem0RequestPacket = new EquipItem0RequestPacket
             {
-                cmd = "equipItem0",
+                cmd = EnumCmdCode.equipItem0,
                 idAccount = idAccount,
                 id = inventoryInfo[idSlot].id,
                 idItem0 = inventoryInfo[idSlot].idItem0,
                 slotName = typeItem0
             };
 
-            packetSerializeManager.HandleSentPacket(sendEquipItem0RequestPacket);
+            PacketWriterManager writer = new PacketWriterManager();
+            writer.WriteInt((int)equipItem0RequestPacket.cmd);
+            writer.WriteInt(equipItem0RequestPacket.idAccount);
+            writer.WriteInt(equipItem0RequestPacket.id);
+            writer.WriteInt(equipItem0RequestPacket.idItem0);
+            writer.WriteString(equipItem0RequestPacket.slotName);
 
+            await socketManager.SendToServer(writer.ToArray());
+            
             ringSlot = null;
             itemInfoText.text = "";
             itemInfo.SetActive(false);

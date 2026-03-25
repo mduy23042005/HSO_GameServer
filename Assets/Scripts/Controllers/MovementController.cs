@@ -70,8 +70,7 @@ public class MovementController : MonoBehaviour, IUpdatable
                 //Nếu collider có tag "Mob" thì chỉ debug, không di chuyển
                 if (hit.collider.CompareTag("Mob"))
                 {
-                    Debug.Log($"Clicked on Mob: {hit.collider.name}");
-                    isMovingToTarget = false;
+                    Debug.Log("Clicking on Mob");
                     return;
                 }
             }

@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class EquipmentRequestPacket
 {
-    public string cmd;
+    public EnumCmdCode cmd;
     public int idAccount;
 }
 public class EquipmentData
@@ -19,7 +19,7 @@ public class EquipmentData
 }
 public class EquipmentResultPacket
 {
-    public string cmd;
+    public EnumCmdCode cmd;
     public List<EquipmentData> equipmentData;
 }
 
@@ -32,12 +32,10 @@ public class EquipmentView : MonoBehaviour, IUpdatable
     private static List<EquipmentData> equipment = new List<EquipmentData>();
 
     private SocketManager socketManager;
-    private PacketSerializeManager packetSerializeManager;
 
     private void Awake()
     {
         socketManager = GameManager.Instance.GetComponent<SocketManager>();
-        packetSerializeManager = GameManager.Instance.GetComponent<PacketSerializeManager>();
 
         int idAccount = LogInView.GetIDAccount() ?? 0;
         if (idAccount != 0)
@@ -59,12 +57,29 @@ public class EquipmentView : MonoBehaviour, IUpdatable
     }
     public void OnUpdate()
     {
-        string data = socketManager.GetEquipmentData();
+        byte[] data = socketManager.GetEquipmentData();
 
-        if (string.IsNullOrEmpty(data))
+        if (data == null || data.Length == 0)
             return;
 
-        EquipmentResultPacket equipmentResult = packetSerializeManager.HandleReceivedPacket<EquipmentResultPacket>(data);
+        PacketReaderManager reader = new PacketReaderManager(data);
+
+        EquipmentResultPacket equipmentResult = new EquipmentResultPacket();
+        equipmentResult.cmd = (EnumCmdCode)reader.ReadInt();
+        equipmentResult.equipmentData = new List<EquipmentData>();
+
+        int countEquipmentData = reader.ReadInt();
+        for (int i = 0; i < countEquipmentData; i++)
+        {
+            equipmentResult.equipmentData.Add(new EquipmentData
+            {
+                id = reader.ReadInt(),
+                idItem0_1 = reader.ReadInt(),
+                nameItem0_1 = reader.ReadString(),
+                category = reader.ReadInt(),
+                slotName = reader.ReadString()
+            });
+        }
 
         for (int i = 0; i < equipmentResult.equipmentData.Count; i++)
         {
@@ -100,13 +115,17 @@ public class EquipmentView : MonoBehaviour, IUpdatable
     private async void ReadCache()
     {
         int idAccount = LogInView.GetIDAccount() ?? 0;
-        EquipmentRequestPacket sendEquipmentRequestPacket = new EquipmentRequestPacket
+        EquipmentRequestPacket equipmentRequestPacket = new EquipmentRequestPacket
         {
-            cmd = "equipment",
+            cmd = EnumCmdCode.equipment,
             idAccount = idAccount,
         };
 
-        packetSerializeManager.HandleSentPacket(sendEquipmentRequestPacket);
+        PacketWriterManager writer = new PacketWriterManager();
+        writer.WriteInt((int)equipmentRequestPacket.cmd);
+        writer.WriteInt(equipmentRequestPacket.idAccount);
+
+        await socketManager.SendToServer(writer.ToArray());
     }
 
     public static List<EquipmentData> GetListEquipmentSlots()

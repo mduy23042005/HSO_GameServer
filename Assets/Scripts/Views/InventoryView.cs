@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using static Unity.Burst.Intrinsics.X86.Avx;
 
 public class InventoryRequestPacket
 {
-    public string cmd;
+    public EnumCmdCode cmd;
     public int idAccount;
 }
 
@@ -58,7 +59,7 @@ public class InventoryItem4Data
 }
 public class InventoryResultPacket
 {
-    public string cmd;
+    public EnumCmdCode cmd;
     public List<InventoryItem0Data> inventoryItem0Data;
     public List<InventoryItem1Data> inventoryItem1Data;
     public List<InventoryItem2Data> inventoryItem2Data;
@@ -74,12 +75,10 @@ public class InventoryView : MonoBehaviour, IUpdatable
     private static List<InventoryItem0Data> inventoryItem0;
 
     private SocketManager socketManager;
-    private PacketSerializeManager packetSerializeManager;
 
     private void Awake()
     {
         socketManager = GameManager.Instance.GetComponent<SocketManager>();
-        packetSerializeManager = GameManager.Instance.GetComponent<PacketSerializeManager>();
 
         int idAccount = LogInView.GetIDAccount() ?? 0;
         if (idAccount != 0)
@@ -102,14 +101,35 @@ public class InventoryView : MonoBehaviour, IUpdatable
 
     public void OnUpdate() // tạm thời chỉ có item0
     {
-        string data = socketManager.GetInventoryData();
+        byte[] data = socketManager.GetInventoryData();
 
-        if (string.IsNullOrEmpty(data))
-        {
+        if (data == null || data.Length == 0)
             return;
-        }
 
-        InventoryResultPacket inventoryResult = packetSerializeManager.HandleReceivedPacket<InventoryResultPacket>(data);
+
+        PacketReaderManager reader = new PacketReaderManager(data);
+
+        InventoryResultPacket inventoryResult = new InventoryResultPacket();
+        inventoryResult.cmd = (EnumCmdCode)reader.ReadInt();
+        inventoryResult.inventoryItem0Data = new List<InventoryItem0Data>();
+        inventoryResult.inventoryItem1Data = new List<InventoryItem1Data>();
+        inventoryResult.inventoryItem2Data = new List<InventoryItem2Data>();
+        inventoryResult.inventoryItem3Data = new List<InventoryItem3Data>();
+        inventoryResult.inventoryItem4Data = new List<InventoryItem4Data>();
+
+        int countInventoryItem0Data = reader.ReadInt();
+        for (int i = 0; i < countInventoryItem0Data; i++)
+        {
+            inventoryResult.inventoryItem0Data.Add(new InventoryItem0Data 
+            {
+                id = reader.ReadInt(),
+                idItem0 = reader.ReadInt(),
+                nameItem0 = reader.ReadString(),
+                typeItem0 = reader.ReadString(),
+                category = reader.ReadInt(),
+                idSchool = reader.ReadInt(),
+            });
+        }
 
         if (inventoryItem0 == null)
             inventoryItem0 = new List<InventoryItem0Data>();
@@ -157,13 +177,17 @@ public class InventoryView : MonoBehaviour, IUpdatable
     private async void ReadCache()
     {
         int idAccount = LogInView.GetIDAccount() ?? 0;
-        InventoryRequestPacket sendInventoryRequestPacket = new InventoryRequestPacket
+        InventoryRequestPacket inventoryRequestPacket = new InventoryRequestPacket
         {
-            cmd = "inventory",
+            cmd = EnumCmdCode.inventory,
             idAccount = idAccount,
         };
 
-        packetSerializeManager.HandleSentPacket(sendInventoryRequestPacket);
+        PacketWriterManager writer = new PacketWriterManager();
+        writer.WriteInt((int)inventoryRequestPacket.cmd);
+        writer.WriteInt(inventoryRequestPacket.idAccount);
+
+        await socketManager.SendToServer(writer.ToArray());
     }
 
     public static List<InventoryItem0Data> GetListInventoryItem0Slots()

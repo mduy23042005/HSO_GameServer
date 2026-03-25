@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[Serializable]
 public class SyncMobData
 {
     public int id;
@@ -13,30 +12,32 @@ public class SyncMobData
     public int idState;
     public int direction;
 }
-[Serializable]
 public class SyncMobDataPacket
 {
-    public string cmd;
+    public EnumCmdCode cmd;
     public List<SyncMobData> mobsData;
+}
+
+public class Mob
+{
+    public GameObject mobObject;
+    public SyncMobData mobData;
 }
 
 public class MobsManager : MonoBehaviour, IUpdatable
 {
     [SerializeField] private List<GameObject> mobPrefabs;
 
-    private Dictionary<int, GameObject> mobs = new Dictionary<int, GameObject>();
-    private Dictionary<int, SyncMobData> mobsData = new Dictionary<int, SyncMobData>();
+    private Dictionary<int, Mob> mobs = new Dictionary<int, Mob>();
     private Dictionary<int, float> lastUpdateTime = new Dictionary<int, float>();
 
     private const float timeOut = 1.2f; // mob update chậm hơn player
 
     private SocketManager socketManager;
-    private PacketSerializeManager packetSerializeManager;
 
     private void Awake()
     {
         socketManager = GameManager.Instance.GetComponent<SocketManager>();
-        packetSerializeManager = GameManager.Instance.GetComponent<PacketSerializeManager>();
     }
 
     private void OnEnable()
@@ -53,14 +54,35 @@ public class MobsManager : MonoBehaviour, IUpdatable
 
     public void OnUpdate()
     {
-        string mobSyncData = socketManager.GetSyncMobsData();
+        byte[] mobSyncData = socketManager.GetSyncMobsData();
 
-        if (!string.IsNullOrEmpty(mobSyncData))
+        if (mobSyncData == null || mobSyncData.Length == 0)
         {
-            var data = packetSerializeManager.HandleReceivedPacket<SyncMobDataPacket>(mobSyncData);
-
-            OnMobDataFromServer(data);
+            return;
         }
+
+        PacketReaderManager reader = new PacketReaderManager(mobSyncData);
+
+        SyncMobDataPacket data = new SyncMobDataPacket();
+        data.cmd = (EnumCmdCode)reader.ReadInt();
+        data.mobsData = new List<SyncMobData>();
+
+        int countSyncMobData = reader.ReadInt();
+        for (int i = 0; i < countSyncMobData; i++)
+        {
+            data.mobsData.Add(new SyncMobData
+            {
+                id = reader.ReadInt(),
+                idMob = reader.ReadInt(),
+                posX = reader.ReadFloat(),
+                posY = reader.ReadFloat(),
+                state = reader.ReadString(),
+                idState = reader.ReadInt(),
+                direction = reader.ReadInt(),
+            });
+        }
+
+        OnMobDataFromServer(data);
 
         HandleTimeoutMob();
     }
@@ -90,22 +112,23 @@ public class MobsManager : MonoBehaviour, IUpdatable
         if (data == null || data.mobsData == null)
             return;
 
-        GameObject mobObj;
+        Mob mob;
 
         foreach (var mobData in data.mobsData)
         {
-            if (!mobs.TryGetValue(mobData.id, out mobObj))
+            if (!mobs.TryGetValue(mobData.id, out mob))
             {
-                mobObj = InitMob(mobData);
+                mob = new Mob();
 
-                if (mobObj == null)
+                mob.mobObject = InitMob(mobData);
+
+                if (mob.mobObject == null)
                     continue;
 
-                mobs.Add(mobData.id, mobObj);
-                mobsData.Add(mobData.id, mobData);
+                mobs.Add(mobData.id, mob);
             }
 
-            mobObj.GetComponent<MovementMobController>().ApplyServerState(mobData);
+            mob.mobObject.GetComponent<MovementMobController>().ApplyServerState(mobData);
             lastUpdateTime[mobData.id] = Time.time;
         }
     }
@@ -121,11 +144,10 @@ public class MobsManager : MonoBehaviour, IUpdatable
 
     public void RemoveMob(int idMob)
     {
-        if (mobs.TryGetValue(idMob, out GameObject mob))
+        if (mobs.TryGetValue(idMob, out Mob mob))
         {
-            Destroy(mob);
+            Destroy(mob.mobObject);
             mobs.Remove(idMob);
-            mobsData.Remove(idMob);
             lastUpdateTime.Remove(idMob);
         }
     }
@@ -135,12 +157,11 @@ public class MobsManager : MonoBehaviour, IUpdatable
         {
             if (kv.Value != null)
             {
-                Destroy(kv.Value);
+                Destroy(kv.Value.mobObject);
             }
         }
 
         mobs.Clear();
-        mobsData.Clear();
         lastUpdateTime.Clear();
     }
 

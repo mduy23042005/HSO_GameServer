@@ -19,7 +19,6 @@ public class SpriteController : MonoBehaviour, IUpdatable
     private ItemController listItem0;
 
     private SocketManager socketManager;
-    private PacketSerializeManager packetSerializeManager;
 
     // id của trang bị thực tế từ database
     private int weaponData = 0;
@@ -36,7 +35,6 @@ public class SpriteController : MonoBehaviour, IUpdatable
         animator = GetComponent<Animator>();
         movementController = GetComponent<MovementController>();
         socketManager = GameManager.Instance.GetComponent<SocketManager>();
-        packetSerializeManager = GameManager.Instance.GetComponent<PacketSerializeManager>();
         listItem0 = ItemController.Instance;
         ReadCache();
     }
@@ -58,26 +56,42 @@ public class SpriteController : MonoBehaviour, IUpdatable
     }
     public void OnUpdate()
     {
-        List<EquipmentData> listOutfitSprites;
+        EquipmentResultPacket outfitData = new EquipmentResultPacket();
 
         if (EquipmentView.GetListEquipmentSlots().Count == 0)
         {
-            string data = socketManager.GetOutfitSpritesData();
+            byte[] data = socketManager.GetOutfitSpritesData();
 
-            if (string.IsNullOrEmpty(data))
+            if (data == null || data.Length == 0)
                 return;
 
-            listOutfitSprites = packetSerializeManager.HandleReceivedPacket<EquipmentResultPacket>(data).equipmentData;
+            PacketReaderManager reader = new PacketReaderManager(data);
+
+            outfitData.cmd = (EnumCmdCode)reader.ReadInt();
+            outfitData.equipmentData = new List<EquipmentData>();
+
+            int countOutfitSprite = reader.ReadInt();
+            for (int i = 0; i < countOutfitSprite; i++)
+            {
+                outfitData.equipmentData.Add(new EquipmentData
+                {
+                    id = reader.ReadInt(),
+                    idItem0_1 = reader.ReadInt(),
+                    nameItem0_1 = reader.ReadString(),
+                    category = reader.ReadInt(),
+                    slotName = reader.ReadString()
+                });
+            }
         }
         else
         {
-            listOutfitSprites = EquipmentView.GetListEquipmentSlots();
+            outfitData.equipmentData = EquipmentView.GetListEquipmentSlots();
         }
 
-        weaponData = listOutfitSprites[0].idItem0_1;
-        helmetData = listOutfitSprites[1].idItem0_1;
-        armorData = listOutfitSprites[2].idItem0_1;
-        legArmorData = listOutfitSprites[3].idItem0_1;
+        weaponData = outfitData.equipmentData[0].idItem0_1;
+        helmetData = outfitData.equipmentData[1].idItem0_1;
+        armorData = outfitData.equipmentData[2].idItem0_1;
+        legArmorData = outfitData.equipmentData[3].idItem0_1;
         hairData = LogInView.GetHair();
 
         EquipLegArmor(legArmorData);
@@ -182,13 +196,17 @@ public class SpriteController : MonoBehaviour, IUpdatable
     private async void ReadCache()
     {
         int idAccount = LogInView.GetIDAccount() ?? 0;
-        EquipmentRequestPacket sendOutfitSpritesRequestPacket = new EquipmentRequestPacket
+        EquipmentRequestPacket outfitSpritesRequestPacket = new EquipmentRequestPacket
         {
-            cmd = "outfitSprites",
+            cmd = EnumCmdCode.outfitSprites,
             idAccount = idAccount,
         };
 
-        packetSerializeManager.HandleSentPacket(sendOutfitSpritesRequestPacket);
+        PacketWriterManager writer = new PacketWriterManager();
+        writer.WriteInt((int)outfitSpritesRequestPacket.cmd);
+        writer.WriteInt(outfitSpritesRequestPacket.idAccount);
+
+        await socketManager.SendToServer(writer.ToArray());
     }
 
     private string GetDirection(float h, float v)

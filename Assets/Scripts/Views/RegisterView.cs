@@ -6,7 +6,7 @@ using UnityEngine.U2D.Animation;
 
 public class RegisterRequestPacket
 {
-    public string cmd;
+    public EnumCmdCode cmd;
     public int idSchool;
     public string nameChar;
     public string username;
@@ -16,7 +16,7 @@ public class RegisterRequestPacket
 }
 public class RegisterResultPacket
 {
-    public string cmd;
+    public EnumCmdCode cmd;
     public bool success;
 }
 
@@ -50,7 +50,6 @@ public class RegisterView : MonoBehaviour, IUpdatable
     private string[] nameBlessing;
 
     private SocketManager socketManager;
-    private PacketSerializeManager packetSerializeManager;
 
     private void Awake()
     {
@@ -64,7 +63,6 @@ public class RegisterView : MonoBehaviour, IUpdatable
         nameBlessing = new string[] { "Ánh sáng", "Bóng tối" };
 
         socketManager = GameManager.Instance.GetComponent<SocketManager>();
-        packetSerializeManager = GameManager.Instance.GetComponent<PacketSerializeManager>();
     }
 
     private void OnEnable()
@@ -80,16 +78,18 @@ public class RegisterView : MonoBehaviour, IUpdatable
     }
     public void OnUpdate()
     {
-        string data = socketManager.GetRegisterData();
+        byte[] data = socketManager.GetRegisterData();
 
-        if (string.IsNullOrEmpty(data))
-        {
+        if (data == null || data.Length == 0)
             return;
-        }
 
         Debug.Log("Received register data successfully!");
 
-        RegisterResultPacket registerResult = packetSerializeManager.HandleReceivedPacket<RegisterResultPacket>(data);
+        PacketReaderManager reader = new PacketReaderManager(data);
+
+        RegisterResultPacket registerResult = new RegisterResultPacket();
+        registerResult.cmd = (EnumCmdCode)reader.ReadInt();
+        registerResult.success = reader.ReadBool();
 
         if (registerResult.success)
         {
@@ -220,9 +220,9 @@ public class RegisterView : MonoBehaviour, IUpdatable
 
         if (!CheckAllInfo(idSchool, inputNameChar, inputUsername, inputPassword)) return;
 
-        RegisterRequestPacket sendRegisterRequestPacket = new RegisterRequestPacket
+        RegisterRequestPacket registerRequestPacket = new RegisterRequestPacket
         {
-            cmd = "register",
+            cmd = EnumCmdCode.register,
             idSchool = idSchool,
             nameChar = nameChar,
             username = username,
@@ -230,7 +230,17 @@ public class RegisterView : MonoBehaviour, IUpdatable
             hair = hair,
             blessingPoints = blessingPoints
         };
-        packetSerializeManager.HandleSentPacket(sendRegisterRequestPacket);
+
+        PacketWriterManager writer = new PacketWriterManager();
+        writer.WriteInt((int)registerRequestPacket.cmd);
+        writer.WriteInt(registerRequestPacket.idSchool);
+        writer.WriteString(registerRequestPacket.nameChar);
+        writer.WriteString(registerRequestPacket.username);
+        writer.WriteString(registerRequestPacket.password);
+        writer.WriteInt(registerRequestPacket.hair);
+        writer.WriteInt(registerRequestPacket.blessingPoints);
+
+        socketManager.SendToServer(writer.ToArray());
     }
 
     private bool CheckAllInfo(int idSchool, TMP_InputField nameChar, TMP_InputField username, TMP_InputField password)

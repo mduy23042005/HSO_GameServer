@@ -93,7 +93,7 @@ public class PlayerSyncData
 }
 public class PlayerSyncDataRequestPacket
 {
-    public string cmd;
+    public EnumCmdCode cmd;
     public PlayerSyncData playerSyncData;
 }
 
@@ -105,7 +105,7 @@ public class OtherPlayerSyncData
 }
 public class SyncOtherPlayersResultPacket
 {
-    public string cmd;
+    public EnumCmdCode cmd;
     public List<OtherPlayerSyncData> otherPlayersData;
 }
 
@@ -124,12 +124,10 @@ public class SyncOtherPlayersManager : MonoBehaviour, IUpdatable
     private const float timeOut = 0.55f;
 
     private SocketManager socketManager;
-    private PacketSerializeManager packetSerializeManager;
 
     private void Awake()
     {
         socketManager = GameManager.Instance.GetComponent<SocketManager>();
-        packetSerializeManager = GameManager.Instance.GetComponent<PacketSerializeManager>();
     }
 
     private void OnEnable()
@@ -166,17 +164,109 @@ public class SyncOtherPlayersManager : MonoBehaviour, IUpdatable
             }
         }
 
-        string logInData = socketManager.GetSyncOtherPlayersData(); //luôn lấy từ sync queue vì online player luôn gửi data đến server khi online
-        string logOutData = socketManager.GetLogOutData();
+        byte[] onlineData = socketManager.GetSyncOtherPlayersData(); //luôn lấy từ sync queue vì online player luôn gửi data đến server khi online
+        byte[] offlineData = socketManager.GetLogOutData();
 
-        if (!string.IsNullOrEmpty(logInData))
+        if (onlineData != null && onlineData.Length > 0)
         {
-            var packet = packetSerializeManager.HandleReceivedPacket<SyncOtherPlayersResultPacket>(logInData);
+            PacketReaderManager reader = new PacketReaderManager(onlineData);
 
-            if (packet?.otherPlayersData == null)
+            SyncOtherPlayersResultPacket data = new SyncOtherPlayersResultPacket();
+            data.cmd = (EnumCmdCode)reader.ReadInt();
+            data.otherPlayersData = new List<OtherPlayerSyncData>();
+
+            int countOtherPlayerData = reader.ReadInt();
+            for (int i = 0; i < countOtherPlayerData; i++)
+            {
+                data.otherPlayersData.Add(new OtherPlayerSyncData
+                {
+                    otherPlayerData = new PlayerData
+                    {
+                        idAccount = reader.ReadInt(),
+                        nameChar = reader.ReadString(),
+                        level = reader.ReadInt(),
+                        idSchool = reader.ReadInt(),
+                        hair = reader.ReadInt(),
+                        weapon = reader.ReadInt(),
+                        helmet = reader.ReadInt(),
+                        armor = reader.ReadInt(),
+                        legArmor = reader.ReadInt(),
+                        gloves = reader.ReadInt(),
+                        shoes = reader.ReadInt(),
+                        ring1 = reader.ReadInt(),
+                        ring2 = reader.ReadInt(),
+                        necklace = reader.ReadInt(),
+                        medal = reader.ReadInt(),
+                        cloak = reader.ReadInt(),
+                        wing = reader.ReadInt(),
+                        skinWing = reader.ReadInt(),
+                        mounts = reader.ReadInt(),
+                        pet = reader.ReadInt(),
+                        skin = reader.ReadInt(),
+                    },
+                    otherPlayerTransformData = new PlayerTransformData
+                    {
+                        positionData = new PositionData
+                        {
+                            x = reader.ReadFloat(),
+                            y = reader.ReadFloat(),
+                            z = reader.ReadFloat(),
+                        },
+                        scaleData = new ScaleData
+                        {
+                            x = reader.ReadFloat(),
+                            y = reader.ReadFloat(),
+                            z = reader.ReadFloat(),
+                        }
+                    },
+                    otherPlayerStateData = new PlayerStateData
+                    {
+                        stateData = (PlayerState)reader.ReadInt(),
+                        directionData = (Direction)reader.ReadInt(),
+                        partBodyTransforms = new List<PartBodyData>()
+                    }
+                });
+
+                int countPartBodyData = reader.ReadInt();
+                for (int j = 0; j < countPartBodyData; j++)
+                {
+                    data.otherPlayersData[i].otherPlayerStateData.partBodyTransforms.Add(new PartBodyData
+                    {
+                        category = reader.ReadString(),
+                        label = reader.ReadString(),
+                        positionData =  new PositionData 
+                        { 
+                            x = reader.ReadFloat(),
+                            y = reader.ReadFloat(),
+                            z = reader.ReadFloat(),
+                        },
+                        rotationData = new RotationData
+                        {
+                            x = reader.ReadFloat(),
+                            y = reader.ReadFloat(),
+                            z = reader.ReadFloat(),
+                        },
+                        scaleData = new ScaleData
+                        {
+                            x = reader.ReadFloat(),
+                            y = reader.ReadFloat(),
+                            z = reader.ReadFloat(),
+                        },
+                        colorData = new ColorData
+                        {
+                            r = reader.ReadFloat(),
+                            g = reader.ReadFloat(),
+                            b = reader.ReadFloat(),
+                            a = reader.ReadFloat(),
+                        }
+                    });
+                }
+            }
+
+            if (data?.otherPlayersData == null)
                 return;
 
-            foreach (var playerData in packet.otherPlayersData)
+            foreach (var playerData in data.otherPlayersData)
             {
                 if (playerData == null)
                     continue;
@@ -190,10 +280,15 @@ public class SyncOtherPlayersManager : MonoBehaviour, IUpdatable
                 }
             }
         }
-        if (!string.IsNullOrEmpty(logOutData))
+        if (offlineData != null && offlineData.Length > 0)
         {
-            var offlinePlayer = packetSerializeManager.HandleReceivedPacket<LogOutRequestPacket>(logOutData);
-            GameObject.Find("LogOut").GetComponent<LogOutController>().SetLogOutData(logOutData);
+            PacketReaderManager reader = new PacketReaderManager(offlineData);
+
+            LogOutRequestPacket offlinePlayer = new LogOutRequestPacket();
+            offlinePlayer.cmd = (EnumCmdCode)reader.ReadInt();
+            offlinePlayer.idAccount = reader.ReadInt();
+
+            GameObject.Find("LogOut").GetComponent<LogOutController>().SetLogOutData(offlinePlayer);
             OffDataFromServer(offlinePlayer);
         }
     }

@@ -1,49 +1,43 @@
-﻿using Newtonsoft.Json.Linq;
-using System;
+﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Net.WebSockets;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.U2D.Animation;
 
 public class SocketManager : MonoBehaviour, IUpdatable
 {
     private ClientWebSocket socket;
     private Uri serverUri;
-    private PacketSerializeManager packetSerializeManager;
     private CancellationTokenSource shutdownCts = new CancellationTokenSource();
 
-    private readonly ConcurrentQueue<string> sendQueue = new ConcurrentQueue<string>();
-    private readonly ConcurrentQueue<string> receiveQueue = new ConcurrentQueue<string>();
+    private readonly ConcurrentQueue<byte[]> sendQueue = new ConcurrentQueue<byte[]>();
+    private readonly ConcurrentQueue<byte[]> receiveQueue = new ConcurrentQueue<byte[]>();
 
-    private readonly ConcurrentQueue<string> syncOtherPlayersQueue = new ConcurrentQueue<string>();
-    private readonly ConcurrentQueue<string> syncMobsQueue = new ConcurrentQueue<string>();
+    private readonly ConcurrentQueue<byte[]> syncOtherPlayersQueue = new ConcurrentQueue<byte[]>();
+    private readonly ConcurrentQueue<byte[]> syncMobsQueue = new ConcurrentQueue<byte[]>();
 
-    private readonly ConcurrentQueue<string> logInQueue = new ConcurrentQueue<string>();
-    private readonly ConcurrentQueue<string> logOutQueue = new ConcurrentQueue<string>();
-    private readonly ConcurrentQueue<string> registerQueue = new ConcurrentQueue<string>();
+    private readonly ConcurrentQueue<byte[]> logInQueue = new ConcurrentQueue<byte[]>();
+    private readonly ConcurrentQueue<byte[]> logOutQueue = new ConcurrentQueue<byte[]>();
+    private readonly ConcurrentQueue<byte[]> registerQueue = new ConcurrentQueue<byte[]>();
 
-    private readonly ConcurrentQueue<string> inventoryQueue = new ConcurrentQueue<string>();
-    private readonly ConcurrentQueue<string> inventoryAttributesQueue = new ConcurrentQueue<string>();
-    private readonly ConcurrentQueue<string> equipmentQueue = new ConcurrentQueue<string>();
-    private readonly ConcurrentQueue<string> equipmentAttributesQueue = new ConcurrentQueue<string>();
+    private readonly ConcurrentQueue<byte[]> inventoryQueue = new ConcurrentQueue<byte[]>();
+    private readonly ConcurrentQueue<byte[]> inventoryAttributesQueue = new ConcurrentQueue<byte[]>();
+    private readonly ConcurrentQueue<byte[]> equipmentQueue = new ConcurrentQueue<byte[]>();
+    private readonly ConcurrentQueue<byte[]> equipmentAttributesQueue = new ConcurrentQueue<byte[]>();
 
-    private readonly ConcurrentQueue<string> outfitSpritesQueue = new ConcurrentQueue<string>();
+    private readonly ConcurrentQueue<byte[]> outfitSpritesQueue = new ConcurrentQueue<byte[]>();
 
     GameObject player;
 
     private void Awake()
     {
 #if UNITY_ANDROID
-        serverUri = new Uri("ws://192.168.100.7:55556/"); //phải khai báo rõ IP LAN của Server cho thiết bị Android 
-        packetSerializeManager = GameManager.Instance.GetComponent<PacketSerializeManager>();
+        serverUri = new Uri("ws://172.16.55.110:55556/"); //phải khai báo rõ IP LAN của Server cho thiết bị Android 
 #elif UNITY_EDITOR || UNITY_STANDALONE
         serverUri = new Uri($"ws://{IPV4ConfigurationManager.GetLocalIPv4()}:55556/"); // dùng IP LAN tự động khi chạy trên máy tính
-        packetSerializeManager = GameManager.Instance.GetComponent<PacketSerializeManager>();
 #endif
     }
 
@@ -74,7 +68,7 @@ public class SocketManager : MonoBehaviour, IUpdatable
 
     public void RegisterDontDestroyOnLoad() { }
 
-    private PlayerSyncDataRequestPacket GetSyncPlayerDataRequestPacket()
+    private byte[] GetSyncPlayerDataRequestByteArray()
     {
         switch (LogInView.GetIDSchool())
         {
@@ -100,12 +94,14 @@ public class SocketManager : MonoBehaviour, IUpdatable
 
         PlayerSyncDataRequestPacket packet = new PlayerSyncDataRequestPacket
         {
-            cmd = "syncPlayerData",
+            cmd = EnumCmdCode.syncPlayerData,
             playerSyncData = new PlayerSyncData
             {
                 playerData = new PlayerData
                 {
                     idAccount = LogInView.GetIDAccount() ?? 0,
+                    nameChar = LogInView.GetNameChar(),
+                    level = LogInView.GetLevel(),
                     idSchool = LogInView.GetIDSchool(),
                     hair = playerSpriteController.GetHairData(),
                     weapon = playerSpriteController.GetWeaponData(),
@@ -170,7 +166,61 @@ public class SocketManager : MonoBehaviour, IUpdatable
             packet.playerSyncData.playerStateData.partBodyTransforms.Add(partBodyData);
         }
 
-        return packet;
+        PacketWriterManager writer = new PacketWriterManager();
+
+        writer.WriteInt((int)packet.cmd);
+        writer.WriteInt(packet.playerSyncData.playerData.idAccount);
+        writer.WriteString(packet.playerSyncData.playerData.nameChar);
+        writer.WriteInt(packet.playerSyncData.playerData.level);
+        writer.WriteInt(packet.playerSyncData.playerData.idSchool);
+        writer.WriteInt(packet.playerSyncData.playerData.hair);
+        writer.WriteInt(packet.playerSyncData.playerData.weapon);
+        writer.WriteInt(packet.playerSyncData.playerData.helmet);
+        writer.WriteInt(packet.playerSyncData.playerData.armor);
+        writer.WriteInt(packet.playerSyncData.playerData.legArmor);
+        writer.WriteInt(packet.playerSyncData.playerData.gloves);
+        writer.WriteInt(packet.playerSyncData.playerData.shoes);
+        writer.WriteInt(packet.playerSyncData.playerData.ring1);
+        writer.WriteInt(packet.playerSyncData.playerData.ring2);
+        writer.WriteInt(packet.playerSyncData.playerData.necklace);
+        writer.WriteInt(packet.playerSyncData.playerData.medal);
+        writer.WriteInt(packet.playerSyncData.playerData.cloak);
+        writer.WriteInt(packet.playerSyncData.playerData.wing);
+        writer.WriteInt(packet.playerSyncData.playerData.skinWing);
+        writer.WriteInt(packet.playerSyncData.playerData.mounts);
+        writer.WriteInt(packet.playerSyncData.playerData.pet);
+        writer.WriteInt(packet.playerSyncData.playerData.skin);
+
+        writer.WriteFloat(packet.playerSyncData.playerTransformData.positionData.x);
+        writer.WriteFloat(packet.playerSyncData.playerTransformData.positionData.y);
+        writer.WriteFloat(packet.playerSyncData.playerTransformData.positionData.z);
+        writer.WriteFloat(packet.playerSyncData.playerTransformData.scaleData.x);
+        writer.WriteFloat(packet.playerSyncData.playerTransformData.scaleData.y);
+        writer.WriteFloat(packet.playerSyncData.playerTransformData.scaleData.z);
+
+        writer.WriteInt((int)packet.playerSyncData.playerStateData.stateData);
+        writer.WriteInt((int)packet.playerSyncData.playerStateData.directionData);
+        writer.WriteListCount(packet.playerSyncData.playerStateData.partBodyTransforms.Count);
+        foreach (var partBodyData in packet.playerSyncData.playerStateData.partBodyTransforms)
+        {
+            writer.WriteString(partBodyData.category);
+            writer.WriteString(partBodyData.label);
+            writer.WriteFloat(partBodyData.positionData.x);
+            writer.WriteFloat(partBodyData.positionData.y);
+            writer.WriteFloat(partBodyData.positionData.z);
+            writer.WriteFloat(partBodyData.rotationData.x);
+            writer.WriteFloat(partBodyData.rotationData.y);
+            writer.WriteFloat(partBodyData.rotationData.z);
+            writer.WriteFloat(partBodyData.scaleData.x);
+            writer.WriteFloat(partBodyData.scaleData.y);
+            writer.WriteFloat(partBodyData.scaleData.z);
+            writer.WriteFloat(partBodyData.colorData.r);
+            writer.WriteFloat(partBodyData.colorData.g);
+            writer.WriteFloat(partBodyData.colorData.b);
+            writer.WriteFloat(partBodyData.colorData.a);
+        }
+
+        return writer.ToArray();
     }
     private async Task StartSyncPlayerLoop(CancellationToken token)
     {
@@ -187,11 +237,11 @@ public class SocketManager : MonoBehaviour, IUpdatable
 
                 if (socket != null && socket.State == WebSocketState.Open)
                 {
-                    PlayerSyncDataRequestPacket packet = GetSyncPlayerDataRequestPacket();
+                    byte[] byteData = GetSyncPlayerDataRequestByteArray();
 
-                    if (packet != null)
+                    if (byteData != null && byteData.Length > 0)
                     {
-                        packetSerializeManager.HandleSentPacket(packet);
+                        await SendToServer(byteData);
                     }
                 }
 
@@ -214,7 +264,7 @@ public class SocketManager : MonoBehaviour, IUpdatable
             Debug.LogError("StartSyncPlayerLoop error: " + e.Message);
         }
     }
-    public async Task SendToServer(string message)
+    public async Task SendToServer(byte[] data)
     {
         if (socket == null)
             return;
@@ -224,9 +274,7 @@ public class SocketManager : MonoBehaviour, IUpdatable
 
         try
         {
-            byte[] data = Encoding.UTF8.GetBytes(message);
-
-            await socket.SendAsync(new ArraySegment<byte>(data), WebSocketMessageType.Text, true, CancellationToken.None);
+            await socket.SendAsync(new ArraySegment<byte>(data), WebSocketMessageType.Binary, true, CancellationToken.None);
         }
         catch (Exception e)
         {
@@ -237,7 +285,7 @@ public class SocketManager : MonoBehaviour, IUpdatable
     private async Task StartReceiveLoop(CancellationToken token)
     {
         var buffer = new byte[4096];
-        var messageBuffer = new StringBuilder();
+        var messageBuffer = new List<byte>();
 
         try
         {
@@ -252,38 +300,14 @@ public class SocketManager : MonoBehaviour, IUpdatable
                     if (result.MessageType == WebSocketMessageType.Close)
                         return;
 
-                    messageBuffer.Append(Encoding.UTF8.GetString(buffer, 0, result.Count));
+                    messageBuffer.AddRange(new ArraySegment<byte>(buffer, 0, result.Count));
 
                 } while (!result.EndOfMessage);
 
-                string fullMessage = messageBuffer.ToString();
+                byte[] fullMessage = messageBuffer.ToArray();
                 messageBuffer.Clear();
-
-                var tokenJson = JToken.Parse(fullMessage);
-
-                switch (tokenJson.Type)
-                {
-                    case JTokenType.Object:
-                        {
-                            string cmd = tokenJson["cmd"]?.ToString();
-                            HandlePacket(cmd, fullMessage);
-                            break;
-                        }
-                    case JTokenType.Array:
-                        {
-                            if (!tokenJson.HasValues)
-                                continue;
-
-                            if (tokenJson[0].Type != JTokenType.Object)
-                                continue;
-
-                            string cmd = tokenJson[0]["cmd"]?.ToString();
-
-                            if (!string.IsNullOrEmpty(cmd))
-                                HandlePacket(cmd, fullMessage);
-                            break;
-                        }
-                }
+                    
+                HandlePacket(fullMessage);
             }
         }
         catch (OperationCanceledException)
@@ -295,106 +319,117 @@ public class SocketManager : MonoBehaviour, IUpdatable
             Debug.Log($"Socket: Mất kết nối tới Server! {ex}");
         }
     }
-    private void HandlePacket(string cmd, string json)
+    private void HandlePacket(byte[] data)
     {
+        PacketReaderManager reader = new PacketReaderManager(data);
+        EnumCmdCode cmd = (EnumCmdCode)reader.ReadInt();
+
         switch (cmd)
         {
-            case "syncOtherPlayers":
+            case EnumCmdCode.syncPlayerData:
                 if (LogInView.GetIDAccount() != 0)
-                    syncOtherPlayersQueue.Enqueue(json);
+                    syncOtherPlayersQueue.Enqueue(data);
                 break;
 
-            case "syncMobs":
-                syncMobsQueue.Enqueue(json);
-                break;
-            case "login_result":
-                logInQueue.Enqueue(json);
-                break;
-            case "logout":
-                logOutQueue.Enqueue(json);
-                break;
-            case "register_result":
-                registerQueue.Enqueue(json);
-                break;
-            case "equipment_result":
-                equipmentQueue.Enqueue(json);
-                break;
-            case "equipmentAttributes_result":
-                equipmentAttributesQueue.Enqueue(json);
-                break;
-            case "inventory_result":
-                inventoryQueue.Enqueue(json);
-                break;
-            case "inventoryAttributes_result":
-                inventoryAttributesQueue.Enqueue(json);
+            case EnumCmdCode.syncMobData:
+                if (LogInView.GetIDAccount() != 0)
+                    syncMobsQueue.Enqueue(data);
                 break;
 
-            case "outfitSprites_result":
-                outfitSpritesQueue.Enqueue(json);
+            case EnumCmdCode.login:
+                logInQueue.Enqueue(data);
+                break;
+
+            case EnumCmdCode.logout:
+                logOutQueue.Enqueue(data);
+                break;
+
+            case EnumCmdCode.register:
+                registerQueue.Enqueue(data);
+                break;
+
+            case EnumCmdCode.equipment:
+                equipmentQueue.Enqueue(data);
+                break;
+
+            case EnumCmdCode.equipmentAttributes:
+                equipmentAttributesQueue.Enqueue(data);
+                break;
+
+            case EnumCmdCode.inventory:
+                inventoryQueue.Enqueue(data);
+                break;
+
+            case EnumCmdCode.inventoryAttributes:
+                inventoryAttributesQueue.Enqueue(data);
+                break;
+
+            case EnumCmdCode.outfitSprites:
+                outfitSpritesQueue.Enqueue(data);
                 break;
 
             default:
-                receiveQueue.Enqueue(json);
+                receiveQueue.Enqueue(data);
                 break;
         }
     }
 
-    public string GetReceiveData()
+    public byte[] GetReceiveData()
     {
         if (receiveQueue.TryDequeue(out var data))
             return data;
 
         return null;
     }
-    public string GetSyncOtherPlayersData()
+    public byte[] GetSyncOtherPlayersData()
     {
         if (syncOtherPlayersQueue.TryDequeue(out var data))
             return data;
         return null;
     }
-    public string GetSyncMobsData()
+    public byte[] GetSyncMobsData()
     {
         if (syncMobsQueue.TryDequeue(out var data))
             return data;
         return null;
     }
-    public string GetLogInData()
+    public byte[] GetLogInData()
     {
         if (logInQueue.TryDequeue(out var data))
             return data;
         return null;
     }
-    public string GetLogOutData()
+    public byte[] GetLogOutData()
     {
         if (logOutQueue.TryDequeue(out var data))
             return data;
         return null;
     }
-    public string GetRegisterData()
+    public byte[] GetRegisterData()
     {
         if (registerQueue.TryDequeue(out var data))
             return data;
         return null;
     }
-    public string GetInventoryData()
+    public byte[] GetInventoryData()
     {
         if (inventoryQueue.TryDequeue(out var data))
             return data;
         return null;
     }
-    public string GetEquipmentData()
+    public byte[] GetEquipmentData()
     {
         if (equipmentQueue.TryDequeue(out var data))
             return data;
         return null;
     }
-    public string GetInventoryAttributesData()
+    public byte[] GetInventoryAttributesData()
     {
         if (inventoryAttributesQueue.TryDequeue(out var data))
             return data;
         return null;
     }
-    public string GetEquipmentAttributesData()
+    public byte[] GetEquipmentAttributesData()
     {
         if (equipmentAttributesQueue.TryDequeue(out var data))
         {
@@ -402,7 +437,7 @@ public class SocketManager : MonoBehaviour, IUpdatable
         }
         return null;
     }
-    public string GetOutfitSpritesData()
+    public byte[] GetOutfitSpritesData()
     {
         if (outfitSpritesQueue.TryDequeue(out var data))
         {
@@ -450,7 +485,7 @@ public class SocketManager : MonoBehaviour, IUpdatable
 
         ClearQueue(outfitSpritesQueue);
     }
-    private void ClearQueue(ConcurrentQueue<string> queue)
+    private void ClearQueue(ConcurrentQueue<byte[]> queue)
     {
         while (queue.TryDequeue(out _)) { }
     }

@@ -5,18 +5,19 @@ using UnityEngine.SceneManagement;
 
 public class LogInRequestPacket
 {
-    public string cmd;
+    public EnumCmdCode cmd;
     public string username;
     public string password;
 }
 public class LogInResultPacket
 {
-    public string cmd;
+    public EnumCmdCode cmd;
     public bool success;
     public int idAccount;
     public int idSchool;
     public string nameChar;
     public int hair;
+    public int level;
     public string message;
 }
 
@@ -29,9 +30,10 @@ public class LogInView : MonoBehaviour, IUpdatable
     private static int idSchool;
     private static int idAccount;
     private static int idHair;
+    private static string nameChar;
+    private static int level;
 
     private SocketManager socketManager;
-    private PacketSerializeManager packetSerializeManager;
 
     private const float timeOut = 10f;
     private bool isLoggingIn = false;
@@ -40,7 +42,6 @@ public class LogInView : MonoBehaviour, IUpdatable
     private void Awake()
     { 
         socketManager = GameManager.Instance.GetComponent<SocketManager>();
-        packetSerializeManager = GameManager.Instance.GetComponent<PacketSerializeManager>();
     }
 
     private void OnEnable()
@@ -59,20 +60,32 @@ public class LogInView : MonoBehaviour, IUpdatable
         if (!isLoggingIn)
             return;
 
-        string data = socketManager.GetLogInData();
+        byte[] data = socketManager.GetLogInData();
 
-        if (!string.IsNullOrEmpty(data))
+        if (data != null && data.Length > 0)
         {
-            LogInResultPacket logInResult = packetSerializeManager.HandleReceivedPacket<LogInResultPacket>(data);
+            PacketReaderManager reader = new PacketReaderManager(data);
 
-            if (logInResult.success)
+            LogInResultPacket loginResult = new LogInResultPacket();
+            loginResult.cmd = (EnumCmdCode)reader.ReadInt();
+            loginResult.success = reader.ReadBool();
+            loginResult.idAccount = reader.ReadInt();
+            loginResult.idSchool = reader.ReadInt();
+            loginResult.nameChar = reader.ReadString();
+            loginResult.hair = reader.ReadInt();
+            loginResult.level = reader.ReadInt();
+            loginResult.message = reader.ReadString();
+            
+            if (loginResult.success)
             {
-                idAccount = logInResult.idAccount;
-                idSchool = logInResult.idSchool;
-                idHair = logInResult.hair;
+                idAccount = loginResult.idAccount;
+                idSchool = loginResult.idSchool;
+                idHair = loginResult.hair;
+                nameChar = loginResult.nameChar;
+                level = loginResult.level;
 
                 textMessage.color = Color.green;
-                textMessage.text = logInResult.message;
+                textMessage.text = loginResult.message;
 
                 isLoggingIn = false;
                 SceneManager.LoadScene("Ngôi Làng Nhỏ");
@@ -80,7 +93,7 @@ public class LogInView : MonoBehaviour, IUpdatable
             else
             {
                 textMessage.color = Color.red;
-                textMessage.text = logInResult.message;
+                textMessage.text = loginResult.message;
                 isLoggingIn = false;
             }
         }
@@ -109,14 +122,19 @@ public class LogInView : MonoBehaviour, IUpdatable
         string username = inputUsername.text.Trim();
         string password = inputPassword.text.Trim();
 
-        LogInRequestPacket sendLogInRequestPacket = new LogInRequestPacket
+        LogInRequestPacket logInRequestPacket = new LogInRequestPacket
         {
-            cmd = "login",
+            cmd = EnumCmdCode.login,
             username = username,
             password = password
         };
 
-        packetSerializeManager.HandleSentPacket(sendLogInRequestPacket);
+        PacketWriterManager writer = new PacketWriterManager();
+        writer.WriteInt((int)logInRequestPacket.cmd);
+        writer.WriteString(logInRequestPacket.username);
+        writer.WriteString(logInRequestPacket.password);
+
+        await socketManager.SendToServer(writer.ToArray());
 
         textMessage.color = Color.yellow;
         textMessage.text = "Đang đăng nhập...";
@@ -147,5 +165,13 @@ public class LogInView : MonoBehaviour, IUpdatable
     public static int GetHair()
     {
         return idHair;
+    }
+    public static string GetNameChar()
+    {
+        return nameChar;
+    }
+    public static int GetLevel()
+    {
+        return level;
     }
 }

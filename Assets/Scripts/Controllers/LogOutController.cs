@@ -1,22 +1,21 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class LogOutRequestPacket
 {
-    public string cmd;
+    public EnumCmdCode cmd;
     public int idAccount;
 }
 
 public class LogOutController : MonoBehaviour, IUpdatable
 {
     private SocketManager socketManager;
-    private PacketSerializeManager packetSerializeManager;
-    private string logOutData;
+    private LogOutRequestPacket logOutData;
 
     private void Awake()
     {
         socketManager = GameManager.Instance.GetComponent<SocketManager>();
-        packetSerializeManager = GameManager.Instance.GetComponent<PacketSerializeManager>();
     }
 
     private void OnEnable()
@@ -33,10 +32,8 @@ public class LogOutController : MonoBehaviour, IUpdatable
 
     public void OnUpdate()
     {
-        if (string.IsNullOrEmpty(logOutData))
+        if (logOutData == null)
             return;
-
-        LogOutRequestPacket logOutResult = packetSerializeManager.HandleReceivedPacket<LogOutRequestPacket>(logOutData);
 
         //Dọn sạch danh sách quản lý Other Players trước khi chuyển về Main Scene
         GameObject.Find("SyncManager").gameObject.GetComponent<SyncOtherPlayersManager>().PrepareForLogOut();
@@ -52,7 +49,6 @@ public class LogOutController : MonoBehaviour, IUpdatable
         {
             EquipmentView.ClearListImagesEquipmentSlots();
         }
-
         if (InventoryView.GetListInventoryItem0Slots() != null)
         {
             InventoryView.ClearInventoryData();
@@ -60,7 +56,7 @@ public class LogOutController : MonoBehaviour, IUpdatable
 
         GameManager.Instance.GetComponent<PlayerManager>().DestroyPlayer();
 
-        logOutData = string.Empty;
+        logOutData = null;
 
         SceneManager.LoadScene("Main");
     }
@@ -73,16 +69,20 @@ public class LogOutController : MonoBehaviour, IUpdatable
 
     public void CLickLogOut()
     {
-        LogOutRequestPacket sendLogOutRequestPacket = new LogOutRequestPacket
+        LogOutRequestPacket logOutRequestPacket = new LogOutRequestPacket
         {
-            cmd = "logout",
+            cmd = EnumCmdCode.logout,
             idAccount = LogInView.GetIDAccount() ?? 0,
         };
 
-        packetSerializeManager.HandleSentPacket(sendLogOutRequestPacket);
+        PacketWriterManager writer = new PacketWriterManager();
+        writer.WriteInt((int)logOutRequestPacket.cmd);
+        writer.WriteInt(logOutRequestPacket.idAccount);
+
+        socketManager.SendToServer(writer.ToArray());
     }
 
-    public void SetLogOutData(string data)
+    public void SetLogOutData(LogOutRequestPacket data)
     {
         logOutData = data;
     }

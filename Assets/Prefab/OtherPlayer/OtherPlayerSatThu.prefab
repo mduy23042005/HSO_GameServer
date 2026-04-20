@@ -669,7 +669,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.002146393, y: 0.10946506}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -679,7 +679,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.5253062, y: 0.50763166}
+  m_Size: {x: 0.88160414, y: 0.6578777}
   m_EdgeRadius: 0
 --- !u!114 &6913172970931823014
 MonoBehaviour:
@@ -693,7 +693,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7721af0206e902f428531c04c772f238, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spriteLibrary:
+  spriteLibraries:
   - {fileID: 3168395722848627350}
   - {fileID: 7455712898762284921}
   - {fileID: 1766067851347999146}
@@ -703,6 +703,16 @@ MonoBehaviour:
   - {fileID: 7032186377313156047}
   - {fileID: 1625842927589020047}
   - {fileID: 8522770678606746626}
+  spriteResolvers:
+  - {fileID: 8926969210593821657}
+  - {fileID: 1106361252962523317}
+  - {fileID: 5503477348228934576}
+  - {fileID: 4172688549657922651}
+  - {fileID: 4876696240141695378}
+  - {fileID: 1874914283256275851}
+  - {fileID: 2639492074982398464}
+  - {fileID: 8601408082873988821}
+  - {fileID: 8075127840288980230}
 --- !u!114 &5915007430110103107
 MonoBehaviour:
   m_ObjectHideFlags: 0

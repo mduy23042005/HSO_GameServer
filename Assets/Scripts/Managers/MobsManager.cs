@@ -6,6 +6,7 @@ public class SyncMobData
 {
     public int id;
     public int idMob;
+    public string nameMob;
     public float posX;
     public float posY;
     public string state;
@@ -74,6 +75,7 @@ public class MobsManager : MonoBehaviour, IUpdatable
             {
                 id = reader.ReadInt(),
                 idMob = reader.ReadInt(),
+                nameMob = reader.ReadString(),
                 posX = reader.ReadFloat(),
                 posY = reader.ReadFloat(),
                 state = reader.ReadString(),

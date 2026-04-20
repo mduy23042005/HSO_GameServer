@@ -5,7 +5,6 @@ using UnityEngine.U2D.Animation;
 
 public class SpriteController : MonoBehaviour, IUpdatable
 {
-    private List<SpriteResolver> resolvers;
     private SpriteResolver faceResolver;
     private Animator animator;
     private string lastCategory;
@@ -14,7 +13,8 @@ public class SpriteController : MonoBehaviour, IUpdatable
     private Direction currentDirection;
 
     [Header("Chỉ định sprite nào của player sẽ bị thay thế")]
-    [SerializeField] private List<SpriteLibrary> spriteLibrary;
+    [SerializeField] private List<SpriteLibrary> spriteLibraries;
+    [SerializeField] private List<SpriteResolver> spriteResolvers;
 
     private ItemController listItem0;
 
@@ -30,8 +30,7 @@ public class SpriteController : MonoBehaviour, IUpdatable
 
     private void Awake()
     {
-        resolvers = GetComponentsInChildren<SpriteResolver>().ToList();
-        faceResolver = resolvers.FirstOrDefault(r => r.gameObject.name == "4_0_0");
+        faceResolver = spriteResolvers.FirstOrDefault(r => r.gameObject.name == "4_0_0");
         animator = GetComponent<Animator>();
         movementController = GetComponent<MovementController>();
         socketManager = GameManager.Instance.GetComponent<SocketManager>();
@@ -137,30 +136,30 @@ public class SpriteController : MonoBehaviour, IUpdatable
     }
     public List<SpriteLibrary> GetListSpriteLibrary()
     {
-        return spriteLibrary;
+        return spriteLibraries;
     }
     #endregion
 
     #region Sửa sprite library sau khi equip item
     private void EquipLegArmor(int id)
     {
-        spriteLibrary[0].spriteLibraryAsset = listItem0.GetItem0(id).legArmor.legArmorLibrariesAsset;
+        spriteLibraries[0].spriteLibraryAsset = listItem0.GetItem0(id).legArmor.legArmorLibrariesAsset;
     }
     private void EquipArmor(int id)
     {
-        spriteLibrary[1].spriteLibraryAsset = listItem0.GetItem0(id).armor.armorLibrariesAsset;
+        spriteLibraries[1].spriteLibraryAsset = listItem0.GetItem0(id).armor.armorLibrariesAsset;
     }
     private void EquipHelmet(int id)
     {
-        spriteLibrary[3].spriteLibraryAsset = listItem0.GetItem0(id).helmet.helmetLibrariesAsset;
+        spriteLibraries[3].spriteLibraryAsset = listItem0.GetItem0(id).helmet.helmetLibrariesAsset;
 
         if (listItem0.GetItem0(id).helmet.isHiddenHair)
         {
-            spriteLibrary[5].gameObject.SetActive(false);
+            spriteLibraries[5].gameObject.SetActive(false);
         }
         else
         {
-            spriteLibrary[5].gameObject.SetActive(true);
+            spriteLibraries[5].gameObject.SetActive(true);
         }
     }
     private void EquipHair(int id)
@@ -170,26 +169,26 @@ public class SpriteController : MonoBehaviour, IUpdatable
         switch (idSchool)
         {
             case 1: //Chiến binh
-                spriteLibrary[5].spriteLibraryAsset = listItem0.GetMaleHairLibrary(id).hairLibrariesAsset;
+                spriteLibraries[5].spriteLibraryAsset = listItem0.GetMaleHairLibrary(id).hairLibrariesAsset;
                 break;
 
             case 2: //Sát thủ 
-                spriteLibrary[5].spriteLibraryAsset = listItem0.GetMaleHairLibrary(id).hairLibrariesAsset;
+                spriteLibraries[5].spriteLibraryAsset = listItem0.GetMaleHairLibrary(id).hairLibrariesAsset;
                 break;
 
             case 3: //Pháp sư
-                spriteLibrary[5].spriteLibraryAsset = listItem0.GetFemaleHairLibrary(id).hairLibrariesAsset;
+                spriteLibraries[5].spriteLibraryAsset = listItem0.GetFemaleHairLibrary(id).hairLibrariesAsset;
                 break;
 
             case 4: //Xạ thủ 
-                spriteLibrary[5].spriteLibraryAsset = listItem0.GetFemaleHairLibrary(id).hairLibrariesAsset;
+                spriteLibraries[5].spriteLibraryAsset = listItem0.GetFemaleHairLibrary(id).hairLibrariesAsset;
                 break;
         }
     }
     private void EquipWeapon(int id)
     {
-        spriteLibrary[6].spriteLibraryAsset = listItem0.GetItem0(id).weapon.weaponFrontLibraries;
-        spriteLibrary[7].spriteLibraryAsset = listItem0.GetItem0(id).weapon.weaponBackLibraries;
+        spriteLibraries[6].spriteLibraryAsset = listItem0.GetItem0(id).weapon.weaponFrontLibraries;
+        spriteLibraries[7].spriteLibraryAsset = listItem0.GetItem0(id).weapon.weaponBackLibraries;
     }
     #endregion
 
@@ -317,7 +316,7 @@ public class SpriteController : MonoBehaviour, IUpdatable
         lastCategory = category;
         lastLabel = label;
 
-        foreach (var r in resolvers)
+        foreach (var r in spriteResolvers)
         {
             if (r != null && r.spriteLibrary != null)
             {

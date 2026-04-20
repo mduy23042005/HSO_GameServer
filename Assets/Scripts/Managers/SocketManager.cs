@@ -5,6 +5,7 @@ using System.Net.WebSockets;
 using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.U2D.Animation;
 
 public class SocketManager : MonoBehaviour, IUpdatable
@@ -16,6 +17,7 @@ public class SocketManager : MonoBehaviour, IUpdatable
     private readonly ConcurrentQueue<byte[]> sendQueue = new ConcurrentQueue<byte[]>();
     private readonly ConcurrentQueue<byte[]> receiveQueue = new ConcurrentQueue<byte[]>();
 
+    private readonly ConcurrentQueue<byte[]> syncCallBack = new ConcurrentQueue<byte[]>();
     private readonly ConcurrentQueue<byte[]> syncOtherPlayersQueue = new ConcurrentQueue<byte[]>();
     private readonly ConcurrentQueue<byte[]> syncMobsQueue = new ConcurrentQueue<byte[]>();
 
@@ -158,10 +160,10 @@ public class SocketManager : MonoBehaviour, IUpdatable
             partBodyData.scaleData.y = partBody.transform.localScale.y;
             partBodyData.scaleData.z = partBody.transform.localScale.z;
 
-            partBodyData.colorData.r = partBody.GetComponent<Renderer>().material.color.r;
-            partBodyData.colorData.g = partBody.GetComponent<Renderer>().material.color.g;
-            partBodyData.colorData.b = partBody.GetComponent<Renderer>().material.color.b;
-            partBodyData.colorData.a = partBody.GetComponent<Renderer>().material.color.a;
+            partBodyData.colorData.r = partBody.GetComponent<SpriteRenderer>().color.r;
+            partBodyData.colorData.g = partBody.GetComponent<SpriteRenderer>().color.g;
+            partBodyData.colorData.b = partBody.GetComponent<SpriteRenderer>().color.b;
+            partBodyData.colorData.a = partBody.GetComponent<SpriteRenderer>().color.a;
 
             packet.playerSyncData.playerStateData.partBodyTransforms.Add(partBodyData);
         }
@@ -169,6 +171,7 @@ public class SocketManager : MonoBehaviour, IUpdatable
         PacketWriterManager writer = new PacketWriterManager();
 
         writer.WriteInt((int)packet.cmd);
+        writer.WriteString(SceneManager.GetActiveScene().name);
         writer.WriteInt(packet.playerSyncData.playerData.idAccount);
         writer.WriteString(packet.playerSyncData.playerData.nameChar);
         writer.WriteInt(packet.playerSyncData.playerData.level);
@@ -326,6 +329,10 @@ public class SocketManager : MonoBehaviour, IUpdatable
 
         switch (cmd)
         {
+            case EnumCmdCode.syncCallBack:
+                syncCallBack.Enqueue(data);
+                break;
+
             case EnumCmdCode.syncPlayerData:
                 if (LogInView.GetIDAccount() != 0)
                     syncOtherPlayersQueue.Enqueue(data);
@@ -379,6 +386,12 @@ public class SocketManager : MonoBehaviour, IUpdatable
         if (receiveQueue.TryDequeue(out var data))
             return data;
 
+        return null;
+    }
+    public byte[] GetSyncCallBackData()
+    {
+        if (syncCallBack.TryDequeue(out var data))
+            return data;
         return null;
     }
     public byte[] GetSyncOtherPlayersData()
@@ -471,6 +484,7 @@ public class SocketManager : MonoBehaviour, IUpdatable
         ClearQueue(sendQueue);
         ClearQueue(receiveQueue);
 
+        ClearQueue(syncCallBack);
         ClearQueue(syncOtherPlayersQueue);
         ClearQueue(syncMobsQueue);
 

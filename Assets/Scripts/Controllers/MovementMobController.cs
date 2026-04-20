@@ -1,8 +1,10 @@
 ﻿using UnityEngine;
+using TMPro;
 
 public class MovementMobController : MonoBehaviour, IUpdatable
 {
     private Vector2 movement;
+    private TMP_Text uiNameMob;
 
     private SyncMobData syncMobDataMovement;
     private int lastIDState = -1; // nhằm phân biệt các trạng thái atk/injured khác nhau khi có nhiều packet cùng loại chỉ yêu cầu thực hiện 1 trạng thái
@@ -14,6 +16,7 @@ public class MovementMobController : MonoBehaviour, IUpdatable
     {
         flipSprite = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
+        uiNameMob = GetComponentInChildren<TMP_Text>();
     }
     private void OnEnable()
     {
@@ -33,6 +36,8 @@ public class MovementMobController : MonoBehaviour, IUpdatable
 
         Vector2 targetPos = new Vector2(syncMobDataMovement.posX, syncMobDataMovement.posY);
         movement = targetPos;
+
+        uiNameMob.text = $"[{syncMobDataMovement.id}] \n {syncMobDataMovement.nameMob}";
 
         UpdateAnimation();
     }
@@ -93,5 +98,17 @@ public class MovementMobController : MonoBehaviour, IUpdatable
                 }
                 break;
         }
+    }
+
+    public int GetID()
+    {
+        if (syncMobDataMovement == null) return 0;
+        return syncMobDataMovement.id;
+    }
+
+    public string GetNameMob()
+    {
+        if (syncMobDataMovement == null) return "";
+        return syncMobDataMovement.nameMob;
     }
 }

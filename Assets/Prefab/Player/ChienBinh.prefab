@@ -812,7 +812,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.002146393, y: 0.10946506}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -822,7 +822,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.5253062, y: 0.50763166}
+  m_Size: {x: 0.88160414, y: 0.6578777}
   m_EdgeRadius: 0
 --- !u!114 &3526485948900276720
 MonoBehaviour:
@@ -833,7 +833,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2686158203596186061}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 83eac5d530e3dea4aa0d9a154d7644bb, type: 3}
+  m_Script: {fileID: 11500000, guid: 683831f46f8a2034e815a1096526887c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &8160304381999141919
@@ -848,7 +848,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2104cdb8bc9097444b06448431b18710, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spriteLibrary:
+  spriteLibraries:
   - {fileID: 4255757589138251193}
   - {fileID: 7271880548673386910}
   - {fileID: 1133424843277716390}
@@ -858,6 +858,16 @@ MonoBehaviour:
   - {fileID: 7152664525261593423}
   - {fileID: 6460664836313341762}
   - {fileID: 2364342591141761285}
+  spriteResolvers:
+  - {fileID: 4328665210672633595}
+  - {fileID: 6052293717332973133}
+  - {fileID: 1099732432250088454}
+  - {fileID: 6673738205658196209}
+  - {fileID: 8603586655053151007}
+  - {fileID: 8887946136143252887}
+  - {fileID: 3710954902701232303}
+  - {fileID: 8578116299073024810}
+  - {fileID: 5787843927081596551}
 --- !u!114 &1772627172671294751
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -992,8 +1002,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed8b1ae4e4e52b34ea557c1c11e076fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_CategoryHash: 0
-  m_labelHash: 0
+  m_CategoryHash: 2.1529441e-16
+  m_labelHash: 0.0000000030799954
   m_SpriteKey: 0
   m_SpriteHash: 906396036
 --- !u!114 &7152664525261593423
@@ -1352,7 +1362,7 @@ MonoBehaviour:
   m_CategoryHash: 3.604752e-20
   m_labelHash: 2.2500676e-22
   m_SpriteKey: 0
-  m_SpriteHash: 479331489
+  m_SpriteHash: 731198519
 --- !u!114 &2364342591141761285
 MonoBehaviour:
   m_ObjectHideFlags: 0

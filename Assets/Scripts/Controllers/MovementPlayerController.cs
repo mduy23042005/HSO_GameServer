@@ -12,7 +12,6 @@ public class MovementController : MonoBehaviour, IUpdatable
     private Vector2 movement;
     private Vector2 lastMove = new Vector2(0, -1);
     private Vector2 targetPosition;
-    private bool movingHorizontalFirst = false;
     private bool isMovingToTarget = false;
     private Animator animator;
     private MenuView menu;
@@ -24,6 +23,7 @@ public class MovementController : MonoBehaviour, IUpdatable
     private List<(int x, int y)> path;
     private int pathIndex;
     private AStarManager astar = new AStarManager();
+    private MapData mapData;
 
     private PlayerState currentState;
     private SocketManager socketManager;
@@ -158,34 +158,35 @@ public class MovementController : MonoBehaviour, IUpdatable
 
         if (isMovingToTarget)
         {
-            string pathMapFile = Application.dataPath + $"/Map/{SceneManager.GetActiveScene().name}.bin";
-            MapData mapData = new MapData();
-
-            if (!File.Exists(pathMapFile))
-                return;
-
-            using (BinaryReader reader = new BinaryReader(File.Open(pathMapFile, FileMode.Open)))
-            {
-                mapData.width = reader.ReadInt32();
-                mapData.height = reader.ReadInt32();
-
-                mapData.offsetX = reader.ReadInt32();
-                mapData.offsetY = reader.ReadInt32();
-
-                mapData.tiles = new byte[mapData.width, mapData.height];
-
-                for (int y = 0; y < mapData.height; y++)
-                {
-                    for (int x = 0; x < mapData.width; x++)
-                    {
-                        mapData.tiles[x, y] = reader.ReadByte();
-                    }
-                }
-            }
-
             // chưa có path thì tạo mới
             if (path == null || path.Count == 0)
             {
+                string pathMapFile = Path.Combine(Application.streamingAssetsPath, $"Maps/{SceneManager.GetActiveScene().name}.bin");
+                mapData = new MapData();
+
+                if (!File.Exists(pathMapFile))               
+                    return;
+                
+
+                using (BinaryReader reader = new BinaryReader(File.Open(pathMapFile, FileMode.Open)))
+                {
+                    mapData.width = reader.ReadInt32();
+                    mapData.height = reader.ReadInt32();
+
+                    mapData.offsetX = reader.ReadInt32();
+                    mapData.offsetY = reader.ReadInt32();
+
+                    mapData.tiles = new byte[mapData.width, mapData.height];
+
+                    for (int y = 0; y < mapData.height; y++)
+                    {
+                        for (int x = 0; x < mapData.width; x++)
+                        {
+                            mapData.tiles[x, y] = reader.ReadByte();
+                        }
+                    }
+                }
+
                 startPosition = ToGrid(transform.position);
                 endMovementPosition = ToGrid(targetPosition);
 

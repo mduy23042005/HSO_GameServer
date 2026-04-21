@@ -87,7 +87,7 @@ public class MapView : MonoBehaviour
             sb.AppendLine();
         }
 
-        string dirClient = Application.dataPath + "/Map";
+        string dirClient = Application.streamingAssetsPath + "/Maps";
         Directory.CreateDirectory(dirClient);
 
         string pathClient = dirClient + $"/{SceneManager.GetActiveScene().name}_ClientDebug.txt";
@@ -97,11 +97,11 @@ public class MapView : MonoBehaviour
 
     private void ExportMapBinary(int[,] map, int width, int height, BoundsInt bounds)
     {
-        string dirClient = Application.dataPath + "/Map";
+        string dirClient = Application.streamingAssetsPath + "/Maps";
         Directory.CreateDirectory(dirClient);
         string pathClient = dirClient + $"/{SceneManager.GetActiveScene().name}.bin";
 
-        string dirWebSocket = "D:/Unity project/HSO_WebSocket/Map";
+        string dirWebSocket = "D:/Unity project/HSO_WebSocket/Maps";
         Directory.CreateDirectory(dirWebSocket);
         string pathWebSocket = dirWebSocket + $"/{SceneManager.GetActiveScene().name}.bin";
 

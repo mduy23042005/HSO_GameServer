@@ -340,6 +340,10 @@ public class SyncOtherPlayersManager : MonoBehaviour, IUpdatable
         }
     }
 
+    public Dictionary<int, OtherPlayer> GetOtherPlayers()
+    {
+        return otherPlayers;
+    }
     public void PrepareForLogOut()
     {
         foreach (var kv in otherPlayers)

@@ -351,7 +351,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   partsBody:
   - renderer: {fileID: 2259002367223316534}
-    offset: 1
+    offset: 2
   - renderer: {fileID: 6998328452772252212}
     offset: 0
 --- !u!1 &2688763921445675472

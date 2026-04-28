@@ -19,7 +19,7 @@ public class MovementController : MonoBehaviour, IUpdatable
 
     private (int x, int y) startPosition;
     private (int x, int y) endMovementPosition;
-    private (int x, int y) endAttackPosition;
+    private MovementMobController mob;
     private List<(int x, int y)> path;
     private int pathIndex;
     private AStarManager astar = new AStarManager();
@@ -100,7 +100,7 @@ public class MovementController : MonoBehaviour, IUpdatable
 
             if (hit.collider.CompareTag("Mob"))
             {
-                MovementMobController mob = hit.collider.GetComponent<MovementMobController>();
+                mob = hit.collider.GetComponent<MovementMobController>();
 
                 if (mob != null)
                 {
@@ -110,11 +110,14 @@ public class MovementController : MonoBehaviour, IUpdatable
                     Debug.Log($"Clicked mob [{id}] {nameMob}");
                 }
 
+                targetPosition = new Vector2(mob.transform.position.x, mob.transform.position.y);
+                isMovingToTarget = true;
                 return;
             }
             // Nếu không click vào mob thì tiến hành di chuyển đến vị trí click
             targetPosition = clickPos;
             isMovingToTarget = true;
+            mob = null;
         }
     }
     public virtual void MoveKeyboard()
@@ -135,10 +138,18 @@ public class MovementController : MonoBehaviour, IUpdatable
             {
                 movement.x = 0;
             }
+
             MoveStop();
 
             if (movement == Vector2.zero)
                 return;
+            else
+            {
+                path = null; // reset để lần sau tạo path mới
+                startPosition = endMovementPosition;
+                isMovingToTarget = false;
+                mob = null;
+            }
 
             float speed = moveSpeed * Time.deltaTime;
 
@@ -158,6 +169,28 @@ public class MovementController : MonoBehaviour, IUpdatable
 
         if (isMovingToTarget)
         {
+            if (mob != null)
+            {
+                targetPosition = new Vector2(mob.transform.position.x, mob.transform.position.y);
+
+                if (Vector2.Distance(transform.position, targetPosition) <= 0.5f)
+                {
+                    path = null;
+                    isMovingToTarget = false;
+                    movement = lastMove;
+                    return;
+                }
+
+                // kiểm tra xem mob có đổi vị trí không (tính theo grid)
+                var newMobGrid = ToGrid(targetPosition);
+
+                if (newMobGrid != endMovementPosition) // nếu mà đã đổi vị trí thì ép FindPath() của A* chạy lại
+                {
+                    endMovementPosition = newMobGrid;
+                    path = null;
+                }
+            }
+
             // chưa có path thì tạo mới
             if (path == null || path.Count == 0)
             {
@@ -167,7 +200,6 @@ public class MovementController : MonoBehaviour, IUpdatable
                 if (!File.Exists(pathMapFile))               
                     return;
                 
-
                 using (BinaryReader reader = new BinaryReader(File.Open(pathMapFile, FileMode.Open)))
                 {
                     mapData.width = reader.ReadInt32();

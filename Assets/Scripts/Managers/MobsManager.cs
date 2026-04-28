@@ -167,6 +167,11 @@ public class MobsManager : MonoBehaviour, IUpdatable
         lastUpdateTime.Clear();
     }
 
+    public Dictionary<int, Mob> GetMobs()
+    {
+        return mobs;
+    }
+
     public void RegisterDontDestroyOnLoad()
     {
         throw new NotImplementedException();

@@ -4,7 +4,6 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
-using UnityEngine.Timeline;
 using UnityEngine.UI;
 
 public enum TileType
@@ -20,6 +19,7 @@ public class MapView : MonoBehaviour, IUpdatable
     [SerializeField] private RectTransform playerMarkerUI;
     [SerializeField] private RectTransform mobMarkerUI;
     [SerializeField] private RectTransform otherPlayerMarkerUI;
+    [SerializeField] private RectTransform AstarMarkerUI;
 
     [SerializeField] private bool exportMapFile = false;
     
@@ -44,6 +44,7 @@ public class MapView : MonoBehaviour, IUpdatable
     private GameObject player;
     private Vector3 lastPlayerPosition;
     private RectTransform playerMarker;
+    private List<RectTransform> aStarMarkers = new List<RectTransform>();
 
     private Dictionary<int, Mob> mobs;
     private Dictionary<int, RectTransform> lastMobsPosition = new Dictionary<int, RectTransform>();
@@ -331,19 +332,31 @@ public class MapView : MonoBehaviour, IUpdatable
     private Vector2 WorldToMiniMapPosition(Vector3 worldPosition)
     {
         BoundsInt bounds = cachedBounds;
-
+        Rect rect = miniMapUI.rectTransform.rect;
         Vector3Int cellPosition = groundTilemap.WorldToCell(worldPosition);
 
         float normalizedX = (cellPosition.x - bounds.xMin) / (float)bounds.size.x;
         float normalizedY = (cellPosition.y - bounds.yMin) / (float)bounds.size.y;
-
-        Rect rect = miniMapUI.rectTransform.rect;
 
         float uiX = normalizedX * rect.width - rect.width * 0.5f;
         float uiY = normalizedY * rect.height - rect.height * 0.5f;
 
         return new Vector2(uiX, uiY);
     }
+    public Vector3 MiniMapToWorldPosition(Vector2 minimapClickPos)
+    {
+        BoundsInt bounds = cachedBounds;
+        Rect rect = miniMapUI.rectTransform.rect;
+
+        float normalizedX = (minimapClickPos.x + rect.width * 0.5f) / rect.width;
+        float normalizedY = (minimapClickPos.y + rect.height * 0.5f) / rect.height;
+
+        float worldX = normalizedX * bounds.size.x + bounds.xMin;
+        float worldY = normalizedY * bounds.size.y + bounds.yMin;
+
+        return new Vector3(worldX, worldY, 0);
+    }
+
     private void DrawMiniMapBorder(Texture2D tex, int width, int height, int borderThickness, Color borderColor)
     {
         for (int b = 0; b < borderThickness; b++)
@@ -364,6 +377,51 @@ public class MapView : MonoBehaviour, IUpdatable
                 tex.SetPixel(width - 1 - b, y, borderColor);
             }
         }
+    }
+    public void DrawAStarPath(List<(int x, int y)> path)
+    {
+        ClearAStarPath();
+
+        if (path == null || path.Count == 0)
+            return;
+
+        int size = (int)groundMinimap[0].textureRect.width;
+
+        foreach (var node in path)
+        {
+            RectTransform marker = Instantiate(AstarMarkerUI, miniMapUI.transform);
+
+            marker.GetComponent<Image>().color = Color.white;
+            marker.sizeDelta = new Vector2(size, size);
+            marker.anchorMin = new Vector2(0.5f, 0.5f);
+            marker.anchorMax = new Vector2(0.5f, 0.5f);
+            marker.pivot = new Vector2(0.5f, 0.5f);
+            Vector3 worldPos = new Vector3(node.x + 0.5f, node.y + 0.5f, 0);
+            marker.anchoredPosition = WorldToMiniMapPosition(worldPos);
+
+            aStarMarkers.Add(marker);
+        }
+    }
+    public void ClearAStarNodeMarker(int index)
+    {
+        if (index >= 0 && index < aStarMarkers.Count)
+        {
+            if (aStarMarkers[index] != null)
+            {
+                Destroy(aStarMarkers[index].gameObject);
+                aStarMarkers[index] = null;
+            }
+        }
+    }
+    public void ClearAStarPath()
+    {
+        foreach (var marker in aStarMarkers)
+        {
+            if (marker != null)
+                Destroy(marker.gameObject);
+        }
+
+        aStarMarkers.Clear();
     }
 
     private void ExportMapFile()

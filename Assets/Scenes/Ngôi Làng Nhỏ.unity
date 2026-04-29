@@ -7077,7 +7077,7 @@ GameObject:
   - component: {fileID: 659330052}
   m_Layer: 5
   m_Name: MinimapUI
-  m_TagString: Untagged
+  m_TagString: MinimapUI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11614,6 +11614,7 @@ MonoBehaviour:
   playerMarkerUI: {fileID: 885459207494287986, guid: cea4c7cfe9028f647983608c98b02226, type: 3}
   mobMarkerUI: {fileID: 3116183440147638248, guid: 32dd1ed66e34c834a8ee77e86faf7bf9, type: 3}
   otherPlayerMarkerUI: {fileID: 8410562244368356061, guid: aa45f27fa6d794f4486616ee96154724, type: 3}
+  AstarMarkerUI: {fileID: 742329716710380744, guid: fbfd07b519d222d47b941adae2438aec, type: 3}
   exportMapFile: 0
   groundTilemap: {fileID: 1679192185}
   waterTilemap: {fileID: 1887942053}

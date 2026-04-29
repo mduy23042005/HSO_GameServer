@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
 public class MovementController : MonoBehaviour, IUpdatable
@@ -17,6 +16,10 @@ public class MovementController : MonoBehaviour, IUpdatable
     private MenuView menu;
     private bool isBusy = false;
 
+    private MapView miniMap;
+    private RectTransform miniMapUI;
+    private Camera uiCamera;
+
     private (int x, int y) startPosition;
     private (int x, int y) endMovementPosition;
     private MovementMobController mob;
@@ -24,6 +27,7 @@ public class MovementController : MonoBehaviour, IUpdatable
     private int pathIndex;
     private AStarManager astar = new AStarManager();
     private MapData mapData;
+    private string lastMapName;
 
     private PlayerState currentState;
     private SocketManager socketManager;
@@ -98,6 +102,26 @@ public class MovementController : MonoBehaviour, IUpdatable
             Vector2 clickPos = new Vector2(mouseWorldPos.x, mouseWorldPos.y);
             RaycastHit2D hit = Physics2D.Raycast(clickPos, Vector2.zero);
 
+            miniMap = GameObject.Find("Grid").GetComponent<MapView>();
+            miniMapUI = GameObject.Find("MinimapUI").GetComponent<RectTransform>();
+            uiCamera = GameObject.Find("Canvas").GetComponent<Canvas>().worldCamera;
+            if (RectTransformUtility.RectangleContainsScreenPoint(miniMapUI, Input.mousePosition, uiCamera))
+            {
+                if (RectTransformUtility.ScreenPointToLocalPointInRectangle(miniMapUI, Input.mousePosition, uiCamera, out var localPoint))
+                {
+                    // gốc tọa độ mà của RectTransform là picot đang được setup ở trung tâm của minimap nên chuyển gốc tọa độ về góc dưới bên trái của minimap
+                    localPoint.x += miniMapUI.rect.width / 2;
+                    localPoint.y += miniMapUI.rect.height / 2;
+
+                    Vector3 worldPos = miniMap.MiniMapToWorldPosition(localPoint);
+
+                    targetPosition = new Vector2(worldPos.x, worldPos.y);
+                    isMovingToTarget = true;
+                    mob = null;
+                    return;
+                }
+            }
+
             if (hit.collider.CompareTag("Mob"))
             {
                 mob = hit.collider.GetComponent<MovementMobController>();
@@ -114,6 +138,7 @@ public class MovementController : MonoBehaviour, IUpdatable
                 isMovingToTarget = true;
                 return;
             }
+
             // Nếu không click vào mob thì tiến hành di chuyển đến vị trí click
             targetPosition = clickPos;
             isMovingToTarget = true;
@@ -148,6 +173,8 @@ public class MovementController : MonoBehaviour, IUpdatable
                 path = null; // reset để lần sau tạo path mới
                 startPosition = endMovementPosition;
                 isMovingToTarget = false;
+                if (miniMap != null)
+                    miniMap.ClearAStarPath();
                 mob = null;
             }
 
@@ -162,7 +189,7 @@ public class MovementController : MonoBehaviour, IUpdatable
     }
     public virtual void MoveMouse()
     {
-        if ((menu != null && menu.GetIsActive()) || EventSystem.current.IsPointerOverGameObject() || isBusy)     
+        if ((menu != null && menu.GetIsActive()) || isBusy)     
             return;
 
         LeftClick();
@@ -177,6 +204,8 @@ public class MovementController : MonoBehaviour, IUpdatable
                 {
                     path = null;
                     isMovingToTarget = false;
+                    if (miniMap != null)
+                        miniMap.ClearAStarPath();
                     movement = lastMove;
                     return;
                 }
@@ -194,27 +223,31 @@ public class MovementController : MonoBehaviour, IUpdatable
             // chưa có path thì tạo mới
             if (path == null || path.Count == 0)
             {
-                string pathMapFile = Path.Combine(Application.streamingAssetsPath, $"Maps/{SceneManager.GetActiveScene().name}.bin");
-                mapData = new MapData();
-
-                if (!File.Exists(pathMapFile))               
-                    return;
-                
-                using (BinaryReader reader = new BinaryReader(File.Open(pathMapFile, FileMode.Open)))
+                if (lastMapName != SceneManager.GetActiveScene().name)
                 {
-                    mapData.width = reader.ReadInt32();
-                    mapData.height = reader.ReadInt32();
+                    lastMapName = SceneManager.GetActiveScene().name;
+                    string pathMapFile = Path.Combine(Application.streamingAssetsPath, $"Maps/{SceneManager.GetActiveScene().name}.bin");
+                    mapData = new MapData();
 
-                    mapData.offsetX = reader.ReadInt32();
-                    mapData.offsetY = reader.ReadInt32();
+                    if (!File.Exists(pathMapFile))
+                        return;
 
-                    mapData.tiles = new byte[mapData.width, mapData.height];
-
-                    for (int y = 0; y < mapData.height; y++)
+                    using (BinaryReader reader = new BinaryReader(File.Open(pathMapFile, FileMode.Open)))
                     {
-                        for (int x = 0; x < mapData.width; x++)
+                        mapData.width = reader.ReadInt32();
+                        mapData.height = reader.ReadInt32();
+
+                        mapData.offsetX = reader.ReadInt32();
+                        mapData.offsetY = reader.ReadInt32();
+
+                        mapData.tiles = new byte[mapData.width, mapData.height];
+
+                        for (int y = 0; y < mapData.height; y++)
                         {
-                            mapData.tiles[x, y] = reader.ReadByte();
+                            for (int x = 0; x < mapData.width; x++)
+                            {
+                                mapData.tiles[x, y] = reader.ReadByte();
+                            }
                         }
                     }
                 }
@@ -230,6 +263,8 @@ public class MovementController : MonoBehaviour, IUpdatable
                 if (path == null || path.Count == 0)
                     return;
 
+                if (miniMap != null)
+                    miniMap.DrawAStarPath(path);
                 pathIndex = 0;
             }
 
@@ -239,6 +274,8 @@ public class MovementController : MonoBehaviour, IUpdatable
                 path = null; // reset để lần sau tạo path mới
                 startPosition = endMovementPosition;
                 isMovingToTarget = false;
+                if (miniMap != null)
+                    miniMap.ClearAStarPath();
                 movement = lastMove;
                 return;
             }
@@ -274,6 +311,8 @@ public class MovementController : MonoBehaviour, IUpdatable
                     path = null; // reset để lần sau tạo path mới
                     startPosition = endMovementPosition;
                     isMovingToTarget = false;
+                    if (miniMap != null)
+                        miniMap.ClearAStarPath();
                     movement = lastMove;
                     return;
                 }
@@ -282,6 +321,7 @@ public class MovementController : MonoBehaviour, IUpdatable
             // kiểm tra chuyển Node
             if (Vector2.Distance(currentPosition, targetNode) < 0.1f)
             {
+                miniMap.ClearAStarNodeMarker(pathIndex);
                 pathIndex++;
             }
         }

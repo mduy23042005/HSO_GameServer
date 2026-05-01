@@ -2,7 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
 public class MovementController : MonoBehaviour, IUpdatable
@@ -16,9 +18,11 @@ public class MovementController : MonoBehaviour, IUpdatable
     private MenuView menu;
     private bool isBusy = false;
 
-    private MapView miniMap;
-    private RectTransform miniMapUI;
+    private MapView minimap;
+    private RectTransform minimapUI;
+    private RectTransform fullMinimapUI;
     private Camera uiCamera;
+    private bool isFullMinimapOpen = false;
 
     private (int x, int y) startPosition;
     private (int x, int y) endMovementPosition;
@@ -56,6 +60,7 @@ public class MovementController : MonoBehaviour, IUpdatable
 
     public virtual void OnUpdate()
     {
+        LeftClick();
         MoveKeyboard();
         MoveMouse();
         UpdateAnimation();
@@ -94,34 +99,77 @@ public class MovementController : MonoBehaviour, IUpdatable
         GameManager.Instance.RegisterPersistent(this);
     }
 
+    private void ShowFullMinimap()
+    {
+        fullMinimapUI.gameObject.SetActive(true);
+        isFullMinimapOpen = true;
+    }
+    private void HideFullMinimap()
+    {
+        fullMinimapUI.gameObject.SetActive(false);
+        isFullMinimapOpen = false;
+    }
     public virtual void LeftClick()
     {
+        if (isFullMinimapOpen)
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                HideFullMinimap();
+                return;
+            }
+            return;
+        }
+
         if (Input.GetMouseButtonDown(0))
         {
-            Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Vector2 clickPos = new Vector2(mouseWorldPos.x, mouseWorldPos.y);
-            RaycastHit2D hit = Physics2D.Raycast(clickPos, Vector2.zero);
-
-            miniMap = GameObject.Find("Grid").GetComponent<MapView>();
-            miniMapUI = GameObject.Find("MinimapUI").GetComponent<RectTransform>();
+            minimap = GameObject.Find("Grid").GetComponent<MapView>();
+            minimapUI = GameObject.Find("MinimapUI").GetComponent<RectTransform>();
+            fullMinimapUI = Resources.FindObjectsOfTypeAll<RectTransform>().FirstOrDefault(t => t.name == "FullMinimapUI");
             uiCamera = GameObject.Find("Canvas").GetComponent<Canvas>().worldCamera;
-            if (RectTransformUtility.RectangleContainsScreenPoint(miniMapUI, Input.mousePosition, uiCamera))
+
+            if (RectTransformUtility.RectangleContainsScreenPoint(minimapUI, Input.mousePosition, uiCamera))
             {
-                if (RectTransformUtility.ScreenPointToLocalPointInRectangle(miniMapUI, Input.mousePosition, uiCamera, out var localPoint))
+                if (!isFullMinimapOpen)
                 {
-                    // gốc tọa độ mà của RectTransform là picot đang được setup ở trung tâm của minimap nên chuyển gốc tọa độ về góc dưới bên trái của minimap
-                    localPoint.x += miniMapUI.rect.width / 2;
-                    localPoint.y += miniMapUI.rect.height / 2;
-
-                    Vector3 worldPos = miniMap.MiniMapToWorldPosition(localPoint);
-
-                    targetPosition = new Vector2(worldPos.x, worldPos.y);
-                    isMovingToTarget = true;
-                    mob = null;
+                    ShowFullMinimap();
                     return;
                 }
             }
+        }
+    }
+    private void RightClick()
+    {
+        if (isFullMinimapOpen)
+        {
+            if (Input.GetMouseButtonDown(1))
+            {
+                if (!RectTransformUtility.RectangleContainsScreenPoint(fullMinimapUI, Input.mousePosition, uiCamera))
+                {
+                    HideFullMinimap();
+                    return;
+                }
+                if (RectTransformUtility.ScreenPointToLocalPointInRectangle(fullMinimapUI, Input.mousePosition, uiCamera, out var localPoint))
+                {
+                    localPoint.x += fullMinimapUI.rect.width / 2;
+                    localPoint.y += fullMinimapUI.rect.height / 2;
 
+                    Vector3 worldPos = minimap.MinimapToWorldPosition(localPoint);
+
+                    targetPosition = new Vector2(worldPos.x, worldPos.y);
+                    isMovingToTarget = true;
+                    path = null;
+                    mob = null;
+                    return;
+                }
+                return;
+            }
+        }
+        if (Input.GetMouseButtonDown(1))
+        {
+            Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector2 clickPos = new Vector2(mouseWorldPos.x, mouseWorldPos.y);
+            RaycastHit2D hit = Physics2D.GetRayIntersection(Camera.main.ScreenPointToRay(Input.mousePosition));
             if (hit.collider.CompareTag("Mob"))
             {
                 mob = hit.collider.GetComponent<MovementMobController>();
@@ -139,9 +187,9 @@ public class MovementController : MonoBehaviour, IUpdatable
                 return;
             }
 
-            // Nếu không click vào mob thì tiến hành di chuyển đến vị trí click
             targetPosition = clickPos;
             isMovingToTarget = true;
+            path = null;
             mob = null;
         }
     }
@@ -173,8 +221,8 @@ public class MovementController : MonoBehaviour, IUpdatable
                 path = null; // reset để lần sau tạo path mới
                 startPosition = endMovementPosition;
                 isMovingToTarget = false;
-                if (miniMap != null)
-                    miniMap.ClearAStarPath();
+                if (minimap != null)
+                    minimap.ClearAStarPath();
                 mob = null;
             }
 
@@ -192,7 +240,7 @@ public class MovementController : MonoBehaviour, IUpdatable
         if ((menu != null && menu.GetIsActive()) || isBusy)     
             return;
 
-        LeftClick();
+        RightClick();
 
         if (isMovingToTarget)
         {
@@ -204,8 +252,8 @@ public class MovementController : MonoBehaviour, IUpdatable
                 {
                     path = null;
                     isMovingToTarget = false;
-                    if (miniMap != null)
-                        miniMap.ClearAStarPath();
+                    if (minimap != null)
+                        minimap.ClearAStarPath();
                     movement = lastMove;
                     return;
                 }
@@ -263,8 +311,8 @@ public class MovementController : MonoBehaviour, IUpdatable
                 if (path == null || path.Count == 0)
                     return;
 
-                if (miniMap != null)
-                    miniMap.DrawAStarPath(path);
+                if (minimap != null)
+                    minimap.DrawAStarPath(path);
                 pathIndex = 0;
             }
 
@@ -274,8 +322,8 @@ public class MovementController : MonoBehaviour, IUpdatable
                 path = null; // reset để lần sau tạo path mới
                 startPosition = endMovementPosition;
                 isMovingToTarget = false;
-                if (miniMap != null)
-                    miniMap.ClearAStarPath();
+                if (minimap != null)
+                    minimap.ClearAStarPath();
                 movement = lastMove;
                 return;
             }
@@ -311,8 +359,8 @@ public class MovementController : MonoBehaviour, IUpdatable
                     path = null; // reset để lần sau tạo path mới
                     startPosition = endMovementPosition;
                     isMovingToTarget = false;
-                    if (miniMap != null)
-                        miniMap.ClearAStarPath();
+                    if (minimap != null)
+                        minimap.ClearAStarPath();
                     movement = lastMove;
                     return;
                 }
@@ -321,7 +369,8 @@ public class MovementController : MonoBehaviour, IUpdatable
             // kiểm tra chuyển Node
             if (Vector2.Distance(currentPosition, targetNode) < 0.1f)
             {
-                miniMap.ClearAStarNodeMarker(pathIndex);
+                if (minimap != null)
+                    minimap.ClearAStarNodeMarker(pathIndex);
                 pathIndex++;
             }
         }

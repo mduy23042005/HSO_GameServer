@@ -37,7 +37,6 @@ public class RegisterView : MonoBehaviour, IUpdatable
     [SerializeField] private TMP_Text textMessageUsername;
     [SerializeField] private TMP_Text textMessagePassword;
 
-    [Header("Thông báo Error School")]
     [SerializeField] private Animator uiPickChienBinh;
     [SerializeField] private Animator uiPickSatThu;
     [SerializeField] private Animator uiPickPhapSu;
@@ -53,13 +52,6 @@ public class RegisterView : MonoBehaviour, IUpdatable
 
     private void Awake()
     {
-        if (GameObject.Find("CharaterSelectionUI"))
-        {
-            uiPickChienBinh = GameObject.Find("UIPickChienBinh").GetComponent<Animator>();
-            uiPickSatThu = GameObject.Find("UIPickSatThu").GetComponent<Animator>();
-            uiPickPhapSu = GameObject.Find("UIPickPhapSu").GetComponent<Animator>();
-            uiPickXaThu = GameObject.Find("UIPickXaThu").GetComponent<Animator>();
-        }
         nameBlessing = new string[] { "Ánh sáng", "Bóng tối" };
 
         socketManager = GameManager.Instance.GetComponent<SocketManager>();

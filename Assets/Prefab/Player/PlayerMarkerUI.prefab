@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 885459207494287986}
   - component: {fileID: 750152071469090837}
   - component: {fileID: 7005409068773515369}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: PlayerMarkerUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}

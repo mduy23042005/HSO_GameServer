@@ -84,6 +84,10 @@ public class PlayerData
     public int mounts;
     public int pet;
     public int skin;
+    public int maxHP;
+    public int maxMP;
+    public int hp;
+    public int mp;
 }
 public class PlayerSyncData
 {

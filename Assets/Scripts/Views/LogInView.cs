@@ -18,6 +18,10 @@ public class LogInResultPacket
     public string nameChar;
     public int hair;
     public int level;
+    public int maxHP;
+    public int maxMP;
+    public int hp;
+    public int mp;
     public string message;
 }
 
@@ -32,6 +36,10 @@ public class LogInView : MonoBehaviour, IUpdatable
     private static int idHair;
     private static string nameChar;
     private static int level;
+    private static int maxHP;
+    private static int maxMP;
+    private static int hp;
+    private static int mp;
 
     private SocketManager socketManager;
 
@@ -74,6 +82,10 @@ public class LogInView : MonoBehaviour, IUpdatable
             loginResult.nameChar = reader.ReadString();
             loginResult.hair = reader.ReadInt();
             loginResult.level = reader.ReadInt();
+            loginResult.maxHP = reader.ReadInt();
+            loginResult.maxMP = reader.ReadInt();
+            loginResult.hp = reader.ReadInt();
+            loginResult.mp = reader.ReadInt();
             loginResult.message = reader.ReadString();
             
             if (loginResult.success)
@@ -83,6 +95,10 @@ public class LogInView : MonoBehaviour, IUpdatable
                 idHair = loginResult.hair;
                 nameChar = loginResult.nameChar;
                 level = loginResult.level;
+                maxHP = loginResult.hp;
+                maxMP = loginResult.mp;
+                hp = loginResult.hp;
+                mp = loginResult.mp;
 
                 textMessage.color = Color.green;
                 textMessage.text = loginResult.message;
@@ -173,5 +189,21 @@ public class LogInView : MonoBehaviour, IUpdatable
     public static int GetLevel()
     {
         return level;
+    }
+    public static int GetMaxHP()
+    {
+        return maxHP;
+    }
+    public static int GetMaxMP()
+    {
+        return maxMP;
+    }
+    public static int GetHP()
+    {
+        return hp;
+    }
+    public static int GetMP()
+    {
+        return mp;
     }
 }

@@ -145,12 +145,12 @@ TextureImporter:
       name: ScreenGameUI_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 1000
-        height: 562
+        x: 114
+        y: 546
+        width: 759
+        height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -159,6 +159,116 @@ TextureImporter:
       bones: []
       spriteID: 6c8863249f90c5700800000000000000
       internalID: 530309822285252806
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenGameUI_1
+      rect:
+        serializedVersion: 2
+        x: 238
+        y: 0
+        width: 523
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d6eac95fbe304a34cbfcf86dcc41cfcb
+      internalID: -1644576574
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenGameUI_2
+      rect:
+        serializedVersion: 2
+        x: 169
+        y: 527
+        width: 165
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: efbe89934c485a545b6b0def0f8cc207
+      internalID: -1953555021
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenGameUI_3
+      rect:
+        serializedVersion: 2
+        x: 169
+        y: 513
+        width: 165
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8d1a6422b5cdc1e41818946eb122573e
+      internalID: 1662044309
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenGameUI_4
+      rect:
+        serializedVersion: 2
+        x: 334
+        y: 527
+        width: 165
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fdbf3d01fe6b2ed46829a97903f58161
+      internalID: -1054057422
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenGameUI_5
+      rect:
+        serializedVersion: 2
+        x: 334
+        y: 513
+        width: 165
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 331f639ffd055374e9e1125da1589e09
+      internalID: -959880412
       vertices: []
       indices: 
       edges: []
@@ -178,6 +288,11 @@ TextureImporter:
       entries: []
     nameFileIdTable:
       ScreenGameUI_0: 530309822285252806
+      ScreenGameUI_1: -1644576574
+      ScreenGameUI_2: -1953555021
+      ScreenGameUI_3: 1662044309
+      ScreenGameUI_4: -1054057422
+      ScreenGameUI_5: -959880412
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

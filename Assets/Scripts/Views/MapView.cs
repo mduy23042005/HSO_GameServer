@@ -4,6 +4,7 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
+using UnityEngine.Timeline;
 using UnityEngine.UI;
 
 public enum TileType
@@ -47,7 +48,9 @@ public class MapView : MonoBehaviour, IUpdatable
     private Vector3 lastPlayerPositionMinimap;
     private RectTransform playerMarkerFullMinimap;
     private RectTransform playerMarkerMinimap;
-    private List<RectTransform> aStarMarkers = new List<RectTransform>();
+    private List<Vector3> aStarWorldPositions = new List<Vector3>();
+    private List<RectTransform> aStarMarkersMinimap = new List<RectTransform>();
+    private List<RectTransform> aStarMarkersFullMinimap = new List<RectTransform>();
 
     private Dictionary<int, Mob> mobs;
     private Dictionary<int, RectTransform> lastMobsPositionFullMinimap = new Dictionary<int, RectTransform>();
@@ -118,6 +121,14 @@ public class MapView : MonoBehaviour, IUpdatable
 
         UpdateMarkerFullMinimap();
         UpdateMarkerMinimap();
+
+        for (int i = 0; i < aStarMarkersMinimap.Count; i++)
+        {
+            if (aStarMarkersMinimap[i] == null)
+                continue;
+
+            aStarMarkersMinimap[i].anchoredPosition = WorldToMinimapPosition(aStarWorldPositions[i]);
+        }
     }
     public void OnLateUpdate() { }
     public void OnFixedUpdate() { }
@@ -532,6 +543,7 @@ public class MapView : MonoBehaviour, IUpdatable
     public void DrawAStarPath(List<(int x, int y)> path)
     {
         ClearAStarPath();
+        aStarWorldPositions.Clear();
 
         if (path == null || path.Count == 0)
             return;
@@ -540,39 +552,63 @@ public class MapView : MonoBehaviour, IUpdatable
 
         foreach (var node in path)
         {
-            RectTransform marker = Instantiate(aStarMarkerUI, fullMinimapUI.transform);
-
-            marker.GetComponent<Image>().color = Color.white;
-            marker.sizeDelta = new Vector2(size, size);
-            marker.anchorMin = new Vector2(0.5f, 0.5f);
-            marker.anchorMax = new Vector2(0.5f, 0.5f);
-            marker.pivot = new Vector2(0.5f, 0.5f);
+            RectTransform markerFullMinimap = Instantiate(aStarMarkerUI, fullMinimapUI.transform);
+            RectTransform markerMinimap = Instantiate(aStarMarkerUI, minimapUI.transform);
             Vector3 worldPos = new Vector3(node.x + 0.5f, node.y + 0.5f, 0);
-            marker.anchoredPosition = WorldToFullMinimapPosition(worldPos);
+            aStarWorldPositions.Add(worldPos); // cached lại những tọa độ của node trong a* path để cố định toàn bộ node khi minimap di chuyển theo player
 
-            aStarMarkers.Add(marker);
+            markerFullMinimap.GetComponent<Image>().color = Color.white;
+            markerFullMinimap.sizeDelta = new Vector2(size, size);
+            markerFullMinimap.anchorMin = new Vector2(0.5f, 0.5f);
+            markerFullMinimap.anchorMax = new Vector2(0.5f, 0.5f);
+            markerFullMinimap.pivot = new Vector2(0.5f, 0.5f);
+            markerFullMinimap.anchoredPosition = WorldToFullMinimapPosition(worldPos);
+
+            markerMinimap.GetComponent<Image>().color = Color.white;
+            markerMinimap.sizeDelta = new Vector2(size, size);
+            markerMinimap.anchorMin = new Vector2(0.5f, 0.5f);
+            markerMinimap.anchorMax = new Vector2(0.5f, 0.5f);
+            markerMinimap.pivot = new Vector2(0.5f, 0.5f);
+
+            aStarMarkersFullMinimap.Add(markerFullMinimap);
+            aStarMarkersMinimap.Add(markerMinimap);
         }
     }
     public void ClearAStarNodeMarker(int index)
     {
-        if (index >= 0 && index < aStarMarkers.Count)
+        if (index >= 0 && index < aStarMarkersFullMinimap.Count)
         {
-            if (aStarMarkers[index] != null)
+            if (aStarMarkersFullMinimap[index] != null)
             {
-                Destroy(aStarMarkers[index].gameObject);
-                aStarMarkers[index] = null;
+                Destroy(aStarMarkersFullMinimap[index].gameObject);
+                aStarMarkersFullMinimap[index] = null;
+            }
+        }
+        if (index >= 0 && index < aStarMarkersMinimap.Count)
+        {
+            if (aStarMarkersMinimap[index] != null)
+            {
+                Destroy(aStarMarkersMinimap[index].gameObject);
+                aStarMarkersMinimap[index] = null;
             }
         }
     }
     public void ClearAStarPath()
     {
-        foreach (var marker in aStarMarkers)
+        for (int i = 0; i < aStarMarkersFullMinimap.Count; i++)
         {
-            if (marker != null)
-                Destroy(marker.gameObject);
+            if (aStarMarkersFullMinimap[i] != null)
+            {
+                Destroy(aStarMarkersFullMinimap[i].gameObject);
+            }
+            if (aStarMarkersMinimap[i] != null)
+            {
+                Destroy(aStarMarkersMinimap[i].gameObject);
+            }
         }
 
-        aStarMarkers.Clear();
+        aStarMarkersFullMinimap.Clear();
+        aStarMarkersMinimap.Clear();
     }
 
     private void ExportMapFile()

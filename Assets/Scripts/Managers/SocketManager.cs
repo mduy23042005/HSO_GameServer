@@ -32,7 +32,7 @@ public class SocketManager : MonoBehaviour, IUpdatable
 
     private readonly ConcurrentQueue<byte[]> outfitSpritesQueue = new ConcurrentQueue<byte[]>();
 
-    GameObject player;
+    private GameObject player;
 
     private void Awake()
     {

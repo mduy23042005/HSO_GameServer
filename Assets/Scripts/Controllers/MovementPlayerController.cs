@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
 public class MovementController : MonoBehaviour, IUpdatable
@@ -23,6 +22,7 @@ public class MovementController : MonoBehaviour, IUpdatable
     private RectTransform fullMinimapUI;
     private Camera uiCamera;
     private bool isFullMinimapOpen = false;
+    private string currentNameMap;
 
     private (int x, int y) startPosition;
     private (int x, int y) endMovementPosition;
@@ -123,13 +123,17 @@ public class MovementController : MonoBehaviour, IUpdatable
 
         if (Input.GetMouseButtonDown(0))
         {
-            minimap = GameObject.Find("Grid").GetComponent<MapView>();
-            minimapUI = GameObject.Find("MinimapUI").GetComponent<RectTransform>();
-            fullMinimapUI = Resources.FindObjectsOfTypeAll<RectTransform>().FirstOrDefault(t => t.name == "FullMinimapUI");
-            uiCamera = GameObject.Find("Canvas").GetComponent<Canvas>().worldCamera;
-
             if (RectTransformUtility.RectangleContainsScreenPoint(minimapUI, Input.mousePosition, uiCamera))
             {
+                if (currentNameMap != SceneManager.GetActiveScene().name)
+                {
+                    minimap = GameObject.Find("Grid").GetComponent<MapView>();
+                    minimapUI = GameObject.Find("MinimapUI").GetComponent<RectTransform>();
+                    fullMinimapUI = Resources.FindObjectsOfTypeAll<RectTransform>().FirstOrDefault(t => t.name == "FullMinimapUI");
+                    uiCamera = GameObject.Find("Canvas").GetComponent<Canvas>().worldCamera;
+                    currentNameMap = SceneManager.GetActiveScene().name;
+                }
+
                 if (!isFullMinimapOpen)
                 {
                     ShowFullMinimap();
@@ -138,7 +142,7 @@ public class MovementController : MonoBehaviour, IUpdatable
             }
         }
     }
-    private void RightClick()
+    public virtual void RightClick()
     {
         if (isFullMinimapOpen)
         {
@@ -185,6 +189,15 @@ public class MovementController : MonoBehaviour, IUpdatable
                 targetPosition = new Vector2(mob.transform.position.x, mob.transform.position.y);
                 isMovingToTarget = true;
                 return;
+            }
+
+            if (currentNameMap != SceneManager.GetActiveScene().name)
+            {
+                minimap = GameObject.Find("Grid").GetComponent<MapView>();
+                minimapUI = GameObject.Find("MinimapUI").GetComponent<RectTransform>();
+                fullMinimapUI = Resources.FindObjectsOfTypeAll<RectTransform>().FirstOrDefault(t => t.name == "FullMinimapUI");
+                uiCamera = GameObject.Find("Canvas").GetComponent<Canvas>().worldCamera;
+                currentNameMap = SceneManager.GetActiveScene().name;
             }
 
             targetPosition = clickPos;

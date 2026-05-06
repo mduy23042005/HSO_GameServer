@@ -17,7 +17,15 @@ public class SocketManager : MonoBehaviour, IUpdatable
     private readonly ConcurrentQueue<byte[]> sendQueue = new ConcurrentQueue<byte[]>();
     private readonly ConcurrentQueue<byte[]> receiveQueue = new ConcurrentQueue<byte[]>();
 
-    private readonly ConcurrentQueue<byte[]> syncCallBack = new ConcurrentQueue<byte[]>();
+    private readonly ConcurrentQueue<byte[]> updateHPQueue = new ConcurrentQueue<byte[]>();
+    private readonly ConcurrentQueue<byte[]> updateMPQueue = new ConcurrentQueue<byte[]>();
+
+    private readonly ConcurrentQueue<byte[]> mobsAttackQueue = new ConcurrentQueue<byte[]>();
+    private readonly ConcurrentQueue<byte[]> mobsHealQueue = new ConcurrentQueue<byte[]>();
+    private readonly ConcurrentQueue<byte[]> mobsInjuredQueue = new ConcurrentQueue<byte[]>();
+    private readonly ConcurrentQueue<byte[]> mobsDieQueue = new ConcurrentQueue<byte[]>();
+
+    private readonly ConcurrentQueue<byte[]> syncCallBackQueue = new ConcurrentQueue<byte[]>();
     private readonly ConcurrentQueue<byte[]> syncOtherPlayersQueue = new ConcurrentQueue<byte[]>();
     private readonly ConcurrentQueue<byte[]> syncMobsQueue = new ConcurrentQueue<byte[]>();
 
@@ -91,7 +99,7 @@ public class SocketManager : MonoBehaviour, IUpdatable
         if (player == null)
             return null;
 
-        MovementController playerMovementController = player.GetComponent<MovementController>();
+        MovementPlayerController playerMovementController = player.GetComponent<MovementPlayerController>();
         SpriteController playerSpriteController = player.GetComponent<SpriteController>();
 
         PlayerSyncDataRequestPacket packet = new PlayerSyncDataRequestPacket
@@ -329,8 +337,28 @@ public class SocketManager : MonoBehaviour, IUpdatable
 
         switch (cmd)
         {
+            case EnumCmdCode.updateHP:
+                updateHPQueue.Enqueue(data); 
+                break;
+            case EnumCmdCode.updateMP:
+                updateMPQueue.Enqueue(data);
+                break;
+
+            case EnumCmdCode.mobsAttack:
+                mobsAttackQueue.Enqueue(data); 
+                break;
+            case EnumCmdCode.mobsHeal:
+                mobsHealQueue.Enqueue(data);
+                break;
+            case EnumCmdCode.mobsInjured:
+                mobsInjuredQueue.Enqueue(data);
+                break;
+            case EnumCmdCode.mobsDie:
+                mobsDieQueue.Enqueue(data);
+                break;
+
             case EnumCmdCode.syncCallBack:
-                syncCallBack.Enqueue(data);
+                syncCallBackQueue.Enqueue(data);
                 break;
 
             case EnumCmdCode.syncPlayerData:
@@ -388,9 +416,52 @@ public class SocketManager : MonoBehaviour, IUpdatable
 
         return null;
     }
+    public byte[] GetUpdateHPData()
+    {
+        if (updateHPQueue.TryDequeue(out var data))
+            return data;
+
+        return null;
+    }
+    public byte[] GetUpdateMPData()
+    {
+        if (updateMPQueue.TryDequeue(out var data))
+            return data;
+
+        return null;
+    }
+    
+    public byte[] GetMobsAttackData()
+    {
+        if (mobsAttackQueue.TryDequeue(out var data))
+            return data;
+
+        return null;
+    }
+    public byte[] GetMobsHealData()
+    {
+        if (mobsHealQueue.TryDequeue(out var data))
+            return data;
+
+        return null;
+    }
+    public byte[] GetMobsInjuredData()
+    {
+        if (mobsInjuredQueue.TryDequeue(out var data))
+            return data;
+
+        return null;
+    }
+    public byte[] GetMobsDieData()
+    {
+        if (mobsDieQueue.TryDequeue(out var data))
+            return data;
+
+        return null;
+    }
     public byte[] GetSyncCallBackData()
     {
-        if (syncCallBack.TryDequeue(out var data))
+        if (syncCallBackQueue.TryDequeue(out var data))
             return data;
         return null;
     }
@@ -484,7 +555,7 @@ public class SocketManager : MonoBehaviour, IUpdatable
         ClearQueue(sendQueue);
         ClearQueue(receiveQueue);
 
-        ClearQueue(syncCallBack);
+        ClearQueue(syncCallBackQueue);
         ClearQueue(syncOtherPlayersQueue);
         ClearQueue(syncMobsQueue);
 

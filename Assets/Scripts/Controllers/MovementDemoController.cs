@@ -1,4 +1,4 @@
-﻿public class MovementDemoController : MovementController
+﻿public class MovementDemoController : MovementPlayerController
 {
     private void OnEnable()
     {

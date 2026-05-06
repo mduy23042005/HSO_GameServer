@@ -3,7 +3,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.U2D.Animation;
 
-public class RegisterDemoController : MovementController
+public class RegisterDemoController : MovementPlayerController
 {
     private Animator animatorChild;
     private GameObject player;

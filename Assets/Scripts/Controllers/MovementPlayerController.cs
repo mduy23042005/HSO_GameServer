@@ -5,8 +5,9 @@ using System.IO;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Tilemaps;
 
-public class MovementController : MonoBehaviour, IUpdatable
+public class MovementPlayerController : MonoBehaviour, IUpdatable
 {
     private float moveSpeed = 6f;
     private Vector2 movement;
@@ -31,7 +32,6 @@ public class MovementController : MonoBehaviour, IUpdatable
     private int pathIndex;
     private AStarManager astar = new AStarManager();
     private MapData mapData;
-    private string lastMapName;
 
     private PlayerState currentState;
     private SocketManager socketManager;
@@ -184,11 +184,11 @@ public class MovementController : MonoBehaviour, IUpdatable
                     string nameMob = mob.GetNameMob();
 
                     Debug.Log($"Clicked mob [{id}] {nameMob}");
-                }
 
-                targetPosition = new Vector2(mob.transform.position.x, mob.transform.position.y);
-                isMovingToTarget = true;
-                return;
+                    targetPosition = new Vector2(mob.transform.position.x, mob.transform.position.y);
+                    isMovingToTarget = true;
+                    return;
+                }
             }
 
             if (currentNameMap != SceneManager.GetActiveScene().name)
@@ -198,8 +198,41 @@ public class MovementController : MonoBehaviour, IUpdatable
                 fullMinimapUI = Resources.FindObjectsOfTypeAll<RectTransform>().FirstOrDefault(t => t.name == "FullMinimapUI");
                 uiCamera = GameObject.Find("Canvas").GetComponent<Canvas>().worldCamera;
                 currentNameMap = SceneManager.GetActiveScene().name;
+
+                string pathMapFile = Path.Combine(Application.streamingAssetsPath, $"Maps/{SceneManager.GetActiveScene().name}.bin");
+                mapData = new MapData();
+
+                if (!File.Exists(pathMapFile))
+                    return;
+
+                using (BinaryReader reader = new BinaryReader(File.Open(pathMapFile, FileMode.Open)))
+                {
+                    mapData.width = reader.ReadInt32();
+                    mapData.height = reader.ReadInt32();
+
+                    mapData.offsetX = reader.ReadInt32();
+                    mapData.offsetY = reader.ReadInt32();
+
+                    mapData.tiles = new byte[mapData.width, mapData.height];
+
+                    for (int y = 0; y < mapData.height; y++)
+                    {
+                        for (int x = 0; x < mapData.width; x++)
+                        {
+                            mapData.tiles[x, y] = reader.ReadByte();
+                        }
+                    }
+                }
             }
 
+            var gridPos = ToGrid(clickPos);
+
+            if (!astar.IsWalkable(mapData, gridPos.x, gridPos.y))
+            {
+                return;
+            }
+
+            // nếu hợp lệ thì move
             targetPosition = clickPos;
             isMovingToTarget = true;
             path = null;
@@ -284,35 +317,6 @@ public class MovementController : MonoBehaviour, IUpdatable
             // chưa có path thì tạo mới
             if (path == null || path.Count == 0)
             {
-                if (lastMapName != SceneManager.GetActiveScene().name)
-                {
-                    lastMapName = SceneManager.GetActiveScene().name;
-                    string pathMapFile = Path.Combine(Application.streamingAssetsPath, $"Maps/{SceneManager.GetActiveScene().name}.bin");
-                    mapData = new MapData();
-
-                    if (!File.Exists(pathMapFile))
-                        return;
-
-                    using (BinaryReader reader = new BinaryReader(File.Open(pathMapFile, FileMode.Open)))
-                    {
-                        mapData.width = reader.ReadInt32();
-                        mapData.height = reader.ReadInt32();
-
-                        mapData.offsetX = reader.ReadInt32();
-                        mapData.offsetY = reader.ReadInt32();
-
-                        mapData.tiles = new byte[mapData.width, mapData.height];
-
-                        for (int y = 0; y < mapData.height; y++)
-                        {
-                            for (int x = 0; x < mapData.width; x++)
-                            {
-                                mapData.tiles[x, y] = reader.ReadByte();
-                            }
-                        }
-                    }
-                }
-
                 startPosition = ToGrid(transform.position);
                 endMovementPosition = ToGrid(targetPosition);
 
@@ -468,11 +472,17 @@ public class MovementController : MonoBehaviour, IUpdatable
             TriggerAnimation("Atk", 0.25f);
             UpdateLastMoveToAnimator();
         }
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            currentState = PlayerState.Injured;
-            TriggerAnimation("Injured", 0.3f);
-            UpdateLastMoveToAnimator();
-        }
+    }
+    public void UpdateInjuredAnimation()
+    {
+        currentState = PlayerState.Injured;
+        TriggerAnimation("Injured", 0.3f);
+        UpdateLastMoveToAnimator();
+    }
+    public void UpdateDieAnimation()
+    {
+        currentState = PlayerState.Die;
+        animator.SetBool("isDie", true);
+        UpdateLastMoveToAnimator();
     }
 }

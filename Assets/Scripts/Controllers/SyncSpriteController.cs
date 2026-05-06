@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.U2D.Animation;
+using UnityEngine.UI;
 
 public class SyncSpriteController : MonoBehaviour, IUpdatable
 {
@@ -10,6 +12,8 @@ public class SyncSpriteController : MonoBehaviour, IUpdatable
     [Header("Chỉ định sprite nào của player sẽ bị thay thế")]
     [SerializeField] private List<SpriteLibrary> spriteLibraries;
     [SerializeField] private List<SpriteResolver> spriteResolvers;
+
+    [SerializeField] private Slider hpBar;
 
     private ItemController listItem0;
 
@@ -71,6 +75,9 @@ public class SyncSpriteController : MonoBehaviour, IUpdatable
 
         otherPlayerTransform = serverTransform;
         otherPlayerState = serverState;
+
+        hpBar.maxValue = serverData.maxHP;
+        hpBar.value = serverData.hp;
 
         UpdateSprite();
     }

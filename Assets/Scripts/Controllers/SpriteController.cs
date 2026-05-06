@@ -9,7 +9,7 @@ public class SpriteController : MonoBehaviour, IUpdatable
     private Animator animator;
     private string lastCategory;
     private string lastLabel;
-    private MovementController movementController;
+    private MovementPlayerController movementPlayerController;
     private Direction currentDirection;
 
     [Header("Chỉ định sprite nào của player sẽ bị thay thế")]
@@ -32,7 +32,7 @@ public class SpriteController : MonoBehaviour, IUpdatable
     {
         faceResolver = spriteResolvers.FirstOrDefault(r => r.gameObject.name == "4_0_0");
         animator = GetComponent<Animator>();
-        movementController = GetComponent<MovementController>();
+        movementPlayerController = GetComponent<MovementPlayerController>();
         socketManager = GameManager.Instance.GetComponent<SocketManager>();
         listItem0 = ItemController.Instance;
         ReadCache();
@@ -236,15 +236,15 @@ public class SpriteController : MonoBehaviour, IUpdatable
 
         float h;
         float v;
-        if (movementController.GetIsMovingToTarget())
+        if (movementPlayerController.GetIsMovingToTarget())
         {
-            h = movementController.GetMovement().x;
-            v = movementController.GetMovement().y;
+            h = movementPlayerController.GetMovement().x;
+            v = movementPlayerController.GetMovement().y;
         }
         else
         {
-            h = movementController.GetLastMovement().x;
-            v = movementController.GetLastMovement().y;
+            h = movementPlayerController.GetLastMovement().x;
+            v = movementPlayerController.GetLastMovement().y;
         }
 
         string direction = GetDirection(h, v);

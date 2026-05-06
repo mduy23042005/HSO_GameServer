@@ -207,6 +207,8 @@ public class SyncOtherPlayersManager : MonoBehaviour, IUpdatable
                         mounts = reader.ReadInt(),
                         pet = reader.ReadInt(),
                         skin = reader.ReadInt(),
+                        maxHP = reader.ReadInt(),
+                        hp = reader.ReadInt(),
                     },
                     otherPlayerTransformData = new PlayerTransformData
                     {

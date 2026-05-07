@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Security.Principal;
 using UnityEngine;
 
 public enum PlayerState
@@ -117,10 +119,13 @@ public class OtherPlayer
 {
     public GameObject otherPlayerObject;
     public PlayerData otherPlayerData;
+
+    public Transform canvasTransform;
 }
 public class SyncOtherPlayersManager : MonoBehaviour, IUpdatable
 {
     [SerializeField] private List<GameObject> otherPlayersPrefab;
+    [SerializeField] private GameObject updateHPUI;
 
     private Dictionary<int, OtherPlayer> otherPlayers = new Dictionary<int, OtherPlayer>();
 
@@ -170,6 +175,7 @@ public class SyncOtherPlayersManager : MonoBehaviour, IUpdatable
 
         byte[] onlineData = socketManager.GetSyncOtherPlayersData(); //luôn lấy từ sync queue vì online player luôn gửi data đến server khi online
         byte[] offlineData = socketManager.GetLogOutData();
+        byte[] updateOtherPlayerHPUIData = socketManager.GetMobsAttackOtherPlayerData();
 
         if (onlineData != null && onlineData.Length > 0)
         {
@@ -297,6 +303,31 @@ public class SyncOtherPlayersManager : MonoBehaviour, IUpdatable
             GameObject.Find("LogOut").GetComponent<LogOutController>().SetLogOutData(offlinePlayer);
             OffDataFromServer(offlinePlayer);
         }
+
+
+        if (updateOtherPlayerHPUIData != null && updateOtherPlayerHPUIData.Length > 0)
+        {
+            PacketReaderManager reader1 = new PacketReaderManager(updateOtherPlayerHPUIData);
+            EnumCmdCode cmd = (EnumCmdCode)reader1.ReadInt();
+            int idAccount = reader1.ReadInt();
+            int mobDamage = reader1.ReadInt();
+            int otherPlayerHP = reader1.ReadInt();
+
+            if (otherPlayers[idAccount].otherPlayerData.hp != otherPlayerHP)
+            {
+                if (otherPlayerHP < otherPlayers[idAccount].otherPlayerData.hp)
+                {
+                    GameObject objectDamageUI = Instantiate(updateHPUI, otherPlayers[idAccount].otherPlayerObject.GetComponentInChildren<Canvas>().transform, false);
+
+                    UpdateHPUI injuredDamageUI = objectDamageUI.GetComponent<UpdateHPUI>();
+                    if (injuredDamageUI != null)
+                    {
+                        injuredDamageUI.SetInjuredDamage(mobDamage);
+                    }
+                }
+                otherPlayers[idAccount].otherPlayerData.hp = otherPlayerHP;
+            }
+        }
     }
     public virtual void OnLateUpdate() { }
     public virtual void OnFixedUpdate() { }
@@ -313,6 +344,7 @@ public class SyncOtherPlayersManager : MonoBehaviour, IUpdatable
         if (!otherPlayers.TryGetValue(data.otherPlayerData.idAccount, out onlinePlayer))
         {
             onlinePlayer = new OtherPlayer();
+            onlinePlayer.otherPlayerData = data.otherPlayerData;
 
             switch (data.otherPlayerData.idSchool)
             {
@@ -326,15 +358,21 @@ public class SyncOtherPlayersManager : MonoBehaviour, IUpdatable
                     onlinePlayer.otherPlayerObject = Instantiate(otherPlayersPrefab[2], new Vector2(data.otherPlayerTransformData.positionData.x, data.otherPlayerTransformData.positionData.y), Quaternion.identity);
                     break;
             }
-
+            onlinePlayer.canvasTransform = onlinePlayer.otherPlayerObject.GetComponentInChildren<Canvas>().transform;
             otherPlayers.Add(data.otherPlayerData.idAccount, onlinePlayer);
 
             onlinePlayer.otherPlayerObject.GetComponentInChildren<SyncSpriteController>().ApplyServerData(data.otherPlayerData, data.otherPlayerTransformData, data.otherPlayerStateData);
         }
         else
         {
+            onlinePlayer.otherPlayerData = data.otherPlayerData;
             onlinePlayer.otherPlayerObject.GetComponentInChildren<SyncSpriteController>().ApplyServerData(data.otherPlayerData, data.otherPlayerTransformData, data.otherPlayerStateData);
         }
+
+        Vector3 scale = onlinePlayer.canvasTransform.localScale;
+        scale.x = data.otherPlayerStateData.directionData == Direction.Right ? -Math.Abs(scale.x) : Math.Abs(scale.x);
+        onlinePlayer.canvasTransform.localScale = scale;
+
         lastUpdateTime[data.otherPlayerData.idAccount] = Time.time;
     }
     public void OffDataFromServer(LogOutRequestPacket data)

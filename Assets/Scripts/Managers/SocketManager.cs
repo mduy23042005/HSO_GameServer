@@ -20,10 +20,11 @@ public class SocketManager : MonoBehaviour, IUpdatable
     private readonly ConcurrentQueue<byte[]> updateHPQueue = new ConcurrentQueue<byte[]>();
     private readonly ConcurrentQueue<byte[]> updateMPQueue = new ConcurrentQueue<byte[]>();
 
-    private readonly ConcurrentQueue<byte[]> mobsAttackQueue = new ConcurrentQueue<byte[]>();
+    private readonly ConcurrentQueue<byte[]> mobsAttackPlayerQueue = new ConcurrentQueue<byte[]>();
     private readonly ConcurrentQueue<byte[]> mobsHealQueue = new ConcurrentQueue<byte[]>();
     private readonly ConcurrentQueue<byte[]> mobsInjuredQueue = new ConcurrentQueue<byte[]>();
     private readonly ConcurrentQueue<byte[]> mobsDieQueue = new ConcurrentQueue<byte[]>();
+    private readonly ConcurrentQueue<byte[]> mobsAttackOtherPlayerQueue = new ConcurrentQueue<byte[]>();
 
     private readonly ConcurrentQueue<byte[]> syncCallBackQueue = new ConcurrentQueue<byte[]>();
     private readonly ConcurrentQueue<byte[]> syncOtherPlayersQueue = new ConcurrentQueue<byte[]>();
@@ -344,8 +345,8 @@ public class SocketManager : MonoBehaviour, IUpdatable
                 updateMPQueue.Enqueue(data);
                 break;
 
-            case EnumCmdCode.mobsAttack:
-                mobsAttackQueue.Enqueue(data); 
+            case EnumCmdCode.mobsAttackPlayer:
+                mobsAttackPlayerQueue.Enqueue(data); 
                 break;
             case EnumCmdCode.mobsHeal:
                 mobsHealQueue.Enqueue(data);
@@ -355,6 +356,9 @@ public class SocketManager : MonoBehaviour, IUpdatable
                 break;
             case EnumCmdCode.mobsDie:
                 mobsDieQueue.Enqueue(data);
+                break;
+            case EnumCmdCode.mobsAttackOtherPlayer:
+                mobsAttackOtherPlayerQueue.Enqueue(data);
                 break;
 
             case EnumCmdCode.syncCallBack:
@@ -431,9 +435,9 @@ public class SocketManager : MonoBehaviour, IUpdatable
         return null;
     }
     
-    public byte[] GetMobsAttackData()
+    public byte[] GetMobsAttackPlayerData()
     {
-        if (mobsAttackQueue.TryDequeue(out var data))
+        if (mobsAttackPlayerQueue.TryDequeue(out var data))
             return data;
 
         return null;
@@ -459,6 +463,14 @@ public class SocketManager : MonoBehaviour, IUpdatable
 
         return null;
     }
+    public byte[] GetMobsAttackOtherPlayerData()
+    {
+        if (mobsAttackOtherPlayerQueue.TryDequeue(out var data))
+            return data;
+
+        return null;
+    }
+
     public byte[] GetSyncCallBackData()
     {
         if (syncCallBackQueue.TryDequeue(out var data))

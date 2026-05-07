@@ -90,12 +90,7 @@ public class UIBarsView : MonoBehaviour, IUpdatable
         }
 
         Vector3 canvasScaleInPlayer = player.GetComponentInChildren<Canvas>().transform.localScale;
-
-        if (player.transform.localScale.x < 0)
-            canvasScaleInPlayer.x = -Math.Abs(canvasScaleInPlayer.x);
-        else
-            canvasScaleInPlayer.x = Math.Abs(canvasScaleInPlayer.x);
-
+        canvasScaleInPlayer.x = player.transform.localScale.x < 0 ? -Math.Abs(canvasScaleInPlayer.x) : Math.Abs(canvasScaleInPlayer.x);
         player.GetComponentInChildren<Canvas>().transform.localScale = canvasScaleInPlayer;
 
         PlayerInjured();
@@ -107,13 +102,14 @@ public class UIBarsView : MonoBehaviour, IUpdatable
 
     private void PlayerInjured()
     {
-        byte[] data = socketManager.GetMobsAttackData();
+        byte[] data = socketManager.GetMobsAttackPlayerData();
 
         if (data == null || data.Length == 0)
             return;
 
         PacketReaderManager reader = new PacketReaderManager(data);
         EnumCmdCode cmd = (EnumCmdCode)reader.ReadInt();
+        int idAccount = reader.ReadInt();
         int mobDamage = reader.ReadInt();
         int playerHP = reader.ReadInt();
         UpdateHP(playerHP);

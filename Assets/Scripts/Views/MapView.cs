@@ -521,6 +521,12 @@ public class MapView : MonoBehaviour, IUpdatable
         float localX = (normalizedX - uv.x) / uv.width;
         float localY = (normalizedY - uv.y) / uv.height;
 
+        if (localX < 0 || localX > 1 || localY < 0 || localY > 1)
+        {
+            localX = Mathf.Clamp01(localX);
+            localY = Mathf.Clamp01(localY);
+        }
+
         float uiX = localX * rect.width - rect.width * 0.5f;
         float uiY = localY * rect.height - rect.height * 0.5f;
 

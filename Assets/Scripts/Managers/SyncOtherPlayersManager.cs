@@ -313,7 +313,7 @@ public class SyncOtherPlayersManager : MonoBehaviour, IUpdatable
             int mobDamage = reader1.ReadInt();
             int otherPlayerHP = reader1.ReadInt();
 
-            if (otherPlayers[idAccount].otherPlayerData.hp != otherPlayerHP)
+            if (otherPlayers[idAccount].otherPlayerData.hp != otherPlayerHP && otherPlayers[idAccount] != null)
             {
                 if (otherPlayerHP < otherPlayers[idAccount].otherPlayerData.hp)
                 {

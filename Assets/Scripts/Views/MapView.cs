@@ -4,7 +4,6 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
-using UnityEngine.Timeline;
 using UnityEngine.UI;
 
 public enum TileType
@@ -127,7 +126,8 @@ public class MapView : MonoBehaviour, IUpdatable
             if (aStarMarkersMinimap[i] == null)
                 continue;
 
-            aStarMarkersMinimap[i].anchoredPosition = WorldToMinimapPosition(aStarWorldPositions[i]);
+            aStarMarkersMinimap[i].anchoredPosition = WorldToMinimapPosition(aStarWorldPositions[i], out bool isVisibleInMinimap);
+            aStarMarkersMinimap[i].gameObject.SetActive(isVisibleInMinimap);
         }
     }
     public void OnLateUpdate() { }
@@ -280,7 +280,8 @@ public class MapView : MonoBehaviour, IUpdatable
 
         if (lastPlayerPositionMinimap != player.transform.position)
         {
-            playerMarkerMinimap.anchoredPosition = WorldToMinimapPosition(player.transform.position);
+            playerMarkerMinimap.anchoredPosition = WorldToMinimapPosition(player.transform.position, out bool isVisibleInMinimap);
+            playerMarkerMinimap.gameObject.SetActive(isVisibleInMinimap);
 
             lastPlayerPositionMinimap = player.transform.position;
         }
@@ -307,10 +308,13 @@ public class MapView : MonoBehaviour, IUpdatable
                     lastMobsPositionMinimap.Add(id, mobMarkerMinimap);
                 }
 
-                if (lastMobsPositionMinimap[id].anchoredPosition != WorldToMinimapPosition(mob.mobObject.transform.position))
+                bool isVisibleInMinimap;
+                Vector2 position = WorldToMinimapPosition(mob.mobObject.transform.position, out isVisibleInMinimap);
+                if (lastMobsPositionMinimap[id].anchoredPosition != position)
                 {
-                    lastMobsPositionMinimap[id].anchoredPosition = WorldToMinimapPosition(mob.mobObject.transform.position);
+                    lastMobsPositionMinimap[id].anchoredPosition = position;
                 }
+                lastMobsPositionMinimap[id].gameObject.SetActive(isVisibleInMinimap);
             }
 
             // xóa marker mob đã chết
@@ -352,10 +356,13 @@ public class MapView : MonoBehaviour, IUpdatable
                     lastOtherPlayersPositionMinimap.Add(id, otherPlayerMarkerMinimap);
                 }
 
-                if (lastOtherPlayersPositionMinimap[id].anchoredPosition != WorldToMinimapPosition(otherPlayer.otherPlayerObject.transform.position))
+                bool isVisibleInMinimap;
+                Vector2 position = WorldToMinimapPosition(otherPlayer.otherPlayerObject.transform.position, out isVisibleInMinimap);
+                if (lastOtherPlayersPositionMinimap[id].anchoredPosition != position)
                 {
-                    lastOtherPlayersPositionMinimap[id].anchoredPosition = WorldToMinimapPosition(otherPlayer.otherPlayerObject.transform.position);
+                    lastOtherPlayersPositionMinimap[id].anchoredPosition = position;
                 }
+                lastOtherPlayersPositionMinimap[id].gameObject.SetActive(isVisibleInMinimap);
             }
 
             // xóa marker mob đã chết
@@ -507,7 +514,7 @@ public class MapView : MonoBehaviour, IUpdatable
 
         return new Vector2(uiX, uiY);
     }
-    private Vector2 WorldToMinimapPosition(Vector3 worldPosition)
+    private Vector2 WorldToMinimapPosition(Vector3 worldPosition, out bool isVisible)
     {
         BoundsInt bounds = cachedBounds;
         Vector3Int cell = groundTilemap.WorldToCell(worldPosition);
@@ -523,10 +530,11 @@ public class MapView : MonoBehaviour, IUpdatable
 
         if (localX < 0 || localX > 1 || localY < 0 || localY > 1)
         {
-            localX = Mathf.Clamp01(localX);
-            localY = Mathf.Clamp01(localY);
+            isVisible = false;
+            return Vector2.zero;
         }
 
+        isVisible = true;
         float uiX = localX * rect.width - rect.width * 0.5f;
         float uiY = localY * rect.height - rect.height * 0.5f;
 
@@ -615,6 +623,7 @@ public class MapView : MonoBehaviour, IUpdatable
 
         aStarMarkersFullMinimap.Clear();
         aStarMarkersMinimap.Clear();
+        aStarWorldPositions.Clear();
     }
 
     private void ExportMapFile()

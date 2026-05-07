@@ -60,6 +60,7 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
 
     public virtual void OnUpdate()
     {
+        InitMinimap();
         LeftClick();
         MoveKeyboard();
         MoveMouse();
@@ -99,6 +100,42 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
         GameManager.Instance.RegisterPersistent(this);
     }
 
+    private void InitMinimap()
+    {
+        if (currentNameMap != SceneManager.GetActiveScene().name)
+        {
+            minimap = GameObject.Find("Grid").GetComponent<MapView>();
+            minimapUI = GameObject.Find("MinimapUI").GetComponent<RectTransform>();
+            fullMinimapUI = Resources.FindObjectsOfTypeAll<RectTransform>().FirstOrDefault(t => t.name == "FullMinimapUI");
+            uiCamera = GameObject.Find("Canvas").GetComponent<Canvas>().worldCamera;
+            currentNameMap = SceneManager.GetActiveScene().name;
+
+            string pathMapFile = Path.Combine(Application.streamingAssetsPath, $"Maps/{SceneManager.GetActiveScene().name}.bin");
+            mapData = new MapData();
+
+            if (!File.Exists(pathMapFile))
+                return;
+
+            using (BinaryReader reader = new BinaryReader(File.Open(pathMapFile, FileMode.Open)))
+            {
+                mapData.width = reader.ReadInt32();
+                mapData.height = reader.ReadInt32();
+
+                mapData.offsetX = reader.ReadInt32();
+                mapData.offsetY = reader.ReadInt32();
+
+                mapData.tiles = new byte[mapData.width, mapData.height];
+
+                for (int y = 0; y < mapData.height; y++)
+                {
+                    for (int x = 0; x < mapData.width; x++)
+                    {
+                        mapData.tiles[x, y] = reader.ReadByte();
+                    }
+                }
+            }
+        }
+    }
     private void ShowFullMinimap()
     {
         fullMinimapUI.gameObject.SetActive(true);
@@ -125,15 +162,6 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
         {
             if (RectTransformUtility.RectangleContainsScreenPoint(minimapUI, Input.mousePosition, uiCamera))
             {
-                if (currentNameMap != SceneManager.GetActiveScene().name)
-                {
-                    minimap = GameObject.Find("Grid").GetComponent<MapView>();
-                    minimapUI = GameObject.Find("MinimapUI").GetComponent<RectTransform>();
-                    fullMinimapUI = Resources.FindObjectsOfTypeAll<RectTransform>().FirstOrDefault(t => t.name == "FullMinimapUI");
-                    uiCamera = GameObject.Find("Canvas").GetComponent<Canvas>().worldCamera;
-                    currentNameMap = SceneManager.GetActiveScene().name;
-                }
-
                 if (!isFullMinimapOpen)
                 {
                     ShowFullMinimap();
@@ -188,40 +216,6 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
                     targetPosition = new Vector2(mob.transform.position.x, mob.transform.position.y);
                     isMovingToTarget = true;
                     return;
-                }
-            }
-
-            if (currentNameMap != SceneManager.GetActiveScene().name)
-            {
-                minimap = GameObject.Find("Grid").GetComponent<MapView>();
-                minimapUI = GameObject.Find("MinimapUI").GetComponent<RectTransform>();
-                fullMinimapUI = Resources.FindObjectsOfTypeAll<RectTransform>().FirstOrDefault(t => t.name == "FullMinimapUI");
-                uiCamera = GameObject.Find("Canvas").GetComponent<Canvas>().worldCamera;
-                currentNameMap = SceneManager.GetActiveScene().name;
-
-                string pathMapFile = Path.Combine(Application.streamingAssetsPath, $"Maps/{SceneManager.GetActiveScene().name}.bin");
-                mapData = new MapData();
-
-                if (!File.Exists(pathMapFile))
-                    return;
-
-                using (BinaryReader reader = new BinaryReader(File.Open(pathMapFile, FileMode.Open)))
-                {
-                    mapData.width = reader.ReadInt32();
-                    mapData.height = reader.ReadInt32();
-
-                    mapData.offsetX = reader.ReadInt32();
-                    mapData.offsetY = reader.ReadInt32();
-
-                    mapData.tiles = new byte[mapData.width, mapData.height];
-
-                    for (int y = 0; y < mapData.height; y++)
-                    {
-                        for (int x = 0; x < mapData.width; x++)
-                        {
-                            mapData.tiles[x, y] = reader.ReadByte();
-                        }
-                    }
                 }
             }
 
@@ -357,10 +351,12 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
                 if (Mathf.Abs(directionToTarget.x) > Mathf.Abs(directionToTarget.y))
                 {
                     movement.x = directionToTarget.x > 0 ? 1 : -1;
+                    movement.y = 0;
                 }
                 else
                 {
                     movement.y = directionToTarget.y > 0 ? 1 : -1;
+                    movement.x = 0;
                 }
 
                 float speed = moveSpeed * Time.deltaTime;

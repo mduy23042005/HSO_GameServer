@@ -1,8 +1,11 @@
 ﻿using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
-public class MovementMobController : MonoBehaviour, IUpdatable
+public class MobController : MonoBehaviour, IUpdatable
 {
+    [SerializeField] private Slider hpBar;
+
     private Vector2 movement;
     private TMP_Text uiNameMob;
 
@@ -37,7 +40,7 @@ public class MovementMobController : MonoBehaviour, IUpdatable
         Vector2 targetPos = new Vector2(syncMobDataMovement.posX, syncMobDataMovement.posY);
         movement = targetPos;
 
-        uiNameMob.text = $"[{syncMobDataMovement.id}] \n {syncMobDataMovement.nameMob}";
+        uiNameMob.text = $"[{syncMobDataMovement.id}] {syncMobDataMovement.nameMob}";
 
         UpdateAnimation();
     }
@@ -51,6 +54,9 @@ public class MovementMobController : MonoBehaviour, IUpdatable
         syncMobDataMovement = data;
 
         flipSprite.flipX = syncMobDataMovement.direction > 0;
+
+        hpBar.maxValue = syncMobDataMovement.maxHP;
+        hpBar.value = syncMobDataMovement.hp;
 
         movement = new Vector2(syncMobDataMovement.posX, syncMobDataMovement.posY);
     }

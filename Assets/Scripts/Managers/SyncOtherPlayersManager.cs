@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Security.Principal;
 using UnityEngine;
 
 public enum PlayerState
@@ -304,7 +303,6 @@ public class SyncOtherPlayersManager : MonoBehaviour, IUpdatable
             OffDataFromServer(offlinePlayer);
         }
 
-
         if (updateOtherPlayerHPUIData != null && updateOtherPlayerHPUIData.Length > 0)
         {
             PacketReaderManager reader1 = new PacketReaderManager(updateOtherPlayerHPUIData);
@@ -313,19 +311,22 @@ public class SyncOtherPlayersManager : MonoBehaviour, IUpdatable
             int mobDamage = reader1.ReadInt();
             int otherPlayerHP = reader1.ReadInt();
 
-            if (otherPlayers[idAccount].otherPlayerData.hp != otherPlayerHP && otherPlayers[idAccount] != null)
+            if (otherPlayers.TryGetValue(idAccount, out OtherPlayer otherPlayer) && otherPlayer != null && otherPlayer.otherPlayerData != null)
             {
-                if (otherPlayerHP < otherPlayers[idAccount].otherPlayerData.hp)
+                if (otherPlayers[idAccount].otherPlayerData.hp != otherPlayerHP)
                 {
-                    GameObject objectDamageUI = Instantiate(updateHPUI, otherPlayers[idAccount].otherPlayerObject.GetComponentInChildren<Canvas>().transform, false);
-
-                    UpdateHPUI injuredDamageUI = objectDamageUI.GetComponent<UpdateHPUI>();
-                    if (injuredDamageUI != null)
+                    if (otherPlayerHP < otherPlayers[idAccount].otherPlayerData.hp)
                     {
-                        injuredDamageUI.SetInjuredDamage(mobDamage);
+                        GameObject objectDamageUI = Instantiate(updateHPUI, otherPlayers[idAccount].otherPlayerObject.GetComponentInChildren<Canvas>().transform, false);
+
+                        UpdateHPUIController injuredDamageUI = objectDamageUI.GetComponent<UpdateHPUIController>();
+                        if (injuredDamageUI != null)
+                        {
+                            injuredDamageUI.SetInjuredDamage(mobDamage);
+                        }
                     }
+                    otherPlayers[idAccount].otherPlayerData.hp = otherPlayerHP;
                 }
-                otherPlayers[idAccount].otherPlayerData.hp = otherPlayerHP;
             }
         }
     }

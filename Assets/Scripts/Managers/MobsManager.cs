@@ -7,6 +7,9 @@ public class SyncMobData
     public int id;
     public int idMob;
     public string nameMob;
+    public int maxHP;
+    public int hp;
+    public int level;
     public float posX;
     public float posY;
     public string state;
@@ -28,6 +31,7 @@ public class Mob
 public class MobsManager : MonoBehaviour, IUpdatable
 {
     [SerializeField] private List<GameObject> mobPrefabs;
+    [SerializeField] private GameObject updateHPUI;
 
     private Dictionary<int, Mob> mobs = new Dictionary<int, Mob>();
     private Dictionary<int, float> lastUpdateTime = new Dictionary<int, float>();
@@ -56,35 +60,91 @@ public class MobsManager : MonoBehaviour, IUpdatable
     public void OnUpdate()
     {
         byte[] mobSyncData = socketManager.GetSyncMobsData();
+        byte[] playerAttackMob = socketManager.GetPlayerAttackMobData();
+        byte[] otherPlayerAttackMob = socketManager.GetOtherPlayerAttackMobData();
 
-        if (mobSyncData == null || mobSyncData.Length == 0)
+        if (mobSyncData != null && mobSyncData.Length > 0)
         {
-            return;
-        }
+            PacketReaderManager reader = new PacketReaderManager(mobSyncData);
 
-        PacketReaderManager reader = new PacketReaderManager(mobSyncData);
+            SyncMobDataPacket data = new SyncMobDataPacket();
+            data.cmd = (EnumCmdCode)reader.ReadInt();
+            data.mobsData = new List<SyncMobData>();
 
-        SyncMobDataPacket data = new SyncMobDataPacket();
-        data.cmd = (EnumCmdCode)reader.ReadInt();
-        data.mobsData = new List<SyncMobData>();
-
-        int countSyncMobData = reader.ReadInt();
-        for (int i = 0; i < countSyncMobData; i++)
-        {
-            data.mobsData.Add(new SyncMobData
+            int countSyncMobData = reader.ReadInt();
+            for (int i = 0; i < countSyncMobData; i++)
             {
-                id = reader.ReadInt(),
-                idMob = reader.ReadInt(),
-                nameMob = reader.ReadString(),
-                posX = reader.ReadFloat(),
-                posY = reader.ReadFloat(),
-                state = reader.ReadString(),
-                idState = reader.ReadInt(),
-                direction = reader.ReadInt(),
-            });
+                data.mobsData.Add(new SyncMobData
+                {
+                    id = reader.ReadInt(),
+                    idMob = reader.ReadInt(),
+                    nameMob = reader.ReadString(),
+                    maxHP = reader.ReadInt(),
+                    hp = reader.ReadInt(),
+                    level = reader.ReadInt(),
+                    posX = reader.ReadFloat(),
+                    posY = reader.ReadFloat(),
+                    state = reader.ReadString(),
+                    idState = reader.ReadInt(),
+                    direction = reader.ReadInt(),
+                });
+            }
+            OnMobDataFromServer(data);
         }
 
-        OnMobDataFromServer(data);
+        if (playerAttackMob != null && playerAttackMob.Length > 0)
+        {
+            PacketReaderManager reader = new PacketReaderManager(playerAttackMob);
+            EnumCmdCode cmd = (EnumCmdCode)reader.ReadInt();
+            int aimedMobID = reader.ReadInt();
+            int damage = reader.ReadInt();
+            int hpMobAfterAttack = reader.ReadInt();
+
+            if (mobs[aimedMobID] != null)
+            {
+                if (mobs[aimedMobID].mobData.hp != hpMobAfterAttack)
+                {
+                    if (hpMobAfterAttack < mobs[aimedMobID].mobData.hp)
+                    {
+                        GameObject objectDamageUI = Instantiate(updateHPUI, mobs[aimedMobID].mobObject.GetComponentInChildren<Canvas>().transform, false);
+
+                        UpdateHPUIController injuredDamageUI = objectDamageUI.GetComponent<UpdateHPUIController>();
+                        if (injuredDamageUI != null)
+                        {
+                            injuredDamageUI.SetInjuredDamage(damage);
+                        }
+                    }
+                    mobs[aimedMobID].mobData.hp = hpMobAfterAttack;
+                }
+            }
+        }
+
+        if (otherPlayerAttackMob != null && otherPlayerAttackMob.Length > 0)
+        {
+            PacketReaderManager reader = new PacketReaderManager(otherPlayerAttackMob);
+            EnumCmdCode cmd = (EnumCmdCode)reader.ReadInt();
+            int aimedMobID = reader.ReadInt();
+            int damage = reader.ReadInt();
+            int hpMobAfterAttack = reader.ReadInt();
+
+            if (mobs[aimedMobID] != null)
+            {
+                if (mobs[aimedMobID].mobData.hp != hpMobAfterAttack)
+                {
+                    if (hpMobAfterAttack < mobs[aimedMobID].mobData.hp)
+                    {
+                        GameObject objectDamageUI = Instantiate(updateHPUI, mobs[aimedMobID].mobObject.GetComponentInChildren<Canvas>().transform, false);
+
+                        UpdateHPUIController injuredDamageUI = objectDamageUI.GetComponent<UpdateHPUIController>();
+                        if (injuredDamageUI != null)
+                        {
+                            injuredDamageUI.SetInjuredDamage(damage);
+                        }
+                    }
+                    mobs[aimedMobID].mobData.hp = hpMobAfterAttack;
+                }
+            }
+        }
 
         HandleTimeoutMob();
     }
@@ -129,8 +189,12 @@ public class MobsManager : MonoBehaviour, IUpdatable
 
                 mobs.Add(mobData.id, mob);
             }
+            else
+            {
+                mob.mobData = mobData;
+            }
 
-            mob.mobObject.GetComponent<MovementMobController>().ApplyServerState(mobData);
+            mob.mobObject.GetComponent<MobController>().ApplyServerState(mobData);
             lastUpdateTime[mobData.id] = Time.time;
         }
     }

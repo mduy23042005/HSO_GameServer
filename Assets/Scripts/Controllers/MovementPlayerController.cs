@@ -5,7 +5,13 @@ using System.IO;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.Tilemaps;
+
+public class PlayerAttackDataPacket
+{
+    public EnumCmdCode cmd;
+    public int idAccount;
+    public int aimedMobID;
+}
 
 public class MovementPlayerController : MonoBehaviour, IUpdatable
 {
@@ -27,7 +33,7 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
 
     private (int x, int y) startPosition;
     private (int x, int y) endMovementPosition;
-    private MovementMobController mob;
+    private MobController mob;
     private List<(int x, int y)> path;
     private int pathIndex;
     private AStarManager astar = new AStarManager();
@@ -204,7 +210,7 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
             RaycastHit2D hit = Physics2D.GetRayIntersection(Camera.main.ScreenPointToRay(Input.mousePosition));
             if (hit.collider.CompareTag("Mob"))
             {
-                mob = hit.collider.GetComponent<MovementMobController>();
+                mob = hit.collider.GetComponent<MobController>();
 
                 if (mob != null)
                 {
@@ -283,31 +289,7 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
         RightClick();
 
         if (isMovingToTarget)
-        {
-            if (mob != null)
-            {
-                targetPosition = new Vector2(mob.transform.position.x, mob.transform.position.y);
-
-                if (Vector2.Distance(transform.position, targetPosition) <= 0.5f)
-                {
-                    path = null;
-                    isMovingToTarget = false;
-                    if (minimap != null)
-                        minimap.ClearAStarPath();
-                    movement = lastMove;
-                    return;
-                }
-
-                // kiểm tra xem mob có đổi vị trí không (tính theo grid)
-                var newMobGrid = ToGrid(targetPosition);
-
-                if (newMobGrid != endMovementPosition) // nếu mà đã đổi vị trí thì ép FindPath() của A* chạy lại
-                {
-                    endMovementPosition = newMobGrid;
-                    path = null;
-                }
-            }
-
+        { 
             // chưa có path thì tạo mới
             if (path == null || path.Count == 0)
             {
@@ -366,6 +348,48 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
                 {
                     transform.position = nextPosition;
                     MoveStop();
+
+                    if (mob != null)
+                    {
+                        targetPosition = new Vector2(mob.transform.position.x, mob.transform.position.y);
+
+                        if (Vector2.Distance(transform.position, targetPosition) <= 0.5f)
+                        {
+                            path = null;
+                            isMovingToTarget = false;
+                            if (minimap != null)
+                                minimap.ClearAStarPath();
+                            movement = lastMove;
+
+                            currentState = PlayerState.Attack;
+                            TriggerAnimation("Atk", 0.25f);
+
+                            PlayerAttackDataPacket attackDataPacket = new PlayerAttackDataPacket
+                            {
+                                cmd = (EnumCmdCode)EnumCmdCode.playerAttackMob,
+                                idAccount = LogInView.GetIDAccount() ?? 0,
+                                aimedMobID = mob.GetID(),
+                            };
+
+                            PacketWriterManager writer = new PacketWriterManager();
+                            writer.WriteInt((int)attackDataPacket.cmd);
+                            writer.WriteInt(attackDataPacket.idAccount);
+                            writer.WriteInt(attackDataPacket.aimedMobID);
+
+                            socketManager.SendToServer(writer.ToArray());
+
+                            return;
+                        }
+
+                        // kiểm tra xem mob có đổi vị trí không (tính theo grid)
+                        var newMobGrid = ToGrid(targetPosition);
+
+                        if (newMobGrid != endMovementPosition) // nếu mà đã đổi vị trí thì ép FindPath() của A* chạy lại
+                        {
+                            endMovementPosition = newMobGrid;
+                            path = null;
+                        }
+                    }
                 }
                 else
                 {

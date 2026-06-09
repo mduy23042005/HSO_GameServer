@@ -41579,7 +41579,7 @@ Tilemap:
       m_AnimatedSprites:
       - {fileID: -1078200139, guid: c4041bd80a99fe848a202672264a34e0, type: 3}
       - {fileID: 412035932, guid: 0b47aaa31490e944aae87f0316379a0b, type: 3}
-      m_AnimationSpeed: 5
+      m_AnimationSpeed: 5.0000005
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 6, y: 0, z: 0}
@@ -41633,7 +41633,7 @@ Tilemap:
       m_AnimatedSprites:
       - {fileID: 110896941, guid: c4041bd80a99fe848a202672264a34e0, type: 3}
       - {fileID: -574573773, guid: 0b47aaa31490e944aae87f0316379a0b, type: 3}
-      m_AnimationSpeed: 5.0000005
+      m_AnimationSpeed: 5
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -1, y: 1, z: 0}
@@ -41732,7 +41732,7 @@ Tilemap:
       m_AnimatedSprites:
       - {fileID: -413025458, guid: c4041bd80a99fe848a202672264a34e0, type: 3}
       - {fileID: -1180023014, guid: 0b47aaa31490e944aae87f0316379a0b, type: 3}
-      m_AnimationSpeed: 5
+      m_AnimationSpeed: 5.0000005
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 22, y: 1, z: 0}
@@ -41759,7 +41759,7 @@ Tilemap:
       m_AnimatedSprites:
       - {fileID: 110896941, guid: c4041bd80a99fe848a202672264a34e0, type: 3}
       - {fileID: -574573773, guid: 0b47aaa31490e944aae87f0316379a0b, type: 3}
-      m_AnimationSpeed: 5.0000005
+      m_AnimationSpeed: 5
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -1, y: 2, z: 0}
@@ -41858,7 +41858,7 @@ Tilemap:
       m_AnimatedSprites:
       - {fileID: -413025458, guid: c4041bd80a99fe848a202672264a34e0, type: 3}
       - {fileID: -1180023014, guid: 0b47aaa31490e944aae87f0316379a0b, type: 3}
-      m_AnimationSpeed: 5.0000005
+      m_AnimationSpeed: 5
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 22, y: 2, z: 0}
@@ -41885,7 +41885,7 @@ Tilemap:
       m_AnimatedSprites:
       - {fileID: -862486746, guid: c4041bd80a99fe848a202672264a34e0, type: 3}
       - {fileID: -878064477, guid: 0b47aaa31490e944aae87f0316379a0b, type: 3}
-      m_AnimationSpeed: 5
+      m_AnimationSpeed: 5.0000005
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -2, y: 3, z: 0}
@@ -43898,6 +43898,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mobPrefabs:
   - {fileID: 2655762381315422256, guid: 3201f3fba9987b04686a81558dd9e9a1, type: 3}
+  updateHPUI: {fileID: 2422661778410389371, guid: 5e93a4fbfcec88544ba942eda07152dd, type: 3}
 --- !u!224 &2011256563
 RectTransform:
   m_ObjectHideFlags: 0

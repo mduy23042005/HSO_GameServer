@@ -1,7 +1,7 @@
 ﻿using TMPro;
 using UnityEngine;
 
-public class UpdateHPUI : MonoBehaviour, IUpdatable
+public class UpdateHPUIController : MonoBehaviour, IUpdatable
 {
     private float moveSpeed = 250f;
     private float lifeTime = 0.5f;

@@ -41,6 +41,9 @@ public class SocketManager : MonoBehaviour, IUpdatable
 
     private readonly ConcurrentQueue<byte[]> outfitSpritesQueue = new ConcurrentQueue<byte[]>();
 
+    private readonly ConcurrentQueue<byte[]> playerAttackMobQueues = new ConcurrentQueue<byte[]>();
+    private readonly ConcurrentQueue<byte[]> otherPlayerAttackMobQueues = new ConcurrentQueue<byte[]>();
+
     private GameObject player;
 
     private void Awake()
@@ -407,6 +410,14 @@ public class SocketManager : MonoBehaviour, IUpdatable
                 outfitSpritesQueue.Enqueue(data);
                 break;
 
+            case EnumCmdCode.playerAttackMob:
+                playerAttackMobQueues.Enqueue(data);
+                break;
+            case EnumCmdCode.otherPlayerAttackMob:
+                Debug.Log("Received otherPlayerAttackMob packet");
+                otherPlayerAttackMobQueues.Enqueue(data);
+                break;
+
             default:
                 receiveQueue.Enqueue(data);
                 break;
@@ -442,6 +453,13 @@ public class SocketManager : MonoBehaviour, IUpdatable
 
         return null;
     }
+    public byte[] GetMobsAttackOtherPlayerData()
+    {
+        if (mobsAttackOtherPlayerQueue.TryDequeue(out var data))
+            return data;
+
+        return null;
+    }
     public byte[] GetMobsHealData()
     {
         if (mobsHealQueue.TryDequeue(out var data))
@@ -459,13 +477,6 @@ public class SocketManager : MonoBehaviour, IUpdatable
     public byte[] GetMobsDieData()
     {
         if (mobsDieQueue.TryDequeue(out var data))
-            return data;
-
-        return null;
-    }
-    public byte[] GetMobsAttackOtherPlayerData()
-    {
-        if (mobsAttackOtherPlayerQueue.TryDequeue(out var data))
             return data;
 
         return null;
@@ -542,6 +553,18 @@ public class SocketManager : MonoBehaviour, IUpdatable
 
         return null;
     }
+    public byte[] GetPlayerAttackMobData()
+    {
+        if (playerAttackMobQueues.TryDequeue(out var data))
+            return data;
+        return null;
+    }
+    public byte[] GetOtherPlayerAttackMobData()
+    {
+        if (otherPlayerAttackMobQueues.TryDequeue(out var data))
+            return data;
+        return null;
+    }
 
     private async void OnApplicationQuit()
     {
@@ -581,6 +604,9 @@ public class SocketManager : MonoBehaviour, IUpdatable
         ClearQueue(equipmentAttributesQueue);
 
         ClearQueue(outfitSpritesQueue);
+
+        ClearQueue(playerAttackMobQueues);
+        ClearQueue(otherPlayerAttackMobQueues);
     }
     private void ClearQueue(ConcurrentQueue<byte[]> queue)
     {

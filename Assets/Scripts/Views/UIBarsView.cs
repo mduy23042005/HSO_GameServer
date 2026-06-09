@@ -123,7 +123,7 @@ public class UIBarsView : MonoBehaviour, IUpdatable
 
                 GameObject objectDamageUI = Instantiate(updateHPUI, player.GetComponentInChildren<Canvas>().transform, false);
 
-                UpdateHPUI injuredDamageUI = objectDamageUI.GetComponent<UpdateHPUI>();
+                UpdateHPUIController injuredDamageUI = objectDamageUI.GetComponent<UpdateHPUIController>();
                 if (injuredDamageUI != null)
                 {
                     injuredDamageUI.SetInjuredDamage(mobDamage);

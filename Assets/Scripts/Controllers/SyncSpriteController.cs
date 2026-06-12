@@ -5,6 +5,13 @@ using UnityEngine.UI;
 
 public class SyncSpriteController : MonoBehaviour, IUpdatable
 {
+    [SerializeField] private GameObject shadow;
+    [SerializeField] private GameObject waterShadow;
+
+    private AStarManager astar = new AStarManager();
+    private bool isStandingInWater = false;
+    private TileType currentTileType;
+
     private PlayerTransformData otherPlayerTransform = new PlayerTransformData();
     private PlayerStateData otherPlayerState = new PlayerStateData();
 
@@ -26,6 +33,9 @@ public class SyncSpriteController : MonoBehaviour, IUpdatable
     private void Awake()
     {
         listItem0 = ItemController.Instance;
+
+        if (waterShadow != null)
+            waterShadow.SetActive(false);
     }
 
     private void OnEnable()
@@ -78,6 +88,8 @@ public class SyncSpriteController : MonoBehaviour, IUpdatable
         hpBar.maxValue = serverData.maxHP;
         hpBar.value = serverData.hp;
 
+        currentTileType = serverData.currentTile;
+
         UpdateSprite();
     }
 
@@ -91,6 +103,35 @@ public class SyncSpriteController : MonoBehaviour, IUpdatable
         otherPlayerScale.y = otherPlayerTransform.scaleData.y;
         otherPlayerScale.z = otherPlayerTransform.scaleData.z;
         transform.localScale = otherPlayerScale;
+
+        if (currentTileType == TileType.Water)
+        {
+            shadow.SetActive(false);
+            waterShadow.SetActive(true);
+
+            // chỉ chạy đúng 1 lần khi vừa xuống nước
+            if (!isStandingInWater)
+            {
+                transform.position = new Vector3(transform.position.x, transform.position.y - 0.2f, transform.position.z);
+                waterShadow.transform.position = new Vector3(transform.position.x, transform.position.y + 0.2f, transform.position.z);
+
+                isStandingInWater = true;
+            }
+        }
+        else
+        {
+            shadow.SetActive(true);
+            waterShadow.SetActive(false);
+
+            // chỉ chạy đúng 1 lần khi vừa lên bờ
+            if (isStandingInWater)
+            {
+                transform.position = new Vector3(transform.position.x, transform.position.y + 0.2f, transform.position.z);
+                waterShadow.transform.position = new Vector3(transform.position.x, transform.position.y - 0.2f, transform.position.z);
+
+                isStandingInWater = false;
+            }
+        }
     }
     public void OnLateUpdate() { }
     public void OnFixedUpdate() { }

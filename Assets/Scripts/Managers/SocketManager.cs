@@ -122,6 +122,7 @@ public class SocketManager : MonoBehaviour, IUpdatable
                     helmet = playerSpriteController.GetHelmetData(),
                     armor = playerSpriteController.GetArmorData(),
                     legArmor = playerSpriteController.GetLegArmorData(),
+                    currentTile = playerMovementController.GetCurrentTileType(),
                 },
                 playerTransformData = new PlayerTransformData
                 {
@@ -205,6 +206,7 @@ public class SocketManager : MonoBehaviour, IUpdatable
         writer.WriteInt(packet.playerSyncData.playerData.mounts);
         writer.WriteInt(packet.playerSyncData.playerData.pet);
         writer.WriteInt(packet.playerSyncData.playerData.skin);
+        writer.WriteInt((int) packet.playerSyncData.playerData.currentTile);
 
         writer.WriteFloat(packet.playerSyncData.playerTransformData.positionData.x);
         writer.WriteFloat(packet.playerSyncData.playerTransformData.positionData.y);

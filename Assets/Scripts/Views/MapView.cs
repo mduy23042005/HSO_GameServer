@@ -8,6 +8,7 @@ using UnityEngine.UI;
 
 public enum TileType
 {
+    None = -1,
     Ground = 0,
     Water = 1,
     Wall = 2,

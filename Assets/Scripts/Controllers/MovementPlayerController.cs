@@ -15,6 +15,9 @@ public class PlayerAttackDataPacket
 
 public class MovementPlayerController : MonoBehaviour, IUpdatable
 {
+    [SerializeField] private GameObject shadow;
+    [SerializeField] private GameObject waterShadow;
+
     private float moveSpeed = 6f;
     private Vector2 movement;
     private Vector2 lastMove = new Vector2(0, -1);
@@ -23,6 +26,7 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
     private Animator animator;
     private MenuView menu;
     private bool isBusy = false;
+    private bool isStandingInWater = false;
 
     private MapView minimap;
     private RectTransform minimapUI;
@@ -46,6 +50,8 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
     {
         animator = GetComponent<Animator>();
         menu = FindAnyObjectByType<MenuView>(FindObjectsInactive.Include);
+        if (waterShadow != null)
+            waterShadow.SetActive(false);
 
         socketManager = GameManager.Instance.GetComponent<SocketManager>();
     }
@@ -97,6 +103,34 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
             transform.localScale = new Vector3(callBackPacket.scaleData.x, callBackPacket.scaleData.y, callBackPacket.scaleData.z);
         }
 
+        if (astar.IsStandInWater(mapData, transform.position.x, transform.position.y))
+        {
+            shadow.SetActive(false);
+            waterShadow.SetActive(true);
+
+            // chỉ chạy đúng 1 lần khi vừa xuống nước
+            if (!isStandingInWater)
+            {
+                transform.position = new Vector3(transform.position.x, transform.position.y - 0.2f, transform.position.z);
+                waterShadow.transform.position = new Vector3(transform.position.x, transform.position.y + 0.2f, transform.position.z);
+
+                isStandingInWater = true;
+            }
+        }
+        else
+        {
+            shadow.SetActive(true);
+            waterShadow.SetActive(false);
+
+            // chỉ chạy đúng 1 lần khi vừa lên bờ
+            if (isStandingInWater)
+            {
+                transform.position = new Vector3(transform.position.x, transform.position.y + 0.2f, transform.position.z);
+                waterShadow.transform.position = new Vector3(transform.position.x, transform.position.y - 0.2f, transform.position.z);
+
+                isStandingInWater = false;
+            }
+        }
     }
     public virtual void OnLateUpdate() { }
     public virtual void OnFixedUpdate() { }
@@ -442,6 +476,11 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
     public PlayerState GetCurrentState()
     {
         return currentState;
+    }
+
+    public TileType GetCurrentTileType()
+    {
+        return astar.GetTileType(mapData, transform.position.x, transform.position.y);
     }
 
     private void UpdateMoveToAnimator()

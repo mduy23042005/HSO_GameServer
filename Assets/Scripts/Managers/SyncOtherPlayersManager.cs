@@ -89,6 +89,7 @@ public class PlayerData
     public int maxMP;
     public int hp;
     public int mp;
+    public TileType currentTile;
 }
 public class PlayerSyncData
 {
@@ -214,6 +215,7 @@ public class SyncOtherPlayersManager : MonoBehaviour, IUpdatable
                         skin = reader.ReadInt(),
                         maxHP = reader.ReadInt(),
                         hp = reader.ReadInt(),
+                        currentTile = (TileType)reader.ReadInt(),
                     },
                     otherPlayerTransformData = new PlayerTransformData
                     {

@@ -325,4 +325,9 @@ public class SpriteController : MonoBehaviour, IUpdatable
             }
         }
     }
+
+    public List<SpriteLibrary> GetListSpriteLibraries()
+    {
+        return spriteLibraries;
+    }
 }

@@ -23,12 +23,12 @@ public class SocketManager : MonoBehaviour, IUpdatable
     private readonly ConcurrentQueue<byte[]> mobsAttackPlayerQueue = new ConcurrentQueue<byte[]>();
     private readonly ConcurrentQueue<byte[]> mobsHealQueue = new ConcurrentQueue<byte[]>();
     private readonly ConcurrentQueue<byte[]> mobsInjuredQueue = new ConcurrentQueue<byte[]>();
-    private readonly ConcurrentQueue<byte[]> mobsDieQueue = new ConcurrentQueue<byte[]>();
     private readonly ConcurrentQueue<byte[]> mobsAttackOtherPlayerQueue = new ConcurrentQueue<byte[]>();
 
     private readonly ConcurrentQueue<byte[]> syncCallBackQueue = new ConcurrentQueue<byte[]>();
     private readonly ConcurrentQueue<byte[]> syncOtherPlayersQueue = new ConcurrentQueue<byte[]>();
     private readonly ConcurrentQueue<byte[]> syncMobsQueue = new ConcurrentQueue<byte[]>();
+    private readonly ConcurrentQueue<byte[]> syncMobsDeadQueue = new ConcurrentQueue<byte[]>();
 
     private readonly ConcurrentQueue<byte[]> logInQueue = new ConcurrentQueue<byte[]>();
     private readonly ConcurrentQueue<byte[]> logOutQueue = new ConcurrentQueue<byte[]>();
@@ -359,9 +359,6 @@ public class SocketManager : MonoBehaviour, IUpdatable
             case EnumCmdCode.mobsInjured:
                 mobsInjuredQueue.Enqueue(data);
                 break;
-            case EnumCmdCode.mobsDie:
-                mobsDieQueue.Enqueue(data);
-                break;
             case EnumCmdCode.mobsAttackOtherPlayer:
                 mobsAttackOtherPlayerQueue.Enqueue(data);
                 break;
@@ -375,9 +372,13 @@ public class SocketManager : MonoBehaviour, IUpdatable
                     syncOtherPlayersQueue.Enqueue(data);
                 break;
 
-            case EnumCmdCode.syncMobData:
+            case EnumCmdCode.syncMobsData:
                 if (LogInView.GetIDAccount() != 0)
                     syncMobsQueue.Enqueue(data);
+                break;
+            case EnumCmdCode.syncMobsDeadData:
+                if (LogInView.GetIDAccount() != 0)
+                    syncMobsDeadQueue.Enqueue(data);
                 break;
 
             case EnumCmdCode.login:
@@ -476,13 +477,6 @@ public class SocketManager : MonoBehaviour, IUpdatable
 
         return null;
     }
-    public byte[] GetMobsDieData()
-    {
-        if (mobsDieQueue.TryDequeue(out var data))
-            return data;
-
-        return null;
-    }
 
     public byte[] GetSyncCallBackData()
     {
@@ -499,6 +493,12 @@ public class SocketManager : MonoBehaviour, IUpdatable
     public byte[] GetSyncMobsData()
     {
         if (syncMobsQueue.TryDequeue(out var data))
+            return data;
+        return null;
+    }
+    public byte[] GetSyncMobsDeadData()
+    {
+        if (syncMobsDeadQueue.TryDequeue(out var data))
             return data;
         return null;
     }

@@ -105,7 +105,6 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
 
         if (astar.IsStandInWater(mapData, transform.position.x, transform.position.y))
         {
-            shadow.SetActive(false);
             waterShadow.SetActive(true);
 
             // chỉ chạy đúng 1 lần khi vừa xuống nước
@@ -119,7 +118,6 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
         }
         else
         {
-            shadow.SetActive(true);
             waterShadow.SetActive(false);
 
             // chỉ chạy đúng 1 lần khi vừa lên bờ

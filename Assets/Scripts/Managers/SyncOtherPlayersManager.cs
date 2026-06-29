@@ -385,6 +385,10 @@ public class SyncOtherPlayersManager : MonoBehaviour, IUpdatable
             Destroy(otherPlayer.otherPlayerObject);
             otherPlayers.Remove(data.idAccount);
         }
+        if (lastUpdateTime.TryGetValue(data.idAccount, out float lastTime))
+        {
+            lastUpdateTime.Remove(data.idAccount);
+        }
     }
 
     public Dictionary<int, OtherPlayer> GetOtherPlayers()

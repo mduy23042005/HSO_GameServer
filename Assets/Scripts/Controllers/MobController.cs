@@ -6,20 +6,26 @@ public class MobController : MonoBehaviour, IUpdatable
 {
     [SerializeField] private Slider hpBar;
 
+    [SerializeField] private GameObject shadow;
+    [SerializeField] private GameObject waterShadow;
+
     private Vector2 movement;
     private TMP_Text uiNameMob;
 
     private SyncMobData syncMobDataMovement;
     private int lastIDState = -1; // nhằm phân biệt các trạng thái atk/injured khác nhau khi có nhiều packet cùng loại chỉ yêu cầu thực hiện 1 trạng thái
+    private bool isStandingInWater = false;
 
     private SpriteRenderer flipSprite;
     private Animator animator;
+    private MobsManager mobsManager;
 
     private void Awake()
     {
         flipSprite = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
         uiNameMob = GetComponentInChildren<TMP_Text>();
+        mobsManager = GameObject.Find("SyncManager").GetComponent<MobsManager>();
     }
     private void OnEnable()
     {
@@ -59,6 +65,32 @@ public class MobController : MonoBehaviour, IUpdatable
         hpBar.value = syncMobDataMovement.hp;
 
         movement = new Vector2(syncMobDataMovement.posX, syncMobDataMovement.posY);
+
+        if (syncMobDataMovement.currentTile == TileType.Water)
+        {
+            waterShadow.SetActive(true);
+
+            // chỉ chạy đúng 1 lần khi vừa xuống nước
+            if (!isStandingInWater)
+            {
+                transform.position = new Vector3(transform.position.x, transform.position.y + 0.4f, transform.position.z);
+                waterShadow.transform.position = new Vector3(transform.position.x, transform.position.y - 0.4f, transform.position.z);
+
+                isStandingInWater = true;
+            }
+        }
+        else
+        {
+            waterShadow.SetActive(false);
+
+            if (isStandingInWater)
+            {
+                transform.position = new Vector3(transform.position.x, transform.position.y - 0.4f, transform.position.z);
+                waterShadow.transform.position = new Vector3(transform.position.x, transform.position.y + 0.4f, transform.position.z);
+
+                isStandingInWater = false;
+            }
+        }
     }
     private void UpdateAnimation()
     {
@@ -83,9 +115,7 @@ public class MobController : MonoBehaviour, IUpdatable
                 else // nhiều packet atk cùng loại (nhiều packet atk state cùng loại)
                 {
                     if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Atk") || animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)
-                    {
                         animator.Play("Stand");
-                    }
                 }
                 break;
 
@@ -98,9 +128,19 @@ public class MobController : MonoBehaviour, IUpdatable
                 else
                 {
                     if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Injured") || animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)
-                    {
                         animator.Play("Stand");
-                    }
+                }
+                break;
+
+            case "Die":
+                if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Die"))
+                {
+                    animator.Play("Die", 0, 0f);
+                }
+                else
+                {
+                    if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Die") || animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)
+                        mobsManager.ApplyMobDead(syncMobDataMovement.id);
                 }
                 break;
         }

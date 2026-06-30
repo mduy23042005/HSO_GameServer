@@ -1,5 +1,7 @@
-﻿using UnityEngine;
+﻿using System.IO;
 using TMPro;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class MobController : MonoBehaviour, IUpdatable
@@ -15,6 +17,9 @@ public class MobController : MonoBehaviour, IUpdatable
     private SyncMobData syncMobDataMovement;
     private int lastIDState = -1; // nhằm phân biệt các trạng thái atk/injured khác nhau khi có nhiều packet cùng loại chỉ yêu cầu thực hiện 1 trạng thái
     private bool isStandingInWater = false;
+    private AStarManager astar = new AStarManager();
+    private MapData mapData;
+    private string currentNameMap;
 
     private SpriteRenderer flipSprite;
     private Animator animator;
@@ -48,6 +53,34 @@ public class MobController : MonoBehaviour, IUpdatable
 
         uiNameMob.text = $"[{syncMobDataMovement.id}] {syncMobDataMovement.nameMob}";
 
+        ReadMap();
+
+        if (syncMobDataMovement.currentTile == TileType.Water && astar.IsStandInWater(mapData, transform.position.x, transform.position.y))
+        {
+            waterShadow.SetActive(true);
+
+            // chỉ chạy đúng 1 lần khi vừa xuống nước
+            if (!isStandingInWater)
+            {
+                transform.position = new Vector3(transform.position.x, transform.position.y + 0.3f, transform.position.z);
+                waterShadow.transform.position = new Vector3(transform.position.x, transform.position.y - 0.3f, transform.position.z);
+
+                isStandingInWater = true;
+            }
+        }
+        else
+        {
+            waterShadow.SetActive(false);
+
+            if (isStandingInWater)
+            {
+                transform.position = new Vector3(transform.position.x, transform.position.y - 0.3f, transform.position.z);
+                waterShadow.transform.position = new Vector3(transform.position.x, transform.position.y + 0.3f, transform.position.z);
+
+                isStandingInWater = false;
+            }
+        }
+
         UpdateAnimation();
     }
     public void OnLateUpdate() { }
@@ -63,32 +96,34 @@ public class MobController : MonoBehaviour, IUpdatable
 
         hpBar.maxValue = syncMobDataMovement.maxHP;
         hpBar.value = syncMobDataMovement.hp;
-
-        movement = new Vector2(syncMobDataMovement.posX, syncMobDataMovement.posY);
-
-        if (syncMobDataMovement.currentTile == TileType.Water)
+    }
+    private void ReadMap()
+    {
+        if (currentNameMap != SceneManager.GetActiveScene().name)
         {
-            waterShadow.SetActive(true);
+            string pathMapFile = Path.Combine(Application.streamingAssetsPath, $"Maps/{SceneManager.GetActiveScene().name}.bin");
+            mapData = new MapData();
 
-            // chỉ chạy đúng 1 lần khi vừa xuống nước
-            if (!isStandingInWater)
+            if (!File.Exists(pathMapFile))
+                return;
+
+            using (BinaryReader reader = new BinaryReader(File.Open(pathMapFile, FileMode.Open)))
             {
-                transform.position = new Vector3(transform.position.x, transform.position.y + 0.4f, transform.position.z);
-                waterShadow.transform.position = new Vector3(transform.position.x, transform.position.y - 0.4f, transform.position.z);
+                mapData.width = reader.ReadInt32();
+                mapData.height = reader.ReadInt32();
 
-                isStandingInWater = true;
-            }
-        }
-        else
-        {
-            waterShadow.SetActive(false);
+                mapData.offsetX = reader.ReadInt32();
+                mapData.offsetY = reader.ReadInt32();
 
-            if (isStandingInWater)
-            {
-                transform.position = new Vector3(transform.position.x, transform.position.y - 0.4f, transform.position.z);
-                waterShadow.transform.position = new Vector3(transform.position.x, transform.position.y + 0.4f, transform.position.z);
+                mapData.tiles = new byte[mapData.width, mapData.height];
 
-                isStandingInWater = false;
+                for (int y = 0; y < mapData.height; y++)
+                {
+                    for (int x = 0; x < mapData.width; x++)
+                    {
+                        mapData.tiles[x, y] = reader.ReadByte();
+                    }
+                }
             }
         }
     }

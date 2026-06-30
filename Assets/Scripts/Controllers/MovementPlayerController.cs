@@ -265,6 +265,7 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
             }
 
             // nếu hợp lệ thì move
+            // trước khi làm path null phải kiểm tra hướng và điểm click
             targetPosition = clickPos;
             isMovingToTarget = true;
             path = null;

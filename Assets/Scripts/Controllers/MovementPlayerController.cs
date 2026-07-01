@@ -35,7 +35,8 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
     private bool isFullMinimapOpen = false;
     private string currentNameMap;
 
-    private (int x, int y) startPosition;
+    private Vector2 currentPosition;
+    private (int x, int y) startMovementPosition;
     private (int x, int y) endMovementPosition;
     private MobController mob;
     private List<(int x, int y)> path;
@@ -268,7 +269,7 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
             // trước khi làm path null phải kiểm tra hướng và điểm click
             targetPosition = clickPos;
             isMovingToTarget = true;
-            path = null;
+            
             mob = null;
         }
     }
@@ -298,7 +299,7 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
             else
             {
                 path = null; // reset để lần sau tạo path mới
-                startPosition = endMovementPosition;
+                startMovementPosition = endMovementPosition;
                 isMovingToTarget = false;
                 if (minimap != null)
                     minimap.ClearAStarPath();
@@ -316,37 +317,51 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
     }
     public virtual void MoveMouse()
     {
-        if ((menu != null && menu.GetIsActive()) || isBusy)     
+        if ((menu != null && menu.GetIsActive()) || isBusy)
             return;
 
         RightClick();
 
         if (isMovingToTarget)
-        { 
-            // chưa có path thì tạo mới
-            if (path == null || path.Count == 0)
+        {
+            currentPosition = transform.position;
+            var targetGrid = ToGrid(targetPosition);
+
+            if (path == null || path.Count == 0 || endMovementPosition != targetGrid)
             {
-                startPosition = ToGrid(transform.position);
-                endMovementPosition = ToGrid(targetPosition);
+                // Nếu đang di chuyển mà click chỗ khác, lấy node kế tiếp làm điểm bắt đầu để tránh giật lùi
+                if (path != null && pathIndex < path.Count)
+                {
+                    startMovementPosition = path[pathIndex];
+                }
+                else
+                {
+                    startMovementPosition = ToGrid(currentPosition);
+                }
 
-                if (!astar.IsWalkable(mapData, endMovementPosition.x, endMovementPosition.y))
+                var newPath = astar.FindPath(mapData, startMovementPosition.x, startMovementPosition.y, targetGrid.x, targetGrid.y);
+
+                if (newPath != null && newPath.Count > 0)
+                {
+                    endMovementPosition = targetGrid;
+                    path = newPath;
+                    pathIndex = 0;
+
+                    if (minimap != null)
+                        minimap.DrawAStarPath(path);
+                }
+                else if (path == null)
+                {
+                    isMovingToTarget = false;
                     return;
-
-                path = astar.FindPath(mapData, startPosition.x, startPosition.y, endMovementPosition.x, endMovementPosition.y);
-
-                if (path == null || path.Count == 0)
-                    return;
-
-                if (minimap != null)
-                    minimap.DrawAStarPath(path);
-                pathIndex = 0;
+                }
             }
 
-            // nếu đi hết path thì nghỉ
+            // 2. Nếu đã đi hết path thì dừng lại
             if (pathIndex >= path.Count)
             {
-                path = null; // reset để lần sau tạo path mới
-                startPosition = endMovementPosition;
+                path = null;
+                startMovementPosition = endMovementPosition;
                 isMovingToTarget = false;
                 if (minimap != null)
                     minimap.ClearAStarPath();
@@ -354,14 +369,12 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
                 return;
             }
 
-            // lấy node tiếp theo
             var node = path[pathIndex];
             Vector2 targetNode = new Vector2(node.x + 0.5f, node.y + 0.5f);
-            Vector2 currentPosition = transform.position;
-            Vector2 directionToTarget = targetNode - currentPosition; // vector hướng tới node tiếp theo
+            Vector2 directionToTarget = targetNode - currentPosition;
             float distanceToTarget = directionToTarget.magnitude;
 
-            if (distanceToTarget > 0.05f)
+            if (distanceToTarget > 0.02f)
             {
                 if (Mathf.Abs(directionToTarget.x) > Mathf.Abs(directionToTarget.y))
                 {
@@ -375,69 +388,63 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
                 }
 
                 float speed = moveSpeed * Time.deltaTime;
-                Vector2 nextPosition = currentPosition + movement * speed;
 
-                if (astar.IsWalkable(mapData, targetNode.x, targetNode.y))
+                // Di chuyển trực tiếp thay vì đợi frame sau
+                if (speed > distanceToTarget)
                 {
-                    transform.position = nextPosition;
-                    MoveStop();
-
-                    if (mob != null)
-                    {
-                        targetPosition = new Vector2(mob.transform.position.x, mob.transform.position.y);
-
-                        if (Vector2.Distance(transform.position, targetPosition) <= 0.5f)
-                        {
-                            path = null;
-                            isMovingToTarget = false;
-                            if (minimap != null)
-                                minimap.ClearAStarPath();
-                            movement = lastMove;
-
-                            currentState = PlayerState.Attack;
-                            TriggerAnimation("Atk", 0.25f);
-
-                            PlayerAttackDataPacket attackDataPacket = new PlayerAttackDataPacket
-                            {
-                                cmd = (EnumCmdCode)EnumCmdCode.playerAttackMob,
-                                idAccount = LogInView.GetIDAccount() ?? 0,
-                                aimedMobID = mob.GetID(),
-                            };
-
-                            PacketWriterManager writer = new PacketWriterManager();
-                            writer.WriteInt((int)attackDataPacket.cmd);
-                            writer.WriteInt(attackDataPacket.idAccount);
-                            writer.WriteInt(attackDataPacket.aimedMobID);
-
-                            socketManager.SendToServer(writer.ToArray());
-
-                            return;
-                        }
-
-                        // kiểm tra xem mob có đổi vị trí không (tính theo grid)
-                        var newMobGrid = ToGrid(targetPosition);
-
-                        if (newMobGrid != endMovementPosition) // nếu mà đã đổi vị trí thì ép FindPath() của A* chạy lại
-                        {
-                            endMovementPosition = newMobGrid;
-                            path = null;
-                        }
-                    }
+                    transform.position = targetNode;
+                    currentPosition = targetNode;
                 }
                 else
                 {
-                    path = null; // reset để lần sau tạo path mới
-                    startPosition = endMovementPosition;
-                    isMovingToTarget = false;
-                    if (minimap != null)
-                        minimap.ClearAStarPath();
-                    movement = lastMove;
-                    return;
+                    transform.position = currentPosition + movement * speed;
+                    currentPosition = transform.position;
+                }
+
+                MoveStop();
+
+                // Xử lý khi click vào quái
+                if (mob != null)
+                {
+                    targetPosition = new Vector2(mob.transform.position.x, mob.transform.position.y);
+
+                    if (Vector2.Distance(transform.position, targetPosition) <= 0.5f)
+                    {
+                        path = null;
+                        isMovingToTarget = false;
+                        if (minimap != null)
+                            minimap.ClearAStarPath();
+                        movement = lastMove;
+
+                        currentState = PlayerState.Attack;
+                        TriggerAnimation("Atk", 0.25f);
+
+                        PlayerAttackDataPacket attackDataPacket = new PlayerAttackDataPacket
+                        {
+                            cmd = (EnumCmdCode)EnumCmdCode.playerAttackMob,
+                            idAccount = LogInView.GetIDAccount() ?? 0,
+                            aimedMobID = mob.GetID(),
+                        };
+
+                        PacketWriterManager writer = new PacketWriterManager();
+                        writer.WriteInt((int)attackDataPacket.cmd);
+                        writer.WriteInt(attackDataPacket.idAccount);
+                        writer.WriteInt(attackDataPacket.aimedMobID);
+
+                        socketManager.SendToServer(writer.ToArray());
+                        return;
+                    }
+
+                    var newMobGrid = ToGrid(targetPosition);
+                    if (newMobGrid != endMovementPosition)
+                    {
+                        path = null;
+                    }
                 }
             }
 
-            // kiểm tra chuyển Node
-            if (Vector2.Distance(currentPosition, targetNode) < 0.1f)
+            // Kiểm tra chuyển đổi Node
+            if (Vector2.Distance(currentPosition, targetNode) <= 0.05f)
             {
                 if (minimap != null)
                     minimap.ClearAStarNodeMarker(pathIndex);

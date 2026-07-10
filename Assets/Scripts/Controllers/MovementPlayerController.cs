@@ -408,7 +408,9 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
                 {
                     targetPosition = new Vector2(mob.transform.position.x, mob.transform.position.y);
 
-                    if (Vector2.Distance(transform.position, targetPosition) <= 0.5f)
+                    var mobGrid = ToGrid(targetPosition);
+
+                    if (Vector2.Distance(transform.position, targetPosition) <= 2f)
                     {
                         path = null;
                         isMovingToTarget = false;

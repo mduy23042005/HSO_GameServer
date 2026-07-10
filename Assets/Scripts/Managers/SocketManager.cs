@@ -333,7 +333,7 @@ public class SocketManager : MonoBehaviour, IUpdatable
         }
         catch (Exception ex)
         {
-            Debug.Log($"Socket: Mất kết nối tới Server! {ex}");
+
         }
     }
     private void HandlePacket(byte[] data)

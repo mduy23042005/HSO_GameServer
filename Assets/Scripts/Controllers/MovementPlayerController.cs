@@ -6,17 +6,11 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class PlayerAttackDataPacket
-{
-    public EnumCmdCode cmd;
-    public int idAccount;
-    public int aimedMobID;
-}
+public class PlayerAttackDataPacket { public EnumCmdCode cmd; public int idAccount; public int aimedMobID; }
 
 public class MovementPlayerController : MonoBehaviour, IUpdatable
 {
-    [SerializeField] private GameObject shadow;
-    [SerializeField] private GameObject waterShadow;
+    [SerializeField] private GameObject shadow; [SerializeField] private GameObject waterShadow;
 
     private float moveSpeed = 6f;
     private Vector2 movement;
@@ -27,6 +21,7 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
     private MenuView menu;
     private bool isBusy = false;
     private bool isStandingInWater = false;
+    private GameObject focusedObject;
 
     private MapView minimap;
     private RectTransform minimapUI;
@@ -250,7 +245,7 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
                     int id = mob.GetID();
                     string nameMob = mob.GetNameMob();
 
-                    Debug.Log($"Clicked mob [{id}] {nameMob}");
+                    focusedObject = mob.gameObject;
 
                     targetPosition = new Vector2(mob.transform.position.x, mob.transform.position.y);
                     isMovingToTarget = true;
@@ -266,10 +261,9 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
             }
 
             // nếu hợp lệ thì move
-            // trước khi làm path null phải kiểm tra hướng và điểm click
             targetPosition = clickPos;
             isMovingToTarget = true;
-            
+
             mob = null;
         }
     }
@@ -410,7 +404,7 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
 
                     var mobGrid = ToGrid(targetPosition);
 
-                    if (Vector2.Distance(transform.position, targetPosition) <= 2f)
+                    if (Vector2.Distance(transform.position, targetPosition) <= 1.5f)
                     {
                         path = null;
                         isMovingToTarget = false;
@@ -535,9 +529,19 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
         }
         if (Input.GetKeyDown(KeyCode.J))
         {
-            currentState = PlayerState.Attack;
-            TriggerAnimation("Atk", 0.25f);
-            UpdateLastMoveToAnimator();
+            if (focusedObject == null)
+                return;
+
+            var gridPos = ToGrid(focusedObject.transform.position);
+
+            if (!astar.IsWalkable(mapData, gridPos.x, gridPos.y))
+                return;
+
+            mob = focusedObject.GetComponent<MobController>();
+
+            targetPosition = mob.transform.position;
+            isMovingToTarget = true;
+            path = null;
         }
     }
     public void UpdateInjuredAnimation()

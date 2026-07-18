@@ -8,7 +8,7 @@ public enum PlayerState
     Move = 1,
     Attack = 2,
     Injured = 3,
-    Die = 4
+    Die = 4,
 }
 public enum Direction
 {
@@ -16,6 +16,59 @@ public enum Direction
     Back = 1,
     Left = 2,
     Right = 3,
+}
+public enum Category
+{
+    Stand = 0,
+    Move = 1,
+    Atk = 2,
+    Injured = 3,
+    Die = 4,
+}
+public enum Label
+{
+    StandFront = 0,
+    StandBack = 1,
+    StandLeft = 2,
+    StandRight = 3,
+
+    StandFrontFrame0 = 4,
+    StandFrontFrame1 = 5,
+    StandBackFrame0 = 6,
+    StandBackFrame1 = 7,
+    StandLeftFrame0 = 8,
+    StandLeftFrame1 = 9,
+    StandRightFrame0 = 10,
+    StandRightFrame1 = 11,
+
+    MoveFrontFrame0 = 12,
+    MoveFrontFrame1 = 13,
+    MoveBackFrame0 = 14,
+    MoveBackFrame1 = 15,
+    MoveLeftFrame0 = 16,
+    MoveLeftFrame1 = 17,
+    MoveRightFrame0 = 18,
+    MoveRightFrame1 = 19,
+
+    AtkFrontFrame0 = 20,
+    AtkFrontFrame1 = 21,
+    AtkBackFrame0 = 22,
+    AtkBackFrame1 = 23,
+    AtkLeftFrame0 = 24,
+    AtkLeftFrame1 = 25,
+    AtkRightFrame0 = 26,
+    AtkRightFrame1 = 27,
+
+    InjuredFrontFrame0 = 28,
+    InjuredFrontFrame1 = 29,
+    InjuredBackFrame0 = 30,
+    InjuredBackFrame1 = 31,
+    InjuredLeftFrame0 = 32,
+    InjuredLeftFrame1 = 33,
+    InjuredRightFrame0 = 34,
+    InjuredRightFrame1 = 35,
+
+    DieFrame0 = 36
 }
 public class PositionData
 {
@@ -44,8 +97,8 @@ public class ColorData
 }
 public class PartBodyData
 {
-    public string category;
-    public string label;
+    public Category category;
+    public Label label;
     public PositionData positionData;
     public RotationData rotationData;
     public ScaleData scaleData;
@@ -121,6 +174,7 @@ public class OtherPlayer
     public PlayerData otherPlayerData;
 
     public Transform canvasTransform;
+    public SyncSpriteController syncSpriteController;
 }
 public class SyncOtherPlayersManager : MonoBehaviour, IUpdatable
 {
@@ -130,7 +184,9 @@ public class SyncOtherPlayersManager : MonoBehaviour, IUpdatable
     private Dictionary<int, OtherPlayer> otherPlayers = new Dictionary<int, OtherPlayer>();
 
     private Dictionary<int, float> lastUpdateTime = new Dictionary<int, float>();
-    private const float timeOut = 0.55f;
+    private const float timeOut = 1f;
+
+    private List<int> toRemove = new List<int>();
 
     private SocketManager socketManager;
 
@@ -153,8 +209,6 @@ public class SyncOtherPlayersManager : MonoBehaviour, IUpdatable
 
     public virtual void OnUpdate()
     {
-        List<int> toRemove = new List<int>();
-
         foreach (var kv in lastUpdateTime)
         {
             if (Time.time - kv.Value > timeOut)
@@ -173,7 +227,7 @@ public class SyncOtherPlayersManager : MonoBehaviour, IUpdatable
             }
         }
 
-        byte[] onlineData = socketManager.GetSyncOtherPlayersData(); //luôn lấy từ sync queue vì online player luôn gửi data đến server khi online
+        byte[] onlineData = socketManager.GetSyncOtherPlayersData();
         byte[] offlineData = socketManager.GetLogOutData();
         byte[] updateOtherPlayerHPUIData = socketManager.GetMobsAttackOtherPlayerData();
 
@@ -188,95 +242,73 @@ public class SyncOtherPlayersManager : MonoBehaviour, IUpdatable
             int countOtherPlayerData = reader.ReadInt();
             for (int i = 0; i < countOtherPlayerData; i++)
             {
-                data.otherPlayersData.Add(new OtherPlayerSyncData
-                {
-                    otherPlayerData = new PlayerData
-                    {
-                        idAccount = reader.ReadInt(),
-                        nameChar = reader.ReadString(),
-                        level = reader.ReadInt(),
-                        idSchool = reader.ReadInt(),
-                        hair = reader.ReadInt(),
-                        weapon = reader.ReadInt(),
-                        helmet = reader.ReadInt(),
-                        armor = reader.ReadInt(),
-                        legArmor = reader.ReadInt(),
-                        gloves = reader.ReadInt(),
-                        shoes = reader.ReadInt(),
-                        ring1 = reader.ReadInt(),
-                        ring2 = reader.ReadInt(),
-                        necklace = reader.ReadInt(),
-                        medal = reader.ReadInt(),
-                        cloak = reader.ReadInt(),
-                        wing = reader.ReadInt(),
-                        skinWing = reader.ReadInt(),
-                        mounts = reader.ReadInt(),
-                        pet = reader.ReadInt(),
-                        skin = reader.ReadInt(),
-                        maxHP = reader.ReadInt(),
-                        hp = reader.ReadInt(),
-                        currentTile = (TileType)reader.ReadInt(),
-                    },
-                    otherPlayerTransformData = new PlayerTransformData
-                    {
-                        positionData = new PositionData
-                        {
-                            x = reader.ReadFloat(),
-                            y = reader.ReadFloat(),
-                            z = reader.ReadFloat(),
-                        },
-                        scaleData = new ScaleData
-                        {
-                            x = reader.ReadFloat(),
-                            y = reader.ReadFloat(),
-                            z = reader.ReadFloat(),
-                        }
-                    },
-                    otherPlayerStateData = new PlayerStateData
-                    {
-                        stateData = (PlayerState)reader.ReadInt(),
-                        directionData = (Direction)reader.ReadInt(),
-                        partBodyTransforms = new List<PartBodyData>()
-                    }
-                });
+                OtherPlayerSyncData otherPlayerSyncData = new OtherPlayerSyncData();
+                otherPlayerSyncData.otherPlayerData = new PlayerData();
+                otherPlayerSyncData.otherPlayerTransformData = new PlayerTransformData();
+                otherPlayerSyncData.otherPlayerTransformData.positionData = new PositionData();
+                otherPlayerSyncData.otherPlayerTransformData.scaleData = new ScaleData();
+                otherPlayerSyncData.otherPlayerStateData = new PlayerStateData();
+
+                otherPlayerSyncData.otherPlayerData.idAccount = reader.ReadInt();
+                otherPlayerSyncData.otherPlayerData.nameChar = reader.ReadString();
+                otherPlayerSyncData.otherPlayerData.level = reader.ReadInt();
+                otherPlayerSyncData.otherPlayerData.idSchool = reader.ReadInt();
+                otherPlayerSyncData.otherPlayerData.hair = reader.ReadInt();
+                otherPlayerSyncData.otherPlayerData.weapon = reader.ReadInt();
+                otherPlayerSyncData.otherPlayerData.helmet = reader.ReadInt();
+                otherPlayerSyncData.otherPlayerData.armor = reader.ReadInt();
+                otherPlayerSyncData.otherPlayerData.legArmor = reader.ReadInt();
+                otherPlayerSyncData.otherPlayerData.maxHP = reader.ReadInt();
+                otherPlayerSyncData.otherPlayerData.hp = reader.ReadInt();
+                otherPlayerSyncData.otherPlayerData.currentTile = (TileType)reader.ReadInt();
+
+                otherPlayerSyncData.otherPlayerTransformData.positionData.x = reader.ReadFloat();
+                otherPlayerSyncData.otherPlayerTransformData.positionData.y = reader.ReadFloat();
+
+                otherPlayerSyncData.otherPlayerTransformData.scaleData.x = reader.ReadFloat();
+                otherPlayerSyncData.otherPlayerTransformData.scaleData.y = 1f;
+                otherPlayerSyncData.otherPlayerTransformData.scaleData.z = 1f;
+
+                otherPlayerSyncData.otherPlayerStateData.stateData = (PlayerState)reader.ReadInt();
+                otherPlayerSyncData.otherPlayerStateData.directionData = (Direction)reader.ReadInt();
+                otherPlayerSyncData.otherPlayerStateData.partBodyTransforms = new List<PartBodyData>();
+
+                data.otherPlayersData.Add(otherPlayerSyncData);
 
                 int countPartBodyData = reader.ReadInt();
                 for (int j = 0; j < countPartBodyData; j++)
                 {
-                    data.otherPlayersData[i].otherPlayerStateData.partBodyTransforms.Add(new PartBodyData
-                    {
-                        category = reader.ReadString(),
-                        label = reader.ReadString(),
-                        positionData =  new PositionData 
-                        { 
-                            x = reader.ReadFloat(),
-                            y = reader.ReadFloat(),
-                            z = reader.ReadFloat(),
-                        },
-                        rotationData = new RotationData
-                        {
-                            x = reader.ReadFloat(),
-                            y = reader.ReadFloat(),
-                            z = reader.ReadFloat(),
-                        },
-                        scaleData = new ScaleData
-                        {
-                            x = reader.ReadFloat(),
-                            y = reader.ReadFloat(),
-                            z = reader.ReadFloat(),
-                        },
-                        colorData = new ColorData
-                        {
-                            r = reader.ReadFloat(),
-                            g = reader.ReadFloat(),
-                            b = reader.ReadFloat(),
-                            a = reader.ReadFloat(),
-                        }
-                    });
+                    PartBodyData partBodyData = new PartBodyData();
+                    partBodyData.positionData = new PositionData();
+                    partBodyData.rotationData = new RotationData();
+                    partBodyData.scaleData = new ScaleData();
+                    partBodyData.colorData = new ColorData();
+
+                    partBodyData.category = (Category)reader.ReadInt();
+                    partBodyData.label = (Label)reader.ReadInt();
+
+                    partBodyData.positionData.x = reader.ReadFloat();
+                    partBodyData.positionData.y = reader.ReadFloat();
+                    partBodyData.positionData.z = 0f;
+
+                    partBodyData.rotationData.x = reader.ReadFloat();
+                    partBodyData.rotationData.y = reader.ReadFloat();
+                    partBodyData.rotationData.z = reader.ReadFloat();
+
+                    partBodyData.scaleData.x = reader.ReadFloat();
+                    partBodyData.scaleData.y = 1f;
+                    partBodyData.scaleData.z = 1f;
+
+                    partBodyData.colorData.r = 1f;
+                    partBodyData.colorData.g = 1f;
+                    partBodyData.colorData.b = 1f;
+                    partBodyData.colorData.a = reader.ReadFloat();
+
+                    data.otherPlayersData[i].otherPlayerStateData.partBodyTransforms.Add(partBodyData);
                 }
             }
 
-            if (data?.otherPlayersData == null)
+            if (data.otherPlayersData == null)
                 return;
 
             foreach (var playerData in data.otherPlayersData)
@@ -315,11 +347,11 @@ public class SyncOtherPlayersManager : MonoBehaviour, IUpdatable
 
             if (otherPlayers.TryGetValue(idAccount, out OtherPlayer otherPlayer) && otherPlayer != null && otherPlayer.otherPlayerData != null)
             {
-                if (otherPlayers[idAccount].otherPlayerData.hp != otherPlayerHP)
+                if (otherPlayer.otherPlayerData.hp != otherPlayerHP)
                 {
-                    if (otherPlayerHP < otherPlayers[idAccount].otherPlayerData.hp)
+                    if (otherPlayerHP < otherPlayer.otherPlayerData.hp)
                     {
-                        GameObject objectDamageUI = Instantiate(updateHPUI, otherPlayers[idAccount].otherPlayerObject.GetComponentInChildren<Canvas>().transform, false);
+                        GameObject objectDamageUI = Instantiate(updateHPUI, otherPlayer.otherPlayerObject.GetComponentInChildren<Canvas>().transform, false);
 
                         UpdateHPUIController injuredDamageUI = objectDamageUI.GetComponent<UpdateHPUIController>();
                         if (injuredDamageUI != null)
@@ -362,14 +394,15 @@ public class SyncOtherPlayersManager : MonoBehaviour, IUpdatable
                     break;
             }
             onlinePlayer.canvasTransform = onlinePlayer.otherPlayerObject.GetComponentInChildren<Canvas>().transform;
-            otherPlayers.Add(data.otherPlayerData.idAccount, onlinePlayer);
+            onlinePlayer.syncSpriteController = onlinePlayer.otherPlayerObject.GetComponent<SyncSpriteController>();
+            onlinePlayer.syncSpriteController.ApplyServerData(data.otherPlayerData, data.otherPlayerTransformData, data.otherPlayerStateData);
 
-            onlinePlayer.otherPlayerObject.GetComponentInChildren<SyncSpriteController>().ApplyServerData(data.otherPlayerData, data.otherPlayerTransformData, data.otherPlayerStateData);
+            otherPlayers.Add(data.otherPlayerData.idAccount, onlinePlayer);
         }
         else
         {
             onlinePlayer.otherPlayerData = data.otherPlayerData;
-            onlinePlayer.otherPlayerObject.GetComponentInChildren<SyncSpriteController>().ApplyServerData(data.otherPlayerData, data.otherPlayerTransformData, data.otherPlayerStateData);
+            onlinePlayer.syncSpriteController.ApplyServerData(data.otherPlayerData, data.otherPlayerTransformData, data.otherPlayerStateData);
         }
 
         Vector3 scale = onlinePlayer.canvasTransform.localScale;

@@ -3,7 +3,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.U2D.Animation;
 
-public class SpriteController : MonoBehaviour, IUpdatable
+public class SpritePlayerController : MonoBehaviour, IUpdatable
 {
     private SpriteResolver faceResolver;
     private Animator animator;
@@ -11,10 +11,13 @@ public class SpriteController : MonoBehaviour, IUpdatable
     private string lastLabel;
     private MovementPlayerController movementPlayerController;
     private Direction currentDirection;
+    private EquipmentResultPacket outfitData = new EquipmentResultPacket();
 
     [Header("Chỉ định sprite nào của player sẽ bị thay thế")]
     [SerializeField] private List<SpriteLibrary> spriteLibraries;
     [SerializeField] private List<SpriteResolver> spriteResolvers;
+
+    private Dictionary<int, (Category, Label)> spriteResolversInfos = new Dictionary<int, (Category, Label)>();
 
     private ItemController listItem0;
 
@@ -28,6 +31,12 @@ public class SpriteController : MonoBehaviour, IUpdatable
     private int hairData = 0;
     private int headData = 0;
 
+    private int standStateHash;
+    private int moveStateHash;
+    private int atkStateHash;
+    private int injuredStateHash;
+    private int dieStateHash;
+
     private void Awake()
     {
         faceResolver = spriteResolvers.FirstOrDefault(r => r.gameObject.name == "4_0_0");
@@ -35,7 +44,153 @@ public class SpriteController : MonoBehaviour, IUpdatable
         movementPlayerController = GetComponent<MovementPlayerController>();
         socketManager = GameManager.Instance.GetComponent<SocketManager>();
         listItem0 = ItemController.Instance;
+
+        // hàm Animator.StringToHash() truyền vào ký tự theo cú pháp [tên layer].[tên state]
+        // mục tiêu của khởi tạo các biến này là so sánh với state animator hiện tại (Animator state -> (int)state.fullPathHash)
+        standStateHash = Animator.StringToHash("Base Layer.Stand");
+        moveStateHash = Animator.StringToHash("Base Layer.Move");
+        atkStateHash = Animator.StringToHash("Base Layer.Atk");
+        injuredStateHash = Animator.StringToHash("Base Layer.Injured");
+        dieStateHash = Animator.StringToHash("Base Layer.Die");
+
         ReadCache();
+        InitSpriteResolversInfos();
+    }
+
+    private Category ConvertCategory(string category)
+    {
+        switch (category)
+        {
+            case "Stand":
+                return Category.Stand;
+
+            case "Move":
+                return Category.Move;
+
+            case "Atk":
+                return Category.Atk;
+
+            case "Injured":
+                return Category.Injured;
+
+            case "Die":
+                return Category.Die;
+
+            default:
+                return Category.Stand;
+        }
+    }
+    private Label ConvertLabel(string label)
+    {
+        switch (label)
+        {
+            case "StandFront": 
+                return Label.StandFront;
+            case "StandBack": 
+                return Label.StandBack;
+            case "StandLeft": 
+                return Label.StandLeft;
+            case "StandRight": 
+                return Label.StandRight;
+
+            case "StandFrontFrame0": 
+                return Label.StandFrontFrame0;
+            case "StandFrontFrame1": 
+                return Label.StandFrontFrame1;
+            case "StandBackFrame0":
+                return Label.StandBackFrame0;
+            case "StandBackFrame1":
+                return Label.StandBackFrame1;
+            case "StandLeftFrame0":
+                return Label.StandLeftFrame0;
+            case "StandLeftFrame1":
+                return Label.StandLeftFrame1;
+            case "StandRightFrame0":
+                return Label.StandRightFrame0;
+            case "StandRightFrame1":
+                return Label.StandRightFrame1;
+
+            case "MoveFrontFrame0": 
+                return Label.MoveFrontFrame0;
+            case "MoveFrontFrame1": 
+                return Label.MoveFrontFrame1;
+
+            case "MoveBackFrame0": 
+                return Label.MoveBackFrame0;
+            case "MoveBackFrame1": 
+                return Label.MoveBackFrame1;
+
+            case "MoveLeftFrame0": 
+                return Label.MoveLeftFrame0;
+            case "MoveLeftFrame1": 
+                return Label.MoveLeftFrame1;
+
+            case "MoveRightFrame0": 
+                return Label.MoveRightFrame0;
+            case "MoveRightFrame1": 
+                return Label.MoveRightFrame1;
+
+            case "AtkFrontFrame0": 
+                return Label.AtkFrontFrame0;
+            case "AtkFrontFrame1": 
+                return Label.AtkFrontFrame1;
+
+            case "AtkBackFrame0": 
+                return Label.AtkBackFrame0;
+            case "AtkBackFrame1": 
+                return Label.AtkBackFrame1;
+
+            case "AtkLeftFrame0": 
+                return Label.AtkLeftFrame0;
+            case "AtkLeftFrame1": 
+                return Label.AtkLeftFrame1;
+
+            case "AtkRightFrame0": 
+                return Label.AtkRightFrame0;
+            case "AtkRightFrame1": 
+                return Label.AtkRightFrame1;
+
+            case "InjuredFrontFrame0": 
+                return Label.InjuredFrontFrame0;
+            case "InjuredFrontFrame1": 
+                return Label.InjuredFrontFrame1;
+
+            case "InjuredBackFrame0":
+                return Label.InjuredBackFrame0;
+            case "InjuredBackFrame1": 
+                return Label.InjuredBackFrame1;
+
+            case "InjuredLeftFrame0": 
+                return Label.InjuredLeftFrame0;
+            case "InjuredLeftFrame1": 
+                return Label.InjuredLeftFrame1;
+
+            case "InjuredRightFrame0": 
+                return Label.InjuredRightFrame0;
+            case "InjuredRightFrame1": 
+                return Label.InjuredRightFrame1;
+
+            case "DieFrame0": 
+                return Label.DieFrame0;
+
+            default:
+                return Label.StandFront;
+        }
+    }
+    private void InitSpriteResolversInfos()
+    {
+        for (int i = 0; i < spriteResolvers.Count; i++)
+        {
+            var resolver = spriteResolvers[i];
+
+            Category category;
+            Label label;
+
+            category = ConvertCategory(resolver.GetCategory());
+            label = ConvertLabel(resolver.GetLabel());
+
+            spriteResolversInfos[i] = (category, label);
+        }
     }
 
     private void OnEnable()
@@ -55,8 +210,6 @@ public class SpriteController : MonoBehaviour, IUpdatable
     }
     public void OnUpdate()
     {
-        EquipmentResultPacket outfitData = new EquipmentResultPacket();
-
         if (EquipmentView.GetListEquipmentSlots().Count == 0)
         {
             byte[] data = socketManager.GetOutfitSpritesData();
@@ -87,17 +240,31 @@ public class SpriteController : MonoBehaviour, IUpdatable
             outfitData.equipmentData = EquipmentView.GetListEquipmentSlots();
         }
 
-        weaponData = outfitData.equipmentData[0].idItem0_1;
-        helmetData = outfitData.equipmentData[1].idItem0_1;
-        armorData = outfitData.equipmentData[2].idItem0_1;
-        legArmorData = outfitData.equipmentData[3].idItem0_1;
-        hairData = LogInView.GetHair();
-
-        EquipLegArmor(legArmorData);
-        EquipArmor(armorData);
-        EquipHelmet(helmetData);
-        EquipWeapon(weaponData);
-        EquipHair(hairData);
+        if (weaponData != outfitData.equipmentData[0].idItem0_1)
+        {
+            weaponData = outfitData.equipmentData[0].idItem0_1;
+            EquipWeapon(weaponData);
+        }
+        if (helmetData != outfitData.equipmentData[1].idItem0_1)
+        {
+            helmetData = outfitData.equipmentData[1].idItem0_1;
+            EquipHelmet(helmetData);
+        }
+        if (armorData != outfitData.equipmentData[2].idItem0_1)
+        {
+            armorData = outfitData.equipmentData[2].idItem0_1;
+            EquipArmor(armorData);
+        }
+        if (legArmorData != outfitData.equipmentData[3].idItem0_1)
+        {
+            legArmorData = outfitData.equipmentData[3].idItem0_1;
+            EquipLegArmor(legArmorData);
+        }
+        if (hairData != LogInView.GetHair())
+        {
+            hairData = LogInView.GetHair();
+            EquipHair(hairData);
+        }
     }
     public void OnLateUpdate()
     {
@@ -137,6 +304,10 @@ public class SpriteController : MonoBehaviour, IUpdatable
     public List<SpriteLibrary> GetListSpriteLibrary()
     {
         return spriteLibraries;
+    }
+    public Dictionary<int, (Category, Label)> GetSpriteResolversInfos()
+    {
+        return spriteResolversInfos;
     }
     #endregion
 
@@ -232,6 +403,8 @@ public class SpriteController : MonoBehaviour, IUpdatable
     private void UpdateSprite()
     {
         AnimatorStateInfo state = animator.GetCurrentAnimatorStateInfo(0);
+        int fullPathHash = state.fullPathHash;
+
         float t = Mathf.Repeat(state.normalizedTime, 1f);
 
         float h;
@@ -264,7 +437,7 @@ public class SpriteController : MonoBehaviour, IUpdatable
         }
 
         // Stand
-        if (state.IsName($"Stand"))
+        if (fullPathHash == standStateHash)
         {
             float[] moveChangeTimes = { 0f, 0.5f, 1f }; // Clip dài 0:40 giây, đổi frame ở 0 / 0.4, 0.2 / 0.4
 
@@ -272,27 +445,32 @@ public class SpriteController : MonoBehaviour, IUpdatable
 
             SetAllResolvers("Stand", $"Stand{direction}");
             faceResolver.SetCategoryAndLabel("Stand", $"Stand{direction}Frame{frame}");
+            spriteResolversInfos[4] = (ConvertCategory("Stand"), ConvertLabel($"Stand{direction}Frame{frame}"));
         }
         // Move
-        if (state.IsName("Move"))
+        if (fullPathHash == moveStateHash)
         {
             float[] moveChangeTimes = { 0f, 0.5f, 1f }; // Clip dài 0:40 giây, đổi frame ở 0 / 0.2, 0.1 / 0.2
 
             int frame = GetFrameByTime(t, moveChangeTimes);
 
             SetAllResolvers("Move", $"Move{direction}Frame{frame}");
+            faceResolver.SetCategoryAndLabel("Move", $"Move{direction}Frame{frame}");
+            spriteResolversInfos[4] = (ConvertCategory("Move"), ConvertLabel($"Move{direction}Frame{frame}"));
         }
         // Attack
-        if (state.IsName("Atk"))
+        if (fullPathHash == atkStateHash)
         {
             float[] moveChangeTimes = { 0f, 0.6667f, 1f }; // Clip dài 0:15 giây, đổi frame ở 0 / 0.15, 0.1 / 0.15
 
             int frame = GetFrameByTime(t, moveChangeTimes);
 
             SetAllResolvers("Atk", $"Atk{direction}Frame{frame}");
+            faceResolver.SetCategoryAndLabel("Atk", $"Atk{direction}Frame{frame}");
+            spriteResolversInfos[4] = (ConvertCategory("Atk"), ConvertLabel($"Atk{direction}Frame{frame}"));
         }
         //Injured
-        if (state.IsName("Injured"))
+        if (fullPathHash == injuredStateHash)
         {
             float[] moveChangeTimes = { 0f, 0.5f, 1f }; // Clip dài 0:20 giây, đổi frame ở 0 / 0.2, 0.1 / 0.2
 
@@ -300,11 +478,14 @@ public class SpriteController : MonoBehaviour, IUpdatable
 
             SetAllResolvers("Stand", $"Stand{direction}");
             faceResolver.SetCategoryAndLabel("Injured", $"Injured{direction}Frame{frame}");
+            spriteResolversInfos[4] = (ConvertCategory("Injured"), ConvertLabel($"Injured{direction}Frame{frame}"));
         }
         // Die
-        if (state.IsName("Die"))
+        if (fullPathHash == dieStateHash)
         {
-           SetAllResolvers("Die", $"DieFrame0");   
+            SetAllResolvers("Die", $"DieFrame0");
+            faceResolver.SetCategoryAndLabel("Die", $"DieFrame0");
+            spriteResolversInfos[4] = (ConvertCategory("Die"), ConvertLabel($"DieFrame0"));
         }
     }
 
@@ -316,18 +497,22 @@ public class SpriteController : MonoBehaviour, IUpdatable
         lastCategory = category;
         lastLabel = label;
 
-        foreach (var r in spriteResolvers)
+        Category enumCategory = ConvertCategory(category);
+        Label enumLabel = ConvertLabel(label);
+
+        for (int i = 0; i < spriteResolvers.Count; i++)
         {
+            if (i == 4) continue;
+
+            var r = spriteResolvers[i];
+
             if (r != null && r.spriteLibrary != null)
             {
                 r.SetCategoryAndLabel(category, label);
                 r.ResolveSpriteToSpriteRenderer();
+                   
+                spriteResolversInfos[i] = (enumCategory, enumLabel);
             }
         }
-    }
-
-    public List<SpriteLibrary> GetListSpriteLibraries()
-    {
-        return spriteLibraries;
     }
 }

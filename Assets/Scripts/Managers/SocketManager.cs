@@ -6,7 +6,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.U2D.Animation;
 
 public class SocketManager : MonoBehaviour, IUpdatable
 {
@@ -45,6 +44,9 @@ public class SocketManager : MonoBehaviour, IUpdatable
     private readonly ConcurrentQueue<byte[]> otherPlayerAttackMobQueues = new ConcurrentQueue<byte[]>();
 
     private GameObject player;
+    private MovementPlayerController playerMovementController;
+    private SpritePlayerController playerSpriteController;
+    private Dictionary<int, (Category, Label)> spriteResolversInfos = new Dictionary<int, (Category, Label)>();
 
     private void Awake()
     {
@@ -84,164 +86,78 @@ public class SocketManager : MonoBehaviour, IUpdatable
 
     private byte[] GetSyncPlayerDataRequestByteArray()
     {
-        switch (LogInView.GetIDSchool())
-        {
-            case 1:
-                player = GameObject.Find("ChienBinh(Clone)");
-                break;
-            case 2:
-                player = GameObject.Find("SatThu(Clone)");
-                break;
-            case 3:
-                player = GameObject.Find("PhapSu(Clone)");
-                break;
-            default:
-                player = GameObject.Find("XaThu(Clone)");
-                break;
-        }
-
         if (player == null)
-            return null;
-
-        MovementPlayerController playerMovementController = player.GetComponent<MovementPlayerController>();
-        SpriteController playerSpriteController = player.GetComponent<SpriteController>();
-
-        PlayerSyncDataRequestPacket packet = new PlayerSyncDataRequestPacket
         {
-            cmd = EnumCmdCode.syncPlayerData,
-            playerSyncData = new PlayerSyncData
+            switch (LogInView.GetIDSchool())
             {
-                playerData = new PlayerData
-                {
-                    idAccount = LogInView.GetIDAccount() ?? 0,
-                    nameChar = LogInView.GetNameChar(),
-                    level = LogInView.GetLevel(),
-                    idSchool = LogInView.GetIDSchool(),
-                    hair = playerSpriteController.GetHairData(),
-                    weapon = playerSpriteController.GetWeaponData(),
-                    helmet = playerSpriteController.GetHelmetData(),
-                    armor = playerSpriteController.GetArmorData(),
-                    legArmor = playerSpriteController.GetLegArmorData(),
-                    currentTile = playerMovementController.GetCurrentTileType(),
-                },
-                playerTransformData = new PlayerTransformData
-                {
-                    positionData = new PositionData
-                    {
-                        x = playerMovementController.transform.position.x,
-                        y = playerMovementController.transform.position.y,
-                        z = playerMovementController.transform.position.z
-                    },
-                    scaleData = new ScaleData
-                    {
-                        x = playerMovementController.transform.localScale.x,
-                        y = playerMovementController.transform.localScale.y,
-                        z = playerMovementController.transform.localScale.z
-                    }
-                },
-                playerStateData = new PlayerStateData
-                {
-                    stateData = playerMovementController.GetCurrentState(),
-                    directionData = playerSpriteController.GetCurrentDirection(),
-                    partBodyTransforms = new List<PartBodyData>(),
-                }
+                case 1:
+                    player = GameObject.Find("ChienBinh(Clone)");
+                    break;
+                case 2:
+                    player = GameObject.Find("SatThu(Clone)");
+                    break;
+                case 3:
+                    player = GameObject.Find("PhapSu(Clone)");
+                    break;
+                default:
+                    player = GameObject.Find("XaThu(Clone)");
+                    break;
             }
-        };
 
-        foreach (var partBody in playerSpriteController.GetListSpriteLibrary())
-        {
-            PartBodyData partBodyData = new PartBodyData
-            {
-                positionData = new PositionData(),
-                rotationData = new RotationData(),
-                scaleData = new ScaleData(),
-                colorData = new ColorData(),
-            };
+            if (player == null)
+                return null;
 
-            partBodyData.category = partBody.GetComponent<SpriteResolver>().GetCategory();
-            partBodyData.label = partBody.GetComponent<SpriteResolver>().GetLabel();
-
-            partBodyData.positionData.x = partBody.transform.localPosition.x;
-            partBodyData.positionData.y = partBody.transform.localPosition.y;
-            partBodyData.positionData.z = partBody.transform.localPosition.z;
-
-            partBodyData.rotationData.x = partBody.transform.localEulerAngles.x;
-            partBodyData.rotationData.y = partBody.transform.localEulerAngles.y;
-            partBodyData.rotationData.z = partBody.transform.localEulerAngles.z;
-
-            partBodyData.scaleData.x = partBody.transform.localScale.x;
-            partBodyData.scaleData.y = partBody.transform.localScale.y;
-            partBodyData.scaleData.z = partBody.transform.localScale.z;
-
-            partBodyData.colorData.r = partBody.GetComponent<SpriteRenderer>().color.r;
-            partBodyData.colorData.g = partBody.GetComponent<SpriteRenderer>().color.g;
-            partBodyData.colorData.b = partBody.GetComponent<SpriteRenderer>().color.b;
-            partBodyData.colorData.a = partBody.GetComponent<SpriteRenderer>().color.a;
-
-            packet.playerSyncData.playerStateData.partBodyTransforms.Add(partBodyData);
+            playerMovementController = player.GetComponent<MovementPlayerController>();
+            playerSpriteController = player.GetComponent<SpritePlayerController>();
         }
-
         PacketWriterManager writer = new PacketWriterManager();
 
-        writer.WriteInt((int)packet.cmd);
+        writer.WriteInt((int)EnumCmdCode.syncPlayerData);
         writer.WriteString(SceneManager.GetActiveScene().name);
-        writer.WriteInt(packet.playerSyncData.playerData.idAccount);
-        writer.WriteString(packet.playerSyncData.playerData.nameChar);
-        writer.WriteInt(packet.playerSyncData.playerData.level);
-        writer.WriteInt(packet.playerSyncData.playerData.idSchool);
-        writer.WriteInt(packet.playerSyncData.playerData.hair);
-        writer.WriteInt(packet.playerSyncData.playerData.weapon);
-        writer.WriteInt(packet.playerSyncData.playerData.helmet);
-        writer.WriteInt(packet.playerSyncData.playerData.armor);
-        writer.WriteInt(packet.playerSyncData.playerData.legArmor);
-        writer.WriteInt(packet.playerSyncData.playerData.gloves);
-        writer.WriteInt(packet.playerSyncData.playerData.shoes);
-        writer.WriteInt(packet.playerSyncData.playerData.ring1);
-        writer.WriteInt(packet.playerSyncData.playerData.ring2);
-        writer.WriteInt(packet.playerSyncData.playerData.necklace);
-        writer.WriteInt(packet.playerSyncData.playerData.medal);
-        writer.WriteInt(packet.playerSyncData.playerData.cloak);
-        writer.WriteInt(packet.playerSyncData.playerData.wing);
-        writer.WriteInt(packet.playerSyncData.playerData.skinWing);
-        writer.WriteInt(packet.playerSyncData.playerData.mounts);
-        writer.WriteInt(packet.playerSyncData.playerData.pet);
-        writer.WriteInt(packet.playerSyncData.playerData.skin);
-        writer.WriteInt((int) packet.playerSyncData.playerData.currentTile);
+        writer.WriteInt(LogInView.GetIDAccount() ?? 0);
+        writer.WriteInt(LogInView.GetLevel());
+        writer.WriteInt(LogInView.GetIDSchool());
+        writer.WriteInt(playerSpriteController.GetHairData());
+        writer.WriteInt(playerSpriteController.GetWeaponData());
+        writer.WriteInt(playerSpriteController.GetHelmetData());
+        writer.WriteInt(playerSpriteController.GetArmorData());
+        writer.WriteInt(playerSpriteController.GetLegArmorData());
+        writer.WriteInt((int)playerMovementController.GetCurrentTileType());
 
-        writer.WriteFloat(packet.playerSyncData.playerTransformData.positionData.x);
-        writer.WriteFloat(packet.playerSyncData.playerTransformData.positionData.y);
-        writer.WriteFloat(packet.playerSyncData.playerTransformData.positionData.z);
-        writer.WriteFloat(packet.playerSyncData.playerTransformData.scaleData.x);
-        writer.WriteFloat(packet.playerSyncData.playerTransformData.scaleData.y);
-        writer.WriteFloat(packet.playerSyncData.playerTransformData.scaleData.z);
+        writer.WriteFloat(playerMovementController.transform.position.x);
+        writer.WriteFloat(playerMovementController.transform.position.y);
 
-        writer.WriteInt((int)packet.playerSyncData.playerStateData.stateData);
-        writer.WriteInt((int)packet.playerSyncData.playerStateData.directionData);
-        writer.WriteListCount(packet.playerSyncData.playerStateData.partBodyTransforms.Count);
-        foreach (var partBodyData in packet.playerSyncData.playerStateData.partBodyTransforms)
+        writer.WriteFloat(playerMovementController.transform.localScale.x);
+
+        writer.WriteInt((int)playerMovementController.GetCurrentState());
+        writer.WriteInt((int)playerSpriteController.GetCurrentDirection());
+        writer.WriteListCount(playerSpriteController.GetListSpriteLibrary().Count);
+
+        spriteResolversInfos = playerSpriteController.GetSpriteResolversInfos();
+
+        for (int i = 0; i < playerSpriteController.GetListSpriteLibrary().Count; i++)
         {
-            writer.WriteString(partBodyData.category);
-            writer.WriteString(partBodyData.label);
-            writer.WriteFloat(partBodyData.positionData.x);
-            writer.WriteFloat(partBodyData.positionData.y);
-            writer.WriteFloat(partBodyData.positionData.z);
-            writer.WriteFloat(partBodyData.rotationData.x);
-            writer.WriteFloat(partBodyData.rotationData.y);
-            writer.WriteFloat(partBodyData.rotationData.z);
-            writer.WriteFloat(partBodyData.scaleData.x);
-            writer.WriteFloat(partBodyData.scaleData.y);
-            writer.WriteFloat(partBodyData.scaleData.z);
-            writer.WriteFloat(partBodyData.colorData.r);
-            writer.WriteFloat(partBodyData.colorData.g);
-            writer.WriteFloat(partBodyData.colorData.b);
-            writer.WriteFloat(partBodyData.colorData.a);
+            writer.WriteInt((int)spriteResolversInfos[i].Item1); //category sprite resolver
+            writer.WriteInt((int)spriteResolversInfos[i].Item2); //label sprite resolver
+
+            writer.WriteFloat(playerSpriteController.GetListSpriteLibrary()[i].transform.localPosition.x);
+            writer.WriteFloat(playerSpriteController.GetListSpriteLibrary()[i].transform.localPosition.y);
+
+            writer.WriteFloat(playerSpriteController.GetListSpriteLibrary()[i].transform.localEulerAngles.x);
+            writer.WriteFloat(playerSpriteController.GetListSpriteLibrary()[i].transform.localEulerAngles.y);
+            writer.WriteFloat(playerSpriteController.GetListSpriteLibrary()[i].transform.localEulerAngles.z);
+
+            writer.WriteFloat(playerSpriteController.GetListSpriteLibrary()[i].transform.localScale.x);
+
+            SpriteRenderer spriteRenderer = playerSpriteController.GetListSpriteLibrary()[i].GetComponent<SpriteRenderer>();
+            writer.WriteFloat(spriteRenderer.color.a);
         }
 
         return writer.ToArray();
     }
     private async Task StartSyncPlayerLoop(CancellationToken token)
     {
-        const int targetTickRate = 70;
+        const int targetTickRate = 30;
         const int tickMS = 1000 / targetTickRate;
 
         var stopwatch = new System.Diagnostics.Stopwatch();

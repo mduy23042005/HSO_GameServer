@@ -8,9 +8,10 @@ public class SyncSpriteController : MonoBehaviour, IUpdatable
     [SerializeField] private GameObject shadow;
     [SerializeField] private GameObject waterShadow;
 
-    private AStarManager astar = new AStarManager();
     private bool isStandingInWater = false;
     private TileType currentTileType;
+
+    private List<SpriteRenderer> spriteRenderers = new List<SpriteRenderer>();
 
     private PlayerTransformData otherPlayerTransform = new PlayerTransformData();
     private PlayerStateData otherPlayerState = new PlayerStateData();
@@ -18,6 +19,8 @@ public class SyncSpriteController : MonoBehaviour, IUpdatable
     [Header("Chỉ định sprite nào của player sẽ bị thay thế")]
     [SerializeField] private List<SpriteLibrary> spriteLibraries;
     [SerializeField] private List<SpriteResolver> spriteResolvers;
+
+    private Dictionary<int, (Category, Label)> spriteResolversInfos = new Dictionary<int, (Category, Label)>();
 
     [SerializeField] private Slider hpBar;
 
@@ -36,6 +39,139 @@ public class SyncSpriteController : MonoBehaviour, IUpdatable
 
         if (waterShadow != null)
             waterShadow.SetActive(false);
+
+        for (int i = 0; i < spriteResolvers.Count; i++)
+        {
+            SpriteRenderer spriteRenderer = spriteResolvers[i].GetComponent<SpriteRenderer>();
+            if (spriteRenderer != null)
+            {
+                spriteRenderers.Add(spriteRenderer);
+            }
+        }
+        InitSpriteResolversInfos();
+    }
+    private Category ConvertCategory(string category)
+    {
+        switch (category)
+        {
+            case "Stand":
+                return Category.Stand;
+
+            case "Move":
+                return Category.Move;
+
+            case "Atk":
+                return Category.Atk;
+
+            case "Injured":
+                return Category.Injured;
+
+            case "Die":
+                return Category.Die;
+
+            default:
+                return Category.Stand;
+        }
+    }
+    private Label ConvertLabel(string label)
+    {
+        switch (label)
+        {
+            case "StandFront":
+                return Label.StandFront;
+            case "StandBack":
+                return Label.StandBack;
+            case "StandLeft":
+                return Label.StandLeft;
+            case "StandRight":
+                return Label.StandRight;
+
+            case "StandFrontFrame0":
+                return Label.StandFrontFrame0;
+            case "StandFrontFrame1":
+                return Label.StandFrontFrame1;
+
+            case "MoveFrontFrame0":
+                return Label.MoveFrontFrame0;
+            case "MoveFrontFrame1":
+                return Label.MoveFrontFrame1;
+
+            case "MoveBackFrame0":
+                return Label.MoveBackFrame0;
+            case "MoveBackFrame1":
+                return Label.MoveBackFrame1;
+
+            case "MoveLeftFrame0":
+                return Label.MoveLeftFrame0;
+            case "MoveLeftFrame1":
+                return Label.MoveLeftFrame1;
+
+            case "MoveRightFrame0":
+                return Label.MoveRightFrame0;
+            case "MoveRightFrame1":
+                return Label.MoveRightFrame1;
+
+            case "AtkFrontFrame0":
+                return Label.AtkFrontFrame0;
+            case "AtkFrontFrame1":
+                return Label.AtkFrontFrame1;
+
+            case "AtkBackFrame0":
+                return Label.AtkBackFrame0;
+            case "AtkBackFrame1":
+                return Label.AtkBackFrame1;
+
+            case "AtkLeftFrame0":
+                return Label.AtkLeftFrame0;
+            case "AtkLeftFrame1":
+                return Label.AtkLeftFrame1;
+
+            case "AtkRightFrame0":
+                return Label.AtkRightFrame0;
+            case "AtkRightFrame1":
+                return Label.AtkRightFrame1;
+
+            case "InjuredFrontFrame0":
+                return Label.InjuredFrontFrame0;
+            case "InjuredFrontFrame1":
+                return Label.InjuredFrontFrame1;
+
+            case "InjuredBackFrame0":
+                return Label.InjuredBackFrame0;
+            case "InjuredBackFrame1":
+                return Label.InjuredBackFrame1;
+
+            case "InjuredLeftFrame0":
+                return Label.InjuredLeftFrame0;
+            case "InjuredLeftFrame1":
+                return Label.InjuredLeftFrame1;
+
+            case "InjuredRightFrame0":
+                return Label.InjuredRightFrame0;
+            case "InjuredRightFrame1":
+                return Label.InjuredRightFrame1;
+
+            case "DieFrame0":
+                return Label.DieFrame0;
+
+            default:
+                return Label.StandFront;
+        }
+    }
+    private void InitSpriteResolversInfos()
+    {
+        for (int i = 0; i < spriteResolvers.Count; i++)
+        {
+            var resolver = spriteResolvers[i];
+
+            Category category;
+            Label label;
+
+            category = ConvertCategory(resolver.GetCategory());
+            label = ConvertLabel(resolver.GetLabel());
+
+            spriteResolversInfos[i] = (category, label);
+        }
     }
 
     private void OnEnable()
@@ -190,44 +326,47 @@ public class SyncSpriteController : MonoBehaviour, IUpdatable
     {
         for (int i = 0; i < otherPlayerState.partBodyTransforms.Count; i++)
         {
-            Vector3 newPositionPartBody = spriteResolvers[i].transform.localPosition;
-            Vector3 currentPositionPartBody = new Vector3(otherPlayerState.partBodyTransforms[i].positionData.x, otherPlayerState.partBodyTransforms[i].positionData.y, otherPlayerState.partBodyTransforms[i].positionData.z);
-            if (newPositionPartBody != currentPositionPartBody)
+            if (spriteResolversInfos[i].Item1 != otherPlayerState.partBodyTransforms[i].category || spriteResolversInfos[i].Item2 != otherPlayerState.partBodyTransforms[i].label)
             {
-                newPositionPartBody.x = otherPlayerState.partBodyTransforms[i].positionData.x;
-                newPositionPartBody.y = otherPlayerState.partBodyTransforms[i].positionData.y;
-                newPositionPartBody.z = otherPlayerState.partBodyTransforms[i].positionData.z;
-                spriteResolvers[i].transform.localPosition = newPositionPartBody;
+                spriteResolvers[i].SetCategoryAndLabel(((Category)otherPlayerState.partBodyTransforms[i].category).ToString(), ((Label)otherPlayerState.partBodyTransforms[i].label).ToString());
+                spriteResolversInfos[i] = ((Category)otherPlayerState.partBodyTransforms[i].category, (Label)otherPlayerState.partBodyTransforms[i].label);
             }
 
-            var newRotationPartBody = Quaternion.Euler(otherPlayerState.partBodyTransforms[i].rotationData.x, otherPlayerState.partBodyTransforms[i].rotationData.y, otherPlayerState.partBodyTransforms[i].rotationData.z); ;
+            Vector3 currentPositionPartBody = spriteResolvers[i].transform.localPosition;
+            if (currentPositionPartBody.x != otherPlayerState.partBodyTransforms[i].positionData.x 
+                || currentPositionPartBody.y != otherPlayerState.partBodyTransforms[i].positionData.y 
+                || currentPositionPartBody.z != otherPlayerState.partBodyTransforms[i].positionData.z)
+            {
+                currentPositionPartBody.x = otherPlayerState.partBodyTransforms[i].positionData.x;
+                currentPositionPartBody.y = otherPlayerState.partBodyTransforms[i].positionData.y;
+                currentPositionPartBody.z = otherPlayerState.partBodyTransforms[i].positionData.z;
+                spriteResolvers[i].transform.localPosition = currentPositionPartBody;
+            }
+
             Quaternion currentRotationPartBody = spriteResolvers[i].transform.localRotation;
-            if (currentRotationPartBody != newRotationPartBody)
+            if (currentRotationPartBody.x != otherPlayerState.partBodyTransforms[i].rotationData.x 
+                || currentRotationPartBody.y != otherPlayerState.partBodyTransforms[i].rotationData.y 
+                || currentRotationPartBody.z != otherPlayerState.partBodyTransforms[i].rotationData.z)
             {
-                spriteResolvers[i].transform.localRotation = newRotationPartBody;
+                spriteResolvers[i].transform.localRotation = Quaternion.Euler(otherPlayerState.partBodyTransforms[i].rotationData.x, otherPlayerState.partBodyTransforms[i].rotationData.y, otherPlayerState.partBodyTransforms[i].rotationData.z);
             }
 
-            Vector3 newScalePartBody = spriteResolvers[i].transform.localScale;
-            Vector3 currentScalePartBody = new Vector3(otherPlayerState.partBodyTransforms[i].scaleData.x, otherPlayerState.partBodyTransforms[i].scaleData.y, otherPlayerState.partBodyTransforms[i].scaleData.z);
-            if (currentScalePartBody != newScalePartBody)
+            Vector3 currentScalePartBody = spriteResolvers[i].transform.localScale;
+            if (currentScalePartBody.x != otherPlayerState.partBodyTransforms[i].scaleData.x 
+                || currentScalePartBody.y != otherPlayerState.partBodyTransforms[i].scaleData.y 
+                || currentScalePartBody.z != otherPlayerState.partBodyTransforms[i].scaleData.z)
             {
-                newScalePartBody.x = otherPlayerState.partBodyTransforms[i].scaleData.x;
-                newScalePartBody.y = otherPlayerState.partBodyTransforms[i].scaleData.y;
-                newScalePartBody.z = otherPlayerState.partBodyTransforms[i].scaleData.z;
-                spriteResolvers[i].transform.localScale = newScalePartBody;
+                currentScalePartBody.x = otherPlayerState.partBodyTransforms[i].scaleData.x;
+                currentScalePartBody.y = otherPlayerState.partBodyTransforms[i].scaleData.y;
+                currentScalePartBody.z = otherPlayerState.partBodyTransforms[i].scaleData.z;
+                spriteResolvers[i].transform.localScale = currentScalePartBody;
             }
 
-            SpriteRenderer renderer = spriteResolvers[i].GetComponent<SpriteRenderer>();
-            Color colorPartBody = renderer.color;
-            colorPartBody.r = otherPlayerState.partBodyTransforms[i].colorData.r;
-            colorPartBody.g = otherPlayerState.partBodyTransforms[i].colorData.g;
-            colorPartBody.b = otherPlayerState.partBodyTransforms[i].colorData.b;
-            colorPartBody.a = otherPlayerState.partBodyTransforms[i].colorData.a;
-            renderer.material.color = colorPartBody;
-
-            if (spriteResolvers[i].GetCategory() != otherPlayerState.partBodyTransforms[i].category || spriteResolvers[i].GetLabel() != otherPlayerState.partBodyTransforms[i].label)
+            Color currentColorPartBody = spriteRenderers[i].color;
+            if (currentColorPartBody.a != otherPlayerState.partBodyTransforms[i].colorData.a)
             {
-                spriteResolvers[i].SetCategoryAndLabel(otherPlayerState.partBodyTransforms[i].category, otherPlayerState.partBodyTransforms[i].label);
+                currentColorPartBody.a = otherPlayerState.partBodyTransforms[i].colorData.a;
+                spriteRenderers[i].color = currentColorPartBody;
             }
         }
     }

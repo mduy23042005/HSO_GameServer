@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public enum PlayerState
@@ -182,6 +185,11 @@ public class SyncOtherPlayersManager : MonoBehaviour, IUpdatable
     [SerializeField] private GameObject updateHPUI;
 
     private Dictionary<int, OtherPlayer> otherPlayers = new Dictionary<int, OtherPlayer>();
+    private readonly ConcurrentQueue<SyncOtherPlayersResultPacket> syncOtherPlayersResultPacketQueue = new ConcurrentQueue<SyncOtherPlayersResultPacket>();
+    private readonly ConcurrentQueue<LogOutRequestPacket> syncLogOutOtherPlayerQueue = new ConcurrentQueue<LogOutRequestPacket>();
+    private readonly ConcurrentQueue<(EnumCmdCode, int, int, int)> syncUpdateHPUIQueue = new ConcurrentQueue<(EnumCmdCode, int, int, int)>();
+
+    private CancellationTokenSource syncTokenSource;
 
     private Dictionary<int, float> lastUpdateTime = new Dictionary<int, float>();
     private const float timeOut = 1f;
@@ -193,6 +201,8 @@ public class SyncOtherPlayersManager : MonoBehaviour, IUpdatable
     private void Awake()
     {
         socketManager = GameManager.Instance.GetComponent<SocketManager>();
+        syncTokenSource = new CancellationTokenSource();
+        _ = ReadSyncPacketLoop(syncTokenSource.Token);
     }
 
     private void OnEnable()
@@ -207,7 +217,118 @@ public class SyncOtherPlayersManager : MonoBehaviour, IUpdatable
         }
     }
 
-    public virtual void OnUpdate()
+    public async Task ReadSyncPacketLoop(CancellationToken token)
+    {
+        while (!token.IsCancellationRequested)
+        {
+            byte[] onlineData = socketManager.GetSyncOtherPlayersData();
+            byte[] offlineData = socketManager.GetLogOutData();
+            byte[] updateOtherPlayerHPUIData = socketManager.GetMobsAttackOtherPlayerData();
+
+            if (onlineData != null && onlineData.Length > 0)
+            {
+                PacketReaderManager reader = new PacketReaderManager(onlineData);
+
+                SyncOtherPlayersResultPacket data = new SyncOtherPlayersResultPacket();
+                data.cmd = (EnumCmdCode)reader.ReadInt();
+                data.otherPlayersData = new List<OtherPlayerSyncData>();
+
+                int countOtherPlayerData = reader.ReadInt();
+                for (int i = 0; i < countOtherPlayerData; i++)
+                {
+                    OtherPlayerSyncData otherPlayerSyncData = new OtherPlayerSyncData();
+                    otherPlayerSyncData.otherPlayerData = new PlayerData();
+                    otherPlayerSyncData.otherPlayerTransformData = new PlayerTransformData();
+                    otherPlayerSyncData.otherPlayerTransformData.positionData = new PositionData();
+                    otherPlayerSyncData.otherPlayerTransformData.scaleData = new ScaleData();
+                    otherPlayerSyncData.otherPlayerStateData = new PlayerStateData();
+
+                    otherPlayerSyncData.otherPlayerData.idAccount = reader.ReadInt();
+                    otherPlayerSyncData.otherPlayerData.level = reader.ReadInt();
+                    otherPlayerSyncData.otherPlayerData.idSchool = reader.ReadInt();
+                    otherPlayerSyncData.otherPlayerData.hair = reader.ReadInt();
+                    otherPlayerSyncData.otherPlayerData.weapon = reader.ReadInt();
+                    otherPlayerSyncData.otherPlayerData.helmet = reader.ReadInt();
+                    otherPlayerSyncData.otherPlayerData.armor = reader.ReadInt();
+                    otherPlayerSyncData.otherPlayerData.legArmor = reader.ReadInt();
+                    otherPlayerSyncData.otherPlayerData.maxHP = reader.ReadInt();
+                    otherPlayerSyncData.otherPlayerData.hp = reader.ReadInt();
+                    otherPlayerSyncData.otherPlayerData.currentTile = (TileType)reader.ReadInt();
+
+                    otherPlayerSyncData.otherPlayerTransformData.positionData.x = reader.ReadFloat();
+                    otherPlayerSyncData.otherPlayerTransformData.positionData.y = reader.ReadFloat();
+
+                    otherPlayerSyncData.otherPlayerTransformData.scaleData.x = reader.ReadFloat();
+                    otherPlayerSyncData.otherPlayerTransformData.scaleData.y = 1f;
+                    otherPlayerSyncData.otherPlayerTransformData.scaleData.z = 1f;
+
+                    otherPlayerSyncData.otherPlayerStateData.stateData = (PlayerState)reader.ReadInt();
+                    otherPlayerSyncData.otherPlayerStateData.directionData = (Direction)reader.ReadInt();
+                    otherPlayerSyncData.otherPlayerStateData.partBodyTransforms = new List<PartBodyData>();
+
+                    data.otherPlayersData.Add(otherPlayerSyncData);
+
+                    int countPartBodyData = reader.ReadInt();
+                    for (int j = 0; j < countPartBodyData; j++)
+                    {
+                        PartBodyData partBodyData = new PartBodyData();
+                        partBodyData.positionData = new PositionData();
+                        partBodyData.rotationData = new RotationData();
+                        partBodyData.scaleData = new ScaleData();
+                        partBodyData.colorData = new ColorData();
+
+                        partBodyData.category = (Category)reader.ReadInt();
+                        partBodyData.label = (Label)reader.ReadInt();
+
+                        partBodyData.positionData.x = reader.ReadFloat();
+                        partBodyData.positionData.y = reader.ReadFloat();
+                        partBodyData.positionData.z = 0f;
+
+                        partBodyData.rotationData.x = reader.ReadFloat();
+                        partBodyData.rotationData.y = reader.ReadFloat();
+                        partBodyData.rotationData.z = reader.ReadFloat();
+
+                        partBodyData.scaleData.x = reader.ReadFloat();
+                        partBodyData.scaleData.y = 1f;
+                        partBodyData.scaleData.z = 1f;
+
+                        partBodyData.colorData.r = 1f;
+                        partBodyData.colorData.g = 1f;
+                        partBodyData.colorData.b = 1f;
+                        partBodyData.colorData.a = reader.ReadFloat();
+
+                        data.otherPlayersData[i].otherPlayerStateData.partBodyTransforms.Add(partBodyData);
+                    }
+                    
+                    syncOtherPlayersResultPacketQueue.Enqueue(data);
+                }
+            }
+            if (offlineData != null && offlineData.Length > 0)
+            {
+                PacketReaderManager reader = new PacketReaderManager(offlineData);
+
+                LogOutRequestPacket offlinePlayer = new LogOutRequestPacket();
+                offlinePlayer.cmd = (EnumCmdCode)reader.ReadInt();
+                offlinePlayer.idAccount = reader.ReadInt();
+                
+                syncLogOutOtherPlayerQueue.Enqueue(offlinePlayer);
+            }
+
+            if (updateOtherPlayerHPUIData != null && updateOtherPlayerHPUIData.Length > 0)
+            {
+                PacketReaderManager reader1 = new PacketReaderManager(updateOtherPlayerHPUIData);
+                EnumCmdCode cmd = (EnumCmdCode)reader1.ReadInt();
+                int idAccount = reader1.ReadInt();
+                int mobDamage = reader1.ReadInt();
+                int otherPlayerHP = reader1.ReadInt();
+
+                syncUpdateHPUIQueue.Enqueue((cmd, idAccount, mobDamage, otherPlayerHP));
+            }
+
+            await Task.Yield();
+        }
+    }
+    public void OnUpdate()
     {
         foreach (var kv in lastUpdateTime)
         {
@@ -226,125 +347,61 @@ public class SyncOtherPlayersManager : MonoBehaviour, IUpdatable
                 lastUpdateTime.Remove(id);
             }
         }
+        toRemove.Clear();
 
-        byte[] onlineData = socketManager.GetSyncOtherPlayersData();
-        byte[] offlineData = socketManager.GetLogOutData();
-        byte[] updateOtherPlayerHPUIData = socketManager.GetMobsAttackOtherPlayerData();
+        SyncOtherPlayersResultPacket onlineData = null;
+        LogOutRequestPacket offlineData = null;
 
-        if (onlineData != null && onlineData.Length > 0)
+        EnumCmdCode cmd = default;
+        int idAccount = 0;
+        int mobDamage = 0;
+        int otherPlayerHP = 0;
+        bool hasHPUpdate = false;
+
+        if (syncOtherPlayersResultPacketQueue.TryDequeue(out var syncOnlineData))
+            onlineData = syncOnlineData;
+
+        if (syncLogOutOtherPlayerQueue.TryDequeue(out var syncOfflineData))
+            offlineData = syncOfflineData;
+
+        if (syncUpdateHPUIQueue.TryDequeue(out var syncUpdateHPUIData))
         {
-            PacketReaderManager reader = new PacketReaderManager(onlineData);
+            cmd = syncUpdateHPUIData.Item1;
+            idAccount = syncUpdateHPUIData.Item2;
+            mobDamage = syncUpdateHPUIData.Item3;
+            otherPlayerHP = syncUpdateHPUIData.Item4;
+            hasHPUpdate = true;
+        }
 
-            SyncOtherPlayersResultPacket data = new SyncOtherPlayersResultPacket();
-            data.cmd = (EnumCmdCode)reader.ReadInt();
-            data.otherPlayersData = new List<OtherPlayerSyncData>();
-
-            int countOtherPlayerData = reader.ReadInt();
-            for (int i = 0; i < countOtherPlayerData; i++)
+        // 3. Xử lý dữ liệu Online từ Server
+        if (onlineData != null)
+        {
+            if (onlineData.otherPlayersData != null)
             {
-                OtherPlayerSyncData otherPlayerSyncData = new OtherPlayerSyncData();
-                otherPlayerSyncData.otherPlayerData = new PlayerData();
-                otherPlayerSyncData.otherPlayerTransformData = new PlayerTransformData();
-                otherPlayerSyncData.otherPlayerTransformData.positionData = new PositionData();
-                otherPlayerSyncData.otherPlayerTransformData.scaleData = new ScaleData();
-                otherPlayerSyncData.otherPlayerStateData = new PlayerStateData();
-
-                otherPlayerSyncData.otherPlayerData.idAccount = reader.ReadInt();
-                otherPlayerSyncData.otherPlayerData.nameChar = reader.ReadString();
-                otherPlayerSyncData.otherPlayerData.level = reader.ReadInt();
-                otherPlayerSyncData.otherPlayerData.idSchool = reader.ReadInt();
-                otherPlayerSyncData.otherPlayerData.hair = reader.ReadInt();
-                otherPlayerSyncData.otherPlayerData.weapon = reader.ReadInt();
-                otherPlayerSyncData.otherPlayerData.helmet = reader.ReadInt();
-                otherPlayerSyncData.otherPlayerData.armor = reader.ReadInt();
-                otherPlayerSyncData.otherPlayerData.legArmor = reader.ReadInt();
-                otherPlayerSyncData.otherPlayerData.maxHP = reader.ReadInt();
-                otherPlayerSyncData.otherPlayerData.hp = reader.ReadInt();
-                otherPlayerSyncData.otherPlayerData.currentTile = (TileType)reader.ReadInt();
-
-                otherPlayerSyncData.otherPlayerTransformData.positionData.x = reader.ReadFloat();
-                otherPlayerSyncData.otherPlayerTransformData.positionData.y = reader.ReadFloat();
-
-                otherPlayerSyncData.otherPlayerTransformData.scaleData.x = reader.ReadFloat();
-                otherPlayerSyncData.otherPlayerTransformData.scaleData.y = 1f;
-                otherPlayerSyncData.otherPlayerTransformData.scaleData.z = 1f;
-
-                otherPlayerSyncData.otherPlayerStateData.stateData = (PlayerState)reader.ReadInt();
-                otherPlayerSyncData.otherPlayerStateData.directionData = (Direction)reader.ReadInt();
-                otherPlayerSyncData.otherPlayerStateData.partBodyTransforms = new List<PartBodyData>();
-
-                data.otherPlayersData.Add(otherPlayerSyncData);
-
-                int countPartBodyData = reader.ReadInt();
-                for (int j = 0; j < countPartBodyData; j++)
+                foreach (var playerData in onlineData.otherPlayersData)
                 {
-                    PartBodyData partBodyData = new PartBodyData();
-                    partBodyData.positionData = new PositionData();
-                    partBodyData.rotationData = new RotationData();
-                    partBodyData.scaleData = new ScaleData();
-                    partBodyData.colorData = new ColorData();
+                    if (playerData == null)
+                        continue;
 
-                    partBodyData.category = (Category)reader.ReadInt();
-                    partBodyData.label = (Label)reader.ReadInt();
+                    if (playerData.otherPlayerData == null)
+                        continue;
 
-                    partBodyData.positionData.x = reader.ReadFloat();
-                    partBodyData.positionData.y = reader.ReadFloat();
-                    partBodyData.positionData.z = 0f;
-
-                    partBodyData.rotationData.x = reader.ReadFloat();
-                    partBodyData.rotationData.y = reader.ReadFloat();
-                    partBodyData.rotationData.z = reader.ReadFloat();
-
-                    partBodyData.scaleData.x = reader.ReadFloat();
-                    partBodyData.scaleData.y = 1f;
-                    partBodyData.scaleData.z = 1f;
-
-                    partBodyData.colorData.r = 1f;
-                    partBodyData.colorData.g = 1f;
-                    partBodyData.colorData.b = 1f;
-                    partBodyData.colorData.a = reader.ReadFloat();
-
-                    data.otherPlayersData[i].otherPlayerStateData.partBodyTransforms.Add(partBodyData);
-                }
-            }
-
-            if (data.otherPlayersData == null)
-                return;
-
-            foreach (var playerData in data.otherPlayersData)
-            {
-                if (playerData == null)
-                    continue;
-
-                if (playerData.otherPlayerData == null)
-                    continue;
-
-                if (playerData.otherPlayerData.idAccount != LogInView.GetIDAccount())
-                {
-                    OnDataFromServer(playerData);
+                    if (playerData.otherPlayerData.idAccount != LogInView.GetIDAccount())
+                    {
+                        OnDataFromServer(playerData);
+                    }
                 }
             }
         }
-        if (offlineData != null && offlineData.Length > 0)
+
+        if (offlineData != null)
         {
-            PacketReaderManager reader = new PacketReaderManager(offlineData);
-
-            LogOutRequestPacket offlinePlayer = new LogOutRequestPacket();
-            offlinePlayer.cmd = (EnumCmdCode)reader.ReadInt();
-            offlinePlayer.idAccount = reader.ReadInt();
-
-            GameObject.Find("LogOut").GetComponent<LogOutController>().SetLogOutData(offlinePlayer);
-            OffDataFromServer(offlinePlayer);
+            GameObject.Find("LogOut").GetComponent<LogOutController>().SetLogOutData(offlineData);
+            OffDataFromServer(offlineData);
         }
 
-        if (updateOtherPlayerHPUIData != null && updateOtherPlayerHPUIData.Length > 0)
+        if (hasHPUpdate)
         {
-            PacketReaderManager reader1 = new PacketReaderManager(updateOtherPlayerHPUIData);
-            EnumCmdCode cmd = (EnumCmdCode)reader1.ReadInt();
-            int idAccount = reader1.ReadInt();
-            int mobDamage = reader1.ReadInt();
-            int otherPlayerHP = reader1.ReadInt();
-
             if (otherPlayers.TryGetValue(idAccount, out OtherPlayer otherPlayer) && otherPlayer != null && otherPlayer.otherPlayerData != null)
             {
                 if (otherPlayer.otherPlayerData.hp != otherPlayerHP)
@@ -364,8 +421,8 @@ public class SyncOtherPlayersManager : MonoBehaviour, IUpdatable
             }
         }
     }
-    public virtual void OnLateUpdate() { }
-    public virtual void OnFixedUpdate() { }
+    public void OnLateUpdate() { }
+    public void OnFixedUpdate() { }
     public void RegisterDontDestroyOnLoad()
     {
         GameManager.Instance.RegisterPersistent(this);
@@ -438,5 +495,14 @@ public class SyncOtherPlayersManager : MonoBehaviour, IUpdatable
             }
         }
         otherPlayers.Clear();
+    }
+
+    private void OnDestroy()
+    {
+        if (syncTokenSource != null)
+        {
+            syncTokenSource.Cancel();
+            syncTokenSource.Dispose();
+        }
     }
 }

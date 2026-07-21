@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.U2D.Animation;
 using UnityEngine.UI;
@@ -328,7 +329,7 @@ public class SyncSpriteController : MonoBehaviour, IUpdatable
         {
             if (spriteResolversInfos[i].Item1 != otherPlayerState.partBodyTransforms[i].category || spriteResolversInfos[i].Item2 != otherPlayerState.partBodyTransforms[i].label)
             {
-                spriteResolvers[i].SetCategoryAndLabel(((Category)otherPlayerState.partBodyTransforms[i].category).ToString(), ((Label)otherPlayerState.partBodyTransforms[i].label).ToString());
+                spriteResolvers[i].SetCategoryAndLabel((otherPlayerState.partBodyTransforms[i].category).ToString(), (otherPlayerState.partBodyTransforms[i].label).ToString());
                 spriteResolversInfos[i] = ((Category)otherPlayerState.partBodyTransforms[i].category, (Label)otherPlayerState.partBodyTransforms[i].label);
             }
 

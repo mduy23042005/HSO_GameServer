@@ -157,7 +157,7 @@ public class SocketManager : MonoBehaviour, IUpdatable
     }
     private async Task StartSyncPlayerLoop(CancellationToken token)
     {
-        const int targetTickRate = 30;
+        const int targetTickRate = 15;
         const int tickMS = 1000 / targetTickRate;
 
         var stopwatch = new System.Diagnostics.Stopwatch();
@@ -174,7 +174,7 @@ public class SocketManager : MonoBehaviour, IUpdatable
 
                     if (byteData != null && byteData.Length > 0)
                     {
-                        await SendToServer(byteData);
+                        _ = SendToServer(byteData);
                     }
                 }
 

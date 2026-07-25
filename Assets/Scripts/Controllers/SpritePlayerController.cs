@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.U2D.Animation;
@@ -11,6 +12,7 @@ public class SpritePlayerController : MonoBehaviour, IUpdatable
     private string lastLabel;
     private MovementPlayerController movementPlayerController;
     private Direction currentDirection;
+    private bool isInjured;
     private EquipmentResultPacket outfitData = new EquipmentResultPacket();
 
     [Header("Chỉ định sprite nào của player sẽ bị thay thế")]
@@ -50,7 +52,6 @@ public class SpritePlayerController : MonoBehaviour, IUpdatable
         standStateHash = Animator.StringToHash("Base Layer.Stand");
         moveStateHash = Animator.StringToHash("Base Layer.Move");
         atkStateHash = Animator.StringToHash("Base Layer.Atk");
-        injuredStateHash = Animator.StringToHash("Base Layer.Injured");
         dieStateHash = Animator.StringToHash("Base Layer.Die");
 
         ReadCache();
@@ -444,8 +445,11 @@ public class SpritePlayerController : MonoBehaviour, IUpdatable
             int frame = GetFrameByTime(t, moveChangeTimes);
 
             SetAllResolvers("Stand", $"Stand{direction}");
-            faceResolver.SetCategoryAndLabel("Stand", $"Stand{direction}Frame{frame}");
-            spriteResolversInfos[4] = (ConvertCategory("Stand"), ConvertLabel($"Stand{direction}Frame{frame}"));
+            if (!isInjured)
+            {
+                faceResolver.SetCategoryAndLabel("Stand", $"Stand{direction}Frame{frame}");
+                spriteResolversInfos[4] = (ConvertCategory("Stand"), ConvertLabel($"Stand{direction}Frame{frame}"));
+            }
         }
         // Move
         if (fullPathHash == moveStateHash)
@@ -455,8 +459,11 @@ public class SpritePlayerController : MonoBehaviour, IUpdatable
             int frame = GetFrameByTime(t, moveChangeTimes);
 
             SetAllResolvers("Move", $"Move{direction}Frame{frame}");
-            faceResolver.SetCategoryAndLabel("Move", $"Move{direction}Frame{frame}");
-            spriteResolversInfos[4] = (ConvertCategory("Move"), ConvertLabel($"Move{direction}Frame{frame}"));
+            if (!isInjured)
+            {
+                faceResolver.SetCategoryAndLabel("Move", $"Move{direction}Frame{frame}");
+                spriteResolversInfos[4] = (ConvertCategory("Move"), ConvertLabel($"Move{direction}Frame{frame}"));
+            }
         }
         // Attack
         if (fullPathHash == atkStateHash)
@@ -466,27 +473,66 @@ public class SpritePlayerController : MonoBehaviour, IUpdatable
             int frame = GetFrameByTime(t, moveChangeTimes);
 
             SetAllResolvers("Atk", $"Atk{direction}Frame{frame}");
-            faceResolver.SetCategoryAndLabel("Atk", $"Atk{direction}Frame{frame}");
-            spriteResolversInfos[4] = (ConvertCategory("Atk"), ConvertLabel($"Atk{direction}Frame{frame}"));
-        }
-        //Injured
-        if (fullPathHash == injuredStateHash)
-        {
-            float[] moveChangeTimes = { 0f, 0.5f, 1f }; // Clip dài 0:20 giây, đổi frame ở 0 / 0.2, 0.1 / 0.2
-
-            int frame = GetFrameByTime(t, moveChangeTimes);
-
-            SetAllResolvers("Stand", $"Stand{direction}");
-            faceResolver.SetCategoryAndLabel("Injured", $"Injured{direction}Frame{frame}");
-            spriteResolversInfos[4] = (ConvertCategory("Injured"), ConvertLabel($"Injured{direction}Frame{frame}"));
+            if (!isInjured)
+            {
+                faceResolver.SetCategoryAndLabel("Atk", $"Atk{direction}Frame{frame}");
+                spriteResolversInfos[4] = (ConvertCategory("Atk"), ConvertLabel($"Atk{direction}Frame{frame}"));
+            }
         }
         // Die
         if (fullPathHash == dieStateHash)
         {
             SetAllResolvers("Die", $"DieFrame0");
-            faceResolver.SetCategoryAndLabel("Die", $"DieFrame0");
-            spriteResolversInfos[4] = (ConvertCategory("Die"), ConvertLabel($"DieFrame0"));
+            if (!isInjured)
+            {
+                faceResolver.SetCategoryAndLabel("Die", $"DieFrame0");
+                spriteResolversInfos[4] = (ConvertCategory("Die"), ConvertLabel($"DieFrame0"));
+            }    
         }
+    }
+    private IEnumerator InjuredCoroutine()
+    {
+        yield return new WaitForSeconds(0.2f);
+
+        isInjured = false;
+    }
+    public void UpdateInjuredSprite()
+    {
+        float h;
+        float v;
+        if (movementPlayerController.GetIsMovingToTarget())
+        {
+            h = movementPlayerController.GetMovement().x;
+            v = movementPlayerController.GetMovement().y;
+        }
+        else
+        {
+            h = movementPlayerController.GetLastMovement().x;
+            v = movementPlayerController.GetLastMovement().y;
+        }
+
+        string direction = GetDirection(h, v);
+        switch (direction)
+        {
+            case "Front":
+                currentDirection = Direction.Front; break;
+
+            case "Back":
+                currentDirection = Direction.Back; break;
+
+            case "Left":
+                currentDirection = Direction.Left; break;
+
+            case "Right":
+                currentDirection = Direction.Right; break;
+        }
+
+        StopCoroutine(nameof(InjuredCoroutine));
+
+        isInjured = true;
+        faceResolver.SetCategoryAndLabel("Injured", $"Injured{direction}Frame1");
+        spriteResolversInfos[4] = (ConvertCategory("Injured"), ConvertLabel($"Injured{direction}Frame1"));
+        StartCoroutine(InjuredCoroutine());
     }
 
     private void SetAllResolvers(string category, string label)

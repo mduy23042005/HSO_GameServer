@@ -547,7 +547,6 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
     public void UpdateInjuredAnimation()
     {
         currentState = PlayerState.Injured;
-        TriggerAnimation("Injured", 0.3f);
         UpdateLastMoveToAnimator();
     }
     public void UpdateDieAnimation()

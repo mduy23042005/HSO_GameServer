@@ -120,6 +120,11 @@ public class UIBarsView : MonoBehaviour, IUpdatable
             {
                 if (playerHP <= 0)
                     player.GetComponent<MovementPlayerController>().UpdateDieAnimation();
+                else
+                {
+                    player.GetComponent<MovementPlayerController>().UpdateInjuredAnimation();
+                    player.GetComponent<SpritePlayerController>().UpdateInjuredSprite();
+                }
 
                 GameObject objectDamageUI = Instantiate(updateHPUI, player.GetComponentInChildren<Canvas>().transform, false);
 
@@ -128,7 +133,6 @@ public class UIBarsView : MonoBehaviour, IUpdatable
                 {
                     injuredDamageUI.SetInjuredDamage(mobDamage);
                 }
-                player.GetComponent<MovementPlayerController>().UpdateInjuredAnimation();
             }
             lastHP = playerHP;
         }

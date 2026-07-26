@@ -272,30 +272,8 @@ public class SyncOtherPlayersManager : MonoBehaviour, IUpdatable
                     for (int j = 0; j < countPartBodyData; j++)
                     {
                         PartBodyData partBodyData = new PartBodyData();
-                        partBodyData.positionData = new PositionData();
-                        partBodyData.rotationData = new RotationData();
-                        partBodyData.scaleData = new ScaleData();
-                        partBodyData.colorData = new ColorData();
-
                         partBodyData.category = (Category)reader.ReadInt();
                         partBodyData.label = (Label)reader.ReadInt();
-
-                        partBodyData.positionData.x = reader.ReadFloat();
-                        partBodyData.positionData.y = reader.ReadFloat();
-                        partBodyData.positionData.z = 0f;
-
-                        partBodyData.rotationData.x = reader.ReadFloat();
-                        partBodyData.rotationData.y = reader.ReadFloat();
-                        partBodyData.rotationData.z = reader.ReadFloat();
-
-                        partBodyData.scaleData.x = reader.ReadFloat();
-                        partBodyData.scaleData.y = 1f;
-                        partBodyData.scaleData.z = 1f;
-
-                        partBodyData.colorData.r = 1f;
-                        partBodyData.colorData.g = 1f;
-                        partBodyData.colorData.b = 1f;
-                        partBodyData.colorData.a = reader.ReadFloat();
 
                         data.otherPlayersData[i].otherPlayerStateData.partBodyTransforms.Add(partBodyData);
                     }

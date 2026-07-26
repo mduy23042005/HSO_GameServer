@@ -139,18 +139,6 @@ public class SocketManager : MonoBehaviour, IUpdatable
         {
             writer.WriteInt((int)spriteResolversInfos[i].Item1); //category sprite resolver
             writer.WriteInt((int)spriteResolversInfos[i].Item2); //label sprite resolver
-
-            writer.WriteFloat(playerSpriteController.GetListSpriteLibrary()[i].transform.localPosition.x);
-            writer.WriteFloat(playerSpriteController.GetListSpriteLibrary()[i].transform.localPosition.y);
-
-            writer.WriteFloat(playerSpriteController.GetListSpriteLibrary()[i].transform.localEulerAngles.x);
-            writer.WriteFloat(playerSpriteController.GetListSpriteLibrary()[i].transform.localEulerAngles.y);
-            writer.WriteFloat(playerSpriteController.GetListSpriteLibrary()[i].transform.localEulerAngles.z);
-
-            writer.WriteFloat(playerSpriteController.GetListSpriteLibrary()[i].transform.localScale.x);
-
-            SpriteRenderer spriteRenderer = playerSpriteController.GetListSpriteLibrary()[i].GetComponent<SpriteRenderer>();
-            writer.WriteFloat(spriteRenderer.color.a);
         }
 
         return writer.ToArray();

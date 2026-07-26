@@ -444,7 +444,7 @@ public class SpritePlayerController : MonoBehaviour, IUpdatable
 
             int frame = GetFrameByTime(t, moveChangeTimes);
 
-            SetAllResolvers("Stand", $"Stand{direction}");
+            SetAllResolvers("Stand", $"Stand{direction}Frame{frame}");
             if (!isInjured)
             {
                 faceResolver.SetCategoryAndLabel("Stand", $"Stand{direction}Frame{frame}");

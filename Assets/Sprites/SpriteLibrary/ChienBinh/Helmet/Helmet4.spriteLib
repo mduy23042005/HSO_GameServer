@@ -11,34 +11,54 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a5e6fedc2472449cead18ef23b5cb30d, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier: Unity.2D.Animation.Runtime::UnityEngine.U2D.Animation.SpriteLibrarySourceAsset
   m_Library:
   - m_Name: Stand
     m_Hash: 628635570
     m_CategoryList: []
     m_OverrideEntries:
-    - m_Name: StandFront
-      m_Hash: 827566042
+    - m_Name: StandFrontFrame0
+      m_Hash: 982635650
       m_Sprite: {fileID: 1773268885678769855, guid: ef46c77bc6dc855428ac0ad0cf534229, type: 3}
       m_FromMain: 0
       m_SpriteOverride: {fileID: 1773268885678769855, guid: ef46c77bc6dc855428ac0ad0cf534229, type: 3}
-    - m_Name: StandBack
-      m_Hash: 452575124
+    - m_Name: StandFrontFrame1
+      m_Hash: 227992596
+      m_Sprite: {fileID: 1773268885678769855, guid: ef46c77bc6dc855428ac0ad0cf534229, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 1773268885678769855, guid: ef46c77bc6dc855428ac0ad0cf534229, type: 3}
+    - m_Name: StandBackFrame0
+      m_Hash: 682108989
       m_Sprite: {fileID: -1757739432, guid: ef46c77bc6dc855428ac0ad0cf534229, type: 3}
       m_FromMain: 0
       m_SpriteOverride: {fileID: -1757739432, guid: ef46c77bc6dc855428ac0ad0cf534229, type: 3}
-    - m_Name: StandLeft
-      m_Hash: 223386059
+    - m_Name: StandBackFrame1
+      m_Hash: 531568811
+      m_Sprite: {fileID: -1757739432, guid: ef46c77bc6dc855428ac0ad0cf534229, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -1757739432, guid: ef46c77bc6dc855428ac0ad0cf534229, type: 3}
+    - m_Name: StandLeftFrame0
+      m_Hash: 855354305
       m_Sprite: {fileID: -929483123, guid: ef46c77bc6dc855428ac0ad0cf534229, type: 3}
       m_FromMain: 0
       m_SpriteOverride: {fileID: -929483123, guid: ef46c77bc6dc855428ac0ad0cf534229, type: 3}
-    - m_Name: StandRight
-      m_Hash: 996323384
+    - m_Name: StandLeftFrame1
+      m_Hash: 100440919
+      m_Sprite: {fileID: -929483123, guid: ef46c77bc6dc855428ac0ad0cf534229, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -929483123, guid: ef46c77bc6dc855428ac0ad0cf534229, type: 3}
+    - m_Name: StandRightFrame0
+      m_Hash: 105361995
+      m_Sprite: {fileID: -929483123, guid: ef46c77bc6dc855428ac0ad0cf534229, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -929483123, guid: ef46c77bc6dc855428ac0ad0cf534229, type: 3}
+    - m_Name: StandRightFrame1
+      m_Hash: 826311389
       m_Sprite: {fileID: -929483123, guid: ef46c77bc6dc855428ac0ad0cf534229, type: 3}
       m_FromMain: 0
       m_SpriteOverride: {fileID: -929483123, guid: ef46c77bc6dc855428ac0ad0cf534229, type: 3}
     m_FromMain: 0
-    m_EntryOverrideCount: 4
+    m_EntryOverrideCount: 8
   - m_Name: Move
     m_Hash: 252483654
     m_CategoryList: []
@@ -143,5 +163,5 @@ MonoBehaviour:
     m_FromMain: 0
     m_EntryOverrideCount: 1
   m_PrimaryLibraryGUID: 
-  m_ModificationHash: 638949959078421402
+  m_ModificationHash: 639206058972134442
   m_Version: 1

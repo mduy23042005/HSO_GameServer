@@ -16,6 +16,7 @@ public class SyncSpriteController : MonoBehaviour, IUpdatable
 
     private PlayerTransformData otherPlayerTransform = new PlayerTransformData();
     private PlayerStateData otherPlayerState = new PlayerStateData();
+    private Dictionary<(int, int, Category, Label), (PositionData, RotationData, ScaleData, ColorData)> bodyDatas;
 
     [Header("Chỉ định sprite nào của player sẽ bị thay thế")]
     [SerializeField] private List<SpriteLibrary> spriteLibraries;
@@ -49,6 +50,7 @@ public class SyncSpriteController : MonoBehaviour, IUpdatable
                 spriteRenderers.Add(spriteRenderer);
             }
         }
+        bodyDatas = PlayerManager.bodyDatas;
         InitSpriteResolversInfos();
     }
     private Category ConvertCategory(string category)
@@ -325,49 +327,49 @@ public class SyncSpriteController : MonoBehaviour, IUpdatable
 
     private void UpdateSprite()
     {
+
         for (int i = 0; i < otherPlayerState.partBodyTransforms.Count; i++)
         {
             if (spriteResolversInfos[i].Item1 != otherPlayerState.partBodyTransforms[i].category || spriteResolversInfos[i].Item2 != otherPlayerState.partBodyTransforms[i].label)
             {
-                spriteResolvers[i].SetCategoryAndLabel((otherPlayerState.partBodyTransforms[i].category).ToString(), (otherPlayerState.partBodyTransforms[i].label).ToString());
+                string category = (otherPlayerState.partBodyTransforms[i].category).ToString();
+                string label = (otherPlayerState.partBodyTransforms[i].label).ToString();
+                spriteResolvers[i].SetCategoryAndLabel(category, label);
                 spriteResolversInfos[i] = ((Category)otherPlayerState.partBodyTransforms[i].category, (Label)otherPlayerState.partBodyTransforms[i].label);
             }
 
-            Vector3 currentPositionPartBody = spriteResolvers[i].transform.localPosition;
-            if (currentPositionPartBody.x != otherPlayerState.partBodyTransforms[i].positionData.x 
-                || currentPositionPartBody.y != otherPlayerState.partBodyTransforms[i].positionData.y 
-                || currentPositionPartBody.z != otherPlayerState.partBodyTransforms[i].positionData.z)
+            if (bodyDatas.TryGetValue((LogInView.GetIDSchool(), i, otherPlayerState.partBodyTransforms[i].category, otherPlayerState.partBodyTransforms[i].label), out var bodyData))
             {
-                currentPositionPartBody.x = otherPlayerState.partBodyTransforms[i].positionData.x;
-                currentPositionPartBody.y = otherPlayerState.partBodyTransforms[i].positionData.y;
-                currentPositionPartBody.z = otherPlayerState.partBodyTransforms[i].positionData.z;
-                spriteResolvers[i].transform.localPosition = currentPositionPartBody;
-            }
+                Vector3 currentPositionPartBody = spriteResolvers[i].transform.localPosition;
+                if (currentPositionPartBody.x != bodyData.Item1.x || currentPositionPartBody.y != bodyData.Item1.y || currentPositionPartBody.z != bodyData.Item1.z)
+                {
+                    currentPositionPartBody.x = bodyData.Item1.x;
+                    currentPositionPartBody.y = bodyData.Item1.y;
+                    currentPositionPartBody.z = bodyData.Item1.z;
+                    spriteResolvers[i].transform.localPosition = currentPositionPartBody;
+                }
 
-            Quaternion currentRotationPartBody = spriteResolvers[i].transform.localRotation;
-            if (currentRotationPartBody.x != otherPlayerState.partBodyTransforms[i].rotationData.x 
-                || currentRotationPartBody.y != otherPlayerState.partBodyTransforms[i].rotationData.y 
-                || currentRotationPartBody.z != otherPlayerState.partBodyTransforms[i].rotationData.z)
-            {
-                spriteResolvers[i].transform.localRotation = Quaternion.Euler(otherPlayerState.partBodyTransforms[i].rotationData.x, otherPlayerState.partBodyTransforms[i].rotationData.y, otherPlayerState.partBodyTransforms[i].rotationData.z);
-            }
+                Quaternion currentRotationPartBody = spriteResolvers[i].transform.localRotation;
+                if (currentRotationPartBody.x != bodyData.Item2.x || currentRotationPartBody.y != bodyData.Item2.y || currentRotationPartBody.z != bodyData.Item2.z)
+                {
+                    spriteResolvers[i].transform.localRotation = Quaternion.Euler(bodyData.Item2.x, bodyData.Item2.y, bodyData.Item2.z);
+                }
 
-            Vector3 currentScalePartBody = spriteResolvers[i].transform.localScale;
-            if (currentScalePartBody.x != otherPlayerState.partBodyTransforms[i].scaleData.x 
-                || currentScalePartBody.y != otherPlayerState.partBodyTransforms[i].scaleData.y 
-                || currentScalePartBody.z != otherPlayerState.partBodyTransforms[i].scaleData.z)
-            {
-                currentScalePartBody.x = otherPlayerState.partBodyTransforms[i].scaleData.x;
-                currentScalePartBody.y = otherPlayerState.partBodyTransforms[i].scaleData.y;
-                currentScalePartBody.z = otherPlayerState.partBodyTransforms[i].scaleData.z;
-                spriteResolvers[i].transform.localScale = currentScalePartBody;
-            }
+                Vector3 currentScalePartBody = spriteResolvers[i].transform.localScale;
+                if (currentScalePartBody.x != bodyData.Item3.x || currentScalePartBody.y != bodyData.Item3.y || currentScalePartBody.z != bodyData.Item3.z)
+                {
+                    currentScalePartBody.x = bodyData.Item3.x;
+                    currentScalePartBody.y = bodyData.Item3.y;
+                    currentScalePartBody.z = bodyData.Item3.z;
+                    spriteResolvers[i].transform.localScale = currentScalePartBody;
+                }
 
-            Color currentColorPartBody = spriteRenderers[i].color;
-            if (currentColorPartBody.a != otherPlayerState.partBodyTransforms[i].colorData.a)
-            {
-                currentColorPartBody.a = otherPlayerState.partBodyTransforms[i].colorData.a;
-                spriteRenderers[i].color = currentColorPartBody;
+                Color currentColorPartBody = spriteRenderers[i].color;
+                if (currentColorPartBody.a != bodyData.Item4.a)
+                {
+                    currentColorPartBody.a = bodyData.Item4.a;
+                    spriteRenderers[i].color = currentColorPartBody;
+                }
             }
         }
     }

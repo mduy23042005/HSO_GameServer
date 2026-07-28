@@ -13950,15 +13950,15 @@ MonoBehaviour:
   - {fileID: -2003435532182951070, guid: aab665e7de728f9419db1164bbbd0573, type: 3}
   - {fileID: -3462412046723755575, guid: 16b7b90d69c17894aa6099d3def51ea6, type: 3}
   listMaleHairLibraries:
-  - hairLibrariesAsset: {fileID: 7108339969198208228, guid: ff6623d51e33aa147ac78403d957e5e5, type: 3}
-  - hairLibrariesAsset: {fileID: 7108339969198208228, guid: 7f53bd8b52e72ed47aa13f0ba218d9f0, type: 3}
-  - hairLibrariesAsset: {fileID: 7108339969198208228, guid: 8b113c2d0c24c5d419f07b9d7ebe15b1, type: 3}
-  - hairLibrariesAsset: {fileID: 7108339969198208228, guid: be851b2ddbf31b24881511418dcfd633, type: 3}
-  - hairLibrariesAsset: {fileID: 7108339969198208228, guid: 5c0254a04c739874dad3b603f2cc3c29, type: 3}
-  - hairLibrariesAsset: {fileID: 7108339969198208228, guid: 284541a666bd9d24abce3c8e1c8c742b, type: 3}
-  - hairLibrariesAsset: {fileID: 7108339969198208228, guid: df027672371e6b94199494b0acd627fc, type: 3}
-  - hairLibrariesAsset: {fileID: 7108339969198208228, guid: 0a122fc9449ce014ba68bf107f6d42db, type: 3}
-  - hairLibrariesAsset: {fileID: 7108339969198208228, guid: c83d38738803d7340aaaa9787d2a702b, type: 3}
+  - hairLibrariesAsset: {fileID: 7108339969198208228, guid: b565b0c3075097a4eba64cdebcfdb1b9, type: 3}
+  - hairLibrariesAsset: {fileID: 7108339969198208228, guid: 1d0ad20c5896efc42b13ac5fc8d5baf6, type: 3}
+  - hairLibrariesAsset: {fileID: 7108339969198208228, guid: bce4f9a52d11e3343be884a9e98b9c24, type: 3}
+  - hairLibrariesAsset: {fileID: 7108339969198208228, guid: 798f9fbf84d5a9b49a8708926de40f1c, type: 3}
+  - hairLibrariesAsset: {fileID: 7108339969198208228, guid: 5dcc3a01f9f6b814cbc3abac96129ab1, type: 3}
+  - hairLibrariesAsset: {fileID: 7108339969198208228, guid: afc5217e33e442740beb7d6cd07d5c64, type: 3}
+  - hairLibrariesAsset: {fileID: 7108339969198208228, guid: 2093af00ce6eeb4479f273fae562a926, type: 3}
+  - hairLibrariesAsset: {fileID: 7108339969198208228, guid: f14a1ffb94296e64f85b15bca00e11f2, type: 3}
+  - hairLibrariesAsset: {fileID: 7108339969198208228, guid: 7a40dc536811f2546a3fc3ba42bfa517, type: 3}
   listFemaleHairLibraries:
   - hairLibrariesAsset: {fileID: 7108339969198208228, guid: 59cc82332afebff4a9ebdbbfba5ce148, type: 3}
   - hairLibrariesAsset: {fileID: 7108339969198208228, guid: 1131679bddd14f941b71f31d489437c5, type: 3}

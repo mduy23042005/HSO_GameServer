@@ -166,27 +166,27 @@ public class PlayerManager : MonoBehaviour, IUpdatable
         #endregion
 
         #region idSchool: 1, idPartBody: 0, Category: Stand, Label: StandBack
-        bodyDatas.Add((1, 0, Category.Stand, Label.StandBack), 
+        bodyDatas.Add((1, 0, Category.Stand, Label.StandBackFrame0), 
             (GetPartBodyPositionData(0f, 0.27f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
-        bodyDatas.Add((1, 0, Category.Stand, Label.StandBack), 
+        bodyDatas.Add((1, 0, Category.Stand, Label.StandBackFrame1), 
             (GetPartBodyPositionData(0f, 0.27f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
         #endregion
         #region idSchool: 1, idPartBody: 1, Category: Stand, Label: StandBack
-        bodyDatas.Add((1, 1, Category.Stand, Label.StandBack), 
+        bodyDatas.Add((1, 1, Category.Stand, Label.StandBackFrame0), 
             (GetPartBodyPositionData(0.00974f, 0.734f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
-        bodyDatas.Add((1, 1, Category.Stand, Label.StandBack), 
+        bodyDatas.Add((1, 1, Category.Stand, Label.StandBackFrame1), 
             (GetPartBodyPositionData(0.00974f, 0.704f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
         #endregion
         #region idSchool: 1, idPartBody: 2, Category: Stand, Label: StandBack
-        bodyDatas.Add((1, 2, Category.Stand, Label.StandBack), 
+        bodyDatas.Add((1, 2, Category.Stand, Label.StandBackFrame0), 
             (GetPartBodyPositionData(0.01774f, 1.544f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
-        bodyDatas.Add((1, 2, Category.Stand, Label.StandBack), 
+        bodyDatas.Add((1, 2, Category.Stand, Label.StandBackFrame1), 
             (GetPartBodyPositionData(0.01774f, 1.514f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
         #endregion
         #region idSchool: 1, idPartBody: 3, Category: Stand, Label: StandBack
-        bodyDatas.Add((1, 3, Category.Stand, Label.StandBack), 
+        bodyDatas.Add((1, 3, Category.Stand, Label.StandBackFrame0), 
             (GetPartBodyPositionData(0.01974f, 1.514f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
-        bodyDatas.Add((1, 3, Category.Stand, Label.StandBack), 
+        bodyDatas.Add((1, 3, Category.Stand, Label.StandBackFrame1), 
             (GetPartBodyPositionData(0.01974f, 1.484f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
         #endregion
         #region idSchool: 1, idPartBody: 4, Category: Stand, Label: StandBack
@@ -196,52 +196,52 @@ public class PlayerManager : MonoBehaviour, IUpdatable
             (GetPartBodyPositionData(0f, 0f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 0f)));
         #endregion
         #region idSchool: 1, idPartBody: 5, Category: Stand, Label: StandBack
-        bodyDatas.Add((1, 5, Category.Stand, Label.StandBack),
+        bodyDatas.Add((1, 5, Category.Stand, Label.StandBackFrame0),
             (GetPartBodyPositionData(0.00174f, 1.8502f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
-        bodyDatas.Add((1, 5, Category.Stand, Label.StandBack),
+        bodyDatas.Add((1, 5, Category.Stand, Label.StandBackFrame1),
             (GetPartBodyPositionData(0.00174f, 1.8202f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
         #endregion
         #region idSchool: 1, idPartBody: 6, Category: Stand, Label: StandBack
-        bodyDatas.Add((1, 6, Category.Stand, Label.StandBack),
+        bodyDatas.Add((1, 6, Category.Stand, Label.StandBackFrame0),
             (GetPartBodyPositionData(0f, 0f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 0f)));
-        bodyDatas.Add((1, 6, Category.Stand, Label.StandBack),
+        bodyDatas.Add((1, 6, Category.Stand, Label.StandBackFrame1),
             (GetPartBodyPositionData(0f, 0f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 0f)));
         #endregion
         #region idSchool: 1, idPartBody: 7, Category: Stand, Label: StandBack
-        bodyDatas.Add((1, 7, Category.Stand, Label.StandBack),
+        bodyDatas.Add((1, 7, Category.Stand, Label.StandBackFrame0),
             (GetPartBodyPositionData(0.11921f, 0.864f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
-        bodyDatas.Add((1, 7, Category.Stand, Label.StandBack),
+        bodyDatas.Add((1, 7, Category.Stand, Label.StandBackFrame1),
             (GetPartBodyPositionData(0.11921f, 0.834f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
         #endregion
         #region idSchool: 1, idPartBody: 8, Category: Stand, Label: StandBack
-        bodyDatas.Add((1, 8, Category.Stand, Label.StandBack),
+        bodyDatas.Add((1, 8, Category.Stand, Label.StandBackFrame0),
             (GetPartBodyPositionData(0f, 0f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 0f)));
-        bodyDatas.Add((1, 8, Category.Stand, Label.StandBack),
+        bodyDatas.Add((1, 8, Category.Stand, Label.StandBackFrame1),
             (GetPartBodyPositionData(0f, 0f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 0f)));
         #endregion
 
         #region idSchool: 1, idPartBody: 0, Category: Stand, Label: StandLeft
-        bodyDatas.Add((1, 0, Category.Stand, Label.StandLeft),
+        bodyDatas.Add((1, 0, Category.Stand, Label.StandLeftFrame0),
             (GetPartBodyPositionData(0f, 0.274f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
-        bodyDatas.Add((1, 0, Category.Stand, Label.StandLeft),
+        bodyDatas.Add((1, 0, Category.Stand, Label.StandLeftFrame1),
             (GetPartBodyPositionData(0f, 0.274f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
         #endregion
         #region idSchool: 1, idPartBody: 1, Category: Stand, Label: StandLeft
-        bodyDatas.Add((1, 1, Category.Stand, Label.StandLeft),
+        bodyDatas.Add((1, 1, Category.Stand, Label.StandLeftFrame0),
             (GetPartBodyPositionData(0.00974f, 0.714f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
-        bodyDatas.Add((1, 1, Category.Stand, Label.StandLeft),
+        bodyDatas.Add((1, 1, Category.Stand, Label.StandLeftFrame1),
             (GetPartBodyPositionData(0.00974f, 0.684f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
         #endregion
         #region idSchool: 1, idPartBody: 2, Category: Stand, Label: StandLeft
-        bodyDatas.Add((1, 2, Category.Stand, Label.StandLeft),
+        bodyDatas.Add((1, 2, Category.Stand, Label.StandLeftFrame0),
             (GetPartBodyPositionData(0.01774f, 1.544f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
-        bodyDatas.Add((1, 2, Category.Stand, Label.StandLeft),
+        bodyDatas.Add((1, 2, Category.Stand, Label.StandLeftFrame1),
             (GetPartBodyPositionData(0.01774f, 1.514f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
         #endregion
         #region idSchool: 1, idPartBody: 3, Category: Stand, Label: StandLeft
-        bodyDatas.Add((1, 3, Category.Stand, Label.StandLeft),
+        bodyDatas.Add((1, 3, Category.Stand, Label.StandLeftFrame0),
             (GetPartBodyPositionData(0.01974f, 1.942f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
-        bodyDatas.Add((1, 3, Category.Stand, Label.StandLeft),
+        bodyDatas.Add((1, 3, Category.Stand, Label.StandLeftFrame1),
             (GetPartBodyPositionData(0.01974f, 1.912f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
         #endregion
         #region idSchool: 1, idPartBody: 4, Category: Stand, Label: StandLeft
@@ -251,52 +251,52 @@ public class PlayerManager : MonoBehaviour, IUpdatable
             (GetPartBodyPositionData(-0.16879f, 1.395f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
         #endregion
         #region idSchool: 1, idPartBody: 5, Category: Stand, Label: StandLeft
-        bodyDatas.Add((1, 5, Category.Stand, Label.StandLeft),
+        bodyDatas.Add((1, 5, Category.Stand, Label.StandLeftFrame0),
             (GetPartBodyPositionData(0.00174f, 1.8502f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
-        bodyDatas.Add((1, 5, Category.Stand, Label.StandLeft),
+        bodyDatas.Add((1, 5, Category.Stand, Label.StandLeftFrame1),
             (GetPartBodyPositionData(0.00174f, 1.8202f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
         #endregion
         #region idSchool: 1, idPartBody: 6, Category: Stand, Label: StandLeft
-        bodyDatas.Add((1, 6, Category.Stand, Label.StandLeft),
+        bodyDatas.Add((1, 6, Category.Stand, Label.StandLeftFrame0),
             (GetPartBodyPositionData(-0.10379f, 0.979f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
-        bodyDatas.Add((1, 6, Category.Stand, Label.StandLeft),
+        bodyDatas.Add((1, 6, Category.Stand, Label.StandLeftFrame1),
             (GetPartBodyPositionData(-0.10379f, 0.949f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
         #endregion
         #region idSchool: 1, idPartBody: 7, Category: Stand, Label: StandLeft
-        bodyDatas.Add((1, 7, Category.Stand, Label.StandLeft),
+        bodyDatas.Add((1, 7, Category.Stand, Label.StandLeftFrame0),
             (GetPartBodyPositionData(0f, 0f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 0f)));
-        bodyDatas.Add((1, 7, Category.Stand, Label.StandLeft),
+        bodyDatas.Add((1, 7, Category.Stand, Label.StandLeftFrame1),
             (GetPartBodyPositionData(0f, 0f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 0f)));
         #endregion
         #region idSchool: 1, idPartBody: 8, Category: Stand, Label: StandLeft
-        bodyDatas.Add((1, 8, Category.Stand, Label.StandLeft),
+        bodyDatas.Add((1, 8, Category.Stand, Label.StandLeftFrame0),
             (GetPartBodyPositionData(0f, 0f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 0f)));
-        bodyDatas.Add((1, 8, Category.Stand, Label.StandLeft),
+        bodyDatas.Add((1, 8, Category.Stand, Label.StandLeftFrame1),
             (GetPartBodyPositionData(0f, 0f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 0f)));
         #endregion
 
         #region idSchool: 1, idPartBody: 0, Category: Stand, Label: StandRight
-        bodyDatas.Add((1, 0, Category.Stand, Label.StandRight),
+        bodyDatas.Add((1, 0, Category.Stand, Label.StandRightFrame0),
             (GetPartBodyPositionData(0f, 0.274f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
-        bodyDatas.Add((1, 0, Category.Stand, Label.StandRight),
+        bodyDatas.Add((1, 0, Category.Stand, Label.StandRightFrame1),
             (GetPartBodyPositionData(0f, 0.274f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
         #endregion
         #region idSchool: 1, idPartBody: 1, Category: Stand, Label: StandRight
-        bodyDatas.Add((1, 1, Category.Stand, Label.StandRight),
+        bodyDatas.Add((1, 1, Category.Stand, Label.StandRightFrame0),
             (GetPartBodyPositionData(0.00974f, 0.714f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
-        bodyDatas.Add((1, 1, Category.Stand, Label.StandRight),
+        bodyDatas.Add((1, 1, Category.Stand, Label.StandRightFrame1),
             (GetPartBodyPositionData(0.00974f, 0.684f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
         #endregion
         #region idSchool: 1, idPartBody: 2, Category: Stand, Label: StandRight
-        bodyDatas.Add((1, 2, Category.Stand, Label.StandRight),
+        bodyDatas.Add((1, 2, Category.Stand, Label.StandRightFrame0),
             (GetPartBodyPositionData(0.01774f, 1.544f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
-        bodyDatas.Add((1, 2, Category.Stand, Label.StandRight),
+        bodyDatas.Add((1, 2, Category.Stand, Label.StandRightFrame1),
             (GetPartBodyPositionData(0.01774f, 1.514f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
         #endregion
         #region idSchool: 1, idPartBody: 3, Category: Stand, Label: StandRight
-        bodyDatas.Add((1, 3, Category.Stand, Label.StandRight),
+        bodyDatas.Add((1, 3, Category.Stand, Label.StandRightFrame0),
             (GetPartBodyPositionData(0.01974f, 1.942f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
-        bodyDatas.Add((1, 3, Category.Stand, Label.StandRight),
+        bodyDatas.Add((1, 3, Category.Stand, Label.StandRightFrame1),
             (GetPartBodyPositionData(0.01974f, 1.912f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
         #endregion
         #region idSchool: 1, idPartBody: 4, Category: Stand, Label: StandRight
@@ -306,27 +306,27 @@ public class PlayerManager : MonoBehaviour, IUpdatable
             (GetPartBodyPositionData(-0.16879f, 1.395f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
         #endregion
         #region idSchool: 1, idPartBody: 5, Category: Stand, Label: StandRight
-        bodyDatas.Add((1, 5, Category.Stand, Label.StandRight),
+        bodyDatas.Add((1, 5, Category.Stand, Label.StandRightFrame0),
             (GetPartBodyPositionData(0.00174f, 1.8502f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
-        bodyDatas.Add((1, 5, Category.Stand, Label.StandRight),
+        bodyDatas.Add((1, 5, Category.Stand, Label.StandRightFrame1),
             (GetPartBodyPositionData(0.00174f, 1.8202f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
         #endregion
         #region idSchool: 1, idPartBody: 6, Category: Stand, Label: StandRight
-        bodyDatas.Add((1, 6, Category.Stand, Label.StandRight),
+        bodyDatas.Add((1, 6, Category.Stand, Label.StandRightFrame0),
             (GetPartBodyPositionData(-0.10379f, 0.979f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
-        bodyDatas.Add((1, 6, Category.Stand, Label.StandRight),
+        bodyDatas.Add((1, 6, Category.Stand, Label.StandRightFrame1),
             (GetPartBodyPositionData(-0.10379f, 0.949f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
         #endregion
         #region idSchool: 1, idPartBody: 7, Category: Stand, Label: StandRight
-        bodyDatas.Add((1, 7, Category.Stand, Label.StandRight),
+        bodyDatas.Add((1, 7, Category.Stand, Label.StandRightFrame0),
             (GetPartBodyPositionData(0f, 0f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 0f)));
-        bodyDatas.Add((1, 7, Category.Stand, Label.StandRight),
+        bodyDatas.Add((1, 7, Category.Stand, Label.StandRightFrame1),
             (GetPartBodyPositionData(0f, 0f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 0f)));
         #endregion
         #region idSchool: 1, idPartBody: 8, Category: Stand, Label: StandRight
-        bodyDatas.Add((1, 8, Category.Stand, Label.StandRight),
+        bodyDatas.Add((1, 8, Category.Stand, Label.StandRightFrame0),
             (GetPartBodyPositionData(0f, 0f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 0f)));
-        bodyDatas.Add((1, 8, Category.Stand, Label.StandRight),
+        bodyDatas.Add((1, 8, Category.Stand, Label.StandRightFrame1),
             (GetPartBodyPositionData(0f, 0f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 0f)));
         #endregion
 
@@ -350,15 +350,15 @@ public class PlayerManager : MonoBehaviour, IUpdatable
         #endregion
         #region idSchool: 1, idPartBody: 3, Category: Move, Label: MoveFront
         bodyDatas.Add((1, 3, Category.Move, Label.MoveFrontFrame0),
-            (GetPartBodyPositionData(0.01974f, 1.544f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
+            (GetPartBodyPositionData(0.01974f, 1.883f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
         bodyDatas.Add((1, 3, Category.Move, Label.MoveFrontFrame1),
-            (GetPartBodyPositionData(0.01974f, 1.544f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
+            (GetPartBodyPositionData(0.01974f, 1.883f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
         #endregion
         #region idSchool: 1, idPartBody: 4, Category: Move, Label: MoveFront
         bodyDatas.Add((1, 4, Category.Move, Label.MoveFrontFrame0),
-            (GetPartBodyPositionData(0.01974f, 1.883f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
+            (GetPartBodyPositionData(0.01874f, 1.3972f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
         bodyDatas.Add((1, 4, Category.Move, Label.MoveFrontFrame1),
-            (GetPartBodyPositionData(0.01974f, 1.883f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
+            (GetPartBodyPositionData(0.01874f, 1.3972f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
         #endregion
         #region idSchool: 1, idPartBody: 5, Category: Move, Label: MoveFront
         bodyDatas.Add((1, 5, Category.Move, Label.MoveFrontFrame0),
@@ -595,7 +595,7 @@ public class PlayerManager : MonoBehaviour, IUpdatable
         #region idSchool: 1, idPartBody: 7, Category: Atk, Label: AtkFront
         bodyDatas.Add((1, 7, Category.Atk, Label.AtkFrontFrame0),
             (GetPartBodyPositionData(0.11921f, 0.864f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 0f)));
-        bodyDatas.Add((1, 7, Category.Atk, Label.AtkFrontFrame0),
+        bodyDatas.Add((1, 7, Category.Atk, Label.AtkFrontFrame1),
             (GetPartBodyPositionData(0.08121f, 0.514f, 0f), GetPartBodyRotationData(-180f, 0f, -140f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
         #endregion
         #region idSchool: 1, idPartBody: 8, Category: Atk, Label: AtkFront
@@ -865,27 +865,27 @@ public class PlayerManager : MonoBehaviour, IUpdatable
         #endregion
 
         #region idSchool: 2, idPartBody: 0, Category: Stand, Label: StandBack
-        bodyDatas.Add((2, 0, Category.Stand, Label.StandBack),
+        bodyDatas.Add((2, 0, Category.Stand, Label.StandBackFrame0),
             (GetPartBodyPositionData(0f, 0.27f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
-        bodyDatas.Add((2, 0, Category.Stand, Label.StandBack),
+        bodyDatas.Add((2, 0, Category.Stand, Label.StandBackFrame1),
             (GetPartBodyPositionData(0f, 0.27f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
         #endregion
         #region idSchool: 2, idPartBody: 1, Category: Stand, Label: StandBack
-        bodyDatas.Add((2, 1, Category.Stand, Label.StandBack),
+        bodyDatas.Add((2, 1, Category.Stand, Label.StandBackFrame0),
             (GetPartBodyPositionData(-0.00079f, 0.734f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
-        bodyDatas.Add((2, 1, Category.Stand, Label.StandBack),
+        bodyDatas.Add((2, 1, Category.Stand, Label.StandBackFrame1),
             (GetPartBodyPositionData(-0.00079f, 0.764f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
         #endregion
         #region idSchool: 2, idPartBody: 2, Category: Stand, Label: StandBack
-        bodyDatas.Add((2, 2, Category.Stand, Label.StandBack),
+        bodyDatas.Add((2, 2, Category.Stand, Label.StandBackFrame0),
             (GetPartBodyPositionData(-0.03179f, 1.494f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
-        bodyDatas.Add((2, 2, Category.Stand, Label.StandBack),
+        bodyDatas.Add((2, 2, Category.Stand, Label.StandBackFrame1),
             (GetPartBodyPositionData(-0.03179f, 1.524f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
         #endregion
         #region idSchool: 2, idPartBody: 3, Category: Stand, Label: StandBack
-        bodyDatas.Add((2, 3, Category.Stand, Label.StandBack),
+        bodyDatas.Add((2, 3, Category.Stand, Label.StandBackFrame0),
             (GetPartBodyPositionData(-0.03879f, 1.314f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
-        bodyDatas.Add((2, 3, Category.Stand, Label.StandBack),
+        bodyDatas.Add((2, 3, Category.Stand, Label.StandBackFrame1),
             (GetPartBodyPositionData(-0.03879f, 1.344f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
         #endregion
         #region idSchool: 2, idPartBody: 4, Category: Stand, Label: StandBack
@@ -895,52 +895,52 @@ public class PlayerManager : MonoBehaviour, IUpdatable
             (GetPartBodyPositionData(0f, 0f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 0f)));
         #endregion
         #region idSchool: 2, idPartBody: 5, Category: Stand, Label: StandBack
-        bodyDatas.Add((2, 5, Category.Stand, Label.StandBack),
+        bodyDatas.Add((2, 5, Category.Stand, Label.StandBackFrame0),
             (GetPartBodyPositionData(-0.04879f, 1.8002f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
-        bodyDatas.Add((2, 5, Category.Stand, Label.StandBack),
+        bodyDatas.Add((2, 5, Category.Stand, Label.StandBackFrame1),
             (GetPartBodyPositionData(-0.04879f, 1.8302f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
         #endregion
         #region idSchool: 2, idPartBody: 6, Category: Stand, Label: StandBack
-        bodyDatas.Add((2, 6, Category.Stand, Label.StandBack),
+        bodyDatas.Add((2, 6, Category.Stand, Label.StandBackFrame0),
             (GetPartBodyPositionData(0f, 0f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 0f)));
-        bodyDatas.Add((2, 6, Category.Stand, Label.StandBack),
+        bodyDatas.Add((2, 6, Category.Stand, Label.StandBackFrame1),
             (GetPartBodyPositionData(0f, 0f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 0f)));
         #endregion
         #region idSchool: 2, idPartBody: 7, Category: Stand, Label: StandBack
-        bodyDatas.Add((2, 7, Category.Stand, Label.StandBack),
+        bodyDatas.Add((2, 7, Category.Stand, Label.StandBackFrame0),
             (GetPartBodyPositionData(0.14121f, 0.864f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
-        bodyDatas.Add((2, 7, Category.Stand, Label.StandBack),
+        bodyDatas.Add((2, 7, Category.Stand, Label.StandBackFrame1),
             (GetPartBodyPositionData(0.14121f, 0.894f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
         #endregion
         #region idSchool: 2, idPartBody: 8, Category: Stand, Label: StandBack
-        bodyDatas.Add((2, 8, Category.Stand, Label.StandBack),
+        bodyDatas.Add((2, 8, Category.Stand, Label.StandBackFrame0),
             (GetPartBodyPositionData(0f, 0f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 0f)));
-        bodyDatas.Add((2, 8, Category.Stand, Label.StandBack),
+        bodyDatas.Add((2, 8, Category.Stand, Label.StandBackFrame1),
             (GetPartBodyPositionData(0f, 0f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 0f)));
         #endregion
 
         #region idSchool: 2, idPartBody: 0, Category: Stand, Label: StandLeft
-        bodyDatas.Add((2, 0, Category.Stand, Label.StandLeft),
+        bodyDatas.Add((2, 0, Category.Stand, Label.StandLeftFrame0),
             (GetPartBodyPositionData(0f, 0.27f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
-        bodyDatas.Add((2, 0, Category.Stand, Label.StandLeft),
+        bodyDatas.Add((2, 0, Category.Stand, Label.StandLeftFrame1),
             (GetPartBodyPositionData(0f, 0.27f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
         #endregion
         #region idSchool: 2, idPartBody: 1, Category: Stand, Label: StandLeft
-        bodyDatas.Add((2, 1, Category.Stand, Label.StandLeft),
+        bodyDatas.Add((2, 1, Category.Stand, Label.StandLeftFrame0),
             (GetPartBodyPositionData(-0.03079f, 0.714f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
-        bodyDatas.Add((2, 1, Category.Stand, Label.StandLeft),
+        bodyDatas.Add((2, 1, Category.Stand, Label.StandLeftFrame1),
             (GetPartBodyPositionData(-0.03079f, 0.744f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
         #endregion
         #region idSchool: 2, idPartBody: 2, Category: Stand, Label: StandLeft
-        bodyDatas.Add((2, 2, Category.Stand, Label.StandLeft),
+        bodyDatas.Add((2, 2, Category.Stand, Label.StandLeftFrame0),
             (GetPartBodyPositionData(-0.03179f, 1.494f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
-        bodyDatas.Add((2, 2, Category.Stand, Label.StandLeft),
+        bodyDatas.Add((2, 2, Category.Stand, Label.StandLeftFrame1),
             (GetPartBodyPositionData(-0.03179f, 1.524f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
         #endregion
         #region idSchool: 2, idPartBody: 3, Category: Stand, Label: StandLeft
-        bodyDatas.Add((2, 3, Category.Stand, Label.StandLeft),
+        bodyDatas.Add((2, 3, Category.Stand, Label.StandLeftFrame0),
             (GetPartBodyPositionData(0.01121f, 1.519f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
-        bodyDatas.Add((2, 3, Category.Stand, Label.StandLeft),
+        bodyDatas.Add((2, 3, Category.Stand, Label.StandLeftFrame1),
             (GetPartBodyPositionData(0.01121f, 1.549f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
         #endregion
         #region idSchool: 2, idPartBody: 4, Category: Stand, Label: StandLeft
@@ -950,52 +950,52 @@ public class PlayerManager : MonoBehaviour, IUpdatable
             (GetPartBodyPositionData(-0.20879f, 1.385f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
         #endregion
         #region idSchool: 2, idPartBody: 5, Category: Stand, Label: StandLeft
-        bodyDatas.Add((2, 5, Category.Stand, Label.StandLeft),
+        bodyDatas.Add((2, 5, Category.Stand, Label.StandLeftFrame0),
             (GetPartBodyPositionData(-0.04879f, 1.8002f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
-        bodyDatas.Add((2, 5, Category.Stand, Label.StandLeft),
+        bodyDatas.Add((2, 5, Category.Stand, Label.StandLeftFrame1),
             (GetPartBodyPositionData(-0.04879f, 1.8302f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
         #endregion
         #region idSchool: 2, idPartBody: 6, Category: Stand, Label: StandLeft
-        bodyDatas.Add((2, 6, Category.Stand, Label.StandLeft),
+        bodyDatas.Add((2, 6, Category.Stand, Label.StandLeftFrame0),
             (GetPartBodyPositionData(-0.13879f, 0.864f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
-        bodyDatas.Add((2, 6, Category.Stand, Label.StandLeft),
+        bodyDatas.Add((2, 6, Category.Stand, Label.StandLeftFrame1),
             (GetPartBodyPositionData(-0.13879f, 0.894f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
         #endregion
         #region idSchool: 2, idPartBody: 7, Category: Stand, Label: StandLeft
-        bodyDatas.Add((2, 7, Category.Stand, Label.StandLeft),
+        bodyDatas.Add((2, 7, Category.Stand, Label.StandLeftFrame0),
             (GetPartBodyPositionData(0f, 0f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 0f)));
-        bodyDatas.Add((2, 7, Category.Stand, Label.StandLeft),
+        bodyDatas.Add((2, 7, Category.Stand, Label.StandLeftFrame1),
             (GetPartBodyPositionData(0f, 0f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 0f)));
         #endregion
         #region idSchool: 2, idPartBody: 8, Category: Stand, Label: StandLeft
-        bodyDatas.Add((2, 8, Category.Stand, Label.StandLeft),
+        bodyDatas.Add((2, 8, Category.Stand, Label.StandLeftFrame0),
             (GetPartBodyPositionData(0f, 0f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 0f)));
-        bodyDatas.Add((2, 8, Category.Stand, Label.StandLeft),
+        bodyDatas.Add((2, 8, Category.Stand, Label.StandLeftFrame1),
             (GetPartBodyPositionData(0f, 0f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 0f)));
         #endregion
 
         #region idSchool: 2, idPartBody: 0, Category: Stand, Label: StandRight
-        bodyDatas.Add((2, 0, Category.Stand, Label.StandRight),
+        bodyDatas.Add((2, 0, Category.Stand, Label.StandRightFrame0),
             (GetPartBodyPositionData(0f, 0.27f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
-        bodyDatas.Add((2, 0, Category.Stand, Label.StandRight),
+        bodyDatas.Add((2, 0, Category.Stand, Label.StandRightFrame1),
             (GetPartBodyPositionData(0f, 0.27f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
         #endregion
         #region idSchool: 2, idPartBody: 1, Category: Stand, Label: StandRight
-        bodyDatas.Add((2, 1, Category.Stand, Label.StandRight),
+        bodyDatas.Add((2, 1, Category.Stand, Label.StandRightFrame0),
             (GetPartBodyPositionData(-0.03079f, 0.714f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
-        bodyDatas.Add((2, 1, Category.Stand, Label.StandRight),
+        bodyDatas.Add((2, 1, Category.Stand, Label.StandRightFrame1),
             (GetPartBodyPositionData(-0.03079f, 0.744f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
         #endregion
         #region idSchool: 2, idPartBody: 2, Category: Stand, Label: StandRight
-        bodyDatas.Add((2, 2, Category.Stand, Label.StandRight),
+        bodyDatas.Add((2, 2, Category.Stand, Label.StandRightFrame0),
             (GetPartBodyPositionData(-0.03179f, 1.494f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
-        bodyDatas.Add((2, 2, Category.Stand, Label.StandRight),
+        bodyDatas.Add((2, 2, Category.Stand, Label.StandRightFrame1),
             (GetPartBodyPositionData(-0.03179f, 1.524f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
         #endregion
         #region idSchool: 2, idPartBody: 3, Category: Stand, Label: StandRight
-        bodyDatas.Add((2, 3, Category.Stand, Label.StandRight),
+        bodyDatas.Add((2, 3, Category.Stand, Label.StandRightFrame0),
             (GetPartBodyPositionData(0.01121f, 1.519f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
-        bodyDatas.Add((2, 3, Category.Stand, Label.StandRight),
+        bodyDatas.Add((2, 3, Category.Stand, Label.StandRightFrame1),
             (GetPartBodyPositionData(0.01121f, 1.549f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
         #endregion
         #region idSchool: 2, idPartBody: 4, Category: Stand, Label: StandRight
@@ -1005,27 +1005,27 @@ public class PlayerManager : MonoBehaviour, IUpdatable
             (GetPartBodyPositionData(-0.20879f, 1.385f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
         #endregion
         #region idSchool: 2, idPartBody: 5, Category: Stand, Label: StandRight
-        bodyDatas.Add((2, 5, Category.Stand, Label.StandRight),
+        bodyDatas.Add((2, 5, Category.Stand, Label.StandRightFrame0),
             (GetPartBodyPositionData(-0.04879f, 1.8002f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
-        bodyDatas.Add((2, 5, Category.Stand, Label.StandRight),
+        bodyDatas.Add((2, 5, Category.Stand, Label.StandRightFrame1),
             (GetPartBodyPositionData(-0.04879f, 1.8302f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
         #endregion
         #region idSchool: 2, idPartBody: 6, Category: Stand, Label: StandRight
-        bodyDatas.Add((2, 6, Category.Stand, Label.StandRight),
+        bodyDatas.Add((2, 6, Category.Stand, Label.StandRightFrame0),
             (GetPartBodyPositionData(-0.13879f, 0.864f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
-        bodyDatas.Add((2, 6, Category.Stand, Label.StandRight),
+        bodyDatas.Add((2, 6, Category.Stand, Label.StandRightFrame1),
             (GetPartBodyPositionData(-0.13879f, 0.894f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
         #endregion
         #region idSchool: 2, idPartBody: 7, Category: Stand, Label: StandRight
-        bodyDatas.Add((2, 7, Category.Stand, Label.StandRight),
+        bodyDatas.Add((2, 7, Category.Stand, Label.StandRightFrame0),
             (GetPartBodyPositionData(0f, 0f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 0f)));
-        bodyDatas.Add((2, 7, Category.Stand, Label.StandRight),
+        bodyDatas.Add((2, 7, Category.Stand, Label.StandRightFrame1),
             (GetPartBodyPositionData(0f, 0f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 0f)));
         #endregion
         #region idSchool: 2, idPartBody: 8, Category: Stand, Label: StandRight
-        bodyDatas.Add((2, 8, Category.Stand, Label.StandRight),
+        bodyDatas.Add((2, 8, Category.Stand, Label.StandRightFrame0),
             (GetPartBodyPositionData(0f, 0f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 0f)));
-        bodyDatas.Add((2, 8, Category.Stand, Label.StandRight),
+        bodyDatas.Add((2, 8, Category.Stand, Label.StandRightFrame1),
             (GetPartBodyPositionData(0f, 0f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 0f)));
         #endregion
 
@@ -1294,7 +1294,7 @@ public class PlayerManager : MonoBehaviour, IUpdatable
         #region idSchool: 2, idPartBody: 7, Category: Atk, Label: AtkFront
         bodyDatas.Add((2, 7, Category.Atk, Label.AtkFrontFrame0),
             (GetPartBodyPositionData(0f, 0f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 0f)));
-        bodyDatas.Add((2, 7, Category.Atk, Label.AtkFrontFrame0),
+        bodyDatas.Add((2, 7, Category.Atk, Label.AtkFrontFrame1),
             (GetPartBodyPositionData(0.16121f, 0.484f, 0f), GetPartBodyRotationData(0f, 0f, 43f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
         #endregion
         #region idSchool: 2, idPartBody: 8, Category: Atk, Label: AtkFront
@@ -1558,27 +1558,27 @@ public class PlayerManager : MonoBehaviour, IUpdatable
         #endregion
 
         #region idSchool: 3, idPartBody: 0, Category: Stand, Label: StandBack
-        bodyDatas.Add((3, 0, Category.Stand, Label.StandBack),
+        bodyDatas.Add((3, 0, Category.Stand, Label.StandBackFrame0),
             (GetPartBodyPositionData(0f, 0.27f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
-        bodyDatas.Add((3, 0, Category.Stand, Label.StandBack),
+        bodyDatas.Add((3, 0, Category.Stand, Label.StandBackFrame1),
             (GetPartBodyPositionData(0f, 0.27f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
         #endregion
         #region idSchool: 3, idPartBody: 1, Category: Stand, Label: StandBack
-        bodyDatas.Add((3, 1, Category.Stand, Label.StandBack),
+        bodyDatas.Add((3, 1, Category.Stand, Label.StandBackFrame0),
             (GetPartBodyPositionData(-0.00079f, 0.751f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
-        bodyDatas.Add((3, 1, Category.Stand, Label.StandBack),
+        bodyDatas.Add((3, 1, Category.Stand, Label.StandBackFrame1),
             (GetPartBodyPositionData(-0.00079f, 0.781f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
         #endregion
         #region idSchool: 3, idPartBody: 2, Category: Stand, Label: StandBack
-        bodyDatas.Add((3, 2, Category.Stand, Label.StandBack),
+        bodyDatas.Add((3, 2, Category.Stand, Label.StandBackFrame0),
             (GetPartBodyPositionData(-0.00179f, 1.494f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
-        bodyDatas.Add((3, 2, Category.Stand, Label.StandBack),
+        bodyDatas.Add((3, 2, Category.Stand, Label.StandBackFrame1),
             (GetPartBodyPositionData(-0.00179f, 1.524f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
         #endregion
         #region idSchool: 3, idPartBody: 3, Category: Stand, Label: StandBack
-        bodyDatas.Add((3, 3, Category.Stand, Label.StandBack),
+        bodyDatas.Add((3, 3, Category.Stand, Label.StandBackFrame0),
             (GetPartBodyPositionData(0.00121f, 2.054f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
-        bodyDatas.Add((3, 3, Category.Stand, Label.StandBack),
+        bodyDatas.Add((3, 3, Category.Stand, Label.StandBackFrame1),
             (GetPartBodyPositionData(0.00121f, 2.084f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
         #endregion
         #region idSchool: 3, idPartBody: 4, Category: Stand, Label: StandBack
@@ -1588,46 +1588,46 @@ public class PlayerManager : MonoBehaviour, IUpdatable
             (GetPartBodyPositionData(0f, 0f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 0f)));
         #endregion
         #region idSchool: 3, idPartBody: 5, Category: Stand, Label: StandBack
-        bodyDatas.Add((3, 5, Category.Stand, Label.StandBack),
+        bodyDatas.Add((3, 5, Category.Stand, Label.StandBackFrame0),
             (GetPartBodyPositionData(0.03121f, 1.493f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
-        bodyDatas.Add((3, 5, Category.Stand, Label.StandBack),
+        bodyDatas.Add((3, 5, Category.Stand, Label.StandBackFrame1),
             (GetPartBodyPositionData(0.03121f, 1.523f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
         #endregion
         #region idSchool: 3, idPartBody: 6, Category: Stand, Label: StandBack
-        bodyDatas.Add((3, 6, Category.Stand, Label.StandBack),
+        bodyDatas.Add((3, 6, Category.Stand, Label.StandBackFrame0),
             (GetPartBodyPositionData(0f, 0f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 0f)));
-        bodyDatas.Add((3, 6, Category.Stand, Label.StandBack),
+        bodyDatas.Add((3, 6, Category.Stand, Label.StandBackFrame1),
             (GetPartBodyPositionData(0f, 0f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 0f)));
         #endregion
         #region idSchool: 3, idPartBody: 7, Category: Stand, Label: StandBack
-        bodyDatas.Add((3, 7, Category.Stand, Label.StandBack),
+        bodyDatas.Add((3, 7, Category.Stand, Label.StandBackFrame0),
             (GetPartBodyPositionData(0.12471f, 0.914f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
-        bodyDatas.Add((3, 7, Category.Stand, Label.StandBack),
+        bodyDatas.Add((3, 7, Category.Stand, Label.StandBackFrame1),
             (GetPartBodyPositionData(0.12471f, 0.944f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
         #endregion
 
         #region idSchool: 3, idPartBody: 0, Category: Stand, Label: StandLeft
-        bodyDatas.Add((3, 0, Category.Stand, Label.StandLeft),
+        bodyDatas.Add((3, 0, Category.Stand, Label.StandLeftFrame0),
             (GetPartBodyPositionData(0f, 0.27f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
-        bodyDatas.Add((3, 0, Category.Stand, Label.StandLeft),
+        bodyDatas.Add((3, 0, Category.Stand, Label.StandLeftFrame1),
             (GetPartBodyPositionData(0f, 0.27f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
         #endregion
         #region idSchool: 3, idPartBody: 1, Category: Stand, Label: StandLeft
-        bodyDatas.Add((3, 1, Category.Stand, Label.StandLeft),
+        bodyDatas.Add((3, 1, Category.Stand, Label.StandLeftFrame0),
             (GetPartBodyPositionData(-0.03179f, 0.664f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
-        bodyDatas.Add((3, 1, Category.Stand, Label.StandLeft),
+        bodyDatas.Add((3, 1, Category.Stand, Label.StandLeftFrame1),
             (GetPartBodyPositionData(-0.03179f, 0.694f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
         #endregion
         #region idSchool: 3, idPartBody: 2, Category: Stand, Label: StandLeft
-        bodyDatas.Add((3, 2, Category.Stand, Label.StandLeft),
+        bodyDatas.Add((3, 2, Category.Stand, Label.StandLeftFrame0),
             (GetPartBodyPositionData(-0.00179f, 1.494f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
-        bodyDatas.Add((3, 2, Category.Stand, Label.StandLeft),
+        bodyDatas.Add((3, 2, Category.Stand, Label.StandLeftFrame1),
             (GetPartBodyPositionData(-0.00179f, 1.524f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
         #endregion
         #region idSchool: 3, idPartBody: 3, Category: Stand, Label: StandLeft
-        bodyDatas.Add((3, 3, Category.Stand, Label.StandLeft),
+        bodyDatas.Add((3, 3, Category.Stand, Label.StandLeftFrame0),
             (GetPartBodyPositionData(0.01821f, 2.054f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
-        bodyDatas.Add((3, 3, Category.Stand, Label.StandLeft),
+        bodyDatas.Add((3, 3, Category.Stand, Label.StandLeftFrame1),
             (GetPartBodyPositionData(0.01821f, 2.084f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
         #endregion
         #region idSchool: 3, idPartBody: 4, Category: Stand, Label: StandLeft
@@ -1637,46 +1637,46 @@ public class PlayerManager : MonoBehaviour, IUpdatable
             (GetPartBodyPositionData(-0.201f, 1.385f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
         #endregion
         #region idSchool: 3, idPartBody: 5, Category: Stand, Label: StandLeft
-        bodyDatas.Add((3, 5, Category.Stand, Label.StandLeft),
+        bodyDatas.Add((3, 5, Category.Stand, Label.StandLeftFrame0),
             (GetPartBodyPositionData(-0.01379f, 1.493f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
-        bodyDatas.Add((3, 5, Category.Stand, Label.StandLeft),
+        bodyDatas.Add((3, 5, Category.Stand, Label.StandLeftFrame1),
             (GetPartBodyPositionData(-0.01379f, 1.523f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
         #endregion
         #region idSchool: 3, idPartBody: 6, Category: Stand, Label: StandLeft
-        bodyDatas.Add((3, 6, Category.Stand, Label.StandLeft),
+        bodyDatas.Add((3, 6, Category.Stand, Label.StandLeftFrame0),
             (GetPartBodyPositionData(-0.06879f, 0.914f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
-        bodyDatas.Add((3, 6, Category.Stand, Label.StandLeft),
+        bodyDatas.Add((3, 6, Category.Stand, Label.StandLeftFrame1),
             (GetPartBodyPositionData(-0.06879f, 0.944f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
         #endregion
         #region idSchool: 3, idPartBody: 7, Category: Stand, Label: StandLeft
-        bodyDatas.Add((3, 7, Category.Stand, Label.StandLeft),
+        bodyDatas.Add((3, 7, Category.Stand, Label.StandLeftFrame0),
             (GetPartBodyPositionData(0f, 0f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 0f)));
-        bodyDatas.Add((3, 7, Category.Stand, Label.StandLeft),
+        bodyDatas.Add((3, 7, Category.Stand, Label.StandLeftFrame1),
             (GetPartBodyPositionData(0f, 0f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 0f)));
         #endregion
 
         #region idSchool: 3, idPartBody: 0, Category: Stand, Label: StandRight
-        bodyDatas.Add((3, 0, Category.Stand, Label.StandRight),
+        bodyDatas.Add((3, 0, Category.Stand, Label.StandRightFrame0),
             (GetPartBodyPositionData(0f, 0.27f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
-        bodyDatas.Add((3, 0, Category.Stand, Label.StandRight),
+        bodyDatas.Add((3, 0, Category.Stand, Label.StandRightFrame1),
             (GetPartBodyPositionData(0f, 0.27f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
         #endregion
         #region idSchool: 3, idPartBody: 1, Category: Stand, Label: StandRight
-        bodyDatas.Add((3, 1, Category.Stand, Label.StandRight),
+        bodyDatas.Add((3, 1, Category.Stand, Label.StandRightFrame0),
             (GetPartBodyPositionData(-0.03179f, 0.664f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
-        bodyDatas.Add((3, 1, Category.Stand, Label.StandRight),
+        bodyDatas.Add((3, 1, Category.Stand, Label.StandRightFrame1),
             (GetPartBodyPositionData(-0.03179f, 0.694f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
         #endregion
         #region idSchool: 3, idPartBody: 2, Category: Stand, Label: StandRight
-        bodyDatas.Add((3, 2, Category.Stand, Label.StandRight),
+        bodyDatas.Add((3, 2, Category.Stand, Label.StandRightFrame0),
             (GetPartBodyPositionData(-0.00179f, 1.494f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
-        bodyDatas.Add((3, 2, Category.Stand, Label.StandRight),
+        bodyDatas.Add((3, 2, Category.Stand, Label.StandRightFrame1),
             (GetPartBodyPositionData(-0.00179f, 1.524f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
         #endregion
         #region idSchool: 3, idPartBody: 3, Category: Stand, Label: StandRight
-        bodyDatas.Add((3, 3, Category.Stand, Label.StandRight),
+        bodyDatas.Add((3, 3, Category.Stand, Label.StandRightFrame0),
             (GetPartBodyPositionData(0.01821f, 2.054f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
-        bodyDatas.Add((3, 3, Category.Stand, Label.StandRight),
+        bodyDatas.Add((3, 3, Category.Stand, Label.StandRightFrame1),
             (GetPartBodyPositionData(0.01821f, 2.084f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
         #endregion
         #region idSchool: 3, idPartBody: 4, Category: Stand, Label: StandRight
@@ -1686,21 +1686,21 @@ public class PlayerManager : MonoBehaviour, IUpdatable
             (GetPartBodyPositionData(-0.201f, 1.385f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
         #endregion
         #region idSchool: 3, idPartBody: 5, Category: Stand, Label: StandRight
-        bodyDatas.Add((3, 5, Category.Stand, Label.StandRight),
+        bodyDatas.Add((3, 5, Category.Stand, Label.StandRightFrame0),
             (GetPartBodyPositionData(-0.01379f, 1.493f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
-        bodyDatas.Add((3, 5, Category.Stand, Label.StandRight),
+        bodyDatas.Add((3, 5, Category.Stand, Label.StandRightFrame1),
             (GetPartBodyPositionData(-0.01379f, 1.523f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
         #endregion
         #region idSchool: 3, idPartBody: 6, Category: Stand, Label: StandRight
-        bodyDatas.Add((3, 6, Category.Stand, Label.StandRight),
+        bodyDatas.Add((3, 6, Category.Stand, Label.StandRightFrame0),
             (GetPartBodyPositionData(-0.06879f, 0.914f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
-        bodyDatas.Add((3, 6, Category.Stand, Label.StandRight),
+        bodyDatas.Add((3, 6, Category.Stand, Label.StandRightFrame1),
             (GetPartBodyPositionData(-0.06879f, 0.944f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
         #endregion
         #region idSchool: 3, idPartBody: 7, Category: Stand, Label: StandRight
-        bodyDatas.Add((3, 7, Category.Stand, Label.StandRight),
+        bodyDatas.Add((3, 7, Category.Stand, Label.StandRightFrame0),
             (GetPartBodyPositionData(0f, 0f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 0f)));
-        bodyDatas.Add((3, 7, Category.Stand, Label.StandRight),
+        bodyDatas.Add((3, 7, Category.Stand, Label.StandRightFrame1),
             (GetPartBodyPositionData(0f, 0f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 0f)));
         #endregion
 
@@ -1734,16 +1734,16 @@ public class PlayerManager : MonoBehaviour, IUpdatable
         bodyDatas.Add((3, 4, Category.Move, Label.MoveFrontFrame1),
             (GetPartBodyPositionData(-0.03179f, 1.355f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
         #endregion
-        #region idSchool: 2, idPartBody: 5, Category: Move, Label: MoveFront
-        bodyDatas.Add((2, 5, Category.Move, Label.MoveFrontFrame0),
-            (GetPartBodyPositionData(0.001f, 1.364f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
-        bodyDatas.Add((2, 5, Category.Move, Label.MoveFrontFrame1),
-            (GetPartBodyPositionData(0.001f, 1.364f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
+        #region idSchool: 3, idPartBody: 5, Category: Move, Label: MoveFront
+        bodyDatas.Add((3, 5, Category.Move, Label.MoveFrontFrame0),
+            (GetPartBodyPositionData(-0.031f, 1.493f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
+        bodyDatas.Add((3, 5, Category.Move, Label.MoveFrontFrame1),
+            (GetPartBodyPositionData(-0.031f, 1.493f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
         #endregion
-        #region idSchool: 2, idPartBody: 6, Category: Move, Label: MoveFront
-        bodyDatas.Add((2, 6, Category.Move, Label.MoveFrontFrame0),
+        #region idSchool: 3, idPartBody: 6, Category: Move, Label: MoveFront
+        bodyDatas.Add((3, 6, Category.Move, Label.MoveFrontFrame0),
             (GetPartBodyPositionData(-0.066f, 0.914f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
-        bodyDatas.Add((2, 6, Category.Move, Label.MoveFrontFrame1),
+        bodyDatas.Add((3, 6, Category.Move, Label.MoveFrontFrame1),
             (GetPartBodyPositionData(-0.066f, 0.914f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
         #endregion
         #region idSchool: 3, idPartBody: 7, Category: Move, Label: MoveFront
@@ -1945,7 +1945,7 @@ public class PlayerManager : MonoBehaviour, IUpdatable
         #region idSchool: 3, idPartBody: 7, Category: Atk, Label: AtkFront
         bodyDatas.Add((3, 7, Category.Atk, Label.AtkFrontFrame0),
             (GetPartBodyPositionData(0.713f, 0.864f, 0f), GetPartBodyRotationData(0f, 0f, 0f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 0f)));
-        bodyDatas.Add((3, 7, Category.Atk, Label.AtkFrontFrame0),
+        bodyDatas.Add((3, 7, Category.Atk, Label.AtkFrontFrame1),
             (GetPartBodyPositionData(-0.25f, 0.264f, 0f), GetPartBodyRotationData(0f, 0f, -130f), GetPartBodyScaleData(1f, 1f, 1f), GetPartBodyColorData(1f, 1f, 1f, 1f)));
         #endregion
 

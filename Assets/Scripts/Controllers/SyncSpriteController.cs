@@ -14,6 +14,7 @@ public class SyncSpriteController : MonoBehaviour, IUpdatable
 
     private List<SpriteRenderer> spriteRenderers = new List<SpriteRenderer>();
 
+    private PlayerData otherPlayerData = new PlayerData();
     private PlayerTransformData otherPlayerTransform = new PlayerTransformData();
     private PlayerStateData otherPlayerState = new PlayerStateData();
     private Dictionary<(int, int, Category, Label), (PositionData, RotationData, ScaleData, ColorData)> bodyDatas;
@@ -76,19 +77,33 @@ public class SyncSpriteController : MonoBehaviour, IUpdatable
                 return Category.Stand;
         }
     }
+    private string ConvertCategory(Category category)
+    {
+        switch (category)
+        {
+            case Category.Stand:
+                return "Stand";
+
+            case Category.Move:
+                return "Move";
+
+            case Category.Atk:
+                return "Atk";
+
+            case Category.Injured:
+                return "Injured";
+
+            case Category.Die:
+                return "Die";
+
+            default:
+                return "Stand";
+        }
+    }
     private Label ConvertLabel(string label)
     {
         switch (label)
         {
-            case "StandFront":
-                return Label.StandFront;
-            case "StandBack":
-                return Label.StandBack;
-            case "StandLeft":
-                return Label.StandLeft;
-            case "StandRight":
-                return Label.StandRight;
-
             case "StandFrontFrame0":
                 return Label.StandFrontFrame0;
             case "StandFrontFrame1":
@@ -158,7 +173,86 @@ public class SyncSpriteController : MonoBehaviour, IUpdatable
                 return Label.DieFrame0;
 
             default:
-                return Label.StandFront;
+                return Label.StandFrontFrame0;
+        }
+    }
+    private string ConvertLabel(Label label)
+    {
+        switch (label)
+        {
+            case Label.StandFrontFrame0:
+                return "StandFrontFrame0";
+            case Label.StandFrontFrame1:
+                return "StandFrontFrame1";
+            case Label.StandBackFrame0:
+                return "StandBackFrame0";
+            case Label.StandBackFrame1:
+                return "StandBackFrame1";
+            case Label.StandLeftFrame0:
+                return "StandLeftFrame0";
+            case Label.StandLeftFrame1:
+                return "StandLeftFrame1";
+            case Label.StandRightFrame0:
+                return "StandRightFrame0";
+            case Label.StandRightFrame1:
+                return "StandRightFrame1";
+
+            case Label.MoveFrontFrame0:
+                return "MoveFrontFrame0";
+            case Label.MoveFrontFrame1:
+                return "MoveFrontFrame1";
+            case Label.MoveBackFrame0:
+                return "MoveBackFrame0";
+            case Label.MoveBackFrame1:
+                return "MoveBackFrame1";
+            case Label.MoveLeftFrame0:
+                return "MoveLeftFrame0";
+            case Label.MoveLeftFrame1:
+                return "MoveLeftFrame1";
+            case Label.MoveRightFrame0:
+                return "MoveRightFrame0";
+            case Label.MoveRightFrame1:
+                return "MoveRightFrame1";
+
+            case Label.AtkFrontFrame0:
+                return "AtkFrontFrame0";
+            case Label.AtkFrontFrame1:
+                return "AtkFrontFrame1";
+            case Label.AtkBackFrame0:
+                return "AtkBackFrame0";
+            case Label.AtkBackFrame1:
+                return "AtkBackFrame1";
+            case Label.AtkLeftFrame0:
+                return "AtkLeftFrame0";
+            case Label.AtkLeftFrame1:
+                return "AtkLeftFrame1";
+            case Label.AtkRightFrame0:
+                return "AtkRightFrame0";
+            case Label.AtkRightFrame1:
+                return "AtkRightFrame1";
+
+            case Label.InjuredFrontFrame0:
+                return "InjuredFrontFrame0";
+            case Label.InjuredFrontFrame1:
+                return "InjuredFrontFrame1";
+            case Label.InjuredBackFrame0:
+                return "InjuredBackFrame0";
+            case Label.InjuredBackFrame1:
+                return "InjuredBackFrame1";
+            case Label.InjuredLeftFrame0:
+                return "InjuredLeftFrame0";
+            case Label.InjuredLeftFrame1:
+                return "InjuredLeftFrame1";
+            case Label.InjuredRightFrame0:
+                return "InjuredRightFrame0";
+            case Label.InjuredRightFrame1:
+                return "InjuredRightFrame1";
+
+            case Label.DieFrame0:
+                return "DieFrame0";
+
+            default:
+                return "StandFrontFrame0";
         }
     }
     private void InitSpriteResolversInfos()
@@ -221,6 +315,7 @@ public class SyncSpriteController : MonoBehaviour, IUpdatable
             EquipHair(hairData, serverData.idSchool);
         }
 
+        otherPlayerData = serverData;
         otherPlayerTransform = serverTransform;
         otherPlayerState = serverState;
 
@@ -327,46 +422,33 @@ public class SyncSpriteController : MonoBehaviour, IUpdatable
 
     private void UpdateSprite()
     {
-
         for (int i = 0; i < otherPlayerState.partBodyTransforms.Count; i++)
         {
             if (spriteResolversInfos[i].Item1 != otherPlayerState.partBodyTransforms[i].category || spriteResolversInfos[i].Item2 != otherPlayerState.partBodyTransforms[i].label)
             {
-                string category = (otherPlayerState.partBodyTransforms[i].category).ToString();
-                string label = (otherPlayerState.partBodyTransforms[i].label).ToString();
+                string category = ConvertCategory(otherPlayerState.partBodyTransforms[i].category);
+                string label = ConvertLabel(otherPlayerState.partBodyTransforms[i].label);
                 spriteResolvers[i].SetCategoryAndLabel(category, label);
                 spriteResolversInfos[i] = ((Category)otherPlayerState.partBodyTransforms[i].category, (Label)otherPlayerState.partBodyTransforms[i].label);
-            }
 
-            if (bodyDatas.TryGetValue((LogInView.GetIDSchool(), i, otherPlayerState.partBodyTransforms[i].category, otherPlayerState.partBodyTransforms[i].label), out var bodyData))
-            {
-                Vector3 currentPositionPartBody = spriteResolvers[i].transform.localPosition;
-                if (currentPositionPartBody.x != bodyData.Item1.x || currentPositionPartBody.y != bodyData.Item1.y || currentPositionPartBody.z != bodyData.Item1.z)
+                if (bodyDatas.TryGetValue((otherPlayerData.idSchool, i, otherPlayerState.partBodyTransforms[i].category, otherPlayerState.partBodyTransforms[i].label), out var bodyData))
                 {
+                    Vector3 currentPositionPartBody = spriteResolvers[i].transform.localPosition;
                     currentPositionPartBody.x = bodyData.Item1.x;
                     currentPositionPartBody.y = bodyData.Item1.y;
                     currentPositionPartBody.z = bodyData.Item1.z;
                     spriteResolvers[i].transform.localPosition = currentPositionPartBody;
-                }
 
-                Quaternion currentRotationPartBody = spriteResolvers[i].transform.localRotation;
-                if (currentRotationPartBody.x != bodyData.Item2.x || currentRotationPartBody.y != bodyData.Item2.y || currentRotationPartBody.z != bodyData.Item2.z)
-                {
+                    Quaternion currentRotationPartBody = spriteResolvers[i].transform.localRotation;
                     spriteResolvers[i].transform.localRotation = Quaternion.Euler(bodyData.Item2.x, bodyData.Item2.y, bodyData.Item2.z);
-                }
 
-                Vector3 currentScalePartBody = spriteResolvers[i].transform.localScale;
-                if (currentScalePartBody.x != bodyData.Item3.x || currentScalePartBody.y != bodyData.Item3.y || currentScalePartBody.z != bodyData.Item3.z)
-                {
+                    Vector3 currentScalePartBody = spriteResolvers[i].transform.localScale;
                     currentScalePartBody.x = bodyData.Item3.x;
                     currentScalePartBody.y = bodyData.Item3.y;
                     currentScalePartBody.z = bodyData.Item3.z;
                     spriteResolvers[i].transform.localScale = currentScalePartBody;
-                }
 
-                Color currentColorPartBody = spriteRenderers[i].color;
-                if (currentColorPartBody.a != bodyData.Item4.a)
-                {
+                    Color currentColorPartBody = spriteRenderers[i].color;
                     currentColorPartBody.a = bodyData.Item4.a;
                     spriteRenderers[i].color = currentColorPartBody;
                 }

@@ -85,15 +85,6 @@ public class SpritePlayerController : MonoBehaviour, IUpdatable
     {
         switch (label)
         {
-            case "StandFront": 
-                return Label.StandFront;
-            case "StandBack": 
-                return Label.StandBack;
-            case "StandLeft": 
-                return Label.StandLeft;
-            case "StandRight": 
-                return Label.StandRight;
-
             case "StandFrontFrame0": 
                 return Label.StandFrontFrame0;
             case "StandFrontFrame1": 
@@ -175,7 +166,7 @@ public class SpritePlayerController : MonoBehaviour, IUpdatable
                 return Label.DieFrame0;
 
             default:
-                return Label.StandFront;
+                return Label.StandFrontFrame0;
         }
     }
     private void InitSpriteResolversInfos()

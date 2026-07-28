@@ -30,11 +30,6 @@ public enum Category
 }
 public enum Label
 {
-    StandFront = 0,
-    StandBack = 1,
-    StandLeft = 2,
-    StandRight = 3,
-
     StandFrontFrame0 = 4,
     StandFrontFrame1 = 5,
     StandBackFrame0 = 6,

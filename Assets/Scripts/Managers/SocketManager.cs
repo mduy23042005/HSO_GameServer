@@ -70,7 +70,7 @@ public class SocketManager : MonoBehaviour, IUpdatable
             Debug.Log("Socket: Kết nối Server thành công!");
 
             _ = StartSyncPlayerLoop(shutdownCts.Token);
-            _ = StartReceiveLoop(shutdownCts.Token);
+            _ = Task.Run(() => StartReceiveLoop(shutdownCts.Token));
         }
         catch (Exception e)
         {
@@ -84,32 +84,18 @@ public class SocketManager : MonoBehaviour, IUpdatable
 
     public void RegisterDontDestroyOnLoad() { }
 
+    public void SetPlayerObject(GameObject obj)
+    {
+        player = obj;
+
+        playerMovementController = player.GetComponent<MovementPlayerController>();
+        playerSpriteController = player.GetComponent<SpritePlayerController>();
+    }
     private byte[] GetSyncPlayerDataRequestByteArray()
     {
         if (player == null)
-        {
-            switch (LogInView.GetIDSchool())
-            {
-                case 1:
-                    player = GameObject.Find("ChienBinh(Clone)");
-                    break;
-                case 2:
-                    player = GameObject.Find("SatThu(Clone)");
-                    break;
-                case 3:
-                    player = GameObject.Find("PhapSu(Clone)");
-                    break;
-                default:
-                    player = GameObject.Find("XaThu(Clone)");
-                    break;
-            }
-
-            if (player == null)
-                return null;
-
-            playerMovementController = player.GetComponent<MovementPlayerController>();
-            playerSpriteController = player.GetComponent<SpritePlayerController>();
-        }
+            return null;
+        
         PacketWriterManager writer = new PacketWriterManager();
 
         writer.WriteInt((int)EnumCmdCode.syncPlayerData);
@@ -145,7 +131,7 @@ public class SocketManager : MonoBehaviour, IUpdatable
     }
     private async Task StartSyncPlayerLoop(CancellationToken token)
     {
-        const int targetTickRate = 15;
+        const int targetTickRate = 20;
         const int tickMS = 1000 / targetTickRate;
 
         var stopwatch = new System.Diagnostics.Stopwatch();
@@ -162,7 +148,7 @@ public class SocketManager : MonoBehaviour, IUpdatable
 
                     if (byteData != null && byteData.Length > 0)
                     {
-                        _ = SendToServer(byteData);
+                        await SendToServer(byteData);
                     }
                 }
 
@@ -227,7 +213,7 @@ public class SocketManager : MonoBehaviour, IUpdatable
 
                 byte[] fullMessage = messageBuffer.ToArray();
                 messageBuffer.Clear();
-                    
+
                 HandlePacket(fullMessage);
             }
         }
@@ -248,14 +234,14 @@ public class SocketManager : MonoBehaviour, IUpdatable
         switch (cmd)
         {
             case EnumCmdCode.updateHP:
-                updateHPQueue.Enqueue(data); 
+                updateHPQueue.Enqueue(data);
                 break;
             case EnumCmdCode.updateMP:
                 updateMPQueue.Enqueue(data);
                 break;
 
             case EnumCmdCode.mobsAttackPlayer:
-                mobsAttackPlayerQueue.Enqueue(data); 
+                mobsAttackPlayerQueue.Enqueue(data);
                 break;
             case EnumCmdCode.mobsHeal:
                 mobsHealQueue.Enqueue(data);
@@ -352,7 +338,7 @@ public class SocketManager : MonoBehaviour, IUpdatable
 
         return null;
     }
-    
+
     public byte[] GetMobsAttackPlayerData()
     {
         if (mobsAttackPlayerQueue.TryDequeue(out var data))

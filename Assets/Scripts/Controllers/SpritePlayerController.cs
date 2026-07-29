@@ -36,7 +36,6 @@ public class SpritePlayerController : MonoBehaviour, IUpdatable
     private int standStateHash;
     private int moveStateHash;
     private int atkStateHash;
-    private int injuredStateHash;
     private int dieStateHash;
 
     private void Awake()

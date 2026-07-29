@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class SyncMobData
@@ -34,6 +37,13 @@ public class MobsManager : MonoBehaviour, IUpdatable
     [SerializeField] private List<GameObject> mobPrefabs;
     [SerializeField] private GameObject updateHPUI;
 
+    private readonly ConcurrentQueue<SyncMobDataPacket> syncMobsResultPacketQueue = new ConcurrentQueue<SyncMobDataPacket>();
+    private readonly ConcurrentQueue<SyncMobDataPacket> syncMobsDeadResultPacketQueue = new ConcurrentQueue<SyncMobDataPacket>();
+    private readonly ConcurrentQueue<(EnumCmdCode, int, int, int)> playerAttackMobResultPacketQueue = new ConcurrentQueue<(EnumCmdCode, int, int, int)>();
+    private readonly ConcurrentQueue<(EnumCmdCode, int, int, int)> otherPlayerAttackMobResultPacketQueue = new ConcurrentQueue<(EnumCmdCode, int, int, int)>();
+
+    private CancellationTokenSource syncTokenSource;
+
     private Dictionary<int, Mob> mobs = new Dictionary<int, Mob>();
     private Dictionary<int, float> lastUpdateTime = new Dictionary<int, float>();
 
@@ -44,6 +54,9 @@ public class MobsManager : MonoBehaviour, IUpdatable
     private void Awake()
     {
         socketManager = GameManager.Instance.GetComponent<SocketManager>();
+
+        syncTokenSource = new CancellationTokenSource();
+        _ = ReadMobsPacketLoop(syncTokenSource.Token);
     }
 
     private void OnEnable()
@@ -58,122 +71,192 @@ public class MobsManager : MonoBehaviour, IUpdatable
         }
     }
 
+    public async Task ReadMobsPacketLoop(CancellationToken token)
+    {
+        while (!token.IsCancellationRequested)
+        {
+            byte[] syncMobsData = socketManager.GetSyncMobsData();
+            byte[] syncMobsDeadData = socketManager.GetSyncMobsDeadData();
+            byte[] playerAttackMob = socketManager.GetPlayerAttackMobData();
+            byte[] otherPlayerAttackMob = socketManager.GetOtherPlayerAttackMobData();
+
+            if (syncMobsData != null && syncMobsData.Length > 0)
+            {
+                PacketReaderManager reader = new PacketReaderManager(syncMobsData);
+
+                SyncMobDataPacket data = new SyncMobDataPacket();
+                data.cmd = (EnumCmdCode)reader.ReadInt();
+                data.mobsData = new List<SyncMobData>();
+
+                int countSyncMobData = reader.ReadInt();
+                for (int i = 0; i < countSyncMobData; i++)
+                {
+                    data.mobsData.Add(new SyncMobData
+                    {
+                        id = reader.ReadInt(),
+                        idMob = reader.ReadInt(),
+                        nameMob = reader.ReadString(),
+                        maxHP = reader.ReadInt(),
+                        hp = reader.ReadInt(),
+                        level = reader.ReadInt(),
+                        posX = reader.ReadFloat(),
+                        posY = reader.ReadFloat(),
+                        state = reader.ReadString(),
+                        idState = reader.ReadInt(),
+                        direction = reader.ReadInt(),
+                        currentTile = (TileType)reader.ReadInt()
+                    });
+                }
+
+                syncMobsResultPacketQueue.Enqueue(data);
+            }
+
+            if (syncMobsDeadData != null && syncMobsDeadData.Length > 0)
+            {
+                PacketReaderManager reader = new PacketReaderManager(syncMobsDeadData);
+
+                SyncMobDataPacket data = new SyncMobDataPacket();
+                data.cmd = (EnumCmdCode)reader.ReadInt();
+                data.mobsData = new List<SyncMobData>();
+
+                int countSyncMobData = reader.ReadInt();
+                for (int i = 0; i < countSyncMobData; i++)
+                {
+                    data.mobsData.Add(new SyncMobData
+                    {
+                        id = reader.ReadInt(),
+                        idMob = reader.ReadInt(),
+                        nameMob = reader.ReadString(),
+                        maxHP = reader.ReadInt(),
+                        hp = reader.ReadInt(),
+                        level = reader.ReadInt(),
+                        posX = reader.ReadFloat(),
+                        posY = reader.ReadFloat(),
+                        state = reader.ReadString(),
+                        idState = reader.ReadInt(),
+                        direction = reader.ReadInt(),
+                        currentTile = (TileType)reader.ReadInt()
+                    });
+                }
+
+                syncMobsDeadResultPacketQueue.Enqueue(data);
+            }
+
+            if (playerAttackMob != null && playerAttackMob.Length > 0)
+            {
+                PacketReaderManager reader = new PacketReaderManager(playerAttackMob);
+                EnumCmdCode cmd = (EnumCmdCode)reader.ReadInt();
+                int aimedMobID = reader.ReadInt();
+                int damage = reader.ReadInt();
+                int hpMobAfterAttack = reader.ReadInt();
+
+                playerAttackMobResultPacketQueue.Enqueue((cmd, aimedMobID, damage, hpMobAfterAttack));
+            }
+
+            if (otherPlayerAttackMob != null && otherPlayerAttackMob.Length > 0)
+            {
+                PacketReaderManager reader = new PacketReaderManager(otherPlayerAttackMob);
+                EnumCmdCode cmd = (EnumCmdCode)reader.ReadInt();
+                int aimedMobID = reader.ReadInt();
+                int damage = reader.ReadInt();
+                int hpMobAfterAttack = reader.ReadInt();
+
+                otherPlayerAttackMobResultPacketQueue.Enqueue((cmd, aimedMobID, damage, hpMobAfterAttack));
+            }
+
+            await Task.Yield();
+        }
+    }
+
     public void OnUpdate()
     {
-        byte[] syncMobsData = socketManager.GetSyncMobsData();
-        byte[] playerAttackMob = socketManager.GetPlayerAttackMobData();
-        byte[] otherPlayerAttackMob = socketManager.GetOtherPlayerAttackMobData();
-        byte[] syncMobsDeadData = socketManager.GetSyncMobsDeadData();
+        SyncMobDataPacket syncMobsData = null;
+        SyncMobDataPacket syncMobsDeadData = null;
 
-        if (syncMobsData != null && syncMobsData.Length > 0)
+        EnumCmdCode cmd = default;
+        int aimedMobID = 0;
+        int damage = 0;
+        int hpMobAfterAttack = 0;
+        bool hasPlayerAttack = false;
+
+        EnumCmdCode otherCmd = default;
+        int otherAimedMobID = 0;
+        int otherDamage = 0;
+        int otherHpMobAfterAttack = 0;
+        bool hasOtherPlayerAttack = false;
+
+        if (syncMobsResultPacketQueue.TryDequeue(out var syncMobPacket))
+            syncMobsData = syncMobPacket;
+
+        if (syncMobsDeadResultPacketQueue.TryDequeue(out var syncMobDeadPacket))
+            syncMobsDeadData = syncMobDeadPacket;
+
+        if (playerAttackMobResultPacketQueue.TryDequeue(out var playerAttackData))
         {
-            PacketReaderManager reader = new PacketReaderManager(syncMobsData);
-
-            SyncMobDataPacket data = new SyncMobDataPacket();
-            data.cmd = (EnumCmdCode)reader.ReadInt();
-            data.mobsData = new List<SyncMobData>();
-
-            int countSyncMobData = reader.ReadInt();
-            for (int i = 0; i < countSyncMobData; i++)
-            {
-                data.mobsData.Add(new SyncMobData
-                {
-                    id = reader.ReadInt(),
-                    idMob = reader.ReadInt(),
-                    nameMob = reader.ReadString(),
-                    maxHP = reader.ReadInt(),
-                    hp = reader.ReadInt(),
-                    level = reader.ReadInt(),
-                    posX = reader.ReadFloat(),
-                    posY = reader.ReadFloat(),
-                    state = reader.ReadString(),
-                    idState = reader.ReadInt(),
-                    direction = reader.ReadInt(),
-                    currentTile = (TileType)reader.ReadInt()
-                });
-            }
-            OnMobDataFromServer(data);
-        }
-        if (syncMobsDeadData != null && syncMobsDeadData.Length > 0)
-        {
-            PacketReaderManager reader = new PacketReaderManager(syncMobsDeadData);
-
-            SyncMobDataPacket data = new SyncMobDataPacket();
-            data.cmd = (EnumCmdCode)reader.ReadInt();
-            data.mobsData = new List<SyncMobData>();
-
-            int countSyncMobData = reader.ReadInt();
-            for (int i = 0; i < countSyncMobData; i++)
-            {
-                data.mobsData.Add(new SyncMobData
-                {
-                    id = reader.ReadInt(),
-                    idMob = reader.ReadInt(),
-                    nameMob = reader.ReadString(),
-                    maxHP = reader.ReadInt(),
-                    hp = reader.ReadInt(),
-                    level = reader.ReadInt(),
-                    posX = reader.ReadFloat(),
-                    posY = reader.ReadFloat(),
-                    state = reader.ReadString(),
-                    idState = reader.ReadInt(),
-                    direction = reader.ReadInt(),
-                    currentTile = (TileType)reader.ReadInt()
-                });
-            }
-            OffMobDataFromServer(data);
+            cmd = playerAttackData.Item1;
+            aimedMobID = playerAttackData.Item2;
+            damage = playerAttackData.Item3;
+            hpMobAfterAttack = playerAttackData.Item4;
+            hasPlayerAttack = true;
         }
 
-        if (playerAttackMob != null && playerAttackMob.Length > 0)
+        if (otherPlayerAttackMobResultPacketQueue.TryDequeue(out var otherPlayerAttackData))
         {
-            PacketReaderManager reader = new PacketReaderManager(playerAttackMob);
-            EnumCmdCode cmd = (EnumCmdCode)reader.ReadInt();
-            int aimedMobID = reader.ReadInt();
-            int damage = reader.ReadInt();
-            int hpMobAfterAttack = reader.ReadInt();
+            otherCmd = otherPlayerAttackData.Item1;
+            otherAimedMobID = otherPlayerAttackData.Item2;
+            otherDamage = otherPlayerAttackData.Item3;
+            otherHpMobAfterAttack = otherPlayerAttackData.Item4;
+            hasOtherPlayerAttack = true;
+        }
 
-            if (mobs[aimedMobID] != null)
+        if (syncMobsData != null)
+            OnMobDataFromServer(syncMobsData);
+
+        if (syncMobsDeadData != null)
+            OffMobDataFromServer(syncMobsDeadData);
+
+        if (hasPlayerAttack)
+        {
+            if (mobs.TryGetValue(aimedMobID, out Mob mob) &&
+                mob != null &&
+                mob.mobData != null)
             {
-                if (mobs[aimedMobID].mobData.hp != hpMobAfterAttack)
+                if (mob.mobData.hp != hpMobAfterAttack)
                 {
-                    if (hpMobAfterAttack < mobs[aimedMobID].mobData.hp)
+                    if (hpMobAfterAttack < mob.mobData.hp)
                     {
-                        GameObject objectDamageUI = Instantiate(updateHPUI, mobs[aimedMobID].mobObject.GetComponentInChildren<Canvas>().transform, false);
+                        GameObject objectDamageUI = Instantiate(updateHPUI, mob.mobObject.GetComponentInChildren<Canvas>().transform, false);
 
                         UpdateHPUIController injuredDamageUI = objectDamageUI.GetComponent<UpdateHPUIController>();
+
                         if (injuredDamageUI != null)
-                        {
                             injuredDamageUI.SetInjuredDamage(damage);
-                        }
                     }
-                    mobs[aimedMobID].mobData.hp = hpMobAfterAttack;
+
+                    mob.mobData.hp = hpMobAfterAttack;
                 }
             }
         }
 
-        if (otherPlayerAttackMob != null && otherPlayerAttackMob.Length > 0)
+        if (hasOtherPlayerAttack)
         {
-            PacketReaderManager reader = new PacketReaderManager(otherPlayerAttackMob);
-            EnumCmdCode cmd = (EnumCmdCode)reader.ReadInt();
-            int aimedMobID = reader.ReadInt();
-            int damage = reader.ReadInt();
-            int hpMobAfterAttack = reader.ReadInt();
-
-            if (mobs[aimedMobID] != null)
+            if (mobs.TryGetValue(otherAimedMobID, out Mob mob) &&
+                mob != null &&
+                mob.mobData != null)
             {
-                if (mobs[aimedMobID].mobData.hp != hpMobAfterAttack)
+                if (mob.mobData.hp != otherHpMobAfterAttack)
                 {
-                    if (hpMobAfterAttack < mobs[aimedMobID].mobData.hp)
+                    if (otherHpMobAfterAttack < mob.mobData.hp)
                     {
-                        GameObject objectDamageUI = Instantiate(updateHPUI, mobs[aimedMobID].mobObject.GetComponentInChildren<Canvas>().transform, false);
+                        GameObject objectDamageUI = Instantiate(updateHPUI, mob.mobObject.GetComponentInChildren<Canvas>().transform, false);
 
                         UpdateHPUIController injuredDamageUI = objectDamageUI.GetComponent<UpdateHPUIController>();
+
                         if (injuredDamageUI != null)
-                        {
-                            injuredDamageUI.SetInjuredDamage(damage);
-                        }
+                            injuredDamageUI.SetInjuredDamage(otherDamage);
                     }
-                    mobs[aimedMobID].mobData.hp = hpMobAfterAttack;
+
+                    mob.mobData.hp = otherHpMobAfterAttack;
                 }
             }
         }
@@ -200,7 +283,6 @@ public class MobsManager : MonoBehaviour, IUpdatable
             RemoveMob(id);
         }
     }
-
     private void OnMobDataFromServer(SyncMobDataPacket data)
     {
         if (data == null || data.mobsData == null)
@@ -309,5 +391,14 @@ public class MobsManager : MonoBehaviour, IUpdatable
     public void RegisterDontDestroyOnLoad()
     {
         throw new NotImplementedException();
+    }
+
+    private void OnDestroy()
+    {
+        if (syncTokenSource != null)
+        {
+            syncTokenSource.Cancel();
+            syncTokenSource.Dispose();
+        }
     }
 }

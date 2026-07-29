@@ -232,7 +232,7 @@ public class RegisterView : MonoBehaviour, IUpdatable
         writer.WriteInt(registerRequestPacket.hair);
         writer.WriteInt(registerRequestPacket.blessingPoints);
 
-        socketManager.SendToServer(writer.ToArray());
+        _ = socketManager.SendToServer(writer.ToArray());
     }
 
     private bool CheckAllInfo(int idSchool, TMP_InputField nameChar, TMP_InputField username, TMP_InputField password)

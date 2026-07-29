@@ -79,7 +79,7 @@ public class LogOutController : MonoBehaviour, IUpdatable
         writer.WriteInt((int)logOutRequestPacket.cmd);
         writer.WriteInt(logOutRequestPacket.idAccount);
 
-        socketManager.SendToServer(writer.ToArray());
+        _ = socketManager.SendToServer(writer.ToArray());
     }
 
     public void SetLogOutData(LogOutRequestPacket data)

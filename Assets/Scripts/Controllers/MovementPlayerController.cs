@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -323,7 +324,7 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
 
             if (path == null || path.Count == 0 || endMovementPosition != targetGrid)
             {
-                // Nếu đang di chuyển mà click chỗ khác, lấy node kế tiếp làm điểm bắt đầu để tránh giật lùi
+                // nếu đang di chuyển mà click chỗ khác, lấy node kế tiếp làm điểm bắt đầu để tránh giật lùi
                 if (path != null && pathIndex < path.Count)
                 {
                     startMovementPosition = path[pathIndex];
@@ -351,7 +352,7 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
                 }
             }
 
-            // 2. Nếu đã đi hết path thì dừng lại
+            // nếu đã đi hết path thì dừng lại
             if (pathIndex >= path.Count)
             {
                 path = null;
@@ -383,7 +384,7 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
 
                 float speed = moveSpeed * Time.deltaTime;
 
-                // Di chuyển trực tiếp thay vì đợi frame sau
+                // di chuyển trực tiếp thay vì đợi frame sau
                 if (speed > distanceToTarget)
                 {
                     transform.position = targetNode;
@@ -397,7 +398,7 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
 
                 MoveStop();
 
-                // Xử lý khi click vào quái
+                // xử lý khi click vào quái
                 if (mob != null)
                 {
                     targetPosition = new Vector2(mob.transform.position.x, mob.transform.position.y);
@@ -427,7 +428,8 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
                         writer.WriteInt(attackDataPacket.idAccount);
                         writer.WriteInt(attackDataPacket.aimedMobID);
 
-                        socketManager.SendToServer(writer.ToArray());
+                        _ = socketManager.SendToServer(writer.ToArray());
+
                         return;
                     }
 
@@ -439,7 +441,7 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
                 }
             }
 
-            // Kiểm tra chuyển đổi Node
+            // kiểm tra chuyển đổi Node
             if (Vector2.Distance(currentPosition, targetNode) <= 0.05f)
             {
                 if (minimap != null)

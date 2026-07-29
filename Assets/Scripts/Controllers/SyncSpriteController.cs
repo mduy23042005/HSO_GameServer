@@ -319,12 +319,12 @@ public class SyncSpriteController : MonoBehaviour, IUpdatable
         otherPlayerTransform = serverTransform;
         otherPlayerState = serverState;
 
-        hpBar.maxValue = serverData.maxHP;
-        hpBar.value = serverData.hp;
-
-        currentTileType = serverData.currentTile;
-
-        UpdateSprite();
+        if (hpBar.maxValue != serverData.maxHP)
+            hpBar.maxValue = serverData.maxHP;
+        if (hpBar.value != serverData.hp)
+            hpBar.value = serverData.hp;
+        if (currentTileType != serverData.currentTile)
+            currentTileType = serverData.currentTile;
     }
 
     public void OnUpdate() 
@@ -366,6 +366,8 @@ public class SyncSpriteController : MonoBehaviour, IUpdatable
                 isStandingInWater = false;
             }
         }
+
+        UpdateSprite();
     }
     public void OnLateUpdate() { }
     public void OnFixedUpdate() { }

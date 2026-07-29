@@ -346,7 +346,6 @@ public class SyncOtherPlayersManager : MonoBehaviour, IUpdatable
             hasHPUpdate = true;
         }
 
-        // 3. Xử lý dữ liệu Online từ Server
         if (onlineData != null)
         {
             if (onlineData.otherPlayersData != null)
@@ -401,7 +400,7 @@ public class SyncOtherPlayersManager : MonoBehaviour, IUpdatable
         GameManager.Instance.RegisterPersistent(this);
     }
 
-    public void OnDataFromServer(OtherPlayerSyncData data)
+    private void OnDataFromServer(OtherPlayerSyncData data)
     {
         OtherPlayer onlinePlayer;
 
@@ -441,7 +440,7 @@ public class SyncOtherPlayersManager : MonoBehaviour, IUpdatable
 
         lastUpdateTime[data.otherPlayerData.idAccount] = Time.time;
     }
-    public void OffDataFromServer(LogOutRequestPacket data)
+    private void OffDataFromServer(LogOutRequestPacket data)
     {
         if (otherPlayers.TryGetValue(data.idAccount, out OtherPlayer otherPlayer))
         {

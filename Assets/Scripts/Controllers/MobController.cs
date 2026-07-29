@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -88,6 +89,7 @@ public class MobController : MonoBehaviour, IUpdatable
     {
         transform.position = Vector2.MoveTowards(transform.position, movement, 2f * Time.fixedDeltaTime);
     }
+
     public void ApplyServerState(SyncMobData data)
     {
         syncMobDataMovement = data;

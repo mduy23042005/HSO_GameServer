@@ -62,24 +62,10 @@ public class CinemachineCameraController : MonoBehaviour, IUpdatable
         if (hasSetTarget)
             return;
 
-        int idSchool = LogInView.GetIDSchool();
-        Transform target = null;
+        if (PlayerManager.player == null)
+            return;
 
-        switch (idSchool)
-        {
-            case 1:
-                target = GameObject.Find("ChienBinh(Clone)")?.transform;
-                break;
-            case 2:
-                target = GameObject.Find("SatThu(Clone)")?.transform;
-                break;
-            case 3:
-                target = GameObject.Find("PhapSu(Clone)")?.transform;
-                break;
-            case 4:
-                target = GameObject.Find("XaThu(Clone)")?.transform;
-                break;
-        }
+        Transform target = PlayerManager.player.transform;
 
         if (target != null)
         {

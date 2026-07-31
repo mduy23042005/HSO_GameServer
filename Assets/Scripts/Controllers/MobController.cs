@@ -31,6 +31,7 @@ public class MobController : MonoBehaviour, IUpdatable
         flipSprite = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
         uiNameMob = GetComponentInChildren<TMP_Text>();
+        uiNameMob.text = $"{gameObject.name.Replace("(Clone)", "")}";
         mobsManager = GameObject.Find("SyncManager").GetComponent<MobsManager>();
     }
     private void OnEnable()
@@ -51,8 +52,6 @@ public class MobController : MonoBehaviour, IUpdatable
 
         Vector2 targetPos = new Vector2(syncMobDataMovement.posX, syncMobDataMovement.posY);
         movement = targetPos;
-
-        uiNameMob.text = $"[{syncMobDataMovement.id}] {syncMobDataMovement.nameMob}";
 
         ReadMap();
 
@@ -94,7 +93,7 @@ public class MobController : MonoBehaviour, IUpdatable
     {
         syncMobDataMovement = data;
 
-        flipSprite.flipX = syncMobDataMovement.direction > 0;
+        flipSprite.flipX = syncMobDataMovement.direction == Direction.Left;
 
         hpBar.maxValue = syncMobDataMovement.maxHP;
         hpBar.value = syncMobDataMovement.hp;
@@ -133,17 +132,17 @@ public class MobController : MonoBehaviour, IUpdatable
     {
         switch (syncMobDataMovement.state)
         {
-            case "Stand":
+            case State.Stand:
                 if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Stand"))
                     animator.Play("Stand");
                 break;
 
-            case "Move":
+            case State.Move:
                 if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Move"))
                     animator.Play("Move");
                 break;
 
-            case "Atk":
+            case State.Attack:
                 if (syncMobDataMovement.idState != lastIDState) // 1 packet atk khác (1 đòn đánh khác)
                 {
                     lastIDState = syncMobDataMovement.idState;
@@ -156,7 +155,7 @@ public class MobController : MonoBehaviour, IUpdatable
                 }
                 break;
 
-            case "Injured":
+            case State.Injured:
                 if (syncMobDataMovement.idState != lastIDState)
                 {
                     lastIDState = syncMobDataMovement.idState;
@@ -169,7 +168,7 @@ public class MobController : MonoBehaviour, IUpdatable
                 }
                 break;
 
-            case "Die":
+            case State.Die:
                 if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Die"))
                 {
                     animator.Play("Die", 0, 0f);

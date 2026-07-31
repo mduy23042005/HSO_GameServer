@@ -9,7 +9,7 @@ public class PlayerManager : MonoBehaviour, IUpdatable
     public static Dictionary<(int, int, Category, Label), (PositionData, RotationData, ScaleData, ColorData)> bodyDatas;
 
     private SocketManager socketManager;
-    private GameObject player;
+    public static GameObject player;
 
     private void Awake()
     {
@@ -95,7 +95,6 @@ public class PlayerManager : MonoBehaviour, IUpdatable
                 player = Instantiate(playerPrefab[3], new Vector2(-9.5f, -4.5f), Quaternion.identity);
                 break;
         }
-        socketManager.SetPlayerObject(player);
     }
 
     public void DestroyPlayer()

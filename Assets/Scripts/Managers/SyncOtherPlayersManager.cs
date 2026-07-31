@@ -5,7 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public enum PlayerState
+public enum State
 {
     Stand = 0,
     Move = 1,
@@ -104,7 +104,7 @@ public class PartBodyData
 }
 public class PlayerStateData
 {
-    public PlayerState stateData;
+    public State stateData;
     public Direction directionData;
     public List<PartBodyData> partBodyTransforms;
 }
@@ -257,7 +257,7 @@ public class SyncOtherPlayersManager : MonoBehaviour, IUpdatable
                     otherPlayerSyncData.otherPlayerTransformData.scaleData.y = 1f;
                     otherPlayerSyncData.otherPlayerTransformData.scaleData.z = 1f;
 
-                    otherPlayerSyncData.otherPlayerStateData.stateData = (PlayerState)reader.ReadInt();
+                    otherPlayerSyncData.otherPlayerStateData.stateData = (State)reader.ReadInt();
                     otherPlayerSyncData.otherPlayerStateData.directionData = (Direction)reader.ReadInt();
                     otherPlayerSyncData.otherPlayerStateData.partBodyTransforms = new List<PartBodyData>();
 
@@ -315,7 +315,7 @@ public class SyncOtherPlayersManager : MonoBehaviour, IUpdatable
         {
             if (otherPlayers.TryGetValue(id, out OtherPlayer obj))
             {
-                Destroy(obj.otherPlayerObject);
+                PoolManager.Instance.Release(obj.otherPlayerObject);
                 otherPlayers.Remove(id);
                 lastUpdateTime.Remove(id);
             }
@@ -413,15 +413,16 @@ public class SyncOtherPlayersManager : MonoBehaviour, IUpdatable
             switch (data.otherPlayerData.idSchool)
             {
                 case 1:
-                    onlinePlayer.otherPlayerObject = Instantiate(otherPlayersPrefab[0], new Vector2(data.otherPlayerTransformData.positionData.x, data.otherPlayerTransformData.positionData.y), Quaternion.identity);
+                    onlinePlayer.otherPlayerObject = PoolManager.Instance.Get(otherPlayersPrefab[0]);
                     break;
                 case 2:
-                    onlinePlayer.otherPlayerObject = Instantiate(otherPlayersPrefab[1], new Vector2(data.otherPlayerTransformData.positionData.x, data.otherPlayerTransformData.positionData.y), Quaternion.identity);
+                    onlinePlayer.otherPlayerObject = PoolManager.Instance.Get(otherPlayersPrefab[1]);
                     break;
                 case 3:
-                    onlinePlayer.otherPlayerObject = Instantiate(otherPlayersPrefab[2], new Vector2(data.otherPlayerTransformData.positionData.x, data.otherPlayerTransformData.positionData.y), Quaternion.identity);
+                    onlinePlayer.otherPlayerObject = PoolManager.Instance.Get(otherPlayersPrefab[2]);
                     break;
             }
+            onlinePlayer.otherPlayerObject.transform.SetPositionAndRotation(new Vector2(data.otherPlayerTransformData.positionData.x, data.otherPlayerTransformData.positionData.y), Quaternion.identity);
             onlinePlayer.canvasTransform = onlinePlayer.otherPlayerObject.GetComponentInChildren<Canvas>().transform;
             onlinePlayer.syncSpriteController = onlinePlayer.otherPlayerObject.GetComponent<SyncSpriteController>();
             onlinePlayer.syncSpriteController.ApplyServerData(data.otherPlayerData, data.otherPlayerTransformData, data.otherPlayerStateData);
@@ -444,7 +445,7 @@ public class SyncOtherPlayersManager : MonoBehaviour, IUpdatable
     {
         if (otherPlayers.TryGetValue(data.idAccount, out OtherPlayer otherPlayer))
         {
-            Destroy(otherPlayer.otherPlayerObject);
+            PoolManager.Instance.Release(otherPlayer.otherPlayerObject);
             otherPlayers.Remove(data.idAccount);
         }
         if (lastUpdateTime.TryGetValue(data.idAccount, out float lastTime))
@@ -463,7 +464,7 @@ public class SyncOtherPlayersManager : MonoBehaviour, IUpdatable
         {
             if (kv.Value != null)
             {
-                Destroy(kv.Value.otherPlayerObject);
+                PoolManager.Instance.Release(kv.Value.otherPlayerObject);
             }
         }
         otherPlayers.Clear();

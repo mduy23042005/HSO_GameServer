@@ -43,7 +43,6 @@ public class SocketManager : MonoBehaviour, IUpdatable
     private readonly ConcurrentQueue<byte[]> playerAttackMobQueues = new ConcurrentQueue<byte[]>();
     private readonly ConcurrentQueue<byte[]> otherPlayerAttackMobQueues = new ConcurrentQueue<byte[]>();
 
-    private GameObject player;
     private MovementPlayerController playerMovementController;
     private SpritePlayerController playerSpriteController;
     private Dictionary<int, (Category, Label)> spriteResolversInfos = new Dictionary<int, (Category, Label)>();
@@ -84,20 +83,15 @@ public class SocketManager : MonoBehaviour, IUpdatable
 
     public void RegisterDontDestroyOnLoad() { }
 
-    public void SetPlayerObject(GameObject obj)
-    {
-        player = obj;
-
-        playerMovementController = player.GetComponent<MovementPlayerController>();
-        playerSpriteController = player.GetComponent<SpritePlayerController>();
-    }
     private byte[] GetSyncPlayerDataRequestByteArray()
     {
-        if (player == null)
+        if (PlayerManager.player == null)
             return null;
-        
-        PacketWriterManager writer = new PacketWriterManager();
 
+        playerMovementController = PlayerManager.player.GetComponent<MovementPlayerController>();
+        playerSpriteController = PlayerManager.player.GetComponent<SpritePlayerController>();
+
+        PacketWriterManager writer = new PacketWriterManager();
         writer.WriteInt((int)EnumCmdCode.syncPlayerData);
         writer.WriteString(SceneManager.GetActiveScene().name);
         writer.WriteInt(LogInView.GetIDAccount() ?? 0);
@@ -307,7 +301,6 @@ public class SocketManager : MonoBehaviour, IUpdatable
                 playerAttackMobQueues.Enqueue(data);
                 break;
             case EnumCmdCode.otherPlayerAttackMob:
-                Debug.Log("Received otherPlayerAttackMob packet");
                 otherPlayerAttackMobQueues.Enqueue(data);
                 break;
 

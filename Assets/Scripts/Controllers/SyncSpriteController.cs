@@ -289,42 +289,42 @@ public class SyncSpriteController : MonoBehaviour, IUpdatable
 
     public void ApplyServerData(PlayerData serverData, PlayerTransformData serverTransform, PlayerStateData serverState)
     {
-        if (weaponData != serverData.weapon)
-        {
-            weaponData = serverData.weapon;
-            EquipWeapon(weaponData);
-        }
-        if (helmetData != serverData.helmet)
-        {
-            helmetData = serverData.helmet;
-            EquipHelmet(helmetData);
-        }
-        if (armorData != serverData.armor)
-        {
-            armorData = serverData.armor;
-            EquipArmor(armorData);
-        }
-        if (legArmorData != serverData.legArmor)
-        {
-            legArmorData = serverData.legArmor;
-            EquipLegArmor(legArmorData);
-        }
-        if (hairData != serverData.hair)
-        {
-            hairData = serverData.hair;
-            EquipHair(hairData, serverData.idSchool);
-        }
-
         otherPlayerData = serverData;
         otherPlayerTransform = serverTransform;
         otherPlayerState = serverState;
 
-        if (hpBar.maxValue != serverData.maxHP)
-            hpBar.maxValue = serverData.maxHP;
-        if (hpBar.value != serverData.hp)
-            hpBar.value = serverData.hp;
-        if (currentTileType != serverData.currentTile)
-            currentTileType = serverData.currentTile;
+        if (weaponData != otherPlayerData.weapon)
+        {
+            weaponData = otherPlayerData.weapon;
+            EquipWeapon(weaponData);
+        }
+        if (helmetData != otherPlayerData.helmet)
+        {
+            helmetData = otherPlayerData.helmet;
+            EquipHelmet(helmetData);
+        }
+        if (armorData != otherPlayerData.armor)
+        {
+            armorData = otherPlayerData.armor;
+            EquipArmor(armorData);
+        }
+        if (legArmorData != otherPlayerData.legArmor)
+        {
+            legArmorData = otherPlayerData.legArmor;
+            EquipLegArmor(legArmorData);
+        }
+        if (hairData != otherPlayerData.hair)
+        {
+            hairData = otherPlayerData.hair;
+            EquipHair(hairData, otherPlayerData.idSchool);
+        }
+
+        if (hpBar.maxValue != otherPlayerData.maxHP)
+            hpBar.maxValue = otherPlayerData.maxHP;
+        if (hpBar.value != otherPlayerData.hp)
+            hpBar.value = otherPlayerData.hp;
+        if (currentTileType != otherPlayerData.currentTile)
+            currentTileType = otherPlayerData.currentTile;
     }
 
     public void OnUpdate() 

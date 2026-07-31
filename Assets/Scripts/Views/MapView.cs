@@ -43,7 +43,6 @@ public class MapView : MonoBehaviour, IUpdatable
     private Dictionary<string, TileType> tileLookup;
     private BoundsInt cachedBounds;
 
-    private GameObject player;
     private Vector3 lastPlayerPositionFullMinimap;
     private Vector3 lastPlayerPositionMinimap;
     private RectTransform playerMarkerFullMinimap;
@@ -95,27 +94,9 @@ public class MapView : MonoBehaviour, IUpdatable
 
     public void OnUpdate()
     {
-        if (player == null)
-        {
-            switch (LogInView.GetIDSchool())
-            {
-                case 1:
-                    player = GameObject.Find("ChienBinh(Clone)");
-                    break;
-                case 2:
-                    player = GameObject.Find("SatThu(Clone)");
-                    break;
-                case 3:
-                    player = GameObject.Find("PhapSu(Clone)");
-                    break;
-                case 4:
-                    player = GameObject.Find("XaThu(Clone)");
-                    break;
-            }
-
-            if (player == null)
-                return;
-        }
+        if (PlayerManager.player == null)
+            return;
+        
 
         UpdateMinimapViewport();
 
@@ -170,11 +151,11 @@ public class MapView : MonoBehaviour, IUpdatable
             playerMarkerFullMinimap.anchorMax = new Vector2(0.5f, 0.5f);
             playerMarkerFullMinimap.pivot = new Vector2(0.5f, 0.5f);
         }
-        if (lastPlayerPositionFullMinimap != player.transform.position)
+        if (lastPlayerPositionFullMinimap != PlayerManager.player.transform.position)
         {
-            playerMarkerFullMinimap.anchoredPosition = WorldToFullMinimapPosition(player.transform.position);
+            playerMarkerFullMinimap.anchoredPosition = WorldToFullMinimapPosition(PlayerManager.player.transform.position);
 
-            lastPlayerPositionFullMinimap = player.transform.position;
+            lastPlayerPositionFullMinimap = PlayerManager.player.transform.position;
         }
 
         if (mobs != null)
@@ -279,12 +260,12 @@ public class MapView : MonoBehaviour, IUpdatable
             playerMarkerMinimap.pivot = new Vector2(0.5f, 0.5f);
         }
 
-        if (lastPlayerPositionMinimap != player.transform.position)
+        if (lastPlayerPositionMinimap != PlayerManager.player.transform.position)
         {
-            playerMarkerMinimap.anchoredPosition = WorldToMinimapPosition(player.transform.position, out bool isVisibleInMinimap);
+            playerMarkerMinimap.anchoredPosition = WorldToMinimapPosition(PlayerManager.player.transform.position, out bool isVisibleInMinimap);
             playerMarkerMinimap.gameObject.SetActive(isVisibleInMinimap);
 
-            lastPlayerPositionMinimap = player.transform.position;
+            lastPlayerPositionMinimap = PlayerManager.player.transform.position;
         }
 
         if (mobs != null)
@@ -485,7 +466,7 @@ public class MapView : MonoBehaviour, IUpdatable
         float fullWidth = fullRect.width;
         float fullHeight = fullRect.height;
 
-        Vector3Int playerCell = groundTilemap.WorldToCell(player.transform.position);
+        Vector3Int playerCell = groundTilemap.WorldToCell(PlayerManager.player.transform.position);
 
         float normalizedX = (playerCell.x - bounds.xMin) / (float)bounds.size.x;
         float normalizedY = (playerCell.y - bounds.yMin) / (float)bounds.size.y;

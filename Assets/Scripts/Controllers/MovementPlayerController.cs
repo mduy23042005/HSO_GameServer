@@ -40,7 +40,7 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
     private AStarManager astar = new AStarManager();
     private MapData mapData;
 
-    private PlayerState currentState;
+    private State currentState;
     private SocketManager socketManager;
 
     private void Awake()
@@ -413,7 +413,7 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
                             minimap.ClearAStarPath();
                         movement = lastMove;
 
-                        currentState = PlayerState.Attack;
+                        currentState = State.Attack;
                         TriggerAnimation("Atk", 0.25f);
 
                         PlayerAttackDataPacket attackDataPacket = new PlayerAttackDataPacket
@@ -477,7 +477,7 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
         return isMovingToTarget;
     }
 
-    public PlayerState GetCurrentState()
+    public State GetCurrentState()
     {
         return currentState;
     }
@@ -519,13 +519,13 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
         }
         if (movement.x == 0 && movement.y == 0)
         {
-            currentState = PlayerState.Stand;
+            currentState = State.Stand;
             animator.SetBool("isMove", false);
             UpdateLastMoveToAnimator();
         }
         if (movement.x != 0 || movement.y != 0)
         {
-            currentState = PlayerState.Move;
+            currentState = State.Move;
             animator.SetBool("isMove", true);
             UpdateMoveToAnimator();
         }
@@ -548,12 +548,12 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
     }
     public void UpdateInjuredAnimation()
     {
-        currentState = PlayerState.Injured;
+        currentState = State.Injured;
         UpdateLastMoveToAnimator();
     }
     public void UpdateDieAnimation()
     {
-        currentState = PlayerState.Die;
+        currentState = State.Die;
         animator.SetBool("isDie", true);
         UpdateLastMoveToAnimator();
     }

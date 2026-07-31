@@ -2,6 +2,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static System.Net.Mime.MediaTypeNames;
 
 public class UIBarsView : MonoBehaviour, IUpdatable
 {
@@ -9,12 +10,12 @@ public class UIBarsView : MonoBehaviour, IUpdatable
     [SerializeField] private TMP_Text hpInfo;
     [SerializeField] private Slider mpBar;
     [SerializeField] private TMP_Text mpInfo;
+    [SerializeField] private TMP_Text fpsInfo;
 
     [SerializeField] private GameObject updateHPUI;
 
     private int lastHP;
 
-    private GameObject player;
     private SocketManager socketManager;
 
     private void Awake()
@@ -67,31 +68,12 @@ public class UIBarsView : MonoBehaviour, IUpdatable
 
     public void OnUpdate() 
     {
-        if (player == null)
-        {
-            switch (LogInView.GetIDSchool())
-            {
-                case 1:
-                    player = GameObject.Find("ChienBinh(Clone)");
-                    break;
-                case 2:
-                    player = GameObject.Find("SatThu(Clone)");
-                    break;
-                case 3:
-                    player = GameObject.Find("PhapSu(Clone)");
-                    break;
-                case 4:
-                    player = GameObject.Find("XaThu(Clone)");
-                    break;
-            }
+        if (PlayerManager.player == null)
+            return;
 
-            if (player == null)
-                return;
-        }
-
-        Vector3 canvasScaleInPlayer = player.GetComponentInChildren<Canvas>().transform.localScale;
-        canvasScaleInPlayer.x = player.transform.localScale.x < 0 ? -Math.Abs(canvasScaleInPlayer.x) : Math.Abs(canvasScaleInPlayer.x);
-        player.GetComponentInChildren<Canvas>().transform.localScale = canvasScaleInPlayer;
+        Vector3 canvasScaleInPlayer = PlayerManager.player.GetComponentInChildren<Canvas>().transform.localScale;
+        canvasScaleInPlayer.x = PlayerManager.player.transform.localScale.x < 0 ? -Math.Abs(canvasScaleInPlayer.x) : Math.Abs(canvasScaleInPlayer.x);
+        PlayerManager.player.GetComponentInChildren<Canvas>().transform.localScale = canvasScaleInPlayer;
 
         PlayerInjured();
         // tính năng heal sẽ cập nhật tiếp theo ở đây
@@ -119,14 +101,16 @@ public class UIBarsView : MonoBehaviour, IUpdatable
             if (playerHP < lastHP)
             {
                 if (playerHP <= 0)
-                    player.GetComponent<MovementPlayerController>().UpdateDieAnimation();
+                    PlayerManager.player.GetComponent<MovementPlayerController>().UpdateDieAnimation();
                 else
                 {
-                    player.GetComponent<MovementPlayerController>().UpdateInjuredAnimation();
-                    player.GetComponent<SpritePlayerController>().UpdateInjuredSprite();
+                    PlayerManager.player.GetComponent<MovementPlayerController>().UpdateInjuredAnimation();
+                    PlayerManager.player.GetComponent<SpritePlayerController>().UpdateInjuredSprite();
                 }
 
-                GameObject objectDamageUI = Instantiate(updateHPUI, player.GetComponentInChildren<Canvas>().transform, false);
+                GameObject objectDamageUI = PoolManager.Instance.Get(updateHPUI);
+                objectDamageUI.transform.SetParent(PlayerManager.player.GetComponentInChildren<Canvas>().transform, false);
+                objectDamageUI.transform.localPosition = Vector3.zero;
 
                 UpdateHPUIController injuredDamageUI = objectDamageUI.GetComponent<UpdateHPUIController>();
                 if (injuredDamageUI != null)

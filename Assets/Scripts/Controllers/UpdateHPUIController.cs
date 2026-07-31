@@ -35,7 +35,8 @@ public class UpdateHPUIController : MonoBehaviour, IUpdatable
 
         if (timer >= lifeTime)
         {
-            Destroy(gameObject);
+            timer = 0;
+            PoolManager.Instance.Release(gameObject);
         }
     }
 

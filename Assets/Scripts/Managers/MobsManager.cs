@@ -15,9 +15,9 @@ public class SyncMobData
     public int level;
     public float posX;
     public float posY;
-    public string state;
+    public State state;
     public int idState;
-    public int direction;
+    public Direction direction;
     public TileType currentTile;
 }
 public class SyncMobDataPacket
@@ -95,15 +95,14 @@ public class MobsManager : MonoBehaviour, IUpdatable
                     {
                         id = reader.ReadInt(),
                         idMob = reader.ReadInt(),
-                        nameMob = reader.ReadString(),
                         maxHP = reader.ReadInt(),
                         hp = reader.ReadInt(),
                         level = reader.ReadInt(),
                         posX = reader.ReadFloat(),
                         posY = reader.ReadFloat(),
-                        state = reader.ReadString(),
+                        state = (State)reader.ReadInt(),
                         idState = reader.ReadInt(),
-                        direction = reader.ReadInt(),
+                        direction = (Direction)reader.ReadInt(),
                         currentTile = (TileType)reader.ReadInt()
                     });
                 }
@@ -126,15 +125,14 @@ public class MobsManager : MonoBehaviour, IUpdatable
                     {
                         id = reader.ReadInt(),
                         idMob = reader.ReadInt(),
-                        nameMob = reader.ReadString(),
                         maxHP = reader.ReadInt(),
                         hp = reader.ReadInt(),
                         level = reader.ReadInt(),
                         posX = reader.ReadFloat(),
                         posY = reader.ReadFloat(),
-                        state = reader.ReadString(),
+                        state = (State)reader.ReadInt(),
                         idState = reader.ReadInt(),
-                        direction = reader.ReadInt(),
+                        direction = (Direction)reader.ReadInt(),
                         currentTile = (TileType)reader.ReadInt()
                     });
                 }
@@ -217,15 +215,15 @@ public class MobsManager : MonoBehaviour, IUpdatable
 
         if (hasPlayerAttack)
         {
-            if (mobs.TryGetValue(aimedMobID, out Mob mob) &&
-                mob != null &&
-                mob.mobData != null)
+            if (mobs.TryGetValue(aimedMobID, out Mob mob) && mob != null && mob.mobData != null)
             {
                 if (mob.mobData.hp != hpMobAfterAttack)
                 {
                     if (hpMobAfterAttack < mob.mobData.hp)
                     {
-                        GameObject objectDamageUI = Instantiate(updateHPUI, mob.mobObject.GetComponentInChildren<Canvas>().transform, false);
+                        GameObject objectDamageUI = PoolManager.Instance.Get(updateHPUI);
+                        objectDamageUI.transform.SetParent(mob.mobObject.GetComponentInChildren<Canvas>().transform, false);
+                        objectDamageUI.transform.localPosition = Vector3.zero;
 
                         UpdateHPUIController injuredDamageUI = objectDamageUI.GetComponent<UpdateHPUIController>();
 
@@ -240,15 +238,17 @@ public class MobsManager : MonoBehaviour, IUpdatable
 
         if (hasOtherPlayerAttack)
         {
-            if (mobs.TryGetValue(otherAimedMobID, out Mob mob) &&
-                mob != null &&
-                mob.mobData != null)
+            if (mobs.TryGetValue(otherAimedMobID, out Mob mob) && mob != null && mob.mobData != null)
             {
                 if (mob.mobData.hp != otherHpMobAfterAttack)
                 {
                     if (otherHpMobAfterAttack < mob.mobData.hp)
                     {
-                        GameObject objectDamageUI = Instantiate(updateHPUI, mob.mobObject.GetComponentInChildren<Canvas>().transform, false);
+                        GameObject objectDamageUI = PoolManager.Instance.Get(updateHPUI);
+
+                        objectDamageUI.transform.SetParent(mob.mobObject.GetComponentInChildren<Canvas>().transform, false);
+
+                        objectDamageUI.transform.localPosition = Vector3.zero;
 
                         UpdateHPUIController injuredDamageUI = objectDamageUI.GetComponent<UpdateHPUIController>();
 
@@ -301,6 +301,7 @@ public class MobsManager : MonoBehaviour, IUpdatable
                 if (mob.mobObject == null)
                     continue;
 
+                mob.mobData = mobData;
                 mobs.Add(mobData.id, mob);
             }
             else
@@ -327,8 +328,6 @@ public class MobsManager : MonoBehaviour, IUpdatable
 
             if (mobs.TryGetValue(mobDeadData.id, out mob))
             {
-                mob = new Mob();
-
                 mob.mobObject = mobs[mobDeadData.id].mobObject;
                 mob.mobData = mobDeadData;
 
@@ -343,7 +342,7 @@ public class MobsManager : MonoBehaviour, IUpdatable
 
         if (mobs.TryGetValue(id, out mobDead))
         {
-            Destroy(mobDead.mobObject);
+            PoolManager.Instance.Release(mobDead.mobObject);
             mobs.Remove(id);
         }
         if (lastUpdateTime.TryGetValue(id, out float lastTime))
@@ -355,7 +354,9 @@ public class MobsManager : MonoBehaviour, IUpdatable
     {
         //GameObject prefab = mobPrefabs[mobData.idMob];
         GameObject prefab = mobPrefabs[0];
-        GameObject mob = Instantiate(prefab, new Vector2(mobData.posX, mobData.posY), Quaternion.identity);
+        GameObject mob = PoolManager.Instance.Get(prefab); 
+
+        mob.transform.SetPositionAndRotation(new Vector2(mobData.posX, mobData.posY), Quaternion.identity);
 
         return mob;
     }
@@ -364,7 +365,7 @@ public class MobsManager : MonoBehaviour, IUpdatable
     {
         if (mobs.TryGetValue(idMob, out Mob mob))
         {
-            Destroy(mob.mobObject);
+            PoolManager.Instance.Release(mob.mobObject);
             mobs.Remove(idMob);
             lastUpdateTime.Remove(idMob);
         }
@@ -375,7 +376,7 @@ public class MobsManager : MonoBehaviour, IUpdatable
         {
             if (kv.Value != null)
             {
-                Destroy(kv.Value.mobObject);
+                PoolManager.Instance.Release(kv.Value.mobObject);
             }
         }
 
@@ -390,7 +391,7 @@ public class MobsManager : MonoBehaviour, IUpdatable
 
     public void RegisterDontDestroyOnLoad()
     {
-        throw new NotImplementedException();
+        GameManager.Instance.RegisterPersistent(this);
     }
 
     private void OnDestroy()

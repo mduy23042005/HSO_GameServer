@@ -272,9 +272,8 @@ public class SyncOtherPlayersManager : MonoBehaviour, IUpdatable
 
                         data.otherPlayersData[i].otherPlayerStateData.partBodyTransforms.Add(partBodyData);
                     }
-                    
-                    syncOtherPlayersResultPacketQueue.Enqueue(data);
                 }
+                syncOtherPlayersResultPacketQueue.Enqueue(data);
             }
             if (offlineData != null && offlineData.Length > 0)
             {

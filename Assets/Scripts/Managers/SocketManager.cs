@@ -125,7 +125,7 @@ public class SocketManager : MonoBehaviour, IUpdatable
     }
     private async Task StartSyncPlayerLoop(CancellationToken token)
     {
-        const int targetTickRate = 20;
+        const int targetTickRate = 30;
         const int tickMS = 1000 / targetTickRate;
 
         var stopwatch = new System.Diagnostics.Stopwatch();

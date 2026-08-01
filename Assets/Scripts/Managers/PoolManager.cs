@@ -65,7 +65,6 @@ public class PoolManager : MonoBehaviour, IUpdatable
         {
             ExpandPool(pool);
         }
-
         GameObject obj = pool.availableObjectsQueue.Dequeue();
 
         activeObjects[obj] = pool;
@@ -93,11 +92,14 @@ public class PoolManager : MonoBehaviour, IUpdatable
     {
         Pool pool = new Pool();
         pool.prefabObject = prefab;
+        int size = 10; // Initial size of the pool
+        for (int i = 0; i < size; i++)
+        {
+            GameObject obj = Instantiate(pool.prefabObject);
+            obj.SetActive(false);
 
-        GameObject obj = Instantiate(pool.prefabObject);
-        obj.SetActive(false);
-
-        pool.availableObjectsQueue.Enqueue(obj);
+            pool.availableObjectsQueue.Enqueue(obj);
+        }
         objectPools.Add(prefab, pool);
         return pool;
     }

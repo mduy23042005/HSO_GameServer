@@ -40834,7 +40834,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -355.4, y: 0.8}
+  m_AnchoredPosition: {x: -355.4, y: 0.8000002}
   m_SizeDelta: {x: 71.36, y: 25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1813417625
@@ -43327,7 +43327,7 @@ Tilemap:
       m_AnimatedSprites:
       - {fileID: -413025458, guid: c4041bd80a99fe848a202672264a34e0, type: 3}
       - {fileID: -1180023014, guid: 0b47aaa31490e944aae87f0316379a0b, type: 3}
-      m_AnimationSpeed: 5.0000005
+      m_AnimationSpeed: 5
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 3, y: 3, z: 0}
@@ -43381,7 +43381,7 @@ Tilemap:
       m_AnimatedSprites:
       - {fileID: 431592449, guid: c4041bd80a99fe848a202672264a34e0, type: 3}
       - {fileID: -1947407181, guid: 0b47aaa31490e944aae87f0316379a0b, type: 3}
-      m_AnimationSpeed: 5.0000005
+      m_AnimationSpeed: 5
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 22, y: 3, z: 0}
@@ -43525,7 +43525,7 @@ Tilemap:
       m_AnimatedSprites:
       - {fileID: 431592449, guid: c4041bd80a99fe848a202672264a34e0, type: 3}
       - {fileID: -1947407181, guid: 0b47aaa31490e944aae87f0316379a0b, type: 3}
-      m_AnimationSpeed: 5
+      m_AnimationSpeed: 5.0000005
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 2, y: 5, z: 0}
@@ -43534,7 +43534,7 @@ Tilemap:
       m_AnimatedSprites:
       - {fileID: 431592449, guid: c4041bd80a99fe848a202672264a34e0, type: 3}
       - {fileID: -1947407181, guid: 0b47aaa31490e944aae87f0316379a0b, type: 3}
-      m_AnimationSpeed: 5
+      m_AnimationSpeed: 5.0000005
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 3, y: 5, z: 0}

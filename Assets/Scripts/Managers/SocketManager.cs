@@ -50,7 +50,7 @@ public class SocketManager : MonoBehaviour, IUpdatable
     private void Awake()
     {
 #if UNITY_ANDROID
-        serverUri = new Uri("ws://172.16.55.110:55556/"); //phải khai báo rõ IP LAN của Server cho thiết bị Android 
+        serverUri = new Uri("ws://192.168.100.7:55556/"); //phải khai báo rõ IP LAN của Server cho thiết bị Android 
 #elif UNITY_EDITOR || UNITY_STANDALONE
         serverUri = new Uri($"ws://{IPV4ConfigurationManager.GetLocalIPv4()}:55556/"); // dùng IP LAN tự động khi chạy trên máy tính
 #endif

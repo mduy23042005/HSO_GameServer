@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour
         }
         instance = this;
         Application.runInBackground = true;
+        Application.targetFrameRate = 90;
         DontDestroyOnLoad(gameObject);
     }
 

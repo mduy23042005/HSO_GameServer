@@ -53,7 +53,6 @@ public class SpritePlayerController : MonoBehaviour, IUpdatable
         atkStateHash = Animator.StringToHash("Base Layer.Atk");
         dieStateHash = Animator.StringToHash("Base Layer.Die");
 
-        ReadCache();
         InitSpriteResolversInfos();
     }
 
@@ -201,34 +200,13 @@ public class SpritePlayerController : MonoBehaviour, IUpdatable
     }
     public void OnUpdate()
     {
-        if (EquipmentView.GetListEquipmentSlots().Count == 0)
+        if (EquipmentView.equipments == null)
         {
-            byte[] data = socketManager.GetOutfitSpritesData();
-
-            if (data == null || data.Length == 0)
-                return;
-
-            PacketReaderManager reader = new PacketReaderManager(data);
-
-            outfitData.cmd = (EnumCmdCode)reader.ReadInt();
-            outfitData.equipmentData = new List<EquipmentData>();
-
-            int countOutfitSprite = reader.ReadInt();
-            for (int i = 0; i < countOutfitSprite; i++)
-            {
-                outfitData.equipmentData.Add(new EquipmentData
-                {
-                    id = reader.ReadInt(),
-                    idItem0_1 = reader.ReadInt(),
-                    nameItem0_1 = reader.ReadString(),
-                    category = reader.ReadInt(),
-                    slotName = reader.ReadString()
-                });
-            }
+            return;
         }
         else
         {
-            outfitData.equipmentData = EquipmentView.GetListEquipmentSlots();
+            outfitData.equipmentData = EquipmentView.equipments;
         }
 
         if (weaponData != outfitData.equipmentData[0].idItem0_1)
@@ -353,22 +331,6 @@ public class SpritePlayerController : MonoBehaviour, IUpdatable
         spriteLibraries[7].spriteLibraryAsset = listItem0.GetItem0(id).weapon.weaponBackLibraries;
     }
     #endregion
-
-    private async void ReadCache()
-    {
-        int idAccount = LogInView.GetIDAccount() ?? 0;
-        EquipmentRequestPacket outfitSpritesRequestPacket = new EquipmentRequestPacket
-        {
-            cmd = EnumCmdCode.outfitSprites,
-            idAccount = idAccount,
-        };
-
-        PacketWriterManager writer = new PacketWriterManager();
-        writer.WriteInt((int)outfitSpritesRequestPacket.cmd);
-        writer.WriteInt(outfitSpritesRequestPacket.idAccount);
-
-        await socketManager.SendToServer(writer.ToArray());
-    }
 
     private string GetDirection(float h, float v)
     {

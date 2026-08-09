@@ -206,7 +206,7 @@ public class ReadAttributesView : MonoBehaviour, IUpdatable
     private async void ReadAttributeInEquipment(int idSlot)
     {
         int idAccount = LogInView.GetIDAccount() ?? 0;
-        List<EquipmentData> equipmentInfo = EquipmentView.GetListEquipmentSlots();
+        List<EquipmentData> equipmentInfo = EquipmentView.equipments;
         int idItem0_1 = equipmentInfo[idSlot].idItem0_1;
 
         if (idItem0_1 == 0 || idSlot >= equipmentInfo.Count) // Slot trống hoặc ngoài phạm vi
@@ -250,7 +250,7 @@ public class ReadAttributesView : MonoBehaviour, IUpdatable
     {
         indexSlot = idSlot;
         int idAccount = LogInView.GetIDAccount() ?? 0;
-        List<InventoryItem0Data> inventoryInfo = InventoryView.GetListInventoryItem0Slots();
+        List<InventoryItem0Data> inventoryInfo = InventoryView.inventoryItem0s;
 
         if (idSlot < 0 || idSlot >= inventoryInfo.Count)
         {
@@ -297,7 +297,7 @@ public class ReadAttributesView : MonoBehaviour, IUpdatable
         int idSchool = LogInView.GetIDSchool();
         try
         {
-            List<InventoryItem0Data> inventoryInfo = InventoryView.GetListInventoryItem0Slots();
+            List<InventoryItem0Data> inventoryInfo = InventoryView.inventoryItem0s;
 
             if (idSlot < 0 || idSlot >= inventoryInfo.Count)
             {

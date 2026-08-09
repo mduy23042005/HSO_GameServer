@@ -28,8 +28,8 @@ public class EquipmentView : MonoBehaviour, IUpdatable
     [Header("Danh sách các ô hành trang")]
     [SerializeField] private List<Image> equipmentSlots;
 
-    private static List<Image> listImagesEquipment;
-    private static List<EquipmentData> equipment = new List<EquipmentData>();
+    public static List<Image> listImagesEquipment;
+    public static List<EquipmentData> equipments = new List<EquipmentData>();
 
     private SocketManager socketManager;
 
@@ -37,11 +37,15 @@ public class EquipmentView : MonoBehaviour, IUpdatable
     {
         socketManager = GameManager.Instance.GetComponent<SocketManager>();
 
-        int idAccount = LogInView.GetIDAccount() ?? 0;
-        if (idAccount != 0)
+        for (int i = 0; i < equipmentSlots.Count && i < equipments.Count; i++)
         {
-            ReadCache();
+            int itemId = equipments[i].idItem0_1;
+            if (itemId == 0)
+                equipmentSlots[i].sprite = ItemController.Instance.GetDefaultItemSprite(i);
+            else
+                equipmentSlots[i].sprite = ItemController.Instance.GetItem0(itemId).iconItem0;
         }
+        listImagesEquipment = equipmentSlots;
     }
 
     private void OnEnable()
@@ -83,20 +87,20 @@ public class EquipmentView : MonoBehaviour, IUpdatable
 
         for (int i = 0; i < equipmentResult.equipmentData.Count; i++)
         {
-            if (i >= equipment.Count)
+            if (i >= equipments.Count)
             {
-                equipment.Add(equipmentResult.equipmentData[i]);
+                equipments.Add(equipmentResult.equipmentData[i]);
             }
             else
             {
-                equipment[i] = equipmentResult.equipmentData[i];
+                equipments[i] = equipmentResult.equipmentData[i];
             }
         }
 
         // Update UI
-        for (int i = 0; i < equipmentSlots.Count && i < equipment.Count; i++)
+        for (int i = 0; i < equipmentSlots.Count && i < equipments.Count; i++)
         {
-            int itemId = equipment[i].idItem0_1;
+            int itemId = equipments[i].idItem0_1;
             if (itemId == 0)
                 equipmentSlots[i].sprite = ItemController.Instance.GetDefaultItemSprite(i);
             else
@@ -111,27 +115,6 @@ public class EquipmentView : MonoBehaviour, IUpdatable
         DontDestroyOnLoad(this.gameObject);
     }
 
-    // Đọc dữ liệu từ database và hiển thị vào Equipment Slots
-    private async void ReadCache()
-    {
-        int idAccount = LogInView.GetIDAccount() ?? 0;
-        EquipmentRequestPacket equipmentRequestPacket = new EquipmentRequestPacket
-        {
-            cmd = EnumCmdCode.equipment,
-            idAccount = idAccount,
-        };
-
-        PacketWriterManager writer = new PacketWriterManager();
-        writer.WriteInt((int)equipmentRequestPacket.cmd);
-        writer.WriteInt(equipmentRequestPacket.idAccount);
-
-        await socketManager.SendToServer(writer.ToArray());
-    }
-
-    public static List<EquipmentData> GetListEquipmentSlots()
-    {
-        return equipment;
-    }
     public static List<Image> GetListImagesEquipmentSlots()
     {
         return listImagesEquipment;
@@ -139,7 +122,7 @@ public class EquipmentView : MonoBehaviour, IUpdatable
 
     public static void ClearEquipmentData()
     {
-        equipment.Clear();
+        equipments.Clear();
     }
     public static void ClearListImagesEquipmentSlots()
     {

@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -90,21 +91,7 @@ public class LogInView : MonoBehaviour, IUpdatable
             
             if (loginResult.success)
             {
-                idAccount = loginResult.idAccount;
-                idSchool = loginResult.idSchool;
-                idHair = loginResult.hair;
-                nameChar = loginResult.nameChar;
-                level = loginResult.level;
-                maxHP = loginResult.hp;
-                maxMP = loginResult.mp;
-                hp = loginResult.hp;
-                mp = loginResult.mp;
-
-                textMessage.color = Color.green;
-                textMessage.text = loginResult.message;
-
-                isLoggingIn = false;
-                SceneManager.LoadScene("Ngôi Làng Nhỏ");
+                LoadLoginData(loginResult);
             }
             else
             {
@@ -128,6 +115,110 @@ public class LogInView : MonoBehaviour, IUpdatable
     public void RegisterDontDestroyOnLoad()
     {
         GameManager.Instance.RegisterPersistent(this);
+    }
+
+    private void LoadLoginData(LogInResultPacket loginResult)
+    {
+        idAccount = loginResult.idAccount;
+        idSchool = loginResult.idSchool;
+        idHair = loginResult.hair;
+        nameChar = loginResult.nameChar;
+        level = loginResult.level;
+        maxHP = loginResult.hp;
+        maxMP = loginResult.mp;
+        hp = loginResult.hp;
+        mp = loginResult.mp;
+
+        textMessage.color = Color.green;
+        textMessage.text = loginResult.message;
+
+        while (EquipmentView.equipments == null || EquipmentView.equipments.Count == 0)
+        {
+            byte[] data = socketManager.GetEquipmentData();
+
+            if (data == null || data.Length == 0)
+                return;
+
+            PacketReaderManager reader = new PacketReaderManager(data);
+
+            EquipmentResultPacket equipmentResult = new EquipmentResultPacket();
+            equipmentResult.cmd = (EnumCmdCode)reader.ReadInt();
+            equipmentResult.equipmentData = new List<EquipmentData>();
+
+            int countEquipmentData = reader.ReadInt();
+            for (int i = 0; i < countEquipmentData; i++)
+            {
+                equipmentResult.equipmentData.Add(new EquipmentData
+                {
+                    id = reader.ReadInt(),
+                    idItem0_1 = reader.ReadInt(),
+                    nameItem0_1 = reader.ReadString(),
+                    category = reader.ReadInt(),
+                    slotName = reader.ReadString()
+                });
+            }
+
+            for (int i = 0; i < equipmentResult.equipmentData.Count; i++)
+            {
+                if (i >= EquipmentView.equipments.Count)
+                {
+                    EquipmentView.equipments.Add(equipmentResult.equipmentData[i]);
+                }
+                else
+                {
+                    EquipmentView.equipments[i] = equipmentResult.equipmentData[i];
+                }
+            }
+        }
+        while (InventoryView.inventoryItem0s == null || InventoryView.inventoryItem0s.Count == 0)
+        {
+            byte[] data = socketManager.GetInventoryData();
+
+            if (data == null || data.Length == 0)
+                return;
+
+            PacketReaderManager reader = new PacketReaderManager(data);
+
+            InventoryResultPacket inventoryResult = new InventoryResultPacket();
+            inventoryResult.cmd = (EnumCmdCode)reader.ReadInt();
+            inventoryResult.inventoryItem0Data = new List<InventoryItem0Data>();
+            inventoryResult.inventoryItem1Data = new List<InventoryItem1Data>();
+            inventoryResult.inventoryItem2Data = new List<InventoryItem2Data>();
+            inventoryResult.inventoryItem3Data = new List<InventoryItem3Data>();
+            inventoryResult.inventoryItem4Data = new List<InventoryItem4Data>();
+
+            int countInventoryItem0Data = reader.ReadInt();
+            for (int i = 0; i < countInventoryItem0Data; i++)
+            {
+                inventoryResult.inventoryItem0Data.Add(new InventoryItem0Data
+                {
+                    id = reader.ReadInt(),
+                    idItem0 = reader.ReadInt(),
+                    nameItem0 = reader.ReadString(),
+                    typeItem0 = reader.ReadString(),
+                    category = reader.ReadInt(),
+                    idSchool = reader.ReadInt(),
+                });
+            }
+
+            if (InventoryView.inventoryItem0s == null)
+                InventoryView.inventoryItem0s = new List<InventoryItem0Data>();
+
+            for (int i = 0; i < inventoryResult.inventoryItem0Data.Count; i++)
+            {
+                if (i >= InventoryView.inventoryItem0s.Count)
+                {
+                    InventoryView.inventoryItem0s.Add(inventoryResult.inventoryItem0Data[i]);
+                }
+                else
+                {
+                    InventoryView.inventoryItem0s[i] = inventoryResult.inventoryItem0Data[i];
+                }
+            }
+        }
+
+        isLoggingIn = false;
+        SceneManager.LoadScene("Ngôi Làng Nhỏ");
     }
 
     private async Task LogIn()

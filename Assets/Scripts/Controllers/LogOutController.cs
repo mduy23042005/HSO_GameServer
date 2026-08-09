@@ -41,7 +41,7 @@ public class LogOutController : MonoBehaviour, IUpdatable
         //Dọn sạch danh sách quản lý Queue nhận dữ liệu từ Server
         socketManager.ClearAllQueues();
 
-        if (EquipmentView.GetListEquipmentSlots() != null)
+        if (EquipmentView.equipments != null)
         {
             EquipmentView.ClearEquipmentData();
         }
@@ -49,7 +49,7 @@ public class LogOutController : MonoBehaviour, IUpdatable
         {
             EquipmentView.ClearListImagesEquipmentSlots();
         }
-        if (InventoryView.GetListInventoryItem0Slots() != null)
+        if (InventoryView.inventoryItem0s != null)
         {
             InventoryView.ClearInventoryData();
         }

@@ -93,15 +93,7 @@ public class SocketManager : MonoBehaviour, IUpdatable
 
         PacketWriterManager writer = new PacketWriterManager();
         writer.WriteInt((int)EnumCmdCode.syncPlayerData);
-        writer.WriteString(SceneManager.GetActiveScene().name);
         writer.WriteInt(LogInView.GetIDAccount() ?? 0);
-        writer.WriteInt(LogInView.GetLevel());
-        writer.WriteInt(LogInView.GetIDSchool());
-        writer.WriteInt(playerSpriteController.GetHairData());
-        writer.WriteInt(playerSpriteController.GetWeaponData());
-        writer.WriteInt(playerSpriteController.GetHelmetData());
-        writer.WriteInt(playerSpriteController.GetArmorData());
-        writer.WriteInt(playerSpriteController.GetLegArmorData());
         writer.WriteInt((int)playerMovementController.GetCurrentTileType());
 
         writer.WriteFloat(playerMovementController.transform.position.x);
@@ -291,10 +283,6 @@ public class SocketManager : MonoBehaviour, IUpdatable
 
             case EnumCmdCode.inventoryAttributes:
                 inventoryAttributesQueue.Enqueue(data);
-                break;
-
-            case EnumCmdCode.outfitSprites:
-                outfitSpritesQueue.Enqueue(data);
                 break;
 
             case EnumCmdCode.playerAttackMob:

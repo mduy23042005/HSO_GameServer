@@ -70,7 +70,7 @@ public class InventoryView : MonoBehaviour, IUpdatable
     [Header("Các ô hành trang")]
     [SerializeField] private List<Image> inventorySlots;
 
-    private static List<InventoryItem0Data> inventoryItem0;
+    public static List<InventoryItem0Data> inventoryItem0s;
 
     private SocketManager socketManager;
 
@@ -78,10 +78,24 @@ public class InventoryView : MonoBehaviour, IUpdatable
     {
         socketManager = GameManager.Instance.GetComponent<SocketManager>();
 
-        int idAccount = LogInView.GetIDAccount() ?? 0;
-        if (idAccount != 0)
+        // Update UI
+        for (int i = 0; i < inventoryItem0s.Count; i++)
         {
-            ReadCache();
+            int itemId = inventoryItem0s[i].idItem0;
+            if (itemId == 0)
+            {
+                inventorySlots[i].sprite = null;
+                inventorySlots[i].color = new Color(0f, 0f, 0f, 0f);
+            }
+            else
+            {
+                inventorySlots[i].sprite = ItemController.Instance.GetItem0(itemId).iconItem0;
+            }
+        }
+        for (int i = inventoryItem0s.Count; i < inventorySlots.Count; i++)
+        {
+            inventorySlots[i].sprite = null;
+            inventorySlots[i].color = new Color(0f, 0f, 0f, 0f);
         }
     }
 
@@ -103,7 +117,6 @@ public class InventoryView : MonoBehaviour, IUpdatable
 
         if (data == null || data.Length == 0)
             return;
-
 
         PacketReaderManager reader = new PacketReaderManager(data);
 
@@ -129,25 +142,25 @@ public class InventoryView : MonoBehaviour, IUpdatable
             });
         }
 
-        if (inventoryItem0 == null)
-            inventoryItem0 = new List<InventoryItem0Data>();
+        if (inventoryItem0s == null)
+            inventoryItem0s = new List<InventoryItem0Data>();
 
         for (int i = 0; i < inventoryResult.inventoryItem0Data.Count; i++)
         {
-            if (i >= inventoryItem0.Count)
+            if (i >= inventoryItem0s.Count)
             {
-                inventoryItem0.Add(inventoryResult.inventoryItem0Data[i]);
+                inventoryItem0s.Add(inventoryResult.inventoryItem0Data[i]);
             }
             else
             {
-                inventoryItem0[i] = inventoryResult.inventoryItem0Data[i];
+                inventoryItem0s[i] = inventoryResult.inventoryItem0Data[i];
             }
         }
 
         // Update UI
-        for (int i = 0; i < inventoryItem0.Count; i++)
+        for (int i = 0; i < inventoryItem0s.Count; i++)
         {
-            int itemId = inventoryItem0[i].idItem0;
+            int itemId = inventoryItem0s[i].idItem0;
             if (itemId == 0)
             {
                 inventorySlots[i].sprite = null;
@@ -171,29 +184,8 @@ public class InventoryView : MonoBehaviour, IUpdatable
         DontDestroyOnLoad(this.gameObject);
     }
 
-    // Đọc dữ liệu từ database và hiển thị vào Inventory Slots
-    private async void ReadCache()
-    {
-        int idAccount = LogInView.GetIDAccount() ?? 0;
-        InventoryRequestPacket inventoryRequestPacket = new InventoryRequestPacket
-        {
-            cmd = EnumCmdCode.inventory,
-            idAccount = idAccount,
-        };
-
-        PacketWriterManager writer = new PacketWriterManager();
-        writer.WriteInt((int)inventoryRequestPacket.cmd);
-        writer.WriteInt(inventoryRequestPacket.idAccount);
-
-        await socketManager.SendToServer(writer.ToArray());
-    }
-
-    public static List<InventoryItem0Data> GetListInventoryItem0Slots()
-    {
-        return inventoryItem0;
-    }
     public static void ClearInventoryData()
     {
-        inventoryItem0.Clear();
+        inventoryItem0s.Clear();
     }
 }

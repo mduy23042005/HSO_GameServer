@@ -86,18 +86,15 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
                 {
                     x = reader.ReadFloat(),
                     y = reader.ReadFloat(),
-                    z = reader.ReadFloat()
                 },
                 scaleData = new
                 {
                     x = reader.ReadFloat(),
-                    y = reader.ReadFloat(),
-                    z = reader.ReadFloat()
                 }
             };
 
-            transform.position = new Vector3(callBackPacket.positionData.x, callBackPacket.positionData.y, callBackPacket.positionData.z);
-            transform.localScale = new Vector3(callBackPacket.scaleData.x, callBackPacket.scaleData.y, callBackPacket.scaleData.z);
+            transform.position = new Vector3(callBackPacket.positionData.x, callBackPacket.positionData.y, 0);
+            transform.localScale = new Vector3(callBackPacket.scaleData.x, 1, 1);
         }
 
         if (astar.IsStandInWater(mapData, transform.position.x, transform.position.y))

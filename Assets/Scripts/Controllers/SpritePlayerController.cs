@@ -23,7 +23,9 @@ public class SpritePlayerController : MonoBehaviour, IUpdatable
 
     private ItemController listItem0;
 
-    private SocketManager socketManager;
+    private float[] moveChangeTimesInStandClip = { 0f, 0.5f, 1f }; // Clip dài 0:40 giây, đổi frame ở 0 / 0.4, 0.2 / 0.4
+    private float[] moveChangeTimesInMoveClip = { 0f, 0.5f, 1f }; // Clip dài 0:40 giây, đổi frame ở 0 / 0.2, 0.1 / 0.2
+    private float[] moveChangeTimesInAtkClip = { 0f, 0.6667f, 1f }; // Clip dài 0:15 giây, đổi frame ở 0 / 0.15, 0.1 / 0.15
 
     // id của trang bị thực tế từ database
     private int weaponData = 0;
@@ -43,7 +45,6 @@ public class SpritePlayerController : MonoBehaviour, IUpdatable
         faceResolver = spriteResolvers.FirstOrDefault(r => r.gameObject.name == "4_0_0");
         animator = GetComponent<Animator>();
         movementPlayerController = GetComponent<MovementPlayerController>();
-        socketManager = GameManager.Instance.GetComponent<SocketManager>();
         listItem0 = ItemController.Instance;
 
         // hàm Animator.StringToHash() truyền vào ký tự theo cú pháp [tên layer].[tên state]
@@ -392,9 +393,7 @@ public class SpritePlayerController : MonoBehaviour, IUpdatable
         // Stand
         if (fullPathHash == standStateHash)
         {
-            float[] moveChangeTimes = { 0f, 0.5f, 1f }; // Clip dài 0:40 giây, đổi frame ở 0 / 0.4, 0.2 / 0.4
-
-            int frame = GetFrameByTime(t, moveChangeTimes);
+            int frame = GetFrameByTime(t, moveChangeTimesInStandClip);
 
             SetAllResolvers("Stand", $"Stand{direction}Frame{frame}");
             if (!isInjured)
@@ -406,9 +405,7 @@ public class SpritePlayerController : MonoBehaviour, IUpdatable
         // Move
         if (fullPathHash == moveStateHash)
         {
-            float[] moveChangeTimes = { 0f, 0.5f, 1f }; // Clip dài 0:40 giây, đổi frame ở 0 / 0.2, 0.1 / 0.2
-
-            int frame = GetFrameByTime(t, moveChangeTimes);
+            int frame = GetFrameByTime(t, moveChangeTimesInMoveClip);
 
             SetAllResolvers("Move", $"Move{direction}Frame{frame}");
             if (!isInjured)
@@ -420,9 +417,7 @@ public class SpritePlayerController : MonoBehaviour, IUpdatable
         // Attack
         if (fullPathHash == atkStateHash)
         {
-            float[] moveChangeTimes = { 0f, 0.6667f, 1f }; // Clip dài 0:15 giây, đổi frame ở 0 / 0.15, 0.1 / 0.15
-
-            int frame = GetFrameByTime(t, moveChangeTimes);
+            int frame = GetFrameByTime(t, moveChangeTimesInAtkClip);
 
             SetAllResolvers("Atk", $"Atk{direction}Frame{frame}");
             if (!isInjured)

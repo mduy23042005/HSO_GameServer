@@ -11,7 +11,8 @@ public class PlayerAttackDataPacket { public EnumCmdCode cmd; public int idAccou
 
 public class MovementPlayerController : MonoBehaviour, IUpdatable
 {
-    [SerializeField] private GameObject shadow; [SerializeField] private GameObject waterShadow;
+    [SerializeField] private GameObject shadow; 
+    [SerializeField] private GameObject waterShadow;
 
     private float moveSpeed = 6f;
     private Vector2 movement;
@@ -99,6 +100,7 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
 
         if (astar.IsStandInWater(mapData, transform.position.x, transform.position.y))
         {
+            shadow.SetActive(false);
             waterShadow.SetActive(true);
 
             // chỉ chạy đúng 1 lần khi vừa xuống nước
@@ -112,6 +114,7 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
         }
         else
         {
+            shadow.SetActive(true);
             waterShadow.SetActive(false);
 
             // chỉ chạy đúng 1 lần khi vừa lên bờ

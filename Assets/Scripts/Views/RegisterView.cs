@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -195,7 +196,7 @@ public class RegisterView : MonoBehaviour, IUpdatable
     }
     #endregion ChangeBlessing
 
-    public void ClickRegister()
+    private async Task Register()
     {
         idSchool = RegisterDemoController.GetIDSchool();
         if (idSchool == 0)
@@ -203,6 +204,8 @@ public class RegisterView : MonoBehaviour, IUpdatable
             SendErrorSchool();
             return;
         }
+
+        await socketManager.InitSocket();
 
         string nameChar = inputNameChar.text.Trim();
         string username = inputUsername.text.Trim();
@@ -232,7 +235,11 @@ public class RegisterView : MonoBehaviour, IUpdatable
         writer.WriteInt(registerRequestPacket.hair);
         writer.WriteInt(registerRequestPacket.blessingPoints);
 
-        _ = socketManager.SendToServer(writer.ToArray());
+        await socketManager.SendToServer(writer.ToArray());
+    }
+    public void ClickRegister()
+    {
+        _ = Register();
     }
 
     private bool CheckAllInfo(int idSchool, TMP_InputField nameChar, TMP_InputField username, TMP_InputField password)

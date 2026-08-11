@@ -5,8 +5,12 @@ using System.Net.WebSockets;
 using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
+public class ServerConfig
+{
+    public string serverIp;
+    public int serverPort;
+}
 public class SocketManager : MonoBehaviour, IUpdatable
 {
     private ClientWebSocket socket;
@@ -27,7 +31,6 @@ public class SocketManager : MonoBehaviour, IUpdatable
     private readonly ConcurrentQueue<byte[]> syncCallBackQueue = new ConcurrentQueue<byte[]>();
     private readonly ConcurrentQueue<byte[]> syncOtherPlayersQueue = new ConcurrentQueue<byte[]>();
     private readonly ConcurrentQueue<byte[]> syncMobsQueue = new ConcurrentQueue<byte[]>();
-    private readonly ConcurrentQueue<byte[]> syncMobsDeadQueue = new ConcurrentQueue<byte[]>();
 
     private readonly ConcurrentQueue<byte[]> logInQueue = new ConcurrentQueue<byte[]>();
     private readonly ConcurrentQueue<byte[]> logOutQueue = new ConcurrentQueue<byte[]>();
@@ -45,15 +48,56 @@ public class SocketManager : MonoBehaviour, IUpdatable
 
     private MovementPlayerController playerMovementController;
     private SpritePlayerController playerSpriteController;
-    private Dictionary<int, (Category, Label)> spriteResolversInfos = new Dictionary<int, (Category, Label)>();
 
     private void Awake()
     {
+        if (!LoadServerConfig())
+        {
+            Debug.LogError("Cannot load ServerConfig.json!");
+            return;
+        }
+    }
+    private string GetServerConfigPath()
+    {
 #if UNITY_ANDROID
-        serverUri = new Uri("ws://192.168.100.7:55556/"); //phải khai báo rõ IP LAN của Server cho thiết bị Android 
+        return System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Application.streamingAssetsPath), "ServerConfig.json");
 #elif UNITY_EDITOR || UNITY_STANDALONE
-        serverUri = new Uri($"ws://{IPV4ConfigurationManager.GetLocalIPv4()}:55556/"); // dùng IP LAN tự động khi chạy trên máy tính
+        return System.IO.Path.Combine(Application.streamingAssetsPath, "ServerConfig.json");
 #endif
+    }
+    private bool LoadServerConfig()
+    {
+        try
+        {
+            string configPath = GetServerConfigPath();
+
+            if (!System.IO.File.Exists(configPath))
+            {
+                Debug.LogError($"Cannot find ServerConfig.json: {configPath}");
+                return false;
+            }
+
+            string json = System.IO.File.ReadAllText(configPath);
+
+            ServerConfig config = JsonUtility.FromJson<ServerConfig>(json);
+
+            if (config == null || string.IsNullOrWhiteSpace(config.serverIp) || config.serverPort <= 0 || config.serverPort > 65535)
+            {
+                Debug.LogError("ServerConfig.json is invalid.");
+                return false;
+            }
+
+            serverUri = new Uri($"ws://{config.serverIp}:{config.serverPort}/");
+
+            Debug.Log($"Connected target: {serverUri}");
+            return true;
+        }
+        catch (Exception e)
+        {
+            Debug.LogError($"Load ServerConfig.json failed: {e}");
+
+            return false;
+        }
     }
 
     public async Task InitSocket()
@@ -103,15 +147,12 @@ public class SocketManager : MonoBehaviour, IUpdatable
 
         writer.WriteInt((int)playerMovementController.GetCurrentState());
         writer.WriteInt((int)playerSpriteController.GetCurrentDirection());
-        writer.WriteListCount(playerSpriteController.GetListSpriteLibrary().Count);
 
-        spriteResolversInfos = playerSpriteController.GetSpriteResolversInfos();
+        writer.WriteInt((int)playerSpriteController.GetSpriteResolversInfos()[4].Item1);
+        writer.WriteInt((int)playerSpriteController.GetSpriteResolversInfos()[4].Item2);
 
-        for (int i = 0; i < playerSpriteController.GetListSpriteLibrary().Count; i++)
-        {
-            writer.WriteInt((int)spriteResolversInfos[i].Item1); //category sprite resolver
-            writer.WriteInt((int)spriteResolversInfos[i].Item2); //label sprite resolver
-        }
+        writer.WriteInt((int)playerSpriteController.GetSpriteResolversInfos()[0].Item1);
+        writer.WriteInt((int)playerSpriteController.GetSpriteResolversInfos()[0].Item2);
 
         return writer.ToArray();
     }
@@ -252,10 +293,6 @@ public class SocketManager : MonoBehaviour, IUpdatable
                 if (LogInView.GetIDAccount() != 0)
                     syncMobsQueue.Enqueue(data);
                 break;
-            case EnumCmdCode.syncMobsDeadData:
-                if (LogInView.GetIDAccount() != 0)
-                    syncMobsDeadQueue.Enqueue(data);
-                break;
 
             case EnumCmdCode.login:
                 logInQueue.Enqueue(data);
@@ -298,6 +335,7 @@ public class SocketManager : MonoBehaviour, IUpdatable
         }
     }
 
+    #region Lấy data trong queue
     public byte[] GetReceiveData()
     {
         if (receiveQueue.TryDequeue(out var data))
@@ -367,12 +405,6 @@ public class SocketManager : MonoBehaviour, IUpdatable
             return data;
         return null;
     }
-    public byte[] GetSyncMobsDeadData()
-    {
-        if (syncMobsDeadQueue.TryDequeue(out var data))
-            return data;
-        return null;
-    }
     public byte[] GetLogInData()
     {
         if (logInQueue.TryDequeue(out var data))
@@ -438,7 +470,7 @@ public class SocketManager : MonoBehaviour, IUpdatable
             return data;
         return null;
     }
-
+    #endregion
     private async void OnApplicationQuit()
     {
         if (socket != null)

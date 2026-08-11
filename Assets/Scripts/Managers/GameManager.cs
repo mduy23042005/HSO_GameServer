@@ -25,14 +25,11 @@ public class GameManager : MonoBehaviour
             return;
         }
         instance = this;
+
         Application.runInBackground = true;
         QualitySettings.vSyncCount = 0;
+        Application.targetFrameRate = 60;
 
-#if UNITY_EDITOR
-        Application.targetFrameRate = 60;
-#else
-        Application.targetFrameRate = 60;
-#endif
         DontDestroyOnLoad(gameObject);
     }
 

@@ -102,30 +102,7 @@ public class MobController : MonoBehaviour, IUpdatable
     {
         if (currentNameMap != SceneManager.GetActiveScene().name)
         {
-            string pathMapFile = Path.Combine(Application.streamingAssetsPath, $"Maps/{SceneManager.GetActiveScene().name}.bin");
-            mapData = new MapData();
-
-            if (!File.Exists(pathMapFile))
-                return;
-
-            using (BinaryReader reader = new BinaryReader(File.Open(pathMapFile, FileMode.Open)))
-            {
-                mapData.width = reader.ReadInt32();
-                mapData.height = reader.ReadInt32();
-
-                mapData.offsetX = reader.ReadInt32();
-                mapData.offsetY = reader.ReadInt32();
-
-                mapData.tiles = new byte[mapData.width, mapData.height];
-
-                for (int y = 0; y < mapData.height; y++)
-                {
-                    for (int x = 0; x < mapData.width; x++)
-                    {
-                        mapData.tiles[x, y] = reader.ReadByte();
-                    }
-                }
-            }
+            mapData = MapView.mapFileData;
         }
     }
     private void UpdateAnimation()

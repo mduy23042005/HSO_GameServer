@@ -356,9 +356,8 @@ public class SyncOtherPlayersManager : MonoBehaviour, IUpdatable
                         continue;
 
                     if (playerData.otherPlayerData.idAccount != LogInView.GetIDAccount())
-                    {
                         OnDataFromServer(playerData);
-                    }
+                    
                 }
             }
         }

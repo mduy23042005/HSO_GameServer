@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.U2D.Animation;
@@ -15,6 +16,7 @@ public class RegisterDemoController : MovementPlayerController
     private RegisterView register;
     private static int idSchool;
     private List<SpriteResolver> resolvers;
+    private bool isBusy = false;
 
     private int lastFrame = -1;
     private string lastState = "";
@@ -127,7 +129,18 @@ public class RegisterDemoController : MovementPlayerController
     }
     public override void UpdateAnimation()
     {
-        animatorChild.SetTrigger("Atk");
+        TriggerAnimation("Atk", 0.25f);
+    }
+    private void TriggerAnimation(string anim, float duration)
+    {
+        animatorChild.SetTrigger(anim);
+        isBusy = true;
+        StartCoroutine(ResetBusy(duration));
+    }
+    private IEnumerator ResetBusy(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        isBusy = false;
     }
 
     private int GetFrameByTime(float t, float[] changeTimes)
@@ -163,11 +176,11 @@ public class RegisterDemoController : MovementPlayerController
 
             int frame = GetFrameByTime(t, moveChangeTimes);
 
-            if (lastState != "StandFront")
+            if (frame != lastFrame || lastState != "StandFront")
             {
                 lastFrame = -1;
                 lastState = "StandFront";
-                SetAllResolvers("Stand", $"StandFront");
+                SetAllResolvers("Stand", $"StandFrontFrame0");
             }
             foreach (var r in resolvers)
             {

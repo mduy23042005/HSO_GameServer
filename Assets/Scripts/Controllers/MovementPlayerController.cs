@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Unity.VectorGraphics;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -11,7 +12,8 @@ public class PlayerAttackDataPacket { public EnumCmdCode cmd; public int idAccou
 
 public class MovementPlayerController : MonoBehaviour, IUpdatable
 {
-    [SerializeField] private GameObject shadow; [SerializeField] private GameObject waterShadow;
+    [SerializeField] private GameObject shadow; 
+    [SerializeField] private GameObject waterShadow;
 
     private float moveSpeed = 6f;
     private Vector2 movement;
@@ -86,22 +88,20 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
                 {
                     x = reader.ReadFloat(),
                     y = reader.ReadFloat(),
-                    z = reader.ReadFloat()
                 },
                 scaleData = new
                 {
                     x = reader.ReadFloat(),
-                    y = reader.ReadFloat(),
-                    z = reader.ReadFloat()
                 }
             };
 
-            transform.position = new Vector3(callBackPacket.positionData.x, callBackPacket.positionData.y, callBackPacket.positionData.z);
-            transform.localScale = new Vector3(callBackPacket.scaleData.x, callBackPacket.scaleData.y, callBackPacket.scaleData.z);
+            transform.position = new Vector3(callBackPacket.positionData.x, callBackPacket.positionData.y, 0);
+            transform.localScale = new Vector3(callBackPacket.scaleData.x, 1, 1);
         }
 
         if (astar.IsStandInWater(mapData, transform.position.x, transform.position.y))
         {
+            shadow.SetActive(false);
             waterShadow.SetActive(true);
 
             // chỉ chạy đúng 1 lần khi vừa xuống nước
@@ -115,6 +115,7 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
         }
         else
         {
+            shadow.SetActive(true);
             waterShadow.SetActive(false);
 
             // chỉ chạy đúng 1 lần khi vừa lên bờ
@@ -145,30 +146,7 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
             uiCamera = GameObject.Find("Canvas").GetComponent<Canvas>().worldCamera;
             currentNameMap = SceneManager.GetActiveScene().name;
 
-            string pathMapFile = Path.Combine(Application.streamingAssetsPath, $"Maps/{SceneManager.GetActiveScene().name}.bin");
-            mapData = new MapData();
-
-            if (!File.Exists(pathMapFile))
-                return;
-
-            using (BinaryReader reader = new BinaryReader(File.Open(pathMapFile, FileMode.Open)))
-            {
-                mapData.width = reader.ReadInt32();
-                mapData.height = reader.ReadInt32();
-
-                mapData.offsetX = reader.ReadInt32();
-                mapData.offsetY = reader.ReadInt32();
-
-                mapData.tiles = new byte[mapData.width, mapData.height];
-
-                for (int y = 0; y < mapData.height; y++)
-                {
-                    for (int x = 0; x < mapData.width; x++)
-                    {
-                        mapData.tiles[x, y] = reader.ReadByte();
-                    }
-                }
-            }
+            mapData = MapView.mapFileData;
         }
     }
     private void ShowFullMinimap()

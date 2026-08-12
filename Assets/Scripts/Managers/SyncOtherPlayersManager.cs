@@ -254,8 +254,6 @@ public class SyncOtherPlayersManager : MonoBehaviour, IUpdatable
                     otherPlayerSyncData.otherPlayerTransformData.positionData.y = reader.ReadFloat();
 
                     otherPlayerSyncData.otherPlayerTransformData.scaleData.x = reader.ReadFloat();
-                    otherPlayerSyncData.otherPlayerTransformData.scaleData.y = 1f;
-                    otherPlayerSyncData.otherPlayerTransformData.scaleData.z = 1f;
 
                     otherPlayerSyncData.otherPlayerStateData.stateData = (State)reader.ReadInt();
                     otherPlayerSyncData.otherPlayerStateData.directionData = (Direction)reader.ReadInt();
@@ -263,15 +261,15 @@ public class SyncOtherPlayersManager : MonoBehaviour, IUpdatable
 
                     data.otherPlayersData.Add(otherPlayerSyncData);
 
-                    int countPartBodyData = reader.ReadInt();
-                    for (int j = 0; j < countPartBodyData; j++)
-                    {
-                        PartBodyData partBodyData = new PartBodyData();
-                        partBodyData.category = (Category)reader.ReadInt();
-                        partBodyData.label = (Label)reader.ReadInt();
+                    PartBodyData faceBodyData = new PartBodyData();
+                    faceBodyData.category = (Category)reader.ReadInt();
+                    faceBodyData.label = (Label)reader.ReadInt();
+                    data.otherPlayersData[i].otherPlayerStateData.partBodyTransforms.Add(faceBodyData);
 
-                        data.otherPlayersData[i].otherPlayerStateData.partBodyTransforms.Add(partBodyData);
-                    }
+                    PartBodyData partBodyData = new PartBodyData();
+                    partBodyData.category = (Category)reader.ReadInt();
+                    partBodyData.label = (Label)reader.ReadInt();
+                    data.otherPlayersData[i].otherPlayerStateData.partBodyTransforms.Add(partBodyData);
                 }
                 syncOtherPlayersResultPacketQueue.Enqueue(data);
             }
@@ -358,9 +356,8 @@ public class SyncOtherPlayersManager : MonoBehaviour, IUpdatable
                         continue;
 
                     if (playerData.otherPlayerData.idAccount != LogInView.GetIDAccount())
-                    {
                         OnDataFromServer(playerData);
-                    }
+                    
                 }
             }
         }

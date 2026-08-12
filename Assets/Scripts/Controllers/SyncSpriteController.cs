@@ -334,8 +334,8 @@ public class SyncSpriteController : MonoBehaviour, IUpdatable
 
         Vector3 otherPlayerScale = transform.localScale;
         otherPlayerScale.x = otherPlayerTransform.scaleData.x;
-        otherPlayerScale.y = otherPlayerTransform.scaleData.y;
-        otherPlayerScale.z = otherPlayerTransform.scaleData.z;
+        otherPlayerScale.y = 1;
+        otherPlayerScale.z = 1;
         transform.localScale = otherPlayerScale;
 
         if (currentTileType == TileType.Water)
@@ -424,16 +424,50 @@ public class SyncSpriteController : MonoBehaviour, IUpdatable
 
     private void UpdateSprite()
     {
-        for (int i = 0; i < otherPlayerState.partBodyTransforms.Count; i++)
+        for (int i = 0; i < spriteResolvers.Count; i++)
         {
-            if (spriteResolversInfos[i].Item1 != otherPlayerState.partBodyTransforms[i].category || spriteResolversInfos[i].Item2 != otherPlayerState.partBodyTransforms[i].label)
+            if (i == 4)
             {
-                string category = ConvertCategory(otherPlayerState.partBodyTransforms[i].category);
-                string label = ConvertLabel(otherPlayerState.partBodyTransforms[i].label);
-                spriteResolvers[i].SetCategoryAndLabel(category, label);
-                spriteResolversInfos[i] = ((Category)otherPlayerState.partBodyTransforms[i].category, (Label)otherPlayerState.partBodyTransforms[i].label);
+                if (spriteResolversInfos[i].Item1 != otherPlayerState.partBodyTransforms[0].category || spriteResolversInfos[i].Item2 != otherPlayerState.partBodyTransforms[0].label)
+                {
+                    string category = ConvertCategory(otherPlayerState.partBodyTransforms[0].category);
+                    string label = ConvertLabel(otherPlayerState.partBodyTransforms[0].label);
 
-                if (bodyDatas.TryGetValue((otherPlayerData.idSchool, i, otherPlayerState.partBodyTransforms[i].category, otherPlayerState.partBodyTransforms[i].label), out var bodyData))
+                    spriteResolvers[i].SetCategoryAndLabel(category, label);
+                    spriteResolversInfos[i] = (otherPlayerState.partBodyTransforms[0].category, otherPlayerState.partBodyTransforms[0].label);
+
+                    if (bodyDatas.TryGetValue((otherPlayerData.idSchool, i, otherPlayerState.partBodyTransforms[0].category, otherPlayerState.partBodyTransforms[0].label), out var bodyData))
+                    {
+                        Vector3 currentPositionPartBody = spriteResolvers[i].transform.localPosition;
+                        currentPositionPartBody.x = bodyData.Item1.x;
+                        currentPositionPartBody.y = bodyData.Item1.y;
+                        currentPositionPartBody.z = bodyData.Item1.z;
+                        spriteResolvers[i].transform.localPosition = currentPositionPartBody;
+
+                        Quaternion currentRotationPartBody = spriteResolvers[i].transform.localRotation;
+                        spriteResolvers[i].transform.localRotation = Quaternion.Euler(bodyData.Item2.x, bodyData.Item2.y, bodyData.Item2.z);
+
+                        Vector3 currentScalePartBody = spriteResolvers[i].transform.localScale;
+                        currentScalePartBody.x = bodyData.Item3.x;
+                        currentScalePartBody.y = bodyData.Item3.y;
+                        currentScalePartBody.z = bodyData.Item3.z;
+                        spriteResolvers[i].transform.localScale = currentScalePartBody;
+
+                        Color currentColorPartBody = spriteRenderers[i].color;
+                        currentColorPartBody.a = bodyData.Item4.a;
+                        spriteRenderers[i].color = currentColorPartBody;
+                    }
+                }
+            }
+
+            if (spriteResolversInfos[i].Item1 != otherPlayerState.partBodyTransforms[1].category || spriteResolversInfos[i].Item2 != otherPlayerState.partBodyTransforms[1].label)
+            {
+                string category = ConvertCategory(otherPlayerState.partBodyTransforms[1].category);
+                string label = ConvertLabel(otherPlayerState.partBodyTransforms[1].label);
+                spriteResolvers[i].SetCategoryAndLabel(category, label);
+                spriteResolversInfos[i] = ((Category)otherPlayerState.partBodyTransforms[1].category, (Label)otherPlayerState.partBodyTransforms[1].label);
+
+                if (bodyDatas.TryGetValue((otherPlayerData.idSchool, i, otherPlayerState.partBodyTransforms[1].category, otherPlayerState.partBodyTransforms[1].label), out var bodyData))
                 {
                     Vector3 currentPositionPartBody = spriteResolvers[i].transform.localPosition;
                     currentPositionPartBody.x = bodyData.Item1.x;

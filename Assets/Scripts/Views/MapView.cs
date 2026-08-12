@@ -59,6 +59,8 @@ public class MapView : MonoBehaviour, IUpdatable
     private Dictionary<int, RectTransform> lastOtherPlayersPositionFullMinimap = new Dictionary<int, RectTransform>();
     private Dictionary<int, RectTransform> lastOtherPlayersPositionMinimap = new Dictionary<int, RectTransform>();
 
+    public static MapData mapFileData;
+
     private void Awake()
     {
         groundLookup = ConvertListToMap(groundTiles, groundMinimap);
@@ -66,6 +68,31 @@ public class MapView : MonoBehaviour, IUpdatable
         wallLookup = ConvertListToMap(wallTiles, wallMinimap);
         mobs = GameObject.Find("SyncManager").GetComponent<MobsManager>().GetMobs();
         otherPlayers = GameObject.Find("SyncManager").GetComponent<SyncOtherPlayersManager>().GetOtherPlayers();
+
+        string pathMapFile = Path.Combine(Application.streamingAssetsPath, $"Maps/{SceneManager.GetActiveScene().name}.bin");
+        mapFileData = new MapData();
+
+        if (!File.Exists(pathMapFile))
+            return;
+
+        using (BinaryReader reader = new BinaryReader(File.Open(pathMapFile, FileMode.Open, FileAccess.Read, FileShare.Read)))
+        {
+            mapFileData.width = reader.ReadInt32();
+            mapFileData.height = reader.ReadInt32();
+
+            mapFileData.offsetX = reader.ReadInt32();
+            mapFileData.offsetY = reader.ReadInt32();
+
+            mapFileData.tiles = new byte[mapFileData.width, mapFileData.height];
+
+            for (int y = 0; y < mapFileData.height; y++)
+            {
+                for (int x = 0; x < mapFileData.width; x++)
+                {
+                    mapFileData.tiles[x, y] = reader.ReadByte();
+                }
+            }
+        }
     }
     private void Start()
     {

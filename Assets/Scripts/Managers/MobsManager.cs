@@ -38,7 +38,6 @@ public class MobsManager : MonoBehaviour, IUpdatable
     [SerializeField] private GameObject updateHPUI;
 
     private readonly ConcurrentQueue<SyncMobDataPacket> syncMobsResultPacketQueue = new ConcurrentQueue<SyncMobDataPacket>();
-    private readonly ConcurrentQueue<SyncMobDataPacket> syncMobsDeadResultPacketQueue = new ConcurrentQueue<SyncMobDataPacket>();
     private readonly ConcurrentQueue<(EnumCmdCode, int, int, int)> playerAttackMobResultPacketQueue = new ConcurrentQueue<(EnumCmdCode, int, int, int)>();
     private readonly ConcurrentQueue<(EnumCmdCode, int, int, int)> otherPlayerAttackMobResultPacketQueue = new ConcurrentQueue<(EnumCmdCode, int, int, int)>();
 
@@ -76,7 +75,6 @@ public class MobsManager : MonoBehaviour, IUpdatable
         while (!token.IsCancellationRequested)
         {
             byte[] syncMobsData = socketManager.GetSyncMobsData();
-            byte[] syncMobsDeadData = socketManager.GetSyncMobsDeadData();
             byte[] playerAttackMob = socketManager.GetPlayerAttackMobData();
             byte[] otherPlayerAttackMob = socketManager.GetOtherPlayerAttackMobData();
 
@@ -86,9 +84,9 @@ public class MobsManager : MonoBehaviour, IUpdatable
 
                 SyncMobDataPacket data = new SyncMobDataPacket();
                 data.cmd = (EnumCmdCode)reader.ReadInt();
-                data.mobsData = new List<SyncMobData>();
-
                 int countSyncMobData = reader.ReadInt();
+
+                data.mobsData = new List<SyncMobData>();
                 for (int i = 0; i < countSyncMobData; i++)
                 {
                     data.mobsData.Add(new SyncMobData
@@ -108,36 +106,6 @@ public class MobsManager : MonoBehaviour, IUpdatable
                 }
 
                 syncMobsResultPacketQueue.Enqueue(data);
-            }
-
-            if (syncMobsDeadData != null && syncMobsDeadData.Length > 0)
-            {
-                PacketReaderManager reader = new PacketReaderManager(syncMobsDeadData);
-
-                SyncMobDataPacket data = new SyncMobDataPacket();
-                data.cmd = (EnumCmdCode)reader.ReadInt();
-                data.mobsData = new List<SyncMobData>();
-
-                int countSyncMobData = reader.ReadInt();
-                for (int i = 0; i < countSyncMobData; i++)
-                {
-                    data.mobsData.Add(new SyncMobData
-                    {
-                        id = reader.ReadInt(),
-                        idMob = reader.ReadInt(),
-                        maxHP = reader.ReadInt(),
-                        hp = reader.ReadInt(),
-                        level = reader.ReadInt(),
-                        posX = reader.ReadFloat(),
-                        posY = reader.ReadFloat(),
-                        state = (State)reader.ReadInt(),
-                        idState = reader.ReadInt(),
-                        direction = (Direction)reader.ReadInt(),
-                        currentTile = (TileType)reader.ReadInt()
-                    });
-                }
-
-                syncMobsDeadResultPacketQueue.Enqueue(data);
             }
 
             if (playerAttackMob != null && playerAttackMob.Length > 0)
@@ -169,7 +137,6 @@ public class MobsManager : MonoBehaviour, IUpdatable
     public void OnUpdate()
     {
         SyncMobDataPacket syncMobsData = null;
-        SyncMobDataPacket syncMobsDeadData = null;
 
         EnumCmdCode cmd = default;
         int aimedMobID = 0;
@@ -185,9 +152,6 @@ public class MobsManager : MonoBehaviour, IUpdatable
 
         if (syncMobsResultPacketQueue.TryDequeue(out var syncMobPacket))
             syncMobsData = syncMobPacket;
-
-        if (syncMobsDeadResultPacketQueue.TryDequeue(out var syncMobDeadPacket))
-            syncMobsDeadData = syncMobDeadPacket;
 
         if (playerAttackMobResultPacketQueue.TryDequeue(out var playerAttackData))
         {
@@ -209,9 +173,6 @@ public class MobsManager : MonoBehaviour, IUpdatable
 
         if (syncMobsData != null)
             OnMobDataFromServer(syncMobsData);
-
-        if (syncMobsDeadData != null)
-            OffMobDataFromServer(syncMobsDeadData);
 
         if (hasPlayerAttack)
         {
@@ -292,7 +253,7 @@ public class MobsManager : MonoBehaviour, IUpdatable
 
         foreach (var mobData in data.mobsData)
         {
-            if (!mobs.TryGetValue(mobData.id, out mob) && mobData.hp > 0)
+            if (!mobs.TryGetValue(mobData.id, out mob) && mobData.hp > 0) // trường hợp mob chưa tồn tại trên client nhưng có tồn tại ở server
             {
                 mob = new Mob();
 
@@ -303,36 +264,17 @@ public class MobsManager : MonoBehaviour, IUpdatable
 
                 mob.mobData = mobData;
                 mobs.Add(mobData.id, mob);
-            }
-            else
-            {
-                if (mobData != null)
-                    mob.mobData = mobData;
-            }
 
-            mob.mobObject.GetComponent<MobController>().ApplyServerState(mobData);
-            lastUpdateTime[mobData.id] = Time.time;
-        }
-    }
-    private void OffMobDataFromServer(SyncMobDataPacket data)
-    {
-        if (data == null || data.mobsData == null)
-            return;
-
-        Mob mob;
-
-        foreach (var mobDeadData in data.mobsData)
-        {
-            if (mobDeadData == null)
+                mob.mobObject.GetComponent<MobController>().ApplyServerState(mobData);
+                lastUpdateTime[mobData.id] = Time.time;
                 continue;
+            }
 
-            if (mobs.TryGetValue(mobDeadData.id, out mob))
+            if (mob != null) // trường hợp mob đã tồn tại trên client nhưng có thay đổi ở server
             {
-                mob.mobObject = mobs[mobDeadData.id].mobObject;
-                mob.mobData = mobDeadData;
-
-                mob.mobObject.GetComponent<MobController>().ApplyServerState(mobDeadData);
-                lastUpdateTime[mobDeadData.id] = Time.time;
+                mob.mobData = mobData;
+                mob.mobObject.GetComponent<MobController>().ApplyServerState(mobData);
+                lastUpdateTime[mobData.id] = Time.time;
             }
         }
     }

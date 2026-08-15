@@ -215,6 +215,7 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
             Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Vector2 clickPos = new Vector2(mouseWorldPos.x, mouseWorldPos.y);
             RaycastHit2D hit = Physics2D.GetRayIntersection(Camera.main.ScreenPointToRay(Input.mousePosition));
+
             if (hit.collider.CompareTag("Mob"))
             {
                 mob = hit.collider.GetComponent<MobController>();

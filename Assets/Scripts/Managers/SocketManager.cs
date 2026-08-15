@@ -60,14 +60,14 @@ public class SocketManager : MonoBehaviour, IUpdatable
     }
     private string GetServerConfigPath()
     {
-#if UNITY_ANDROID
-        return System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Application.streamingAssetsPath), "ServerConfig.json");
-#elif UNITY_EDITOR || UNITY_STANDALONE
         return System.IO.Path.Combine(Application.streamingAssetsPath, "ServerConfig.json");
-#endif
     }
     private bool LoadServerConfig()
     {
+#if UNITY_ANDROID
+        serverUri = new Uri("ws://192.168.100.9:55556/");
+        return true;
+#elif UNITY_STANDALONE || UNITY_EDITOR
         try
         {
             string configPath = GetServerConfigPath();
@@ -99,6 +99,7 @@ public class SocketManager : MonoBehaviour, IUpdatable
 
             return false;
         }
+#endif
     }
 
     public async Task InitSocket()

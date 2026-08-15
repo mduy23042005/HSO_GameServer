@@ -49,7 +49,6 @@ public class MobController : MonoBehaviour, IUpdatable
     public void OnUpdate() 
     {
         if (syncMobDataMovement == null) return;
-
         Vector2 targetPos = new Vector2(syncMobDataMovement.posX, syncMobDataMovement.posY);
         movement = targetPos;
 

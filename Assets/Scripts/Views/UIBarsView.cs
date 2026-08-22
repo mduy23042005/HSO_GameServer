@@ -1,8 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using static System.Net.Mime.MediaTypeNames;
 
 public class UIBarsView : MonoBehaviour, IUpdatable
 {
@@ -10,7 +10,6 @@ public class UIBarsView : MonoBehaviour, IUpdatable
     [SerializeField] private TMP_Text hpInfo;
     [SerializeField] private Slider mpBar;
     [SerializeField] private TMP_Text mpInfo;
-    [SerializeField] private TMP_Text fpsInfo;
 
     [SerializeField] private GameObject updateHPUI;
 
@@ -20,6 +19,9 @@ public class UIBarsView : MonoBehaviour, IUpdatable
 
     private void Awake()
     {
+        hpBar.interactable = false;
+        mpBar.interactable = false;
+
         int maxHP = LogInView.GetMaxHP();
         int maxMP = LogInView.GetMaxMP();
         int hp = LogInView.GetHP();
@@ -59,7 +61,6 @@ public class UIBarsView : MonoBehaviour, IUpdatable
         hpBar.value = hp;
         hpInfo.text = $"{hpBar.value} / {hpBar.maxValue}";
     }
-
     public void UpdateMP(int mp)
     {
         mpBar.value = mp;

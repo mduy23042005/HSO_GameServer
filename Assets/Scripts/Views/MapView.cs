@@ -1,7 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
 using UnityEngine.UI;
@@ -70,13 +73,18 @@ public class MapView : MonoBehaviour, IUpdatable
         otherPlayers = GameObject.Find("SyncManager").GetComponent<SyncOtherPlayersManager>().GetOtherPlayers();
 
         string pathMapFile = Path.Combine(Application.streamingAssetsPath, $"Maps/{SceneManager.GetActiveScene().name}.bin");
-        mapFileData = new MapData();
 
+#if UNITY_ANDROID
+         StartCoroutine(LoadMapDataForAndroid(pathMapFile));
+    
+#elif UNITY_STANDALONE || UNITY_EDITOR
         if (!File.Exists(pathMapFile))
             return;
 
         using (BinaryReader reader = new BinaryReader(File.Open(pathMapFile, FileMode.Open, FileAccess.Read, FileShare.Read)))
         {
+            mapFileData = new MapData();
+
             mapFileData.width = reader.ReadInt32();
             mapFileData.height = reader.ReadInt32();
 
@@ -90,6 +98,43 @@ public class MapView : MonoBehaviour, IUpdatable
                 for (int x = 0; x < mapFileData.width; x++)
                 {
                     mapFileData.tiles[x, y] = reader.ReadByte();
+                }
+            }
+        }
+    
+#endif
+    }
+    private IEnumerator LoadMapDataForAndroid(string mapDataFilePath)
+    {
+        using (UnityWebRequest www = UnityWebRequest.Get(mapDataFilePath))
+        {
+            yield return www.SendWebRequest();
+
+            if (www.result != UnityWebRequest.Result.Success)
+            {
+                Debug.LogError("Lỗi: " + www.error);
+                yield break;
+            }
+
+            using (MemoryStream stream = new MemoryStream(www.downloadHandler.data))
+            using (BinaryReader reader = new BinaryReader(stream))
+            {
+                mapFileData = new MapData();
+
+                mapFileData.width = reader.ReadInt32();
+                mapFileData.height = reader.ReadInt32();
+
+                mapFileData.offsetX = reader.ReadInt32();
+                mapFileData.offsetY = reader.ReadInt32();
+
+                mapFileData.tiles = new byte[mapFileData.width, mapFileData.height];
+
+                for (int y = 0; y < mapFileData.height; y++)
+                {
+                    for (int x = 0; x < mapFileData.width; x++)
+                    {
+                        mapFileData.tiles[x, y] = reader.ReadByte();
+                    }
                 }
             }
         }
@@ -124,7 +169,6 @@ public class MapView : MonoBehaviour, IUpdatable
         if (PlayerManager.player == null)
             return;
         
-
         UpdateMinimapViewport();
 
         UpdateMarkerFullMinimap();

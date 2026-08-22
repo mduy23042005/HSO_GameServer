@@ -170,8 +170,6 @@ public class OtherPlayer
 {
     public GameObject otherPlayerObject;
     public PlayerData otherPlayerData;
-
-    public Transform canvasTransform;
     public SyncSpriteController syncSpriteController;
 }
 public class SyncOtherPlayersManager : MonoBehaviour, IUpdatable
@@ -418,8 +416,8 @@ public class SyncOtherPlayersManager : MonoBehaviour, IUpdatable
                     onlinePlayer.otherPlayerObject = PoolManager.Instance.Get(otherPlayersPrefab[2]);
                     break;
             }
+
             onlinePlayer.otherPlayerObject.transform.SetPositionAndRotation(new Vector2(data.otherPlayerTransformData.positionData.x, data.otherPlayerTransformData.positionData.y), Quaternion.identity);
-            onlinePlayer.canvasTransform = onlinePlayer.otherPlayerObject.GetComponentInChildren<Canvas>().transform;
             onlinePlayer.syncSpriteController = onlinePlayer.otherPlayerObject.GetComponent<SyncSpriteController>();
             onlinePlayer.syncSpriteController.ApplyServerData(data.otherPlayerData, data.otherPlayerTransformData, data.otherPlayerStateData);
 
@@ -430,10 +428,6 @@ public class SyncOtherPlayersManager : MonoBehaviour, IUpdatable
             onlinePlayer.otherPlayerData = data.otherPlayerData;
             onlinePlayer.syncSpriteController.ApplyServerData(data.otherPlayerData, data.otherPlayerTransformData, data.otherPlayerStateData);
         }
-
-        Vector3 scale = onlinePlayer.canvasTransform.localScale;
-        scale.x = data.otherPlayerStateData.directionData == Direction.Right ? -Math.Abs(scale.x) : Math.Abs(scale.x);
-        onlinePlayer.canvasTransform.localScale = scale;
 
         lastUpdateTime[data.otherPlayerData.idAccount] = Time.time;
     }

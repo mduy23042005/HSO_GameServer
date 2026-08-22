@@ -7,13 +7,14 @@ using UnityEngine.UI;
 
 public class MobController : MonoBehaviour, IUpdatable
 {
+    [SerializeField] private TMP_Text uiNameMob;
     [SerializeField] private Slider hpBar;
+    [SerializeField] private GameObject sprite;
 
     [SerializeField] private GameObject shadow;
     [SerializeField] private GameObject waterShadow;
 
     private Vector2 movement;
-    private TMP_Text uiNameMob;
 
     private SyncMobData syncMobDataMovement;
     private int lastIDState = -1; // nhằm phân biệt các trạng thái atk/injured khác nhau khi có nhiều packet cùng loại chỉ yêu cầu thực hiện 1 trạng thái
@@ -28,9 +29,9 @@ public class MobController : MonoBehaviour, IUpdatable
 
     private void Awake()
     {
-        flipSprite = GetComponent<SpriteRenderer>();
-        animator = GetComponent<Animator>();
-        uiNameMob = GetComponentInChildren<TMP_Text>();
+        hpBar.interactable = false;
+        flipSprite = sprite.GetComponent<SpriteRenderer>();
+        animator = sprite.GetComponent<Animator>();
         uiNameMob.text = $"{gameObject.name.Replace("(Clone)", "")}";
         mobsManager = GameObject.Find("SyncManager").GetComponent<MobsManager>();
     }

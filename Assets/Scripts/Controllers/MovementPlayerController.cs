@@ -4,8 +4,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Unity.VectorGraphics;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
 public class PlayerAttackDataPacket { public EnumCmdCode cmd; public int idAccount; public int aimedMobID; }
@@ -14,6 +14,7 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
 {
     [SerializeField] private GameObject shadow; 
     [SerializeField] private GameObject waterShadow;
+    [SerializeField] private GameObject focusUI;
 
     private float moveSpeed = 6f;
     private Vector2 movement;
@@ -72,8 +73,14 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
     public virtual void OnUpdate()
     {
         InitMinimap();
+#if UNITY_ANDROID
+        TouchScreen();
+#elif UNITY_STANDALONE || UNITY_EDITOR
+
         LeftClick();
+        RightClick();
         MoveKeyboard();
+#endif
         MoveMouse();
         UpdateAnimation();
 
@@ -159,15 +166,89 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
         fullMinimapUI.gameObject.SetActive(false);
         isFullMinimapOpen = false;
     }
+    private void TouchScreen()
+    {
+        if (Input.touchCount == 0)
+            return;
+
+        Touch touch = Input.GetTouch(0);
+
+        if (touch.phase != TouchPhase.Began)
+            return;
+
+        Vector2 touchPos = touch.position;
+
+        if (isFullMinimapOpen)
+        {
+            if (!RectTransformUtility.RectangleContainsScreenPoint(fullMinimapUI, touchPos, uiCamera))
+            {
+                HideFullMinimap();
+                return;
+            }
+
+            if (RectTransformUtility.ScreenPointToLocalPointInRectangle(fullMinimapUI, touchPos, uiCamera, out Vector2 localPoint))
+            {
+                localPoint.x += fullMinimapUI.rect.width / 2;
+                localPoint.y += fullMinimapUI.rect.height / 2;
+
+                Vector3 worldPos = minimap.MinimapToWorldPosition(localPoint);
+
+                targetPosition = new Vector2(worldPos.x, worldPos.y);
+                isMovingToTarget = true;
+                path = null;
+                mob = null;
+                return;
+            }
+
+            return;
+        }
+
+        if (minimapUI != null && RectTransformUtility.RectangleContainsScreenPoint(minimapUI, touchPos, uiCamera))
+        {
+            ShowFullMinimap();
+            return;
+        }
+
+        if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject(touch.fingerId))
+            return;
+
+        Ray ray = Camera.main.ScreenPointToRay(touchPos);
+        RaycastHit2D hit = Physics2D.GetRayIntersection(ray);
+        if (hit.collider != null && hit.collider.CompareTag("Mob"))
+        {
+            mob = hit.collider.GetComponent<MobController>();
+
+            if (mob != null)
+            {
+                focusedObject = mob.gameObject;
+
+                targetPosition = new Vector2(mob.transform.position.x, mob.transform.position.y);
+                isMovingToTarget = true;
+                return;
+            }
+        }
+        else
+        {
+            mob = null;
+        }
+
+        Vector3 touchWorldPos = Camera.main.ScreenToWorldPoint(touchPos);
+        Vector2 clickPos = new Vector2(touchWorldPos.x, touchWorldPos.y);
+        var gridPos = ToGrid(clickPos);
+
+        if (!astar.IsWalkable(mapData, gridPos.x, gridPos.y))
+            return;
+
+        targetPosition = clickPos;
+        isMovingToTarget = true;
+    }
     public virtual void LeftClick()
     {
         if (isFullMinimapOpen)
         {
             if (Input.GetMouseButtonDown(0))
-            {
                 HideFullMinimap();
-                return;
-            }
+
             return;
         }
 
@@ -222,9 +303,6 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
 
                 if (mob != null)
                 {
-                    int id = mob.GetID();
-                    string nameMob = mob.GetNameMob();
-
                     focusedObject = mob.gameObject;
 
                     targetPosition = new Vector2(mob.transform.position.x, mob.transform.position.y);
@@ -232,40 +310,39 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
                     return;
                 }
             }
+            else
+            {
+                mob = null;
+            }
 
             var gridPos = ToGrid(clickPos);
 
             if (!astar.IsWalkable(mapData, gridPos.x, gridPos.y))
-            {
                 return;
-            }
 
             // nếu hợp lệ thì move
             targetPosition = clickPos;
             isMovingToTarget = true;
 
-            mob = null;
+            //mob = null;
         }
     }
     public virtual void MoveKeyboard()
     {
         if (isBusy)
-        {
             return;
-        }
+
         if (menu == null || !menu.GetIsActive())
         {
             movement.x = Input.GetAxisRaw("Horizontal");
             movement.y = Input.GetAxisRaw("Vertical");
-            if (movement.x != 0)
-            {
-                movement.y = 0;
-            }
-            if (movement.y != 0)
-            {
-                movement.x = 0;
-            }
 
+            if (movement.x != 0)
+                movement.y = 0;
+            
+            if (movement.y != 0)
+                movement.x = 0;
+            
             MoveStop();
 
             if (movement == Vector2.zero)
@@ -293,8 +370,6 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
     {
         if ((menu != null && menu.GetIsActive()) || isBusy)
             return;
-
-        RightClick();
 
         if (isMovingToTarget)
         {
@@ -339,7 +414,7 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
                 isMovingToTarget = false;
                 if (minimap != null)
                     minimap.ClearAStarPath();
-                movement = lastMove;
+                movement = Vector2.zero;
                 return;
             }
 

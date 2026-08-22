@@ -343,7 +343,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_CategoryHash: 2.1529441e-16
-  m_labelHash: 0.0000000030799954
+  m_labelHash: 0.0011125954
   m_SpriteKey: 0
   m_SpriteHash: 194118516
 --- !u!114 &7825345404171105382
@@ -567,7 +567,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_CategoryHash: 2.1529441e-16
-  m_labelHash: 1.032935e-22
+  m_labelHash: 0.0011125954
   m_SpriteKey: 0
   m_SpriteHash: 194118516
 --- !u!114 &8328665186002037132
@@ -988,6 +988,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shadow: {fileID: 8862918755977742809}
   waterShadow: {fileID: 822165313666242910}
+  focusUI: {fileID: 1933556936249596761, guid: 98bd30fb432de014db14b20b06f8a410, type: 3}
 --- !u!114 &6421654928533407758
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1529,8 +1530,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed8b1ae4e4e52b34ea557c1c11e076fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_CategoryHash: 0
-  m_labelHash: 0
+  m_CategoryHash: 2.1529441e-16
+  m_labelHash: 0.0011125954
   m_SpriteKey: 0
   m_SpriteHash: 194118516
 --- !u!114 &5739253738724435144

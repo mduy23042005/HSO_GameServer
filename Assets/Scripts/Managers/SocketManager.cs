@@ -1,11 +1,14 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Net.WebSockets;
 using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class ServerConfig
 {
@@ -60,18 +63,33 @@ public class SocketManager : MonoBehaviour, IUpdatable
     }
     private string GetServerConfigPath()
     {
-        return System.IO.Path.Combine(Application.streamingAssetsPath, "ServerConfig.json");
+        return Path.Combine(Application.streamingAssetsPath, "ServerConfig.json");
+    }
+    private IEnumerator LoadServerConfigForAndroid(string configPath)
+    {
+        using (UnityWebRequest www = UnityWebRequest.Get(configPath))
+        {
+            yield return www.SendWebRequest();
+
+            if (www.result != UnityWebRequest.Result.Success)
+            {
+                Debug.LogError("Lỗi: " + www.error);
+                yield break;
+            }
+            ServerConfig serverConfigData = JsonUtility.FromJson<ServerConfig>(www.downloadHandler.text);
+            serverUri = new Uri($"ws://{serverConfigData.serverIp}:{serverConfigData.serverPort}/");
+        }
     }
     private bool LoadServerConfig()
     {
+        string configPath = GetServerConfigPath();
 #if UNITY_ANDROID
-        serverUri = new Uri("ws://192.168.100.9:55556/");
+        StartCoroutine(LoadServerConfigForAndroid(configPath));
+        // serverUri = new Uri("ws://192.168.110.109:55556/");
         return true;
 #elif UNITY_STANDALONE || UNITY_EDITOR
         try
         {
-            string configPath = GetServerConfigPath();
-
             if (!System.IO.File.Exists(configPath))
             {
                 Debug.LogError($"Cannot find ServerConfig.json: {configPath}");

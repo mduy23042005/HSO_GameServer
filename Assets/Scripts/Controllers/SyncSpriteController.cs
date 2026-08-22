@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class SyncSpriteController : MonoBehaviour, IUpdatable
 {
+    [SerializeField] private GameObject sprites;
     [SerializeField] private GameObject shadow;
     [SerializeField] private GameObject waterShadow;
 
@@ -38,6 +39,7 @@ public class SyncSpriteController : MonoBehaviour, IUpdatable
 
     private void Awake()
     {
+        hpBar.interactable = false;
         listItem0 = ItemController.Instance;
 
         if (waterShadow != null)
@@ -332,11 +334,11 @@ public class SyncSpriteController : MonoBehaviour, IUpdatable
         Vector2 targetPos = new Vector2(otherPlayerTransform.positionData.x, otherPlayerTransform.positionData.y);
         transform.position = Vector2.MoveTowards(transform.position, targetPos, 6f * Time.deltaTime);
 
-        Vector3 otherPlayerScale = transform.localScale;
+        Vector3 otherPlayerScale = sprites.transform.localScale;
         otherPlayerScale.x = otherPlayerTransform.scaleData.x;
         otherPlayerScale.y = 1;
         otherPlayerScale.z = 1;
-        transform.localScale = otherPlayerScale;
+        sprites.transform.localScale = otherPlayerScale;
 
         if (currentTileType == TileType.Water)
         {

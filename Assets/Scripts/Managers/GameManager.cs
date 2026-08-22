@@ -26,6 +26,10 @@ public class GameManager : MonoBehaviour
         }
         instance = this;
 
+#if UNITY_ANDROID
+        Screen.orientation = ScreenOrientation.LandscapeLeft;
+#endif
+
         Application.runInBackground = true;
         QualitySettings.vSyncCount = 0;
         Application.targetFrameRate = 60;

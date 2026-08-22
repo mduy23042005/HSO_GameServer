@@ -803,7 +803,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_CategoryHash: 2.1529441e-16
-  m_labelHash: 0.0000000030799954
+  m_labelHash: 0.0011125954
   m_SpriteKey: 0
   m_SpriteHash: 194118516
 --- !u!114 &7271880548673386910
@@ -978,6 +978,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shadow: {fileID: 2061395365055526278}
   waterShadow: {fileID: 2111513135463833205}
+  focusUI: {fileID: 1933556936249596761, guid: 98bd30fb432de014db14b20b06f8a410, type: 3}
 --- !u!114 &8160304381999141919
 MonoBehaviour:
   m_ObjectHideFlags: 0

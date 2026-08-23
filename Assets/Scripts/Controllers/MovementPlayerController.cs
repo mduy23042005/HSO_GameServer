@@ -14,7 +14,7 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
 {
     [SerializeField] private GameObject shadow; 
     [SerializeField] private GameObject waterShadow;
-    [SerializeField] private GameObject focusUI;
+    [SerializeField] private LayerMask focusLayer;
 
     private float moveSpeed = 6f;
     private Vector2 movement;
@@ -25,7 +25,6 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
     private MenuView menu;
     private bool isBusy = false;
     private bool isStandingInWater = false;
-    private GameObject focusedObject;
 
     private MapView minimap;
     private RectTransform minimapUI;
@@ -37,7 +36,6 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
     private Vector2 currentPosition;
     private (int x, int y) startMovementPosition;
     private (int x, int y) endMovementPosition;
-    private MobController mob;
     private List<(int x, int y)> path;
     private int pathIndex;
     private AStarManager astar = new AStarManager();
@@ -196,7 +194,7 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
                 targetPosition = new Vector2(worldPos.x, worldPos.y);
                 isMovingToTarget = true;
                 path = null;
-                mob = null;
+                FocusController.focusedObject = null;
                 return;
             }
 
@@ -212,27 +210,13 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
         if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject(touch.fingerId))
             return;
 
-        Ray ray = Camera.main.ScreenPointToRay(touchPos);
-        RaycastHit2D hit = Physics2D.GetRayIntersection(ray);
-        if (hit.collider != null && hit.collider.CompareTag("Mob"))
-        {
-            mob = hit.collider.GetComponent<MobController>();
-
-            if (mob != null)
-            {
-                focusedObject = mob.gameObject;
-
-                targetPosition = new Vector2(mob.transform.position.x, mob.transform.position.y);
-                isMovingToTarget = true;
-                return;
-            }
-        }
-        else
-        {
-            mob = null;
-        }
-
         Vector3 touchWorldPos = Camera.main.ScreenToWorldPoint(touchPos);
+        Collider2D hit = Physics2D.OverlapPoint(touchWorldPos, focusLayer);
+        if (hit != null)
+            FocusController.focusedObject = hit.gameObject;
+        else
+            FocusController.focusedObject = null;
+
         Vector2 clickPos = new Vector2(touchWorldPos.x, touchWorldPos.y);
         var gridPos = ToGrid(clickPos);
 
@@ -262,6 +246,13 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
                     return;
                 }
             }
+
+            Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Collider2D hit = Physics2D.OverlapPoint(mouseWorldPos, focusLayer);
+            if (hit != null)
+                FocusController.focusedObject = hit.gameObject;
+            else
+                FocusController.focusedObject = null;
         }
     }
     public virtual void RightClick()
@@ -285,7 +276,7 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
                     targetPosition = new Vector2(worldPos.x, worldPos.y);
                     isMovingToTarget = true;
                     path = null;
-                    mob = null;
+                    FocusController.focusedObject = null;
                     return;
                 }
                 return;
@@ -295,25 +286,6 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
         {
             Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Vector2 clickPos = new Vector2(mouseWorldPos.x, mouseWorldPos.y);
-            RaycastHit2D hit = Physics2D.GetRayIntersection(Camera.main.ScreenPointToRay(Input.mousePosition));
-
-            if (hit.collider.CompareTag("Mob"))
-            {
-                mob = hit.collider.GetComponent<MobController>();
-
-                if (mob != null)
-                {
-                    focusedObject = mob.gameObject;
-
-                    targetPosition = new Vector2(mob.transform.position.x, mob.transform.position.y);
-                    isMovingToTarget = true;
-                    return;
-                }
-            }
-            else
-            {
-                mob = null;
-            }
 
             var gridPos = ToGrid(clickPos);
 
@@ -354,7 +326,7 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
                 isMovingToTarget = false;
                 if (minimap != null)
                     minimap.ClearAStarPath();
-                mob = null;
+                FocusController.focusedObject = null;
             }
 
             float speed = moveSpeed * Time.deltaTime;
@@ -453,9 +425,9 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
                 MoveStop();
 
                 // xử lý khi click vào quái
-                if (mob != null)
+                if (FocusController.focusedObject != null && FocusController.focusedObject.GetComponent<MobController>() != null)
                 {
-                    targetPosition = new Vector2(mob.transform.position.x, mob.transform.position.y);
+                    targetPosition = new Vector2(FocusController.focusedObject.transform.position.x, FocusController.focusedObject.transform.position.y);
 
                     var mobGrid = ToGrid(targetPosition);
 
@@ -474,7 +446,7 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
                         {
                             cmd = (EnumCmdCode)EnumCmdCode.playerAttackMob,
                             idAccount = LogInView.GetIDAccount() ?? 0,
-                            aimedMobID = mob.GetID(),
+                            aimedMobID = FocusController.focusedObject.GetComponent<MobController>().GetID(),
                         };
 
                         PacketWriterManager writer = new PacketWriterManager();
@@ -585,15 +557,18 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
         }
         if (Input.GetKeyDown(KeyCode.J))
         {
-            if (focusedObject == null)
+            if (FocusController.focusedObject == null)
                 return;
 
-            var gridPos = ToGrid(focusedObject.transform.position);
+            var gridPos = ToGrid(FocusController.focusedObject.transform.position);
 
             if (!astar.IsWalkable(mapData, gridPos.x, gridPos.y))
                 return;
 
-            mob = focusedObject.GetComponent<MobController>();
+            MobController mob = FocusController.focusedObject.GetComponent<MobController>();
+
+            if (mob == null)
+                return;  
 
             targetPosition = mob.transform.position;
             isMovingToTarget = true;

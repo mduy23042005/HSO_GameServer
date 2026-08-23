@@ -596,6 +596,7 @@ GameObject:
   - component: {fileID: 2571566081737759803}
   - component: {fileID: 915633620289908121}
   - component: {fileID: 726993529518785662}
+  - component: {fileID: 1768109046035838122}
   - component: {fileID: 4880056049953142996}
   - component: {fileID: 1278839144784717136}
   m_Layer: 7
@@ -740,7 +741,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shadow: {fileID: 4057440563754763961}
   waterShadow: {fileID: 4380695761454584125}
-  focusUI: {fileID: 1933556936249596761, guid: 98bd30fb432de014db14b20b06f8a410, type: 3}
+  focusLayer:
+    serializedVersion: 2
+    m_Bits: 128
+--- !u!114 &1768109046035838122
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4099471368125039374}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0fdef09376508f94ba86bf1084d2fce1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FocusController
+  focusUI: {fileID: 1781930538902635416, guid: 2066b199c0815154eb1ea445c6afd53f, type: 3}
 --- !u!114 &4880056049953142996
 MonoBehaviour:
   m_ObjectHideFlags: 0

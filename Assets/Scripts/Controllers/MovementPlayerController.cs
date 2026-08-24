@@ -72,14 +72,14 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
     {
         InitMinimap();
 #if UNITY_ANDROID
+        MoveDPad();
         TouchScreen();
 #elif UNITY_STANDALONE || UNITY_EDITOR
-
         LeftClick();
         RightClick();
         MoveKeyboard();
 #endif
-        MoveMouse();
+        MoveToTargetPosition();
         UpdateAnimation();
 
         byte[] data = socketManager.GetSyncCallBackData();
@@ -295,8 +295,7 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
             // nếu hợp lệ thì move
             targetPosition = clickPos;
             isMovingToTarget = true;
-
-            //mob = null;
+            FocusController.focusedObject = null;
         }
     }
     public virtual void MoveKeyboard()
@@ -326,6 +325,41 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
                 isMovingToTarget = false;
                 if (minimap != null)
                     minimap.ClearAStarPath();
+            }
+
+            float speed = moveSpeed * Time.deltaTime;
+
+            transform.position += new Vector3(movement.x, movement.y, 0) * speed;
+        }
+        else
+        {
+            return;
+        }
+    }
+    public virtual void MoveDPad()
+    {
+        if (isBusy)
+            return;
+
+        if (menu == null || !menu.GetIsActive())
+        {
+            if (movement.x != 0)
+                movement.y = 0;
+
+            if (movement.y != 0)
+                movement.x = 0;
+
+            MoveStop();
+
+            if (movement == Vector2.zero)
+                return;
+            else
+            {
+                path = null; // reset để lần sau tạo path mới
+                startMovementPosition = endMovementPosition;
+                isMovingToTarget = false;
+                if (minimap != null)
+                    minimap.ClearAStarPath();
                 FocusController.focusedObject = null;
             }
 
@@ -338,7 +372,7 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
             return;
         }
     }
-    public virtual void MoveMouse()
+    public virtual void MoveToTargetPosition()
     {
         if ((menu != null && menu.GetIsActive()) || isBusy)
             return;
@@ -489,6 +523,11 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
         }
     }
 
+    public void SetMovement(float x, float y)
+    {
+        movement.x = x;
+        movement.y = y;
+    }
     public Vector2 GetMovement()
     {
         return movement;

@@ -22,9 +22,9 @@ public class FocusController : MonoBehaviour, IUpdatable
 
     public void OnFixedUpdate()
     {
-        if (focusedObject != null)
+        if (focusedObject != null && focusedObject.activeInHierarchy)
         {
-            if (focusedObjectUI == null )
+            if (focusedObjectUI == null)
             {
                 focusedObjectUI = PoolManager.Instance.Get(focusUI);
             }
@@ -35,7 +35,6 @@ public class FocusController : MonoBehaviour, IUpdatable
         {
             if (focusedObjectUI != null)
             {
-                focusedObject = null;
                 PoolManager.Instance.Release(focusedObjectUI);
                 focusedObjectUI = null;
             }

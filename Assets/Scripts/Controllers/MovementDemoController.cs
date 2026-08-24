@@ -15,7 +15,7 @@
     {
         return;
     }
-    public override void MoveMouse()
+    public override void MoveToTargetPosition()
     {
         return;
     }

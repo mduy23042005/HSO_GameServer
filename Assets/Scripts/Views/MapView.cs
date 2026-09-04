@@ -214,7 +214,7 @@ public class MapView : MonoBehaviour, IUpdatable
         if (playerMarkerFullMinimap == null)
         {
             int size = (int)groundMinimap[0].textureRect.width;
-            playerMarkerFullMinimap = Instantiate(playerMarkerUI, fullMinimapUI.transform);
+            playerMarkerFullMinimap = Instantiate(playerMarkerUI, fullMinimapUI.rectTransform);
 
             playerMarkerFullMinimap.GetComponent<Image>().color = Color.black;
             playerMarkerFullMinimap.sizeDelta = new Vector2(size, size);
@@ -240,7 +240,7 @@ public class MapView : MonoBehaviour, IUpdatable
                 if (!lastMobsPositionFullMinimap.ContainsKey(id))
                 {
                     int size = (int)(groundMinimap[0].textureRect.width);
-                    RectTransform mobMarkerFullMinimap = Instantiate(mobMarkerUI, fullMinimapUI.transform);
+                    RectTransform mobMarkerFullMinimap = PoolManager.Instance.Get(mobMarkerUI, fullMinimapUI.rectTransform);
 
                     mobMarkerFullMinimap.GetComponent<Image>().color = Color.red;
                     mobMarkerFullMinimap.sizeDelta = new Vector2(size, size);
@@ -264,7 +264,7 @@ public class MapView : MonoBehaviour, IUpdatable
             {
                 if (!mobs.ContainsKey(lastMobPosition.Key))
                 {
-                    Destroy(lastMobPosition.Value.gameObject);
+                    PoolManager.Instance.Release(lastMobPosition.Value);
                     removeIds.Add(lastMobPosition.Key);
                 }
             }
@@ -284,7 +284,7 @@ public class MapView : MonoBehaviour, IUpdatable
                 if (!lastOtherPlayersPositionFullMinimap.ContainsKey(id))
                 {
                     int size = (int)(groundMinimap[0].textureRect.width);
-                    RectTransform otherPlayerMarkerFullMinimap = Instantiate(otherPlayerMarkerUI, fullMinimapUI.transform);
+                    RectTransform otherPlayerMarkerFullMinimap = PoolManager.Instance.Get(otherPlayerMarkerUI, fullMinimapUI.rectTransform);
 
                     otherPlayerMarkerFullMinimap.GetComponent<Image>().color = Color.blue;
                     otherPlayerMarkerFullMinimap.sizeDelta = new Vector2(size, size);
@@ -308,7 +308,7 @@ public class MapView : MonoBehaviour, IUpdatable
             {
                 if (!otherPlayers.ContainsKey(lastOtherPlayerPosition.Key))
                 {
-                    Destroy(lastOtherPlayerPosition.Value.gameObject);
+                    PoolManager.Instance.Release(lastOtherPlayerPosition.Value);
                     removeIds.Add(lastOtherPlayerPosition.Key);
                 }
             }
@@ -322,7 +322,7 @@ public class MapView : MonoBehaviour, IUpdatable
         if (playerMarkerMinimap == null)
         {
             int size = (int)groundMinimap[0].textureRect.width;
-            playerMarkerMinimap = Instantiate(playerMarkerUI, minimapUI.transform);
+            playerMarkerMinimap = Instantiate(playerMarkerUI, minimapUI.rectTransform);
 
             playerMarkerMinimap.GetComponent<Image>().color = Color.black;
             playerMarkerMinimap.sizeDelta = new Vector2(size, size);
@@ -350,7 +350,7 @@ public class MapView : MonoBehaviour, IUpdatable
                 if (!lastMobsPositionMinimap.ContainsKey(id))
                 {
                     int size = (int)(groundMinimap[0].textureRect.width);
-                    RectTransform mobMarkerMinimap = Instantiate(mobMarkerUI, minimapUI.transform);
+                    RectTransform mobMarkerMinimap = PoolManager.Instance.Get(mobMarkerUI, minimapUI.rectTransform);
 
                     mobMarkerMinimap.GetComponent<Image>().color = Color.red;
                     mobMarkerMinimap.sizeDelta = new Vector2(size, size);
@@ -377,7 +377,7 @@ public class MapView : MonoBehaviour, IUpdatable
             {
                 if (!mobs.ContainsKey(lastMobPosition.Key))
                 {
-                    Destroy(lastMobPosition.Value.gameObject);
+                    PoolManager.Instance.Release(lastMobPosition.Value);
                     removeIds.Add(lastMobPosition.Key);
                 }
             }
@@ -398,7 +398,7 @@ public class MapView : MonoBehaviour, IUpdatable
                 if (!lastOtherPlayersPositionMinimap.ContainsKey(id))
                 {
                     int size = (int)(groundMinimap[0].textureRect.width);
-                    RectTransform otherPlayerMarkerMinimap = Instantiate(otherPlayerMarkerUI, minimapUI.transform);
+                    RectTransform otherPlayerMarkerMinimap = PoolManager.Instance.Get(otherPlayerMarkerUI, minimapUI.rectTransform);
 
                     otherPlayerMarkerMinimap.GetComponent<Image>().color = Color.blue;
                     otherPlayerMarkerMinimap.sizeDelta = new Vector2(size, size);
@@ -425,7 +425,7 @@ public class MapView : MonoBehaviour, IUpdatable
             {
                 if (!otherPlayers.ContainsKey(lastOtherPlayerPosition.Key))
                 {
-                    Destroy(lastOtherPlayerPosition.Value.gameObject);
+                    PoolManager.Instance.Release(lastOtherPlayerPosition.Value);
                     removeIds.Add(lastOtherPlayerPosition.Key);
                 }
             }
@@ -619,8 +619,8 @@ public class MapView : MonoBehaviour, IUpdatable
 
         foreach (var node in path)
         {
-            RectTransform markerFullMinimap = Instantiate(aStarMarkerUI, fullMinimapUI.transform);
-            RectTransform markerMinimap = Instantiate(aStarMarkerUI, minimapUI.transform);
+            RectTransform markerFullMinimap = PoolManager.Instance.Get(aStarMarkerUI, fullMinimapUI.rectTransform);
+            RectTransform markerMinimap = PoolManager.Instance.Get(aStarMarkerUI, minimapUI.rectTransform);
             Vector3 worldPos = new Vector3(node.x + 0.5f, node.y + 0.5f, 0);
             aStarWorldPositions.Add(worldPos); // cached lại những tọa độ của node trong a* path để cố định toàn bộ node khi minimap di chuyển theo player
 
@@ -647,7 +647,7 @@ public class MapView : MonoBehaviour, IUpdatable
         {
             if (aStarMarkersFullMinimap[index] != null)
             {
-                Destroy(aStarMarkersFullMinimap[index].gameObject);
+                PoolManager.Instance.Release(aStarMarkersFullMinimap[index]);
                 aStarMarkersFullMinimap[index] = null;
             }
         }
@@ -655,7 +655,7 @@ public class MapView : MonoBehaviour, IUpdatable
         {
             if (aStarMarkersMinimap[index] != null)
             {
-                Destroy(aStarMarkersMinimap[index].gameObject);
+                PoolManager.Instance.Release(aStarMarkersMinimap[index]);
                 aStarMarkersMinimap[index] = null;
             }
         }
@@ -666,11 +666,11 @@ public class MapView : MonoBehaviour, IUpdatable
         {
             if (aStarMarkersFullMinimap[i] != null)
             {
-                Destroy(aStarMarkersFullMinimap[i].gameObject);
+                PoolManager.Instance.Release(aStarMarkersFullMinimap[i]);
             }
             if (aStarMarkersMinimap[i] != null)
             {
-                Destroy(aStarMarkersMinimap[i].gameObject);
+                PoolManager.Instance.Release(aStarMarkersMinimap[i]);
             }
         }
 

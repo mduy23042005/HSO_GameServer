@@ -9,6 +9,7 @@ TagManager:
   - FullMinimapUI
   - UI
   - OtherPlayer
+  - VirtualAttackButton
   layers:
   - Default
   - TransparentFX

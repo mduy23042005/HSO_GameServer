@@ -25,9 +25,7 @@ public class FocusController : MonoBehaviour, IUpdatable
         if (focusedObject != null && focusedObject.activeInHierarchy)
         {
             if (focusedObjectUI == null)
-            {
                 focusedObjectUI = PoolManager.Instance.Get(focusUI);
-            }
 
             focusedObjectUI.transform.position = new Vector3(focusedObject.transform.position.x, focusedObject.transform.position.y + 3.5f, 0);
         }
@@ -35,6 +33,7 @@ public class FocusController : MonoBehaviour, IUpdatable
         {
             if (focusedObjectUI != null)
             {
+                focusedObject = null;
                 PoolManager.Instance.Release(focusedObjectUI);
                 focusedObjectUI = null;
             }

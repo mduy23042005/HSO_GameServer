@@ -8,7 +8,12 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
-public class PlayerAttackDataPacket { public EnumCmdCode cmd; public int idAccount; public int aimedMobID; }
+public class PlayerAttackDataPacket 
+{ 
+    public EnumCmdCode cmd; 
+    public int idAccount; 
+    public int aimedMobID; 
+}
 
 public class MovementPlayerController : MonoBehaviour, IUpdatable
 {
@@ -25,6 +30,7 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
     private MenuView menu;
     private bool isBusy = false;
     private bool isStandingInWater = false;
+    private bool isDPadPressed;
 
     private MapView minimap;
     private RectTransform minimapUI;
@@ -72,8 +78,8 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
     {
         InitMinimap();
 #if UNITY_ANDROID
-        MoveDPad();
         TouchScreen();
+        MoveDPad();
 #elif UNITY_STANDALONE || UNITY_EDITOR
         LeftClick();
         RightClick();
@@ -174,6 +180,9 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
         if (touch.phase != TouchPhase.Began)
             return;
 
+        if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject(touch.fingerId))
+            return;
+
         Vector2 touchPos = touch.position;
 
         if (isFullMinimapOpen)
@@ -197,7 +206,6 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
                 FocusController.focusedObject = null;
                 return;
             }
-
             return;
         }
 
@@ -207,24 +215,12 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
             return;
         }
 
-        if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject(touch.fingerId))
-            return;
-
         Vector3 touchWorldPos = Camera.main.ScreenToWorldPoint(touchPos);
         Collider2D hit = Physics2D.OverlapPoint(touchWorldPos, focusLayer);
         if (hit != null)
             FocusController.focusedObject = hit.gameObject;
         else
             FocusController.focusedObject = null;
-
-        Vector2 clickPos = new Vector2(touchWorldPos.x, touchWorldPos.y);
-        var gridPos = ToGrid(clickPos);
-
-        if (!astar.IsWalkable(mapData, gridPos.x, gridPos.y))
-            return;
-
-        targetPosition = clickPos;
-        isMovingToTarget = true;
     }
     public virtual void LeftClick()
     {
@@ -318,27 +314,23 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
 
             if (movement == Vector2.zero)
                 return;
-            else
-            {
-                path = null; // reset để lần sau tạo path mới
-                startMovementPosition = endMovementPosition;
-                isMovingToTarget = false;
-                if (minimap != null)
-                    minimap.ClearAStarPath();
-            }
+
+            path = null; // reset để lần sau tạo path mới
+            startMovementPosition = endMovementPosition;
+            isMovingToTarget = false;
+            if (minimap != null)
+                minimap.ClearAStarPath();
 
             float speed = moveSpeed * Time.deltaTime;
-
             transform.position += new Vector3(movement.x, movement.y, 0) * speed;
-        }
-        else
-        {
-            return;
         }
     }
     public virtual void MoveDPad()
     {
         if (isBusy)
+            return;
+
+        if (!isDPadPressed)
             return;
 
         if (menu == null || !menu.GetIsActive())
@@ -360,7 +352,6 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
                 isMovingToTarget = false;
                 if (minimap != null)
                     minimap.ClearAStarPath();
-                FocusController.focusedObject = null;
             }
 
             float speed = moveSpeed * Time.deltaTime;
@@ -429,7 +420,7 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
             Vector2 directionToTarget = targetNode - currentPosition;
             float distanceToTarget = directionToTarget.magnitude;
 
-            if (distanceToTarget > 0.02f)
+            if (distanceToTarget > 0.01f)
             {
                 if (Mathf.Abs(directionToTarget.x) > Mathf.Abs(directionToTarget.y))
                 {
@@ -471,25 +462,9 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
                         isMovingToTarget = false;
                         if (minimap != null)
                             minimap.ClearAStarPath();
-                        movement = lastMove;
+                        movement = Vector2.zero;
 
-                        currentState = State.Attack;
-                        TriggerAnimation("Atk", 0.25f);
-
-                        PlayerAttackDataPacket attackDataPacket = new PlayerAttackDataPacket
-                        {
-                            cmd = (EnumCmdCode)EnumCmdCode.playerAttackMob,
-                            idAccount = LogInView.GetIDAccount() ?? 0,
-                            aimedMobID = FocusController.focusedObject.GetComponent<MobController>().GetID(),
-                        };
-
-                        PacketWriterManager writer = new PacketWriterManager();
-                        writer.WriteInt((int)attackDataPacket.cmd);
-                        writer.WriteInt(attackDataPacket.idAccount);
-                        writer.WriteInt(attackDataPacket.aimedMobID);
-
-                        _ = socketManager.SendToServer(writer.ToArray());
-
+                        UpdateAtkAnimation();
                         return;
                     }
 
@@ -502,7 +477,7 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
             }
 
             // kiểm tra chuyển đổi Node
-            if (Vector2.Distance(currentPosition, targetNode) <= 0.05f)
+            if (Vector2.Distance(currentPosition, targetNode) <= 0.01f)
             {
                 if (minimap != null)
                     minimap.ClearAStarNodeMarker(pathIndex);
@@ -525,8 +500,9 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
 
     public void SetMovement(float x, float y)
     {
-        movement.x = x;
-        movement.y = y;
+        movement = new Vector2(x, y);
+
+        isDPadPressed = x != 0 || y != 0;
     }
     public Vector2 GetMovement()
     {
@@ -565,8 +541,9 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
 
     private void TriggerAnimation(string anim, float duration)
     {
-        animator.SetTrigger(anim);
         isBusy = true;
+        animator.SetBool("isMove", false);
+        animator.SetTrigger(anim);
         UpdateLastMoveToAnimator();
         StartCoroutine(ResetBusy(duration));
     }
@@ -579,9 +556,7 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
     public virtual void UpdateAnimation()
     {
         if (isBusy)
-        {
             return;
-        }
         if (movement.x == 0 && movement.y == 0)
         {
             currentState = State.Stand;
@@ -596,23 +571,49 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
         }
         if (Input.GetKeyDown(KeyCode.J))
         {
-            if (FocusController.focusedObject == null)
-                return;
-
-            var gridPos = ToGrid(FocusController.focusedObject.transform.position);
-
-            if (!astar.IsWalkable(mapData, gridPos.x, gridPos.y))
-                return;
-
-            MobController mob = FocusController.focusedObject.GetComponent<MobController>();
-
-            if (mob == null)
-                return;  
-
-            targetPosition = mob.transform.position;
-            isMovingToTarget = true;
-            path = null;
+            ChaseAndAttack();
         }
+    }
+    public void ChaseAndAttack()
+    {
+        if (FocusController.focusedObject == null)
+            return;
+
+        var gridPos = ToGrid(FocusController.focusedObject.transform.position);
+
+        if (!astar.IsWalkable(mapData, gridPos.x, gridPos.y))
+            return;
+
+        if (FocusController.focusedObject != null && FocusController.focusedObject.GetComponent<MobController>() != null)
+        {
+            targetPosition = new Vector2(FocusController.focusedObject.transform.position.x, FocusController.focusedObject.transform.position.y);
+
+            var mobGrid = ToGrid(targetPosition);
+
+            if (Vector2.Distance(transform.position, targetPosition) <= 1.5f)
+            {
+                UpdateAtkAnimation();
+                return;
+            }
+            else
+            {
+                targetPosition = FocusController.focusedObject.transform.position;
+                isMovingToTarget = true;
+                path = null;
+            }
+        }
+    }
+    public void UpdateAtkAnimation()
+    {
+        currentState = State.Attack;
+        TriggerAnimation("Atk", 0.5f);
+
+        PacketWriterManager writer = new PacketWriterManager();
+        writer.WriteInt((int)(EnumCmdCode)EnumCmdCode.playerAttackMob); // sau này sẽ quy ước chung thành atk để có thể attack cả other player và mob
+        writer.WriteInt(LogInView.GetIDAccount() ?? 0);
+        writer.WriteInt(FocusController.focusedObject.GetComponent<MobController>().GetID());
+
+        _ = socketManager.SendToServer(writer.ToArray());
     }
     public void UpdateInjuredAnimation()
     {

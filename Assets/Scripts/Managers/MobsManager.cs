@@ -180,7 +180,7 @@ public class MobsManager : MonoBehaviour, IUpdatable
             {
                 if (mob.mobData.hp != hpMobAfterAttack)
                 {
-                    if (hpMobAfterAttack < mob.mobData.hp)
+                    if (hpMobAfterAttack < mob.mobData.hp && hpMobAfterAttack >= 0)
                     {
                         GameObject objectDamageUI = PoolManager.Instance.Get(updateHPUI);
                         objectDamageUI.transform.SetParent(mob.mobObject.GetComponentInChildren<Canvas>().transform, false);

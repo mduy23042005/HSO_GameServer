@@ -148,7 +148,7 @@ public class MobController : MonoBehaviour, IUpdatable
             case State.Die:
                 if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Die"))
                 {
-                    animator.Play("Die", 0, 0f);
+                    animator.Play("Die", 0, 0f);           
                 }
                 else
                 {

@@ -80,7 +80,6 @@ public class LogInView : MonoBehaviour, IUpdatable
             loginResult.success = reader.ReadBool();
             loginResult.idAccount = reader.ReadInt();
             loginResult.idSchool = reader.ReadInt();
-            loginResult.nameChar = reader.ReadString();
             loginResult.hair = reader.ReadInt();
             loginResult.level = reader.ReadInt();
             loginResult.maxHP = reader.ReadInt();
@@ -241,16 +240,21 @@ public class LogInView : MonoBehaviour, IUpdatable
         writer.WriteString(logInRequestPacket.username);
         writer.WriteString(logInRequestPacket.password);
 
-        await socketManager.SendToServer(writer.ToArray());
-
         textMessage.color = Color.yellow;
         textMessage.text = "Đang đăng nhập...";
         isLoggingIn = true;
         startTime = Time.time;
+
+        await socketManager.SendToServer(writer.ToArray());
     }
     public void ClickLogIn()
     {
-        _ = LogIn();
+        if (!isLoggingIn)
+            _ = LogIn();
+    }
+    private System.Collections.IEnumerator wait(float duration)
+    {
+        yield return new WaitForSeconds(duration);
     }
     public void ClickRegister()
     {

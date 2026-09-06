@@ -607,22 +607,25 @@ public class MapView : MonoBehaviour, IUpdatable
         return new Vector3(worldX, worldY, 0);
     }
 
-    public void DrawAStarPath(List<(int x, int y)> path)
+    public void DrawAStarPath(List<(int x, int y)> path, int startIndex = 0)
     {
         ClearAStarPath();
         aStarWorldPositions.Clear();
 
-        if (path == null || path.Count == 0)
+        if (path == null || path.Count == 0 || startIndex >= path.Count)
             return;
 
         int size = (int)groundMinimap[0].textureRect.width;
 
-        foreach (var node in path)
+        // Chỉ duyệt và vẽ marker từ startIndex trở đi
+        for (int i = startIndex; i < path.Count; i++)
         {
             RectTransform markerFullMinimap = PoolManager.Instance.Get(aStarMarkerUI, fullMinimapUI.rectTransform);
             RectTransform markerMinimap = PoolManager.Instance.Get(aStarMarkerUI, minimapUI.rectTransform);
+
+            var node = path[i];
             Vector3 worldPos = new Vector3(node.x + 0.5f, node.y + 0.5f, 0);
-            aStarWorldPositions.Add(worldPos); // cached lại những tọa độ của node trong a* path để cố định toàn bộ node khi minimap di chuyển theo player
+            aStarWorldPositions.Add(worldPos);
 
             markerFullMinimap.GetComponent<Image>().color = Color.white;
             markerFullMinimap.sizeDelta = new Vector2(size, size);
@@ -641,23 +644,23 @@ public class MapView : MonoBehaviour, IUpdatable
             aStarMarkersMinimap.Add(markerMinimap);
         }
     }
-    public void ClearAStarNodeMarker(int index)
+    public void ClearAStarNodeMarker()
     {
-        if (index >= 0 && index < aStarMarkersFullMinimap.Count)
+        if (aStarMarkersFullMinimap.Count > 0 && aStarMarkersFullMinimap[0] != null)
         {
-            if (aStarMarkersFullMinimap[index] != null)
-            {
-                PoolManager.Instance.Release(aStarMarkersFullMinimap[index]);
-                aStarMarkersFullMinimap[index] = null;
-            }
+            PoolManager.Instance.Release(aStarMarkersFullMinimap[0]);
+            aStarMarkersFullMinimap.RemoveAt(0);
         }
-        if (index >= 0 && index < aStarMarkersMinimap.Count)
+
+        if (aStarMarkersMinimap.Count > 0 && aStarMarkersMinimap[0] != null)
         {
-            if (aStarMarkersMinimap[index] != null)
-            {
-                PoolManager.Instance.Release(aStarMarkersMinimap[index]);
-                aStarMarkersMinimap[index] = null;
-            }
+            PoolManager.Instance.Release(aStarMarkersMinimap[0]);
+            aStarMarkersMinimap.RemoveAt(0);
+        }
+
+        if (aStarWorldPositions.Count > 0)
+        {
+            aStarWorldPositions.RemoveAt(0);
         }
     }
     public void ClearAStarPath()

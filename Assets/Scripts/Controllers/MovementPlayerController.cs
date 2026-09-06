@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using UnityEngine.UIElements;
 
 public class PlayerAttackDataPacket 
 { 
@@ -393,8 +394,14 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
                     path = newPath;
                     pathIndex = 0;
 
+                    Vector2 firstNodeCenter = new Vector2(path[0].x + 0.5f, path[0].y + 0.5f);
+                    if (path.Count > 1 && Vector2.Distance(currentPosition, firstNodeCenter) < 0.3f)
+                    {
+                        pathIndex = 1;
+                    }
+
                     if (minimap != null)
-                        minimap.DrawAStarPath(path);
+                        minimap.DrawAStarPath(path, pathIndex);
                 }
                 else if (path == null)
                 {
@@ -420,7 +427,7 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
             Vector2 directionToTarget = targetNode - currentPosition;
             float distanceToTarget = directionToTarget.magnitude;
 
-            if (distanceToTarget > 0.01f)
+            if (distanceToTarget > 0.05f)
             {
                 if (Mathf.Abs(directionToTarget.x) > Mathf.Abs(directionToTarget.y))
                 {
@@ -443,7 +450,7 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
                 }
                 else
                 {
-                    transform.position = currentPosition + movement * speed;
+                    transform.position = currentPosition + directionToTarget.normalized * speed;
                     currentPosition = transform.position;
                 }
 
@@ -477,17 +484,18 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
             }
 
             // kiểm tra chuyển đổi Node
-            if (Vector2.Distance(currentPosition, targetNode) <= 0.01f)
+            if (Vector2.Distance(currentPosition, targetNode) <= 0.08f)
             {
                 if (minimap != null)
-                    minimap.ClearAStarNodeMarker(pathIndex);
+                    minimap.ClearAStarNodeMarker();
+
                 pathIndex++;
             }
         }
     }
     private (int x, int y) ToGrid(Vector2 pos)
     {
-        return ((int)Math.Floor(pos.x), (int)Math.Floor(pos.y));
+        return (Mathf.RoundToInt(pos.x - 0.5f), Mathf.RoundToInt(pos.y - 0.5f));
     }
 
     private void MoveStop()
@@ -622,6 +630,7 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
     }
     public void UpdateDieAnimation()
     {
+        Debug.Log("Player has died.");
         currentState = State.Die;
         animator.SetBool("isDie", true);
         UpdateLastMoveToAnimator();

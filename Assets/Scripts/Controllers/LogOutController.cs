@@ -30,36 +30,7 @@ public class LogOutController : MonoBehaviour, IUpdatable
         }
     }
 
-    public void OnUpdate()
-    {
-        if (logOutData == null)
-            return;
-
-        //Dọn sạch danh sách quản lý Other Players trước khi chuyển về Main Scene
-        GameObject.Find("SyncManager").gameObject.GetComponent<SyncOtherPlayersManager>().PrepareForLogOut();
-
-        //Dọn sạch danh sách quản lý Queue nhận dữ liệu từ Server
-        socketManager.ClearAllQueues();
-
-        if (EquipmentView.equipments != null)
-        {
-            EquipmentView.ClearEquipmentData();
-        }
-        if (EquipmentView.GetListImagesEquipmentSlots() != null)
-        {
-            EquipmentView.ClearListImagesEquipmentSlots();
-        }
-        if (InventoryView.inventoryItem0s != null)
-        {
-            InventoryView.ClearInventoryData();
-        }
-
-        GameManager.Instance.GetComponent<PlayerManager>().DestroyPlayer();
-
-        logOutData = null;
-
-        SceneManager.LoadScene("Main");
-    }
+    public void OnUpdate() { }
     public void OnLateUpdate() { }
     public void OnFixedUpdate() { }
     public void RegisterDontDestroyOnLoad()
@@ -69,17 +40,27 @@ public class LogOutController : MonoBehaviour, IUpdatable
 
     public void CLickLogOut()
     {
-        LogOutRequestPacket logOutRequestPacket = new LogOutRequestPacket
-        {
-            cmd = EnumCmdCode.logout,
-            idAccount = LogInView.GetIDAccount() ?? 0,
-        };
+        //Dọn sạch danh sách quản lý Other Players trước khi chuyển về Main Scene
+        GameObject.Find("SyncManager").gameObject.GetComponent<SyncOtherPlayersManager>().PrepareForLogOut();
 
-        PacketWriterManager writer = new PacketWriterManager();
-        writer.WriteInt((int)logOutRequestPacket.cmd);
-        writer.WriteInt(logOutRequestPacket.idAccount);
+        //Dọn sạch danh sách quản lý Queue nhận dữ liệu từ Server
+        socketManager.ClearAllQueues();
+        socketManager.CloseSocket();
 
-        _ = socketManager.SendToServer(writer.ToArray());
+        if (EquipmentView.equipments != null)
+            EquipmentView.ClearEquipmentData();
+        
+        if (EquipmentView.GetListImagesEquipmentSlots() != null)
+            EquipmentView.ClearListImagesEquipmentSlots();
+        
+        if (InventoryView.inventoryItem0s != null)
+            InventoryView.ClearInventoryData();
+
+        GameManager.Instance.GetComponent<PlayerManager>().DestroyPlayer();
+
+        logOutData = null;
+
+        SceneManager.LoadScene("Main");
     }
 
     public void SetLogOutData(LogOutRequestPacket data)

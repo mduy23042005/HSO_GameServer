@@ -140,6 +140,21 @@ public class SocketManager : MonoBehaviour, IUpdatable
             Debug.LogError("Socket: Kết nối Server thất bại! " + e.Message);
         }
     }
+    public async Task CloseSocket()
+    {
+        if (socket != null && socket.State == WebSocketState.Open)
+        {
+            try
+            {
+                await socket.CloseAsync(WebSocketCloseStatus.NormalClosure, "Client closing", CancellationToken.None);
+                Debug.Log("Socket: Ngắt kết nối Server thành công!");
+            }
+            catch (Exception e)
+            {
+                Debug.LogError("Socket: Ngắt kết nối Server thất bại! " + e.Message);
+            }
+        }
+    }
 
     public void OnUpdate() { }
     public void OnLateUpdate() { }
@@ -332,10 +347,6 @@ public class SocketManager : MonoBehaviour, IUpdatable
 
             case EnumCmdCode.login:
                 logInQueue.Enqueue(data);
-                break;
-
-            case EnumCmdCode.logout:
-                logOutQueue.Enqueue(data);
                 break;
 
             case EnumCmdCode.register:

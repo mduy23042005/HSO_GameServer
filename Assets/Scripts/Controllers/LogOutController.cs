@@ -56,7 +56,9 @@ public class LogOutController : MonoBehaviour, IUpdatable
         if (InventoryView.inventoryItem0s != null)
             InventoryView.ClearInventoryData();
 
-        GameManager.Instance.GetComponent<PlayerManager>().DestroyPlayer();
+        GameManager.Instance.GetComponent<PlayerManager>().ReleasePlayer();
+        PoolManager.Instance.ClearObjectPools();
+        PoolManager.Instance.ClearUIObjectPools();
 
         logOutData = null;
 

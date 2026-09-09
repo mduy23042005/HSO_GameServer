@@ -252,10 +252,6 @@ public class LogInView : MonoBehaviour, IUpdatable
         if (!isLoggingIn)
             _ = LogIn();
     }
-    private System.Collections.IEnumerator wait(float duration)
-    {
-        yield return new WaitForSeconds(duration);
-    }
     public void ClickRegister()
     {
         SceneManager.LoadScene("SelectCharacterScene");

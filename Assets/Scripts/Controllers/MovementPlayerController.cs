@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
-using UnityEngine.UIElements;
 
 public class PlayerAttackDataPacket 
 { 
@@ -26,6 +25,7 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
     private Vector2 movement;
     private Vector2 lastMove = new Vector2(0, -1);
     private Vector2 targetPosition;
+    private Vector2 lastPosition;
     private bool isMovingToTarget = false;
     private Animator animator;
     private MenuView menu;
@@ -55,6 +55,7 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
     {
         animator = GetComponent<Animator>();
         menu = FindAnyObjectByType<MenuView>(FindObjectsInactive.Include);
+
         if (waterShadow != null)
             waterShadow.SetActive(false);
 
@@ -111,7 +112,7 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
             transform.localScale = new Vector3(callBackPacket.scaleData.x, 1, 1);
         }
 
-        if (astar.IsStandInWater(mapData, transform.position.x, transform.position.y))
+        if (astar.IsStandInWater(mapData, lastPosition.x, lastPosition.y) && lastPosition != Vector2.zero)
         {
             shadow.SetActive(false);
             waterShadow.SetActive(true);
@@ -324,6 +325,7 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
 
             float speed = moveSpeed * Time.deltaTime;
             transform.position += new Vector3(movement.x, movement.y, 0) * speed;
+            lastPosition = transform.position;
         }
     }
     public virtual void MoveDPad()
@@ -358,6 +360,7 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
             float speed = moveSpeed * Time.deltaTime;
 
             transform.position += new Vector3(movement.x, movement.y, 0) * speed;
+            lastPosition = transform.position;
         }
         else
         {
@@ -452,6 +455,7 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
                 {
                     transform.position = currentPosition + directionToTarget.normalized * speed;
                     currentPosition = transform.position;
+                    lastPosition = currentPosition;
                 }
 
                 MoveStop();
@@ -549,6 +553,9 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
 
     private void TriggerAnimation(string anim, float duration)
     {
+        if (isBusy)
+            return;
+
         isBusy = true;
         animator.SetBool("isMove", false);
         animator.SetTrigger(anim);
@@ -630,7 +637,7 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
     }
     public void UpdateDieAnimation()
     {
-        Debug.Log("Player has died.");
+        isBusy = true;
         currentState = State.Die;
         animator.SetBool("isDie", true);
         UpdateLastMoveToAnimator();

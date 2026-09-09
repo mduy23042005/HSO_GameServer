@@ -85,13 +85,7 @@ public class PacketWriterManager
 
         byte[] bytes = BitConverter.GetBytes(value);
 
-        Buffer.BlockCopy(
-            bytes,
-            0,
-            buffer,
-            length,
-            8
-        );
+        Buffer.BlockCopy(bytes, 0, buffer, length, 8);
 
         length += 8;
     }

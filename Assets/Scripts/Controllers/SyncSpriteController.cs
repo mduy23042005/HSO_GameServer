@@ -289,11 +289,14 @@ public class SyncSpriteController : MonoBehaviour, IUpdatable
         GameManager.Instance.RegisterPersistent(this);
     }
 
-    public void ApplyServerData(PlayerData serverData, PlayerTransformData serverTransform, PlayerStateData serverState)
+    public void ApplyServerData(PlayerData serverData)
     {
-        otherPlayerData = serverData;
-        otherPlayerTransform = serverTransform;
-        otherPlayerState = serverState;
+        otherPlayerData.idSchool = serverData.idSchool;
+        otherPlayerData.weapon = serverData.weapon;
+        otherPlayerData.helmet = serverData.helmet;
+        otherPlayerData.armor = serverData.armor;
+        otherPlayerData.legArmor = serverData.legArmor;
+        otherPlayerData.hair = serverData.hair;
 
         if (weaponData != otherPlayerData.weapon)
         {
@@ -320,6 +323,17 @@ public class SyncSpriteController : MonoBehaviour, IUpdatable
             hairData = otherPlayerData.hair;
             EquipHair(hairData, otherPlayerData.idSchool);
         }
+    }
+    public void ApplyServerRealtimeData(PlayerData serverData, PlayerTransformData serverTransform, PlayerStateData serverState)
+    {
+        otherPlayerData.maxHP = serverData.maxHP;
+        otherPlayerData.maxMP = serverData.maxMP;
+        otherPlayerData.hp = serverData.hp;
+        otherPlayerData.mp = serverData.mp;
+        otherPlayerData.currentTile = serverData.currentTile;
+
+        otherPlayerTransform = serverTransform;
+        otherPlayerState = serverState;
 
         if (hpBar.maxValue != otherPlayerData.maxHP)
             hpBar.maxValue = otherPlayerData.maxHP;
@@ -330,7 +344,10 @@ public class SyncSpriteController : MonoBehaviour, IUpdatable
     }
 
     public void OnUpdate() 
-    {
+    {   
+        if (otherPlayerTransform.positionData == null || otherPlayerTransform.scaleData == null || otherPlayerState == null)
+            return;
+
         Vector2 targetPos = new Vector2(otherPlayerTransform.positionData.x, otherPlayerTransform.positionData.y);
         transform.position = Vector2.MoveTowards(transform.position, targetPos, 6f * Time.deltaTime);
 

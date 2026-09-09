@@ -41,7 +41,38 @@ public class PlayerManager : MonoBehaviour, IUpdatable
         GameManager.Instance.RegisterPersistent(this);
     }
 
-    //Test cache part body
+    private void InitPlayer()
+    {
+        int idSchool = LogInView.GetIDSchool();
+
+        switch (idSchool)
+        {
+            case 1: 
+                player = PoolManager.Instance.Get(playerPrefab[0]);
+                player.transform.position = new Vector2(Random.Range(-10, 6), Random.Range(-9, 5));
+                break;
+            case 2:
+                player = PoolManager.Instance.Get(playerPrefab[1]);
+                player.transform.position = new Vector2(Random.Range(-10, 6), Random.Range(-9, 5));
+                break;
+            case 3:
+                player = PoolManager.Instance.Get(playerPrefab[2]);
+                player.transform.position = new Vector2(Random.Range(-10, 6), Random.Range(-9, 5));
+                break;
+        }
+    }
+
+    public void ReleasePlayer()
+    {
+        if (player != null)
+        {
+            PoolManager.Instance.Release(player);
+            player = null;
+            LogInView.SetIDAccount(0);
+        }
+    }
+
+    //part body structure data
     private PositionData GetPartBodyPositionData(float x, float y, float z)
     {
         PositionData positionData = new PositionData();
@@ -74,37 +105,6 @@ public class PlayerManager : MonoBehaviour, IUpdatable
         colorData.b = b;
         colorData.a = a;
         return colorData;
-    }
-
-    private void InitPlayer()
-    {
-        int idSchool = LogInView.GetIDSchool();
-
-        switch (idSchool)
-        {
-            case 1:
-                player = Instantiate(playerPrefab[0], new Vector2(-9.5f, -4.5f), Quaternion.identity);
-                break;
-            case 2:
-                player = Instantiate(playerPrefab[1], new Vector2(-9.5f, -4.5f), Quaternion.identity);
-                break;
-            case 3:
-                player = Instantiate(playerPrefab[2], new Vector2(-9.5f, -4.5f), Quaternion.identity);
-                break;
-            case 4:
-                player = Instantiate(playerPrefab[3], new Vector2(-9.5f, -4.5f), Quaternion.identity);
-                break;
-        }
-    }
-
-    public void DestroyPlayer()
-    {
-        if (player != null)
-        {
-            Destroy(player);
-            player = null;
-            LogInView.SetIDAccount(0);
-        }
     }
 
     private void InitPartBodyData()

@@ -34,10 +34,10 @@ public class SocketManager : MonoBehaviour, IUpdatable
 
     private readonly ConcurrentQueue<byte[]> syncCallBackQueue = new ConcurrentQueue<byte[]>();
     private readonly ConcurrentQueue<byte[]> syncOtherPlayersQueue = new ConcurrentQueue<byte[]>();
+    private readonly ConcurrentQueue<byte[]> syncOtherPlayersRealtimeQueue = new ConcurrentQueue<byte[]>();
     private readonly ConcurrentQueue<byte[]> syncMobsQueue = new ConcurrentQueue<byte[]>();
 
     private readonly ConcurrentQueue<byte[]> logInQueue = new ConcurrentQueue<byte[]>();
-    private readonly ConcurrentQueue<byte[]> logOutQueue = new ConcurrentQueue<byte[]>();
     private readonly ConcurrentQueue<byte[]> registerQueue = new ConcurrentQueue<byte[]>();
 
     private readonly ConcurrentQueue<byte[]> inventoryQueue = new ConcurrentQueue<byte[]>();
@@ -171,7 +171,7 @@ public class SocketManager : MonoBehaviour, IUpdatable
         playerSpriteController = PlayerManager.player.GetComponent<SpritePlayerController>();
 
         PacketWriterManager writer = new PacketWriterManager();
-        writer.WriteInt((int)EnumCmdCode.syncPlayerData);
+        writer.WriteInt((int)EnumCmdCode.syncOtherPlayersData);
         writer.WriteInt(LogInView.GetIDAccount() ?? 0);
         writer.WriteInt((int)playerMovementController.GetCurrentTileType());
 
@@ -300,7 +300,7 @@ public class SocketManager : MonoBehaviour, IUpdatable
             if (InventoryView.inventoryItem0s != null)
                 InventoryView.ClearInventoryData();
 
-            GameManager.Instance.GetComponent<PlayerManager>().DestroyPlayer();
+            GameManager.Instance.GetComponent<PlayerManager>().ReleasePlayer();
             SceneManager.LoadScene("Main");
         }
     }
@@ -335,9 +335,13 @@ public class SocketManager : MonoBehaviour, IUpdatable
                 syncCallBackQueue.Enqueue(data);
                 break;
 
-            case EnumCmdCode.syncPlayerData:
+            case EnumCmdCode.syncOtherPlayersData:
                 if (LogInView.GetIDAccount() != 0)
                     syncOtherPlayersQueue.Enqueue(data);
+                break;
+            case EnumCmdCode.syncOtherPlayersRealtimeData:
+                if (LogInView.GetIDAccount() != 0)
+                    syncOtherPlayersRealtimeQueue.Enqueue(data);
                 break;
 
             case EnumCmdCode.syncMobsData:
@@ -446,6 +450,12 @@ public class SocketManager : MonoBehaviour, IUpdatable
             return data;
         return null;
     }
+    public byte[] GetSyncOtherPlayersRealtimeData()
+    {
+        if (syncOtherPlayersRealtimeQueue.TryDequeue(out var data))
+            return data;
+        return null;
+    }
     public byte[] GetSyncMobsData()
     {
         if (syncMobsQueue.TryDequeue(out var data))
@@ -455,12 +465,6 @@ public class SocketManager : MonoBehaviour, IUpdatable
     public byte[] GetLogInData()
     {
         if (logInQueue.TryDequeue(out var data))
-            return data;
-        return null;
-    }
-    public byte[] GetLogOutData()
-    {
-        if (logOutQueue.TryDequeue(out var data))
             return data;
         return null;
     }
@@ -547,7 +551,6 @@ public class SocketManager : MonoBehaviour, IUpdatable
         ClearQueue(syncMobsQueue);
 
         ClearQueue(logInQueue);
-        ClearQueue(logOutQueue);
         ClearQueue(registerQueue);
 
         ClearQueue(inventoryQueue);

@@ -63,6 +63,51 @@ public class PoolManager : MonoBehaviour, IUpdatable
         GameManager.Instance.RegisterPersistent(this);
     }
 
+    public void ClearObjectPools()
+    {
+        foreach (var pool in objectPools.Values)
+        {
+            while (pool.availableObjectsQueue.Count > 0)
+            {
+                GameObject obj = pool.availableObjectsQueue.Dequeue();
+
+                if (obj != null)
+                    Destroy(obj);
+            }
+        }
+
+        foreach (var obj in new List<GameObject>(activeObjects.Keys))
+        {
+            if (obj != null)
+                Destroy(obj);
+        }
+
+        activeObjects.Clear();
+        objectPools.Clear();
+    }
+    public void ClearUIObjectPools()
+    {
+        foreach (var pool in uiObjectPools.Values)
+        {
+            while (pool.availableUIObjectsQueue.Count > 0)
+            {
+                RectTransform obj = pool.availableUIObjectsQueue.Dequeue();
+
+                if (obj != null)
+                    Destroy(obj.gameObject);
+            }
+        }
+
+        foreach (var obj in new List<RectTransform>(activeUIObjects.Keys))
+        {
+            if (obj != null)
+                Destroy(obj.gameObject);
+        }
+
+        activeUIObjects.Clear();
+        uiObjectPools.Clear();
+    }
+
     public GameObject Get(GameObject prefab)
     {
         if (!objectPools.TryGetValue(prefab, out Pool pool))
@@ -70,11 +115,23 @@ public class PoolManager : MonoBehaviour, IUpdatable
             pool = CreatePool(prefab);
         }
 
-        if (pool.availableObjectsQueue.Count == 0)
+        GameObject obj = null;
+
+        while (pool.availableObjectsQueue.Count > 0)
+        {
+            obj = pool.availableObjectsQueue.Dequeue();
+
+            if (obj != null)
+                break;
+
+            obj = null;
+        }
+
+        if (obj == null)
         {
             ExpandPool(pool);
+            obj = pool.availableObjectsQueue.Dequeue();
         }
-        GameObject obj = pool.availableObjectsQueue.Dequeue();
 
         activeObjects[obj] = pool;
         obj.SetActive(true);
@@ -124,17 +181,26 @@ public class PoolManager : MonoBehaviour, IUpdatable
             uiPool = CreatePool(prefab, parentUIObject);
         }
 
-        if (uiPool.availableUIObjectsQueue.Count == 0)
+        RectTransform uiObject = null;
+
+        while (uiPool.availableUIObjectsQueue.Count > 0)
+        {
+            uiObject = uiPool.availableUIObjectsQueue.Dequeue();
+            if (uiObject != null)
+                break;
+
+            uiObject = null;
+        }
+
+        if (uiObject == null)
         {
             ExpandPool(uiPool, parentUIObject);
+            uiObject = uiPool.availableUIObjectsQueue.Dequeue();
         }
-        RectTransform uiObj = uiPool.availableUIObjectsQueue.Dequeue();
 
-        uiObj.SetParent(parentUIObject, false);
-
-        activeUIObjects[uiObj] = uiPool;
-        uiObj.gameObject.SetActive(true);
-        return uiObj;
+        activeUIObjects[uiObject] = uiPool;
+        uiObject.gameObject.SetActive(true);
+        return uiObject;
     }
     public void Release(RectTransform uiObj)
     {

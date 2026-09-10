@@ -80,6 +80,7 @@ public class LogInView : MonoBehaviour, IUpdatable
             loginResult.success = reader.ReadBool();
             loginResult.idAccount = reader.ReadInt();
             loginResult.idSchool = reader.ReadInt();
+            loginResult.nameChar = reader.ReadString();
             loginResult.hair = reader.ReadInt();
             loginResult.level = reader.ReadInt();
             loginResult.maxHP = reader.ReadInt();

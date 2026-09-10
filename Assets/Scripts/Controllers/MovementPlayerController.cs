@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
@@ -17,6 +18,7 @@ public class PlayerAttackDataPacket
 
 public class MovementPlayerController : MonoBehaviour, IUpdatable
 {
+    [SerializeField] private TMP_Text namePlayer;
     [SerializeField] private GameObject shadow; 
     [SerializeField] private GameObject waterShadow;
     [SerializeField] private LayerMask focusLayer;
@@ -32,6 +34,7 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
     private bool isBusy = false;
     private bool isStandingInWater = false;
     private bool isDPadPressed;
+    private RectTransform rectNamePlayer;
 
     private MapView minimap;
     private RectTransform minimapUI;
@@ -55,6 +58,9 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
     {
         animator = GetComponent<Animator>();
         menu = FindAnyObjectByType<MenuView>(FindObjectsInactive.Include);
+
+        if (namePlayer != null)
+            namePlayer.text = LogInView.GetNameChar();
 
         if (waterShadow != null)
             waterShadow.SetActive(false);
@@ -90,6 +96,9 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
         MoveToTargetPosition();
         UpdateAnimation();
 
+        if (rectNamePlayer != null)
+            rectNamePlayer = namePlayer.GetComponent<RectTransform>();
+
         byte[] data = socketManager.GetSyncCallBackData();
         if (data != null && data.Length > 0)
         {
@@ -110,9 +119,10 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
 
             transform.position = new Vector3(callBackPacket.positionData.x, callBackPacket.positionData.y, 0);
             transform.localScale = new Vector3(callBackPacket.scaleData.x, 1, 1);
+            lastPosition = transform.position;
         }
 
-        if (astar.IsStandInWater(mapData, lastPosition.x, lastPosition.y) && lastPosition != Vector2.zero)
+        if (astar.IsStandInWater(mapData, lastPosition.x, lastPosition.y))
         {
             shadow.SetActive(false);
             waterShadow.SetActive(true);
@@ -141,7 +151,11 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
             }
         }
     }
-    public virtual void OnLateUpdate() { }
+    public virtual void OnLateUpdate() 
+    {
+        if (rectNamePlayer != null)
+            rectNamePlayer.localScale = Vector3.one;
+    }
     public virtual void OnFixedUpdate() { }
 
     public void RegisterDontDestroyOnLoad()
@@ -450,6 +464,7 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
                 {
                     transform.position = targetNode;
                     currentPosition = targetNode;
+                    lastPosition = currentPosition;
                 }
                 else
                 {

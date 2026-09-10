@@ -1,11 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using TMPro;
 using UnityEngine;
 using UnityEngine.U2D.Animation;
 using UnityEngine.UI;
 
 public class SyncSpriteController : MonoBehaviour, IUpdatable
 {
+    [SerializeField] private TMP_Text nameOtherPlayer;
     [SerializeField] private GameObject sprites;
     [SerializeField] private GameObject shadow;
     [SerializeField] private GameObject waterShadow;
@@ -291,12 +293,15 @@ public class SyncSpriteController : MonoBehaviour, IUpdatable
 
     public void ApplyServerData(PlayerData serverData)
     {
+        otherPlayerData.nameChar = serverData.nameChar;
         otherPlayerData.idSchool = serverData.idSchool;
         otherPlayerData.weapon = serverData.weapon;
         otherPlayerData.helmet = serverData.helmet;
         otherPlayerData.armor = serverData.armor;
         otherPlayerData.legArmor = serverData.legArmor;
         otherPlayerData.hair = serverData.hair;
+
+        nameOtherPlayer.text = otherPlayerData.nameChar;
 
         if (weaponData != otherPlayerData.weapon)
         {

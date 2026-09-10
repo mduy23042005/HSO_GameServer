@@ -233,6 +233,7 @@ public class SyncOtherPlayersManager : MonoBehaviour, IUpdatable
                     otherPlayerSyncData.otherPlayerData = new PlayerData();
 
                     otherPlayerSyncData.otherPlayerData.idAccount = reader.ReadInt();
+                    otherPlayerSyncData.otherPlayerData.nameChar = reader.ReadString();
                     otherPlayerSyncData.otherPlayerData.level = reader.ReadInt();
                     otherPlayerSyncData.otherPlayerData.idSchool = reader.ReadInt();
                     otherPlayerSyncData.otherPlayerData.hair = reader.ReadInt();

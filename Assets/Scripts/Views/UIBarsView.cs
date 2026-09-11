@@ -92,6 +92,7 @@ public class UIBarsView : MonoBehaviour, IUpdatable
 
         PacketReaderManager reader = new PacketReaderManager(data);
         EnumCmdCode cmd = (EnumCmdCode)reader.ReadInt();
+        int id = reader.ReadInt();
         int idAccount = reader.ReadInt();
         int mobDamage = reader.ReadInt();
         int playerHP = reader.ReadInt();
@@ -110,13 +111,11 @@ public class UIBarsView : MonoBehaviour, IUpdatable
                 }
 
                 GameObject objectDamageUI = PoolManager.Instance.Get(updateHPUI);
-                objectDamageUI.transform.SetParent(PlayerManager.player.GetComponentInChildren<Canvas>().transform, false);
-                objectDamageUI.transform.localPosition = Vector3.zero;
 
                 UpdateHPUIController injuredDamageUI = objectDamageUI.GetComponent<UpdateHPUIController>();
                 if (injuredDamageUI != null)
                 {
-                    injuredDamageUI.SetInjuredDamage(mobDamage);
+                    injuredDamageUI.SetInjuredDamage(MobsManager.Instance.GetMobByID(id).mobObject, mobDamage, PlayerManager.player, new Vector3(0.25f, 1.5f, 0f));
                 }
             }
             lastHP = playerHP;

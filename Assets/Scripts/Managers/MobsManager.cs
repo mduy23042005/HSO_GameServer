@@ -39,7 +39,7 @@ public class MobsManager : MonoBehaviour, IUpdatable
 
     private readonly ConcurrentQueue<SyncMobDataPacket> syncMobsResultPacketQueue = new ConcurrentQueue<SyncMobDataPacket>();
     private readonly ConcurrentQueue<(EnumCmdCode, int, int, int)> playerAttackMobResultPacketQueue = new ConcurrentQueue<(EnumCmdCode, int, int, int)>();
-    private readonly ConcurrentQueue<(EnumCmdCode, int, int, int)> otherPlayerAttackMobResultPacketQueue = new ConcurrentQueue<(EnumCmdCode, int, int, int)>();
+    private readonly ConcurrentQueue<(EnumCmdCode, int, int, int, int)> otherPlayerAttackMobResultPacketQueue = new ConcurrentQueue<(EnumCmdCode, int, int, int, int)>();
 
     private CancellationTokenSource syncTokenSource;
 
@@ -48,10 +48,13 @@ public class MobsManager : MonoBehaviour, IUpdatable
 
     private const float timeOut = 1.2f; // mob update chậm hơn player
 
+    public static MobsManager Instance;
+
     private SocketManager socketManager;
 
     private void Awake()
     {
+        Instance = this;
         socketManager = GameManager.Instance.GetComponent<SocketManager>();
 
         syncTokenSource = new CancellationTokenSource();
@@ -123,11 +126,12 @@ public class MobsManager : MonoBehaviour, IUpdatable
             {
                 PacketReaderManager reader = new PacketReaderManager(otherPlayerAttackMob);
                 EnumCmdCode cmd = (EnumCmdCode)reader.ReadInt();
+                int otherIDAccount = reader.ReadInt();
                 int aimedMobID = reader.ReadInt();
                 int damage = reader.ReadInt();
                 int hpMobAfterAttack = reader.ReadInt();
 
-                otherPlayerAttackMobResultPacketQueue.Enqueue((cmd, aimedMobID, damage, hpMobAfterAttack));
+                otherPlayerAttackMobResultPacketQueue.Enqueue((cmd, otherIDAccount, aimedMobID, damage, hpMobAfterAttack));
             }
 
             await Task.Yield();
@@ -145,6 +149,7 @@ public class MobsManager : MonoBehaviour, IUpdatable
         bool hasPlayerAttack = false;
 
         EnumCmdCode otherCmd = default;
+        int otherIDAccount = 0;
         int otherAimedMobID = 0;
         int otherDamage = 0;
         int otherHpMobAfterAttack = 0;
@@ -165,9 +170,10 @@ public class MobsManager : MonoBehaviour, IUpdatable
         if (otherPlayerAttackMobResultPacketQueue.TryDequeue(out var otherPlayerAttackData))
         {
             otherCmd = otherPlayerAttackData.Item1;
-            otherAimedMobID = otherPlayerAttackData.Item2;
-            otherDamage = otherPlayerAttackData.Item3;
-            otherHpMobAfterAttack = otherPlayerAttackData.Item4;
+            otherIDAccount = otherPlayerAttackData.Item2;
+            otherAimedMobID = otherPlayerAttackData.Item3;
+            otherDamage = otherPlayerAttackData.Item4;
+            otherHpMobAfterAttack = otherPlayerAttackData.Item5;
             hasOtherPlayerAttack = true;
         }
 
@@ -183,13 +189,11 @@ public class MobsManager : MonoBehaviour, IUpdatable
                     if (hpMobAfterAttack < mob.mobData.hp && hpMobAfterAttack >= 0)
                     {
                         GameObject objectDamageUI = PoolManager.Instance.Get(updateHPUI);
-                        objectDamageUI.transform.SetParent(mob.mobObject.GetComponentInChildren<Canvas>().transform, false);
-                        objectDamageUI.transform.localPosition = Vector3.zero;
 
                         UpdateHPUIController injuredDamageUI = objectDamageUI.GetComponent<UpdateHPUIController>();
 
                         if (injuredDamageUI != null)
-                            injuredDamageUI.SetInjuredDamage(damage);
+                            injuredDamageUI.SetInjuredDamage(PlayerManager.player, damage, mob.mobObject, new Vector3(0.25f, 0.5f, 0f));
                     }
 
                     mob.mobData.hp = hpMobAfterAttack;
@@ -207,14 +211,10 @@ public class MobsManager : MonoBehaviour, IUpdatable
                     {
                         GameObject objectDamageUI = PoolManager.Instance.Get(updateHPUI);
 
-                        objectDamageUI.transform.SetParent(mob.mobObject.GetComponentInChildren<Canvas>().transform, false);
-
-                        objectDamageUI.transform.localPosition = Vector3.zero;
-
                         UpdateHPUIController injuredDamageUI = objectDamageUI.GetComponent<UpdateHPUIController>();
 
                         if (injuredDamageUI != null)
-                            injuredDamageUI.SetInjuredDamage(otherDamage);
+                            injuredDamageUI.SetInjuredDamage(SyncOtherPlayersManager.Instance.GetOtherPlayerByID(otherIDAccount).otherPlayerObject, otherDamage, mob.mobObject, new Vector3(0.25f, 0.5f, 0f));
                     }
 
                     mob.mobData.hp = otherHpMobAfterAttack;
@@ -329,6 +329,14 @@ public class MobsManager : MonoBehaviour, IUpdatable
     public Dictionary<int, Mob> GetMobs()
     {
         return mobs;
+    }
+    public Mob GetMobByID(int id)
+    {
+        if (mobs.TryGetValue(id, out Mob mob))
+        {
+            return mob;
+        }
+        return null;
     }
 
     public void RegisterDontDestroyOnLoad()

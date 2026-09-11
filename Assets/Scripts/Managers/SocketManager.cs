@@ -52,6 +52,7 @@ public class SocketManager : MonoBehaviour, IUpdatable
 
     private MovementPlayerController playerMovementController;
     private SpritePlayerController playerSpriteController;
+    private Animator playerAnimator;
 
     private void Awake()
     {
@@ -167,8 +168,12 @@ public class SocketManager : MonoBehaviour, IUpdatable
         if (PlayerManager.player == null)
             return null;
 
-        playerMovementController = PlayerManager.player.GetComponent<MovementPlayerController>();
-        playerSpriteController = PlayerManager.player.GetComponent<SpritePlayerController>();
+        if (playerMovementController == null)
+            playerMovementController = PlayerManager.player.GetComponent<MovementPlayerController>();
+        if (playerSpriteController == null)
+            playerSpriteController = PlayerManager.player.GetComponent<SpritePlayerController>();
+        if (playerAnimator == null)
+            playerAnimator = PlayerManager.player.GetComponentInChildren<Animator>();
 
         PacketWriterManager writer = new PacketWriterManager();
         writer.WriteInt((int)EnumCmdCode.syncOtherPlayersData);
@@ -178,7 +183,7 @@ public class SocketManager : MonoBehaviour, IUpdatable
         writer.WriteFloat(playerMovementController.transform.position.x);
         writer.WriteFloat(playerMovementController.transform.position.y);
 
-        writer.WriteFloat(playerMovementController.transform.localScale.x);
+        writer.WriteFloat(playerAnimator.transform.localScale.x);
 
         writer.WriteInt((int)playerMovementController.GetCurrentState());
         writer.WriteInt((int)playerSpriteController.GetCurrentDirection());

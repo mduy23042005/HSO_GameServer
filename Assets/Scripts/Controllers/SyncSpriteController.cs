@@ -7,7 +7,6 @@ using UnityEngine.UI;
 
 public class SyncSpriteController : MonoBehaviour, IUpdatable
 {
-    [SerializeField] private TMP_Text levelOtherPlayer;
     [SerializeField] private TMP_Text nameOtherPlayer;
     [SerializeField] private GameObject sprites;
     [SerializeField] private GameObject shadow;
@@ -303,8 +302,7 @@ public class SyncSpriteController : MonoBehaviour, IUpdatable
         otherPlayerData.legArmor = serverData.legArmor;
         otherPlayerData.hair = serverData.hair;
 
-        nameOtherPlayer.text = otherPlayerData.nameChar;
-        levelOtherPlayer.text = $"Lv {otherPlayerData.level}";
+        nameOtherPlayer.text = $"Lv {otherPlayerData.level} {otherPlayerData.nameChar}";
 
         if (weaponData != otherPlayerData.weapon)
         {

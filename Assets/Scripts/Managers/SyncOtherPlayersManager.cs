@@ -180,7 +180,7 @@ public class SyncOtherPlayersManager : MonoBehaviour, IUpdatable
     private Dictionary<int, OtherPlayer> otherPlayers = new Dictionary<int, OtherPlayer>();
     private readonly ConcurrentQueue<SyncOtherPlayersResultPacket> syncOtherPlayersResultPacketQueue = new ConcurrentQueue<SyncOtherPlayersResultPacket>();
     private readonly ConcurrentQueue<SyncOtherPlayersResultPacket> syncOtherPlayersRealtimeResultPacketQueue = new ConcurrentQueue<SyncOtherPlayersResultPacket>();
-    private readonly ConcurrentQueue<(EnumCmdCode, int, int, int)> syncUpdateHPUIQueue = new ConcurrentQueue<(EnumCmdCode, int, int, int)>();
+    private readonly ConcurrentQueue<(EnumCmdCode, int, int, int, int)> syncUpdateHPUIQueue = new ConcurrentQueue<(EnumCmdCode, int, int, int, int)>();
 
     private CancellationTokenSource syncTokenSource;
 
@@ -189,10 +189,13 @@ public class SyncOtherPlayersManager : MonoBehaviour, IUpdatable
 
     private List<int> toRemove = new List<int>();
 
+    public static SyncOtherPlayersManager Instance;
+
     private SocketManager socketManager;
 
     private void Awake()
     {
+        Instance = this;
         socketManager = GameManager.Instance.GetComponent<SocketManager>();
         syncTokenSource = new CancellationTokenSource();
         _ = ReadSyncPacketLoop(syncTokenSource.Token);
@@ -297,11 +300,12 @@ public class SyncOtherPlayersManager : MonoBehaviour, IUpdatable
             {
                 PacketReaderManager reader1 = new PacketReaderManager(updateOtherPlayerHPUIData);
                 EnumCmdCode cmd = (EnumCmdCode)reader1.ReadInt();
+                int idMob = reader1.ReadInt();
                 int idAccount = reader1.ReadInt();
                 int mobDamage = reader1.ReadInt();
                 int otherPlayerHP = reader1.ReadInt();
 
-                syncUpdateHPUIQueue.Enqueue((cmd, idAccount, mobDamage, otherPlayerHP));
+                syncUpdateHPUIQueue.Enqueue((cmd, idMob, idAccount, mobDamage, otherPlayerHP));
             }
 
             await Task.Yield();
@@ -317,13 +321,13 @@ public class SyncOtherPlayersManager : MonoBehaviour, IUpdatable
             }
         }
 
-        foreach (var id in toRemove)
+        foreach (var idOtherPlayer in toRemove)
         {
-            if (otherPlayers.TryGetValue(id, out OtherPlayer obj))
+            if (otherPlayers.TryGetValue(idOtherPlayer, out OtherPlayer obj))
             {
                 PoolManager.Instance.Release(obj.otherPlayerObject);
-                otherPlayers.Remove(id);
-                lastUpdateTime.Remove(id);
+                otherPlayers.Remove(idOtherPlayer);
+                lastUpdateTime.Remove(idOtherPlayer);
             }
         }
         toRemove.Clear();
@@ -332,6 +336,7 @@ public class SyncOtherPlayersManager : MonoBehaviour, IUpdatable
         SyncOtherPlayersResultPacket onlineRealtimeData = null;
 
         EnumCmdCode cmd = default;
+        int id = 0;
         int idAccount = 0;
         int mobDamage = 0;
         int otherPlayerHP = 0;
@@ -346,9 +351,10 @@ public class SyncOtherPlayersManager : MonoBehaviour, IUpdatable
         if (syncUpdateHPUIQueue.TryDequeue(out var syncUpdateHPUIData))
         {
             cmd = syncUpdateHPUIData.Item1;
-            idAccount = syncUpdateHPUIData.Item2;
-            mobDamage = syncUpdateHPUIData.Item3;
-            otherPlayerHP = syncUpdateHPUIData.Item4;
+            id = syncUpdateHPUIData.Item2;
+            idAccount = syncUpdateHPUIData.Item3;
+            mobDamage = syncUpdateHPUIData.Item4;
+            otherPlayerHP = syncUpdateHPUIData.Item5;
             hasHPUpdate = true;
         }
 
@@ -362,8 +368,7 @@ public class SyncOtherPlayersManager : MonoBehaviour, IUpdatable
                         continue;
 
                     if (playerData.otherPlayerData.idAccount != LogInView.GetIDAccount())
-                       OnDataFromServer(playerData);
-                    
+                       OnDataFromServer(playerData);                  
                 }
             }
         }
@@ -395,7 +400,7 @@ public class SyncOtherPlayersManager : MonoBehaviour, IUpdatable
                         UpdateHPUIController injuredDamageUI = objectDamageUI.GetComponent<UpdateHPUIController>();
                         if (injuredDamageUI != null)
                         {
-                            injuredDamageUI.SetInjuredDamage(mobDamage);
+                            injuredDamageUI.SetInjuredDamage(MobsManager.Instance.GetMobByID(id).mobObject, mobDamage, otherPlayer.otherPlayerObject, new Vector3(0f, 1.8f, 0f));
                         }
                     }
                     otherPlayers[idAccount].otherPlayerData.hp = otherPlayerHP;
@@ -464,6 +469,14 @@ public class SyncOtherPlayersManager : MonoBehaviour, IUpdatable
     public Dictionary<int, OtherPlayer> GetOtherPlayers()
     {
         return otherPlayers;
+    }
+    public OtherPlayer GetOtherPlayerByID(int idAccount)
+    {
+        if (otherPlayers.TryGetValue(idAccount, out OtherPlayer otherPlayer))
+        {
+            return otherPlayer;
+        }
+        return null;
     }
     public void PrepareForLogOut()
     {

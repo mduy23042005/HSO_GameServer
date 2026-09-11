@@ -198,6 +198,8 @@ public class PoolManager : MonoBehaviour, IUpdatable
             uiObject = uiPool.availableUIObjectsQueue.Dequeue();
         }
 
+        uiObject.SetParent(parentUIObject, false);
+
         activeUIObjects[uiObject] = uiPool;
         uiObject.gameObject.SetActive(true);
         return uiObject;

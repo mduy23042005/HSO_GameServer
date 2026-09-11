@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class SyncSpriteController : MonoBehaviour, IUpdatable
 {
+    [SerializeField] private TMP_Text levelOtherPlayer;
     [SerializeField] private TMP_Text nameOtherPlayer;
     [SerializeField] private GameObject sprites;
     [SerializeField] private GameObject shadow;
@@ -294,6 +295,7 @@ public class SyncSpriteController : MonoBehaviour, IUpdatable
     public void ApplyServerData(PlayerData serverData)
     {
         otherPlayerData.nameChar = serverData.nameChar;
+        otherPlayerData.level = serverData.level;
         otherPlayerData.idSchool = serverData.idSchool;
         otherPlayerData.weapon = serverData.weapon;
         otherPlayerData.helmet = serverData.helmet;
@@ -302,6 +304,7 @@ public class SyncSpriteController : MonoBehaviour, IUpdatable
         otherPlayerData.hair = serverData.hair;
 
         nameOtherPlayer.text = otherPlayerData.nameChar;
+        levelOtherPlayer.text = $"Lv {otherPlayerData.level}";
 
         if (weaponData != otherPlayerData.weapon)
         {

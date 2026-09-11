@@ -18,6 +18,7 @@ public class PlayerAttackDataPacket
 
 public class MovementPlayerController : MonoBehaviour, IUpdatable
 {
+    [SerializeField] private Animator animator;
     [SerializeField] private TMP_Text namePlayer;
     [SerializeField] private GameObject shadow; 
     [SerializeField] private GameObject waterShadow;
@@ -29,12 +30,10 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
     private Vector2 targetPosition;
     private Vector2 lastPosition;
     private bool isMovingToTarget = false;
-    private Animator animator;
     private MenuView menu;
     private bool isBusy = false;
     private bool isStandingInWater = false;
     private bool isDPadPressed;
-    private RectTransform rectNamePlayer;
 
     private MapView minimap;
     private RectTransform minimapUI;
@@ -56,11 +55,10 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
 
     private void Awake()
     {
-        animator = GetComponent<Animator>();
         menu = FindAnyObjectByType<MenuView>(FindObjectsInactive.Include);
 
         if (namePlayer != null)
-            namePlayer.text = LogInView.GetNameChar();
+            namePlayer.text = $"Lv {LogInView.GetLevel()} {LogInView.GetNameChar()}";
 
         if (waterShadow != null)
             waterShadow.SetActive(false);
@@ -96,9 +94,6 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
         MoveToTargetPosition();
         UpdateAnimation();
 
-        if (rectNamePlayer != null)
-            rectNamePlayer = namePlayer.GetComponent<RectTransform>();
-
         byte[] data = socketManager.GetSyncCallBackData();
         if (data != null && data.Length > 0)
         {
@@ -122,7 +117,7 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
             lastPosition = transform.position;
         }
 
-        if (astar.IsStandInWater(mapData, lastPosition.x, lastPosition.y))
+        if (astar.IsStandInWater(mapData, lastPosition.x, lastPosition.y) && lastPosition != Vector2.zero)
         {
             shadow.SetActive(false);
             waterShadow.SetActive(true);
@@ -151,11 +146,7 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
             }
         }
     }
-    public virtual void OnLateUpdate() 
-    {
-        if (rectNamePlayer != null)
-            rectNamePlayer.localScale = Vector3.one;
-    }
+    public virtual void OnLateUpdate() { }
     public virtual void OnFixedUpdate() { }
 
     public void RegisterDontDestroyOnLoad()
@@ -538,6 +529,10 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
     public Vector2 GetLastMovement()
     {
         return lastMove;
+    }
+    public void SetLastPosition(Vector2 position)
+    {
+        lastPosition = position;
     }
 
     public bool GetIsMovingToTarget()

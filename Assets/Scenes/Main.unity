@@ -1140,9 +1140,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerPrefab:
-  - {fileID: 2686158203596186061, guid: 52493cf958f36b04b8df545038d70e57, type: 3}
-  - {fileID: 4709928625883205606, guid: f971d6e622030f64f9d65aa05b819f1c, type: 3}
-  - {fileID: 4099471368125039374, guid: e99a1d3a75702a649a0708317c7d07b2, type: 3}
+  - {fileID: 1887108271017217227, guid: 52493cf958f36b04b8df545038d70e57, type: 3}
+  - {fileID: 6138671254599840282, guid: f971d6e622030f64f9d65aa05b819f1c, type: 3}
+  - {fileID: 8591692311120707276, guid: e99a1d3a75702a649a0708317c7d07b2, type: 3}
 --- !u!114 &918182167
 MonoBehaviour:
   m_ObjectHideFlags: 0

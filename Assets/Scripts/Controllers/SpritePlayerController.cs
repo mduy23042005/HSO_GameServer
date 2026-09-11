@@ -6,8 +6,9 @@ using UnityEngine.U2D.Animation;
 
 public class SpritePlayerController : MonoBehaviour, IUpdatable
 {
+    [SerializeField] private Animator animator;
+
     private SpriteResolver faceResolver;
-    private Animator animator;
     private string lastCategory;
     private string lastLabel;
     private MovementPlayerController movementPlayerController;
@@ -43,7 +44,6 @@ public class SpritePlayerController : MonoBehaviour, IUpdatable
     private void Awake()
     {
         faceResolver = spriteResolvers.FirstOrDefault(r => r.gameObject.name == "4_0_0");
-        animator = GetComponent<Animator>();
         movementPlayerController = GetComponent<MovementPlayerController>();
         listItem0 = ItemController.Instance;
 

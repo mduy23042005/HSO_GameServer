@@ -40,10 +40,7 @@ public class UpdateHPUIController : MonoBehaviour, IUpdatable
         }
     }
 
-    public void OnLateUpdate() 
-    {
-        rect.localScale = Vector3.one;
-    }
+    public void OnLateUpdate() { }
     public void OnFixedUpdate() { }
 
     public void RegisterDontDestroyOnLoad() { }

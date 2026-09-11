@@ -8,12 +8,10 @@ public class PlayerManager : MonoBehaviour, IUpdatable
     // Key: (idSchool, idPartBody, Category, Label)
     public static Dictionary<(int, int, Category, Label), (PositionData, RotationData, ScaleData, ColorData)> bodyDatas;
 
-    private SocketManager socketManager;
     public static GameObject player;
 
     private void Awake()
     {
-        socketManager = GameManager.Instance.GetComponent<SocketManager>();
         InitPartBodyData();
     }
 
@@ -60,6 +58,7 @@ public class PlayerManager : MonoBehaviour, IUpdatable
                 player.transform.position = new Vector2(Random.Range(-10, 6), Random.Range(-9, 5));
                 break;
         }
+        player.GetComponent<MovementPlayerController>().SetLastPosition(player.transform.position);
     }
 
     public void ReleasePlayer()

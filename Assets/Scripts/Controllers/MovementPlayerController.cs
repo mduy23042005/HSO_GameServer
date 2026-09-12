@@ -24,7 +24,7 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
     [SerializeField] private GameObject waterShadow;
     [SerializeField] private LayerMask focusLayer;
 
-    private float moveSpeed = 6f;
+    private float moveSpeed = 5f;
     private Vector2 movement;
     private Vector2 lastMove = new Vector2(0, -1);
     private Vector2 targetPosition;

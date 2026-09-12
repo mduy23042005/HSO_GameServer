@@ -11,7 +11,6 @@ public class LogOutRequestPacket
 public class LogOutController : MonoBehaviour, IUpdatable
 {
     private SocketManager socketManager;
-    private LogOutRequestPacket logOutData;
 
     private void Awake()
     {
@@ -60,13 +59,6 @@ public class LogOutController : MonoBehaviour, IUpdatable
         PoolManager.Instance.ClearObjectPools();
         PoolManager.Instance.ClearUIObjectPools();
 
-        logOutData = null;
-
         SceneManager.LoadScene("Main");
-    }
-
-    public void SetLogOutData(LogOutRequestPacket data)
-    {
-        logOutData = data;
     }
 }

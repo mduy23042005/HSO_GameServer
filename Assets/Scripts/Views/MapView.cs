@@ -15,7 +15,7 @@ public enum TileType
     Ground = 0,
     Water = 1,
     Wall = 2,
-    Obstacle = 3
+    Decoration = 3
 }
 public class MapView : MonoBehaviour, IUpdatable
 {
@@ -31,6 +31,7 @@ public class MapView : MonoBehaviour, IUpdatable
     [SerializeField] private Tilemap groundTilemap;
     [SerializeField] private Tilemap waterTilemap;
     [SerializeField] private Tilemap wallTilemap;
+    [SerializeField] private Tilemap decorationTilemap;
 
     [SerializeField] private List<TileBase> groundTiles;
     [SerializeField] private List<Sprite> groundMinimap;
@@ -43,7 +44,6 @@ public class MapView : MonoBehaviour, IUpdatable
     private Dictionary<TileBase, Sprite> waterLookup;
     private Dictionary<TileBase, Sprite> wallLookup;
 
-    private Dictionary<string, TileType> tileLookup;
     private BoundsInt cachedBounds;
 
     private Vector3 lastPlayerPositionFullMinimap;
@@ -440,6 +440,7 @@ public class MapView : MonoBehaviour, IUpdatable
         groundTilemap.CompressBounds();
         waterTilemap.CompressBounds();
         wallTilemap.CompressBounds();
+        decorationTilemap.CompressBounds();
 
         BoundsInt bounds = groundTilemap.cellBounds;
 
@@ -684,20 +685,10 @@ public class MapView : MonoBehaviour, IUpdatable
 
     private void ExportMapFile()
     {
-        tileLookup = new Dictionary<string, TileType>();
-
-        foreach (var t in groundTiles)
-            tileLookup[t.name] = TileType.Ground;
-
-        foreach (var t in waterTiles)
-            tileLookup[t.name] = TileType.Water;
-
-        foreach (var t in wallTiles)
-            tileLookup[t.name] = TileType.Wall;
-
         groundTilemap.CompressBounds();
         waterTilemap.CompressBounds();
         wallTilemap.CompressBounds();
+        decorationTilemap.CompressBounds();
 
         BoundsInt bounds = groundTilemap.cellBounds;
 
@@ -719,6 +710,7 @@ public class MapView : MonoBehaviour, IUpdatable
                 Vector3Int pos = new Vector3Int(x, y, 0);
 
                 int tileCode =
+                    decorationTilemap.HasTile(pos) ? 3 :
                     wallTilemap.HasTile(pos) ? 2 :
                     waterTilemap.HasTile(pos) ? 1 :
                     groundTilemap.HasTile(pos) ? 0 : 0;
@@ -757,9 +749,9 @@ public class MapView : MonoBehaviour, IUpdatable
         Directory.CreateDirectory(dirClient);
         string pathClient = dirClient + $"/{SceneManager.GetActiveScene().name}.bin";
 
-        string dirWebSocket = "D:/Unity project/HSO_WebSocket/Maps";
-        Directory.CreateDirectory(dirWebSocket);
-        string pathWebSocket = dirWebSocket + $"/{SceneManager.GetActiveScene().name}.bin";
+        string dirServer = "D:/Unity project/HSO_MMORPGServer/HSO_Server/Maps";
+        Directory.CreateDirectory(dirServer);
+        string pathServer = dirServer + $"/{SceneManager.GetActiveScene().name}.bin";
 
         using (BinaryWriter writer = new BinaryWriter(File.Open(pathClient, FileMode.Create)))
         {
@@ -779,7 +771,7 @@ public class MapView : MonoBehaviour, IUpdatable
         }
         Debug.Log("Binary map exported: " + pathClient);
 
-        using (BinaryWriter writer = new BinaryWriter(File.Open(pathWebSocket, FileMode.Create)))
+        using (BinaryWriter writer = new BinaryWriter(File.Open(pathServer, FileMode.Create)))
         {
             writer.Write(width);
             writer.Write(height);
@@ -795,7 +787,7 @@ public class MapView : MonoBehaviour, IUpdatable
                 }
             }
         }
-        Debug.Log("Binary map exported: " + pathWebSocket);
+        Debug.Log("Binary map exported: " + pathServer);
     }
 
     public void RegisterDontDestroyOnLoad() { }

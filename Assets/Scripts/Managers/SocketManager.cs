@@ -250,9 +250,9 @@ public class SocketManager : MonoBehaviour, IUpdatable
         {
             await socket.SendAsync(new ArraySegment<byte>(data), WebSocketMessageType.Binary, true, CancellationToken.None);
         }
-        catch (Exception e)
+        catch
         {
-            Debug.LogError("SendToServer error: " + e.Message);
+            GameObject.Find("LogOut").gameObject.GetComponent<LogOutController>().CLickLogOut();
         }
     }
 

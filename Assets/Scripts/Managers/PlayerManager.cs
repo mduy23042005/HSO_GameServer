@@ -47,17 +47,16 @@ public class PlayerManager : MonoBehaviour, IUpdatable
         {
             case 1: 
                 player = PoolManager.Instance.Get(playerPrefab[0]);
-                player.transform.position = new Vector2(Random.Range(-10, 6), Random.Range(-9, 5));
                 break;
             case 2:
                 player = PoolManager.Instance.Get(playerPrefab[1]);
-                player.transform.position = new Vector2(Random.Range(-10, 6), Random.Range(-9, 5));
                 break;
             case 3:
                 player = PoolManager.Instance.Get(playerPrefab[2]);
-                player.transform.position = new Vector2(Random.Range(-10, 6), Random.Range(-9, 5));
                 break;
         }
+
+        player.transform.position = new Vector2(-9.5f, 1);
         player.GetComponent<MovementPlayerController>().SetLastPosition(player.transform.position);
     }
 

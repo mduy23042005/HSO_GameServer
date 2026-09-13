@@ -374,7 +374,6 @@ GameObject:
   - component: {fileID: 5032661361979406882}
   - component: {fileID: 7406187157727187940}
   - component: {fileID: 8423126532372490692}
-  - component: {fileID: 2047754208971439381}
   m_Layer: 0
   m_Name: ChienBinh
   m_TagString: Untagged
@@ -539,39 +538,6 @@ MonoBehaviour:
   - {fileID: 8900418486510496384}
   - {fileID: 5148037834553113593}
   - {fileID: 7646617800954549492}
---- !u!114 &2047754208971439381
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1887108271017217227}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bf18c17a7a050614a865f26a2d1eb842, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  partsBody:
-  - renderer: {fileID: 606170266482983385}
-    offset: 2
-  - renderer: {fileID: 4777279480959971222}
-    offset: 3
-  - renderer: {fileID: 5563086689064950186}
-    offset: 4
-  - renderer: {fileID: 3020691009837104231}
-    offset: 7
-  - renderer: {fileID: 8959349850197435324}
-    offset: 5
-  - renderer: {fileID: 2372382575139692577}
-    offset: 6
-  - renderer: {fileID: 4983299217871570158}
-    offset: 1
-  - renderer: {fileID: 3630453019283762799}
-    offset: 8
-  - renderer: {fileID: 7457781155378300956}
-    offset: 0
-  - renderer: {fileID: 1946144189141002502}
-    offset: 4
 --- !u!1 &3459168707093721001
 GameObject:
   m_ObjectHideFlags: 0

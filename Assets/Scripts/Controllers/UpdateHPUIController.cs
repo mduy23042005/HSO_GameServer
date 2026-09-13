@@ -42,12 +42,6 @@ public class UpdateHPUIController : MonoBehaviour, IUpdatable
 
             PoolManager.Instance.Release(gameObject);
         }
-
-        if (splatterBlood != null && splatterBlood.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.5f)
-        {
-            PoolManager.Instance.Release(splatterBlood);
-            splatterBlood = null;
-        }
     }
 
     public void OnLateUpdate() { }

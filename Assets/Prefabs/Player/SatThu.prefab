@@ -1145,7 +1145,6 @@ GameObject:
   - component: {fileID: 2870907116992031512}
   - component: {fileID: 7072917848368953088}
   - component: {fileID: 5853040024001243210}
-  - component: {fileID: 9205738290086818526}
   m_Layer: 0
   m_Name: SatThu
   m_TagString: Untagged
@@ -1310,41 +1309,6 @@ MonoBehaviour:
   - {fileID: 8254802035361958119}
   - {fileID: 8815845611978541024}
   - {fileID: 1823436567345571123}
---- !u!114 &9205738290086818526
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6138671254599840282}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bf18c17a7a050614a865f26a2d1eb842, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  partsBody:
-  - renderer: {fileID: 6109698257644088660}
-    offset: 2
-  - renderer: {fileID: 370363199018095885}
-    offset: 3
-  - renderer: {fileID: 4367010478435386593}
-    offset: 4
-  - renderer: {fileID: 2929843618644982817}
-    offset: 7
-  - renderer: {fileID: 6227459922522115458}
-    offset: 5
-  - renderer: {fileID: 1426896634012772081}
-    offset: 6
-  - renderer: {fileID: 2556622027708619098}
-    offset: 1
-  - renderer: {fileID: 8245266139597986252}
-    offset: 8
-  - renderer: {fileID: 7202229992910212040}
-    offset: 4
-  - renderer: {fileID: 5831117412928531888}
-    offset: 0
-  - renderer: {fileID: 7202229992910212040}
-    offset: 4
 --- !u!1 &6600403744367040205
 GameObject:
   m_ObjectHideFlags: 0

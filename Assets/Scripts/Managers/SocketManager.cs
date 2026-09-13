@@ -39,6 +39,7 @@ public class SocketManager : MonoBehaviour, IUpdatable
 
     private readonly ConcurrentQueue<byte[]> logInQueue = new ConcurrentQueue<byte[]>();
     private readonly ConcurrentQueue<byte[]> registerQueue = new ConcurrentQueue<byte[]>();
+    private readonly ConcurrentQueue<byte[]> changeMapQueue = new ConcurrentQueue<byte[]>();
 
     private readonly ConcurrentQueue<byte[]> inventoryQueue = new ConcurrentQueue<byte[]>();
     private readonly ConcurrentQueue<byte[]> inventoryAttributesQueue = new ConcurrentQueue<byte[]>();
@@ -362,6 +363,11 @@ public class SocketManager : MonoBehaviour, IUpdatable
                 registerQueue.Enqueue(data);
                 break;
 
+            case EnumCmdCode.changeMap:
+                if (LogInView.GetIDAccount() != 0)
+                    changeMapQueue.Enqueue(data);
+                break;
+
             case EnumCmdCode.equipment:
                 equipmentQueue.Enqueue(data);
                 break;
@@ -479,6 +485,12 @@ public class SocketManager : MonoBehaviour, IUpdatable
             return data;
         return null;
     }
+    public byte[] GetChangeMapData()
+    {
+        if (changeMapQueue.TryDequeue(out var data))
+            return data;
+        return null;
+    }
     public byte[] GetInventoryData()
     {
         if (inventoryQueue.TryDequeue(out var data))
@@ -557,6 +569,7 @@ public class SocketManager : MonoBehaviour, IUpdatable
 
         ClearQueue(logInQueue);
         ClearQueue(registerQueue);
+        ClearQueue(changeMapQueue);
 
         ClearQueue(inventoryQueue);
         ClearQueue(inventoryAttributesQueue);

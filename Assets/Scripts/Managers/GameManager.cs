@@ -31,7 +31,7 @@ public class GameManager : MonoBehaviour
 #endif
 
         Application.runInBackground = true;
-        Application.targetFrameRate = 90;
+        Application.targetFrameRate = 60;
 
         DontDestroyOnLoad(gameObject);
     }

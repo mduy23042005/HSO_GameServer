@@ -690,10 +690,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8455084141287469970}
-  - component: {fileID: 5655434683433530151}
   - component: {fileID: 3996610361627264304}
-  - component: {fileID: 8194804487198805130}
-  - component: {fileID: 7865879332081218660}
+  - component: {fileID: 5655434683433530151}
   m_Layer: 7
   m_Name: Slime
   m_TagString: Mob
@@ -720,23 +718,6 @@ Transform:
   - {fileID: 213910785027497785}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5655434683433530151
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7256394505456260105}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b9b02097bab624f49b57812d61174f93, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MobController
-  uiNameMob: {fileID: 2011346472715207450}
-  hpBar: {fileID: 3286017500534247851}
-  sprite: {fileID: 4932005711595654297}
-  shadow: {fileID: 2700459933962954053}
-  waterShadow: {fileID: 8198620928803195275}
 --- !u!61 &3996610361627264304
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -767,7 +748,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -783,7 +764,7 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 2, y: 2}
   m_EdgeRadius: 0
---- !u!114 &8194804487198805130
+--- !u!114 &5655434683433530151
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -792,43 +773,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 7256394505456260105}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bf18c17a7a050614a865f26a2d1eb842, type: 3}
+  m_Script: {fileID: 11500000, guid: b9b02097bab624f49b57812d61174f93, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::YSortRenderController
-  partsBody:
-  - renderer: {fileID: 5359719656582826402}
-    offset: 1
-  - renderer: {fileID: 8485722610011547505}
-    offset: 0
-  - renderer: {fileID: 643539855586158865}
-    offset: 10
---- !u!50 &7865879332081218660
-Rigidbody2D:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7256394505456260105}
-  m_BodyType: 0
-  m_Simulated: 0
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 4
+  m_EditorClassIdentifier: Assembly-CSharp::MobController
+  uiNameMob: {fileID: 2011346472715207450}
+  hpBar: {fileID: 3286017500534247851}
+  sprite: {fileID: 4932005711595654297}
+  shadow: {fileID: 2700459933962954053}
+  waterShadow: {fileID: 8198620928803195275}
 --- !u!1 &8198620928803195275
 GameObject:
   m_ObjectHideFlags: 0

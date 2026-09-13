@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerManager : MonoBehaviour, IUpdatable
 {
@@ -7,11 +8,15 @@ public class PlayerManager : MonoBehaviour, IUpdatable
 
     // Key: (idSchool, idPartBody, Category, Label)
     public static Dictionary<(int, int, Category, Label), (PositionData, RotationData, ScaleData, ColorData)> bodyDatas;
+    private int idMap = 1;
+    private Vector2 playerSpawnPosition = new Vector2(-9.5f, 1f);
 
     public static GameObject player;
+    private SocketManager socketManager;
 
     private void Awake()
     {
+        socketManager = GameManager.Instance.GetComponent<SocketManager>();
         InitPartBodyData();
     }
 
@@ -29,7 +34,45 @@ public class PlayerManager : MonoBehaviour, IUpdatable
 
     public void OnUpdate() 
     {
-        if (player == null && LogInView.GetIDAccount() != 0)
+        byte[] data = socketManager.GetChangeMapData();
+        if (data != null && data.Length > 0)
+        { 
+            PacketReaderManager reader = new PacketReaderManager(data);
+            var changeMapPacket = new
+            {
+                cmd = (EnumCmdCode)reader.ReadInt(),
+                newIDMap = reader.ReadInt(),
+                positionData = new
+                {
+                    x = reader.ReadFloat(),
+                    y = reader.ReadFloat(),
+                },
+                scaleData = new
+                {
+                    x = reader.ReadFloat(),
+                }
+            };
+
+            if (idMap == changeMapPacket.newIDMap)
+                return;
+
+            idMap = changeMapPacket.newIDMap;
+            playerSpawnPosition.x = changeMapPacket.positionData.x;
+            playerSpawnPosition.y = changeMapPacket.positionData.y;
+
+            switch (changeMapPacket.newIDMap)
+            {
+                case 1:
+                    SceneManager.LoadScene("Ngôi Làng Nhỏ");
+                    break;
+
+                case 6:
+                    SceneManager.LoadScene("Rừng Ảo Giác");
+                    break;
+            }
+        }
+
+        if (player == null && LogInView.GetIDAccount() != 0 && idMap != 0)
             InitPlayer();
     }
     public void OnLateUpdate() { }
@@ -55,8 +98,17 @@ public class PlayerManager : MonoBehaviour, IUpdatable
                 player = PoolManager.Instance.Get(playerPrefab[2]);
                 break;
         }
+        
+        switch (idMap)
+        {
+            case 1:
+                player.transform.position = new Vector3(playerSpawnPosition.x, playerSpawnPosition.y, 0f);
+                break;
+            case 6:
+                player.transform.position = new Vector3(playerSpawnPosition.x, playerSpawnPosition.y, 0f);
+                break;
+        }
 
-        player.transform.position = new Vector2(-9.5f, 1);
         player.GetComponent<MovementPlayerController>().SetLastPosition(player.transform.position);
     }
 

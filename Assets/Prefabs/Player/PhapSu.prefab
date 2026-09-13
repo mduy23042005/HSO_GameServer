@@ -1442,7 +1442,6 @@ GameObject:
   - component: {fileID: 1551852231290683404}
   - component: {fileID: 9000591006893119364}
   - component: {fileID: 8341456571741801887}
-  - component: {fileID: 5568100930530178207}
   m_Layer: 0
   m_Name: PhapSu
   m_TagString: Untagged
@@ -1605,37 +1604,6 @@ MonoBehaviour:
   - {fileID: 572042630008978659}
   - {fileID: 4172066552520814620}
   - {fileID: 8331721914449845178}
---- !u!114 &5568100930530178207
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8591692311120707276}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bf18c17a7a050614a865f26a2d1eb842, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  partsBody:
-  - renderer: {fileID: 3225603666641593305}
-    offset: 2
-  - renderer: {fileID: 184650809191701850}
-    offset: 3
-  - renderer: {fileID: 4055768060599965147}
-    offset: 4
-  - renderer: {fileID: 1967695997339198789}
-    offset: 7
-  - renderer: {fileID: 3482562428033226275}
-    offset: 5
-  - renderer: {fileID: 6051708764872702052}
-    offset: 6
-  - renderer: {fileID: 4180770089225561180}
-    offset: 1
-  - renderer: {fileID: 3570300921867759253}
-    offset: 8
-  - renderer: {fileID: 8156950028260597355}
-    offset: 0
 --- !u!1 &8960884514848034340
 GameObject:
   m_ObjectHideFlags: 0

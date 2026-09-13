@@ -252,7 +252,7 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
 
             Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Collider2D hit = Physics2D.OverlapPoint(mouseWorldPos, focusLayer);
-            if (hit != null)
+            if (hit != null)       
                 FocusController.focusedObject = hit.gameObject;
             else
                 FocusController.focusedObject = null;

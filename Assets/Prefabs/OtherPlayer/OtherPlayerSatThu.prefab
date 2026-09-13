@@ -1236,10 +1236,9 @@ GameObject:
   - component: {fileID: 7595747503928235416}
   - component: {fileID: 5485520976120586561}
   - component: {fileID: 6913172970931823014}
-  - component: {fileID: 5915007430110103107}
   m_Layer: 7
   m_Name: OtherPlayerSatThu
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 419385456094870383, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1293,7 +1292,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -1346,39 +1345,6 @@ MonoBehaviour:
   - {fileID: 8601408082873988821}
   - {fileID: 8075127840288980230}
   hpBar: {fileID: 4477490427752607496}
---- !u!114 &5915007430110103107
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6002207029804953653}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bf18c17a7a050614a865f26a2d1eb842, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  partsBody:
-  - renderer: {fileID: 6271921742891868655}
-    offset: 2
-  - renderer: {fileID: 2683233007031814000}
-    offset: 3
-  - renderer: {fileID: 5237770057917767744}
-    offset: 4
-  - renderer: {fileID: 2807444641292085595}
-    offset: 7
-  - renderer: {fileID: 5383587453832144511}
-    offset: 5
-  - renderer: {fileID: 874064974519229249}
-    offset: 6
-  - renderer: {fileID: 1889514366955745381}
-    offset: 1
-  - renderer: {fileID: 6647643534189933537}
-    offset: 8
-  - renderer: {fileID: 500064694273438629}
-    offset: 4
-  - renderer: {fileID: 885922119381197995}
-    offset: 0
 --- !u!1 &6324342669091926766
 GameObject:
   m_ObjectHideFlags: 0

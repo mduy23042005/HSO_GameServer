@@ -15,7 +15,8 @@ public enum TileType
     Ground = 0,
     Water = 1,
     Wall = 2,
-    Decoration = 3
+    Decoration = 3,
+    MapTransition = 4
 }
 public class MapView : MonoBehaviour, IUpdatable
 {
@@ -29,9 +30,11 @@ public class MapView : MonoBehaviour, IUpdatable
     [SerializeField] private bool exportMapFile = false;
 
     [SerializeField] private Tilemap groundTilemap;
+    [SerializeField] private Tilemap groundLevel1Tilemap;
     [SerializeField] private Tilemap waterTilemap;
     [SerializeField] private Tilemap wallTilemap;
     [SerializeField] private Tilemap decorationTilemap;
+    [SerializeField] private Tilemap mapTransitionTilemap;
 
     [SerializeField] private List<TileBase> groundTiles;
     [SerializeField] private List<Sprite> groundMinimap;
@@ -438,9 +441,6 @@ public class MapView : MonoBehaviour, IUpdatable
     private BoundsInt GetMapBounds()
     {
         groundTilemap.CompressBounds();
-        waterTilemap.CompressBounds();
-        wallTilemap.CompressBounds();
-        decorationTilemap.CompressBounds();
 
         BoundsInt bounds = groundTilemap.cellBounds;
 
@@ -460,8 +460,10 @@ public class MapView : MonoBehaviour, IUpdatable
     {
         // lấy giới hạn đường bound từng phần của map
         groundTilemap.CompressBounds();
+        groundLevel1Tilemap.CompressBounds();
         waterTilemap.CompressBounds();
         wallTilemap.CompressBounds();
+        mapTransitionTilemap.CompressBounds();
 
         BoundsInt bounds = GetMapBounds();
 
@@ -484,8 +486,22 @@ public class MapView : MonoBehaviour, IUpdatable
 
                 Sprite sprite = null;
 
-                // bắt đầu mapping tilebase sang sprite minimap
-                if (wallTilemap.HasTile(positionInt))
+                if (mapTransitionTilemap.HasTile(positionInt))
+                {
+                    for (int pixelX = 0; pixelX < tileFullMinimapWidth; pixelX++)
+                    {
+                        for (int pixelY = 0; pixelY < tileFullMinimapHeight; pixelY++)
+                        {
+                            texture2D.SetPixel(drawX + pixelX, drawY + pixelY, Color.blue);
+                        }
+                    }
+                }
+                else if (groundLevel1Tilemap.HasTile(positionInt))
+                {
+                    TileBase tile = groundLevel1Tilemap.GetTile(positionInt);
+                    groundLookup.TryGetValue(tile, out sprite);
+                }
+                else if (wallTilemap.HasTile(positionInt))
                 {
                     TileBase tile = wallTilemap.GetTile(positionInt);
                     wallLookup.TryGetValue(tile, out sprite);
@@ -502,10 +518,7 @@ public class MapView : MonoBehaviour, IUpdatable
                 }
 
                 if (sprite == null)
-                {
-                    Debug.Log("Missing sprite for tile");
                     continue;
-                }
 
                 // bắt đầu render sprite cho minimap
                 for (int pixelX = 0; pixelX < tileFullMinimapWidth; pixelX++)
@@ -689,6 +702,7 @@ public class MapView : MonoBehaviour, IUpdatable
         waterTilemap.CompressBounds();
         wallTilemap.CompressBounds();
         decorationTilemap.CompressBounds();
+        mapTransitionTilemap.CompressBounds();
 
         BoundsInt bounds = groundTilemap.cellBounds;
 
@@ -710,6 +724,7 @@ public class MapView : MonoBehaviour, IUpdatable
                 Vector3Int pos = new Vector3Int(x, y, 0);
 
                 int tileCode =
+                    mapTransitionTilemap.HasTile(pos) ? 4 :
                     decorationTilemap.HasTile(pos) ? 3 :
                     wallTilemap.HasTile(pos) ? 2 :
                     waterTilemap.HasTile(pos) ? 1 :

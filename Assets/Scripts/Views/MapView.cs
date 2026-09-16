@@ -764,7 +764,7 @@ public class MapView : MonoBehaviour, IUpdatable
         Directory.CreateDirectory(dirClient);
         string pathClient = dirClient + $"/{SceneManager.GetActiveScene().name}.bin";
 
-        string dirServer = "D:/Unity project/HSO_MMORPGServer/HSO_Server/Maps";
+        string dirServer = "E:/Unity project/HSO_MMORPGServer/HSO_Server/Maps";
         Directory.CreateDirectory(dirServer);
         string pathServer = dirServer + $"/{SceneManager.GetActiveScene().name}.bin";
 

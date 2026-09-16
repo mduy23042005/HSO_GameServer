@@ -87,7 +87,6 @@ public class SocketManager : MonoBehaviour, IUpdatable
         string configPath = GetServerConfigPath();
 #if UNITY_ANDROID
         StartCoroutine(LoadServerConfigForAndroid(configPath));
-        // serverUri = new Uri("ws://192.168.110.109:55556/");
         return true;
 #elif UNITY_STANDALONE || UNITY_EDITOR
         try
@@ -134,8 +133,8 @@ public class SocketManager : MonoBehaviour, IUpdatable
             await socket.ConnectAsync(serverUri, CancellationToken.None);
             Debug.Log("Socket: Kết nối Server thành công!");
 
-            _ = StartSyncPlayerLoop(shutdownCts.Token);
-            _ = Task.Run(() => StartReceiveLoop(shutdownCts.Token));
+            _ = StartSyncPlayerLoop();
+            _ = Task.Run(StartReceiveLoop);
         }
         catch (Exception e)
         {
@@ -197,7 +196,7 @@ public class SocketManager : MonoBehaviour, IUpdatable
 
         return writer.ToArray();
     }
-    private async Task StartSyncPlayerLoop(CancellationToken token)
+    private async Task StartSyncPlayerLoop()
     {
         const int targetTickRate = 30;
         const int tickMS = 1000 / targetTickRate;
@@ -206,7 +205,7 @@ public class SocketManager : MonoBehaviour, IUpdatable
 
         try
         {
-            while (!token.IsCancellationRequested)
+            while (!shutdownCts.IsCancellationRequested)
             {
                 stopwatch.Restart();
 
@@ -225,7 +224,7 @@ public class SocketManager : MonoBehaviour, IUpdatable
                 int sleep = tickMS - (int)stopwatch.ElapsedMilliseconds;
 
                 if (sleep > 0)
-                    await Task.Delay(sleep, token);
+                    await Task.Delay(sleep, shutdownCts.Token);
                 else
                     await Task.Yield();
             }
@@ -257,20 +256,20 @@ public class SocketManager : MonoBehaviour, IUpdatable
         }
     }
 
-    private async Task StartReceiveLoop(CancellationToken token)
+    private async Task StartReceiveLoop()
     {
         var buffer = new byte[4096];
         var messageBuffer = new List<byte>();
 
         try
         {
-            while (!token.IsCancellationRequested && socket != null && socket.State == WebSocketState.Open)
+            while (!shutdownCts.IsCancellationRequested && socket != null && socket.State == WebSocketState.Open)
             {
                 WebSocketReceiveResult result;
 
                 do
                 {
-                    result = await socket.ReceiveAsync(new ArraySegment<byte>(buffer), token);
+                    result = await socket.ReceiveAsync(new ArraySegment<byte>(buffer), shutdownCts.Token);
 
                     if (result.MessageType == WebSocketMessageType.Close)
                         return;

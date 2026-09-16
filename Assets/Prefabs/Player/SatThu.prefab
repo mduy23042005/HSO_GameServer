@@ -1145,6 +1145,7 @@ GameObject:
   - component: {fileID: 2870907116992031512}
   - component: {fileID: 7072917848368953088}
   - component: {fileID: 5853040024001243210}
+  - component: {fileID: 5997352295798392820}
   m_Layer: 0
   m_Name: SatThu
   m_TagString: Untagged
@@ -1232,7 +1233,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.002146393, y: 0.10946506}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -1242,7 +1243,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.88160414, y: 0.6578777}
+  m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
 --- !u!114 &2870907116992031512
 MonoBehaviour:
@@ -1309,6 +1310,19 @@ MonoBehaviour:
   - {fileID: 8254802035361958119}
   - {fileID: 8815845611978541024}
   - {fileID: 1823436567345571123}
+--- !u!210 &5997352295798392820
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6138671254599840282}
+  m_Enabled: 1
+  m_SortingLayerID: 1808891219
+  m_SortingLayer: 3
+  m_SortingOrder: 0
+  m_SortAtRoot: 0
+  m_Sort3DAs2D: 0
 --- !u!1 &6600403744367040205
 GameObject:
   m_ObjectHideFlags: 0

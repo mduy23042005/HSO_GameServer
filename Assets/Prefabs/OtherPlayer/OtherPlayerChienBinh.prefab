@@ -1482,6 +1482,7 @@ GameObject:
   - component: {fileID: 1766983471580102064}
   - component: {fileID: 1607716004203031428}
   - component: {fileID: 2746472192839734756}
+  - component: {fileID: 3301584016267893328}
   m_Layer: 7
   m_Name: OtherPlayerChienBinh
   m_TagString: Untagged
@@ -1591,6 +1592,19 @@ MonoBehaviour:
   - {fileID: 6212742453064986393}
   - {fileID: 6764108109272538086}
   hpBar: {fileID: 9113207847735861047}
+--- !u!210 &3301584016267893328
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4555938910356724988}
+  m_Enabled: 1
+  m_SortingLayerID: 1808891219
+  m_SortingLayer: 3
+  m_SortingOrder: 0
+  m_SortAtRoot: 0
+  m_Sort3DAs2D: 0
 --- !u!1 &4668916797416398653
 GameObject:
   m_ObjectHideFlags: 0

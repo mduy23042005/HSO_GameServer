@@ -23,9 +23,11 @@ public class MobController : MonoBehaviour, IUpdatable
     private MapData mapData;
     private string currentNameMap;
 
+    private int lastHP;
+    private bool isInjured;
+
     private SpriteRenderer flipSprite;
     private Animator animator;
-    private MobsManager mobsManager;
 
     private void Awake()
     {
@@ -33,7 +35,6 @@ public class MobController : MonoBehaviour, IUpdatable
         flipSprite = sprite.GetComponent<SpriteRenderer>();
         animator = sprite.GetComponent<Animator>();
         uiNameMob.text = $"{gameObject.name.Replace("(Clone)", "")}";
-        mobsManager = GameObject.Find("SyncManager").GetComponent<MobsManager>();
     }
     private void OnEnable()
     {
@@ -93,6 +94,16 @@ public class MobController : MonoBehaviour, IUpdatable
     {
         syncMobDataMovement = data;
 
+        if (lastHP == 0)
+            lastHP = syncMobDataMovement.hp;
+
+        if (lastHP > syncMobDataMovement.hp)
+        {
+            syncMobDataMovement.state = State.Injured;
+            isInjured = true;
+            lastHP = syncMobDataMovement.hp;
+        }
+
         flipSprite.flipX = syncMobDataMovement.direction == Direction.Left;
 
         hpBar.maxValue = syncMobDataMovement.maxHP;
@@ -100,13 +111,19 @@ public class MobController : MonoBehaviour, IUpdatable
     }
     private void ReadMap()
     {
-        if (currentNameMap != SceneManager.GetActiveScene().name)
+        string sceneName = SceneManager.GetActiveScene().name;
+
+        if (currentNameMap != sceneName)
         {
+            currentNameMap = sceneName;
             mapData = MapView.mapFileData;
         }
     }
     private void UpdateAnimation()
     {
+        if (isInjured)
+            return;
+
         switch (syncMobDataMovement.state)
         {
             case State.Stand:
@@ -114,16 +131,11 @@ public class MobController : MonoBehaviour, IUpdatable
                     animator.Play("Stand");
                 break;
 
-            case State.Move:
-                if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Move"))
-                    animator.Play("Move");
-                break;
-
             case State.Attack:
                 if (syncMobDataMovement.idState != lastIDState) // 1 packet atk khác (1 đòn đánh khác)
                 {
                     lastIDState = syncMobDataMovement.idState;
-                    animator.Play("Atk", 0, 0f);
+                    animator.Play("Atk");
                 }
                 else // nhiều packet atk cùng loại (nhiều packet atk state cùng loại)
                 {
@@ -136,25 +148,21 @@ public class MobController : MonoBehaviour, IUpdatable
                 if (syncMobDataMovement.idState != lastIDState)
                 {
                     lastIDState = syncMobDataMovement.idState;
-                    animator.Play("Injured", 0, 0f);
+                    animator.Play("Die");
                 }
-                else
+                else // nhiều packet atk cùng loại (nhiều packet atk state cùng loại)
                 {
-                    if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Injured") || animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)
+                    if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Die") || animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)
+                    {
                         animator.Play("Stand");
+                        isInjured = false;
+                    }
                 }
                 break;
 
             case State.Die:
-                if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Die"))
-                {
-                    animator.Play("Die", 0, 0f);           
-                }
-                else
-                {
-                    if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Die") || animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)
-                        mobsManager.ApplyMobDead(syncMobDataMovement.id);
-                }
+                if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Die"))            
+                    animator.Play("Die");           
                 break;
         }
     }

@@ -374,6 +374,7 @@ GameObject:
   - component: {fileID: 5032661361979406882}
   - component: {fileID: 7406187157727187940}
   - component: {fileID: 8423126532372490692}
+  - component: {fileID: 132011183232152837}
   m_Layer: 0
   m_Name: ChienBinh
   m_TagString: Untagged
@@ -461,7 +462,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.002146393, y: 0.10946506}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -471,7 +472,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.88160414, y: 0.6578777}
+  m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
 --- !u!114 &5032661361979406882
 MonoBehaviour:
@@ -538,6 +539,19 @@ MonoBehaviour:
   - {fileID: 8900418486510496384}
   - {fileID: 5148037834553113593}
   - {fileID: 7646617800954549492}
+--- !u!210 &132011183232152837
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1887108271017217227}
+  m_Enabled: 1
+  m_SortingLayerID: 1808891219
+  m_SortingLayer: 3
+  m_SortingOrder: 0
+  m_SortAtRoot: 0
+  m_Sort3DAs2D: 0
 --- !u!1 &3459168707093721001
 GameObject:
   m_ObjectHideFlags: 0

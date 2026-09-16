@@ -692,6 +692,7 @@ GameObject:
   - component: {fileID: 8455084141287469970}
   - component: {fileID: 3996610361627264304}
   - component: {fileID: 5655434683433530151}
+  - component: {fileID: 8948598502118132492}
   m_Layer: 7
   m_Name: Slime
   m_TagString: Mob
@@ -781,6 +782,19 @@ MonoBehaviour:
   sprite: {fileID: 4932005711595654297}
   shadow: {fileID: 2700459933962954053}
   waterShadow: {fileID: 8198620928803195275}
+--- !u!210 &8948598502118132492
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7256394505456260105}
+  m_Enabled: 1
+  m_SortingLayerID: 1808891219
+  m_SortingLayer: 3
+  m_SortingOrder: 0
+  m_SortAtRoot: 0
+  m_Sort3DAs2D: 0
 --- !u!1 &8198620928803195275
 GameObject:
   m_ObjectHideFlags: 0

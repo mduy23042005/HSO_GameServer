@@ -794,6 +794,7 @@ GameObject:
   - component: {fileID: 9016623393643773847}
   - component: {fileID: 1022505872438381526}
   - component: {fileID: 369121675999717179}
+  - component: {fileID: 1209043284419874668}
   m_Layer: 7
   m_Name: OtherPlayerPhapSu
   m_TagString: Untagged
@@ -901,6 +902,19 @@ MonoBehaviour:
   - {fileID: 2259629594542405685}
   - {fileID: 5798832119547285150}
   hpBar: {fileID: 977872974013970617}
+--- !u!210 &1209043284419874668
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5030301652225976667}
+  m_Enabled: 1
+  m_SortingLayerID: 1808891219
+  m_SortingLayer: 3
+  m_SortingOrder: 0
+  m_SortAtRoot: 0
+  m_Sort3DAs2D: 0
 --- !u!1 &5115369031228267483
 GameObject:
   m_ObjectHideFlags: 0

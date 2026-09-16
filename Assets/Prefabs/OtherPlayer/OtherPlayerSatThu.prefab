@@ -1236,6 +1236,7 @@ GameObject:
   - component: {fileID: 7595747503928235416}
   - component: {fileID: 5485520976120586561}
   - component: {fileID: 6913172970931823014}
+  - component: {fileID: 3533464449799642054}
   m_Layer: 7
   m_Name: OtherPlayerSatThu
   m_TagString: Untagged
@@ -1345,6 +1346,19 @@ MonoBehaviour:
   - {fileID: 8601408082873988821}
   - {fileID: 8075127840288980230}
   hpBar: {fileID: 4477490427752607496}
+--- !u!210 &3533464449799642054
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6002207029804953653}
+  m_Enabled: 1
+  m_SortingLayerID: 1808891219
+  m_SortingLayer: 3
+  m_SortingOrder: 0
+  m_SortAtRoot: 0
+  m_Sort3DAs2D: 0
 --- !u!1 &6324342669091926766
 GameObject:
   m_ObjectHideFlags: 0

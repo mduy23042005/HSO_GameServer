@@ -24,7 +24,7 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
     [SerializeField] private GameObject waterShadow;
     [SerializeField] private LayerMask focusLayer;
 
-    private float moveSpeed = 5f;
+    private float moveSpeed = 6f;
     private Vector2 movement;
     private Vector2 lastMove = new Vector2(0, -1);
     private Vector2 targetPosition;
@@ -98,22 +98,12 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
         if (data != null && data.Length > 0)
         {
             PacketReaderManager reader = new PacketReaderManager(data);
-            var callBackPacket = new
-            {
-                cmd = (EnumCmdCode)reader.ReadInt(),
-                positionData = new
-                {
-                    x = reader.ReadFloat(),
-                    y = reader.ReadFloat(),
-                },
-                scaleData = new
-                {
-                    x = reader.ReadFloat(),
-                }
-            };
 
-            transform.position = new Vector3(callBackPacket.positionData.x, callBackPacket.positionData.y, 0);
-            transform.localScale = new Vector3(callBackPacket.scaleData.x, 1, 1);
+            var cmd = (EnumCmdCode)reader.ReadInt();
+            float positionX = reader.ReadFloat();
+            float positionY = reader.ReadFloat();
+
+            transform.position = new Vector3(positionX, positionY, 0);
             lastPosition = transform.position;
         }
 
@@ -386,13 +376,9 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
             {
                 // nếu đang di chuyển mà click chỗ khác, lấy node kế tiếp làm điểm bắt đầu để tránh giật lùi
                 if (path != null && pathIndex < path.Count)
-                {
-                    startMovementPosition = path[pathIndex];
-                }
+                    startMovementPosition = path[pathIndex];        
                 else
-                {
                     startMovementPosition = ToGrid(currentPosition);
-                }
 
                 var newPath = astar.FindPath(mapData, startMovementPosition.x, startMovementPosition.y, targetGrid.x, targetGrid.y);
 

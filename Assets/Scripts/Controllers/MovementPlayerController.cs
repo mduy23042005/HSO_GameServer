@@ -547,37 +547,27 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
         animator.SetFloat("LastVertical", lastMove.y);
     }
 
-    private void TriggerAnimation(string anim, float duration)
-    {
-        if (isBusy)
-            return;
-
-        isBusy = true;
-        animator.SetBool("isMove", false);
-        animator.SetTrigger(anim);
-        UpdateLastMoveToAnimator();
-        StartCoroutine(ResetBusy(duration));
-    }
-    private IEnumerator ResetBusy(float duration)
-    {
-        yield return new WaitForSeconds(duration);
-        isBusy = false;
-    }
-
     public virtual void UpdateAnimation()
     {
         if (isBusy)
             return;
-        if (movement.x == 0 && movement.y == 0)
+
+        if ((movement.x == 0 && movement.y == 0) && currentState != State.Stand)
         {
-            currentState = State.Stand;
-            animator.SetBool("isMove", false);
+            if (currentState != State.Stand)
+            {
+                currentState = State.Stand;
+                animator.SetTrigger("Stand");
+            }
             UpdateLastMoveToAnimator();
         }
         if (movement.x != 0 || movement.y != 0)
         {
-            currentState = State.Move;
-            animator.SetBool("isMove", true);
+            if (currentState != State.Move)
+            {
+                currentState = State.Move;
+                animator.SetTrigger("Move");
+            }
             UpdateMoveToAnimator();
         }
         if (Input.GetKeyDown(KeyCode.J))
@@ -614,10 +604,26 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
             }
         }
     }
+
+    private void UpdateAttackAnimation(string anim, float duration)
+    {
+        if (isBusy)
+            return;
+
+        isBusy = true;
+        animator.SetTrigger(anim);
+        UpdateLastMoveToAnimator();
+        StartCoroutine(ResetBusy(duration));
+    }
+    private IEnumerator ResetBusy(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        isBusy = false;
+    }
     public void UpdateAtkAnimation()
     {
         currentState = State.Attack;
-        TriggerAnimation("Atk", 0.5f);
+        UpdateAttackAnimation("Atk", 0.5f);
 
         PacketWriterManager writer = new PacketWriterManager();
         writer.WriteInt((int)(EnumCmdCode)EnumCmdCode.playerAttackMob); // sau này sẽ quy ước chung thành atk để có thể attack cả other player và mob
@@ -635,7 +641,7 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
     {
         isBusy = true;
         currentState = State.Die;
-        animator.SetBool("isDie", true);
+        animator.SetTrigger("Die");
         UpdateLastMoveToAnimator();
     }
 }

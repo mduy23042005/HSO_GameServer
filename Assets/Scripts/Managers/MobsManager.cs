@@ -312,19 +312,6 @@ public class MobsManager : MonoBehaviour, IUpdatable
             lastUpdateTime.Remove(idMob);
         }
     }
-    public void ClearAllMobs()
-    {
-        foreach (var kv in mobs)
-        {
-            if (kv.Value != null)
-            {
-                PoolManager.Instance.Release(kv.Value.mobObject);
-            }
-        }
-
-        mobs.Clear();
-        lastUpdateTime.Clear();
-    }
 
     public Dictionary<int, Mob> GetMobs()
     {

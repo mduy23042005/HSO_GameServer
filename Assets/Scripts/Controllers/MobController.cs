@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using static UnityEditorInternal.VersionControl.ListControl;
 
 public class MobController : MonoBehaviour, IUpdatable
 {
@@ -17,14 +18,16 @@ public class MobController : MonoBehaviour, IUpdatable
     private Vector2 movement;
 
     private SyncMobData syncMobDataMovement;
-    private int lastIDState = -1; // nhằm phân biệt các trạng thái atk/injured khác nhau khi có nhiều packet cùng loại chỉ yêu cầu thực hiện 1 trạng thái
+    private int lastIDStateStand = -1;
+    private int lastIDStateAtk = -1;
+    private int lastIDStateInjured = -1;
+    private int lastIDStateDie = -1;
     private bool isStandingInWater = false;
     private AStarManager astar = new AStarManager();
     private MapData mapData;
     private string currentNameMap;
 
     private int lastHP;
-    private bool isInjured;
 
     private SpriteRenderer flipSprite;
     private Animator animator;
@@ -50,7 +53,9 @@ public class MobController : MonoBehaviour, IUpdatable
     public void RegisterDontDestroyOnLoad() { }
     public void OnUpdate() 
     {
-        if (syncMobDataMovement == null) return;
+        if (syncMobDataMovement == null) 
+            return;
+
         Vector2 targetPos = new Vector2(syncMobDataMovement.posX, syncMobDataMovement.posY);
         movement = targetPos;
 
@@ -87,6 +92,10 @@ public class MobController : MonoBehaviour, IUpdatable
     public void OnLateUpdate() { }
     public void OnFixedUpdate() 
     {
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName("Atk") || animator.GetCurrentAnimatorStateInfo(0).IsName("Injured") || animator.GetCurrentAnimatorStateInfo(0).IsName("Die"))
+            return;
+
+        flipSprite.flipX = syncMobDataMovement.direction == Direction.Left;
         transform.position = Vector2.MoveTowards(transform.position, movement, 2f * Time.fixedDeltaTime);
     }
 
@@ -100,11 +109,8 @@ public class MobController : MonoBehaviour, IUpdatable
         if (lastHP > syncMobDataMovement.hp)
         {
             syncMobDataMovement.state = State.Injured;
-            isInjured = true;
             lastHP = syncMobDataMovement.hp;
         }
-
-        flipSprite.flipX = syncMobDataMovement.direction == Direction.Left;
 
         hpBar.maxValue = syncMobDataMovement.maxHP;
         hpBar.value = syncMobDataMovement.hp;
@@ -121,48 +127,42 @@ public class MobController : MonoBehaviour, IUpdatable
     }
     private void UpdateAnimation()
     {
-        if (isInjured)
-            return;
-
         switch (syncMobDataMovement.state)
         {
             case State.Stand:
-                if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Stand"))
-                    animator.Play("Stand");
+                if (syncMobDataMovement.idState != lastIDStateStand)
+                {
+                    lastIDStateStand = syncMobDataMovement.idState;
+                    animator.SetTrigger("Stand");
+                }
                 break;
 
             case State.Attack:
-                if (syncMobDataMovement.idState != lastIDState) // 1 packet atk khác (1 đòn đánh khác)
+                if (syncMobDataMovement.idState != lastIDStateAtk)
                 {
-                    lastIDState = syncMobDataMovement.idState;
-                    animator.Play("Atk");
-                }
-                else // nhiều packet atk cùng loại (nhiều packet atk state cùng loại)
-                {
-                    if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Atk") || animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)
-                        animator.Play("Stand");
+                    lastIDStateAtk = syncMobDataMovement.idState;
+                    animator.SetTrigger("Atk");
                 }
                 break;
 
             case State.Injured:
-                if (syncMobDataMovement.idState != lastIDState)
+                if (syncMobDataMovement.idState != lastIDStateInjured)
                 {
-                    lastIDState = syncMobDataMovement.idState;
-                    animator.Play("Die");
-                }
-                else // nhiều packet atk cùng loại (nhiều packet atk state cùng loại)
-                {
-                    if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Die") || animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)
-                    {
-                        animator.Play("Stand");
-                        isInjured = false;
-                    }
+                    lastIDStateInjured = syncMobDataMovement.idState;
+                    animator.SetTrigger("Injured");
                 }
                 break;
 
             case State.Die:
-                if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Die"))            
-                    animator.Play("Die");           
+                if (syncMobDataMovement.idState != lastIDStateDie)
+                {
+                    lastIDStateDie = syncMobDataMovement.idState;
+                    animator.SetTrigger("Die");
+                }
+
+                if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.9f)
+                    MobsManager.Instance.ApplyMobDead(syncMobDataMovement.id);
+
                 break;
         }
     }

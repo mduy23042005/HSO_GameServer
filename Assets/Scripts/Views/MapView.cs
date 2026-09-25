@@ -367,9 +367,8 @@ public class MapView : MonoBehaviour, IUpdatable
                 bool isVisibleInMinimap;
                 Vector2 position = WorldToMinimapPosition(mob.mobObject.transform.position, out isVisibleInMinimap);
                 if (lastMobsPositionMinimap[id].anchoredPosition != position)
-                {
                     lastMobsPositionMinimap[id].anchoredPosition = position;
-                }
+                
                 lastMobsPositionMinimap[id].gameObject.SetActive(isVisibleInMinimap);
             }
 
@@ -444,21 +443,46 @@ public class MapView : MonoBehaviour, IUpdatable
 
         BoundsInt bounds = groundTilemap.cellBounds;
 
-        bounds.xMin = Mathf.Min(bounds.xMin, waterTilemap.cellBounds.xMin);
-        bounds.yMin = Mathf.Min(bounds.yMin, waterTilemap.cellBounds.yMin);
-        bounds.xMax = Mathf.Max(bounds.xMax, waterTilemap.cellBounds.xMax);
-        bounds.yMax = Mathf.Max(bounds.yMax, waterTilemap.cellBounds.yMax);
+        if (waterTilemap != null)
+        {
+            waterTilemap.CompressBounds();
+            bounds.xMin = Mathf.Min(bounds.xMin, waterTilemap.cellBounds.xMin);
+            bounds.yMin = Mathf.Min(bounds.yMin, waterTilemap.cellBounds.yMin);
+            bounds.xMax = Mathf.Max(bounds.xMax, waterTilemap.cellBounds.xMax);
+            bounds.yMax = Mathf.Max(bounds.yMax, waterTilemap.cellBounds.yMax);
+        }
 
-        bounds.xMin = Mathf.Min(bounds.xMin, wallTilemap.cellBounds.xMin);
-        bounds.yMin = Mathf.Min(bounds.yMin, wallTilemap.cellBounds.yMin);
-        bounds.xMax = Mathf.Max(bounds.xMax, wallTilemap.cellBounds.xMax);
-        bounds.yMax = Mathf.Max(bounds.yMax, wallTilemap.cellBounds.yMax);
+        if (wallTilemap != null)
+        {
+            wallTilemap.CompressBounds();
+            bounds.xMin = Mathf.Min(bounds.xMin, wallTilemap.cellBounds.xMin);
+            bounds.yMin = Mathf.Min(bounds.yMin, wallTilemap.cellBounds.yMin);
+            bounds.xMax = Mathf.Max(bounds.xMax, wallTilemap.cellBounds.xMax);
+            bounds.yMax = Mathf.Max(bounds.yMax, wallTilemap.cellBounds.yMax);
+        }
+
+        if (groundLevel1Tilemap != null)
+        {
+            groundLevel1Tilemap.CompressBounds();
+            bounds.xMin = Mathf.Min(bounds.xMin, groundLevel1Tilemap.cellBounds.xMin);
+            bounds.yMin = Mathf.Min(bounds.yMin, groundLevel1Tilemap.cellBounds.yMin);
+            bounds.xMax = Mathf.Max(bounds.xMax, groundLevel1Tilemap.cellBounds.xMax);
+            bounds.yMax = Mathf.Max(bounds.yMax, groundLevel1Tilemap.cellBounds.yMax);
+        }
+
+        if (mapTransitionTilemap != null)
+        {
+            mapTransitionTilemap.CompressBounds();
+            bounds.xMin = Mathf.Min(bounds.xMin, mapTransitionTilemap.cellBounds.xMin);
+            bounds.yMin = Mathf.Min(bounds.yMin, mapTransitionTilemap.cellBounds.yMin);
+            bounds.xMax = Mathf.Max(bounds.xMax, mapTransitionTilemap.cellBounds.xMax);
+            bounds.yMax = Mathf.Max(bounds.yMax, mapTransitionTilemap.cellBounds.yMax);
+        }
 
         return bounds;
     }
     private void DrawFullMinimap()
     {
-        // lấy giới hạn đường bound từng phần của map
         groundTilemap.CompressBounds();
         groundLevel1Tilemap.CompressBounds();
         waterTilemap.CompressBounds();
@@ -470,9 +494,12 @@ public class MapView : MonoBehaviour, IUpdatable
         // lấy kích thước pixel của 1 tile minimap, tất cả tile base đề cùng kích thước nên lấy tile base đầu tiên của ground
         int tileFullMinimapWidth = (int)groundMinimap[0].textureRect.width;
         int tileFullMinimapHeight = (int)groundMinimap[0].textureRect.height;
-        int borderSize = tileFullMinimapWidth;
 
-        Texture2D texture2D = new Texture2D(bounds.size.x * tileFullMinimapWidth, bounds.size.y * tileFullMinimapHeight);
+        Texture2D texture2D = new Texture2D(bounds.size.x * tileFullMinimapWidth, bounds.size.y * tileFullMinimapHeight, TextureFormat.RGBA32, false);
+
+        // xóa sạnh texture ban đầu về màu trong suốt
+        Color[] clearColors = new Color[texture2D.width * texture2D.height];
+        texture2D.SetPixels(clearColors);
 
         // bắt đầu đọc theo tilemap
         for (int x = bounds.xMin; x < bounds.xMax; x++)
@@ -526,35 +553,33 @@ public class MapView : MonoBehaviour, IUpdatable
                     for (int pixelY = 0; pixelY < tileFullMinimapHeight; pixelY++)
                     {
                         Color c = sprite.texture.GetPixel((int)sprite.textureRect.x + pixelX, (int)sprite.textureRect.y + pixelY);
-                        texture2D.SetPixel(drawX + pixelX, drawY + pixelY, c);
+                        if (c.a > 0.1f) // chỉ đè những pixel không trong suốt
+                        {
+                            texture2D.SetPixel(drawX + pixelX, drawY + pixelY, c);
+                        }
                     }
                 }
             }
         }
 
-        texture2D.wrapMode = TextureWrapMode.Clamp;
         texture2D.Apply();
-
-        // gắn những gì đã render lên UI
         fullMinimapUI.texture = texture2D;
         minimapUI.texture = texture2D;
 
-        //điều chỉnh kích thước của RawImage để hiển thị đúng kích thước minimap
         fullMinimapUI.rectTransform.sizeDelta = new Vector2(texture2D.width, texture2D.height);
     }
     private void UpdateMinimapViewport()
     {
         BoundsInt bounds = cachedBounds;
-
         Rect fullRect = fullMinimapUI.rectTransform.rect;
 
         float fullWidth = fullRect.width;
         float fullHeight = fullRect.height;
 
-        Vector3Int playerCell = groundTilemap.WorldToCell(PlayerManager.player.transform.position);
+        Vector3 playerPos = PlayerManager.player.transform.position;
 
-        float normalizedX = (playerCell.x - bounds.xMin) / (float)bounds.size.x;
-        float normalizedY = (playerCell.y - bounds.yMin) / (float)bounds.size.y;
+        float normalizedX = (playerPos.x - bounds.xMin) / (float)bounds.size.x;
+        float normalizedY = (playerPos.y - bounds.yMin) / (float)bounds.size.y;
 
         float viewWidth = minimapUI.rectTransform.rect.width / fullWidth;
         float viewHeight = minimapUI.rectTransform.rect.height / fullHeight;
@@ -571,10 +596,9 @@ public class MapView : MonoBehaviour, IUpdatable
     {
         BoundsInt bounds = cachedBounds;
         Rect rect = fullMinimapUI.rectTransform.rect;
-        Vector3Int cell = groundTilemap.WorldToCell(worldPosition);
 
-        float normalizedX = (cell.x - bounds.xMin) / (float)bounds.size.x;
-        float normalizedY = (cell.y - bounds.yMin) / (float)bounds.size.y;
+        float normalizedX = (worldPosition.x - bounds.xMin) / (float)bounds.size.x;
+        float normalizedY = (worldPosition.y - bounds.yMin) / (float)bounds.size.y;
 
         float uiX = normalizedX * rect.width - rect.width * 0.5f;
         float uiY = normalizedY * rect.height - rect.height * 0.5f;
@@ -584,10 +608,9 @@ public class MapView : MonoBehaviour, IUpdatable
     private Vector2 WorldToMinimapPosition(Vector3 worldPosition, out bool isVisible)
     {
         BoundsInt bounds = cachedBounds;
-        Vector3Int cell = groundTilemap.WorldToCell(worldPosition);
 
-        float normalizedX = (cell.x - bounds.xMin) / (float)bounds.size.x;
-        float normalizedY = (cell.y - bounds.yMin) / (float)bounds.size.y;
+        float normalizedX = (worldPosition.x - bounds.xMin) / (float)bounds.size.x;
+        float normalizedY = (worldPosition.y - bounds.yMin) / (float)bounds.size.y;
 
         Rect uv = minimapUI.uvRect;
         Rect rect = minimapUI.rectTransform.rect;
@@ -629,7 +652,10 @@ public class MapView : MonoBehaviour, IUpdatable
         if (path == null || path.Count == 0 || startIndex >= path.Count)
             return;
 
-        int size = (int)groundMinimap[0].textureRect.width;
+        int fullSize = (int)groundMinimap[0].textureRect.width;
+
+        // Thu nhỏ kích thước marker A* lại (ví dụ bằng 20% kích thước của tile, bạn có thể chỉnh số này tùy ý từ 0.2f đến 0.5f)
+        int aStarMarkerSize = Mathf.RoundToInt(fullSize * 0.2f);
 
         // Chỉ duyệt và vẽ marker từ startIndex trở đi
         for (int i = startIndex; i < path.Count; i++)
@@ -642,14 +668,14 @@ public class MapView : MonoBehaviour, IUpdatable
             aStarWorldPositions.Add(worldPos);
 
             markerFullMinimap.GetComponent<Image>().color = Color.white;
-            markerFullMinimap.sizeDelta = new Vector2(size, size);
+            markerFullMinimap.sizeDelta = new Vector2(aStarMarkerSize, aStarMarkerSize);
             markerFullMinimap.anchorMin = new Vector2(0.5f, 0.5f);
             markerFullMinimap.anchorMax = new Vector2(0.5f, 0.5f);
             markerFullMinimap.pivot = new Vector2(0.5f, 0.5f);
             markerFullMinimap.anchoredPosition = WorldToFullMinimapPosition(worldPos);
 
             markerMinimap.GetComponent<Image>().color = Color.white;
-            markerMinimap.sizeDelta = new Vector2(size, size);
+            markerMinimap.sizeDelta = new Vector2(aStarMarkerSize, aStarMarkerSize);
             markerMinimap.anchorMin = new Vector2(0.5f, 0.5f);
             markerMinimap.anchorMax = new Vector2(0.5f, 0.5f);
             markerMinimap.pivot = new Vector2(0.5f, 0.5f);

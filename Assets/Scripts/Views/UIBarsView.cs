@@ -110,13 +110,11 @@ public class UIBarsView : MonoBehaviour, IUpdatable
                     PlayerManager.player.GetComponent<SpritePlayerController>().UpdateInjuredSprite();
                 }
 
-                GameObject objectDamageUI = PoolManager.Instance.Get(updateHPUI);
+                UpdateHPUIController injuredDamageUI = PoolManager.Instance.Get(updateHPUI).GetComponent<UpdateHPUIController>();
 
-                UpdateHPUIController injuredDamageUI = objectDamageUI.GetComponent<UpdateHPUIController>();
-                if (injuredDamageUI != null)
-                {
-                    injuredDamageUI.SetInjuredDamage(MobsManager.Instance.GetMobByID(id).mobObject, mobDamage, PlayerManager.player, new Vector3(0.25f, 1.5f, 0f));
-                }
+                var mob = MobsManager.Instance != null ? MobsManager.Instance.GetMobByID(id) : null;
+                if (injuredDamageUI != null && mob != null && mob.mobObject != null && PlayerManager.player != null)
+                    injuredDamageUI.SetInjuredDamage(MobsManager.Instance.GetMobByID(id)?.mobObject, mobDamage, PlayerManager.player, new Vector3(0.25f, 1.5f, 0f));
             }
             lastHP = playerHP;
         }

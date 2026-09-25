@@ -391,18 +391,13 @@ public class SyncOtherPlayersManager : MonoBehaviour, IUpdatable
         {
             if (otherPlayers.TryGetValue(idAccount, out OtherPlayer otherPlayer) && otherPlayer != null && otherPlayer.otherPlayerData != null)
             {
-                if (otherPlayer.otherPlayerData.hp != otherPlayerHP)
+                if (mobDamage > 0)
                 {
-                    if (otherPlayerHP < otherPlayer.otherPlayerData.hp)
-                    {
-                        GameObject objectDamageUI = Instantiate(updateHPUI, otherPlayer.otherPlayerObject.GetComponentInChildren<Canvas>().transform, false);
+                    UpdateHPUIController injuredDamageUI = PoolManager.Instance.Get(updateHPUI).GetComponent<UpdateHPUIController>();
 
-                        UpdateHPUIController injuredDamageUI = objectDamageUI.GetComponent<UpdateHPUIController>();
-                        if (injuredDamageUI != null)
-                        {
-                            injuredDamageUI.SetInjuredDamage(MobsManager.Instance.GetMobByID(id).mobObject, mobDamage, otherPlayer.otherPlayerObject, new Vector3(0f, 1.8f, 0f));
-                        }
-                    }
+                    if (injuredDamageUI != null && MobsManager.Instance.GetMobByID(id) != null && MobsManager.Instance.GetMobByID(id).mobObject != null)
+                        injuredDamageUI.SetInjuredDamage(MobsManager.Instance.GetMobByID(id).mobObject, mobDamage, otherPlayer.otherPlayerObject, new Vector3(0f, 1.8f, 0f));
+
                     otherPlayers[idAccount].otherPlayerData.hp = otherPlayerHP;
                 }
             }

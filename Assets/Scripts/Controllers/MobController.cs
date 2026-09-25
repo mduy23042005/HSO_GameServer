@@ -4,7 +4,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using static UnityEditorInternal.VersionControl.ListControl;
 
 public class MobController : MonoBehaviour, IUpdatable
 {
@@ -51,9 +50,9 @@ public class MobController : MonoBehaviour, IUpdatable
         }
     }
     public void RegisterDontDestroyOnLoad() { }
-    public void OnUpdate() 
+    public void OnUpdate()
     {
-        if (syncMobDataMovement == null) 
+        if (syncMobDataMovement == null)
             return;
 
         Vector2 targetPos = new Vector2(syncMobDataMovement.posX, syncMobDataMovement.posY);
@@ -90,7 +89,7 @@ public class MobController : MonoBehaviour, IUpdatable
         UpdateAnimation();
     }
     public void OnLateUpdate() { }
-    public void OnFixedUpdate() 
+    public void OnFixedUpdate()
     {
         if (animator.GetCurrentAnimatorStateInfo(0).IsName("Atk") || animator.GetCurrentAnimatorStateInfo(0).IsName("Injured") || animator.GetCurrentAnimatorStateInfo(0).IsName("Die"))
             return;
@@ -160,7 +159,7 @@ public class MobController : MonoBehaviour, IUpdatable
                     animator.SetTrigger("Die");
                 }
 
-                if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.9f)
+                if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 1f)
                     MobsManager.Instance.ApplyMobDead(syncMobDataMovement.id);
 
                 break;
@@ -172,7 +171,6 @@ public class MobController : MonoBehaviour, IUpdatable
         if (syncMobDataMovement == null) return 0;
         return syncMobDataMovement.id;
     }
-
     public string GetNameMob()
     {
         if (syncMobDataMovement == null) return "";

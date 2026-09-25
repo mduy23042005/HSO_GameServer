@@ -319,7 +319,7 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
                 minimap.ClearAStarPath();
 
             float speed = moveSpeed * Time.deltaTime;
-            transform.position += new Vector3(movement.x, movement.y, 0) * speed;
+            transform.position += (Vector3)(movement * speed);
             lastPosition = transform.position;
         }
     }

@@ -386,9 +386,6 @@ public class SocketManager : MonoBehaviour, IUpdatable
             case EnumCmdCode.playerAttackMob:
                 playerAttackMobQueues.Enqueue(data);
                 break;
-            case EnumCmdCode.otherPlayerAttackMob:
-                otherPlayerAttackMobQueues.Enqueue(data);
-                break;
 
             default:
                 receiveQueue.Enqueue(data);
@@ -528,12 +525,6 @@ public class SocketManager : MonoBehaviour, IUpdatable
     public byte[] GetPlayerAttackMobData()
     {
         if (playerAttackMobQueues.TryDequeue(out var data))
-            return data;
-        return null;
-    }
-    public byte[] GetOtherPlayerAttackMobData()
-    {
-        if (otherPlayerAttackMobQueues.TryDequeue(out var data))
             return data;
         return null;
     }

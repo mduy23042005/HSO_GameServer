@@ -134,11 +134,15 @@ public class ReadAttributesView : MonoBehaviour, IUpdatable
                 if (equipmentAttributesResult == null || equipmentAttributesResult.attributesData.item0_Attributes.Count == 0)
                     return;
 
-                nameItemText.text = $"{equipmentAttributesResult.attributesData.nameItem0_1}";
+                nameItemText.text = equipmentAttributesResult.attributesData.nameItem0_1;
+                itemInfoText.text = "";
+
                 for (int i = 0; i < equipmentAttributesResult.attributesData.item0_Attributes.Count; i++)
                 {
                     itemInfoText.text += $"{equipmentAttributesResult.attributesData.item0_Attributes[i].Value} {equipmentAttributesResult.attributesData.nameAttributes[i].NameAttribute} \n";
                 }
+
+                cmdReadAttributes = null;
                 break;
 
             case "inventoryAttributes":
@@ -183,11 +187,15 @@ public class ReadAttributesView : MonoBehaviour, IUpdatable
                 if (inventoryAttributesResult == null || inventoryAttributesResult.attributesItem0Data.item0_Attributes.Count == 0)
                     return;
 
-                nameItemText.text = $"{inventoryAttributesResult.attributesItem0Data.nameItem0}";
+                nameItemText.text = inventoryAttributesResult.attributesItem0Data.nameItem0;
+                itemInfoText.text = "";
+
                 for (int i = 0; i < inventoryAttributesResult.attributesItem0Data.item0_Attributes.Count; i++)
                 {
                     itemInfoText.text += $"{inventoryAttributesResult.attributesItem0Data.item0_Attributes[i].Value} {inventoryAttributesResult.attributesItem0Data.nameAttributes[i].NameAttribute} \n";
                 }
+
+                cmdReadAttributes = null;
                 break;
 
             default:

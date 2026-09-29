@@ -49,43 +49,53 @@ public class EquipItem0RequestPacket
 
 public class ReadAttributesView : MonoBehaviour, IUpdatable
 {
-    [SerializeField] private GameObject itemInfo;
     [SerializeField] private GameObject nameItem;
+    [SerializeField] private GameObject attributeItem;
     [SerializeField] private GameObject ring1Ring2Menu;
     [SerializeField] private List<Image> ring1Ring2Choice;
 
-    private TMP_Text itemInfoText;
+    private TMP_Text attributeItemText;
     private TMP_Text nameItemText;
     private string ringSlot;
     private int indexSlot;
 
     private SocketManager socketManager;
     private string cmdReadAttributes;
+    private Action<InventorySlotClickEvent> onInventorySlotClick;
+    private Action<EquipmentSlotClickEvent> onEquipmentSlotClick;
 
     private void Awake()
     {
         socketManager = GameManager.Instance.GetComponent<SocketManager>();
 
-        itemInfoText = itemInfo.GetComponent<TMP_Text>();
+        attributeItemText = attributeItem.GetComponent<TMP_Text>();
         nameItemText = nameItem.GetComponent<TMP_Text>();
+
+        onInventorySlotClick = eventData => ReadAttributeInInventory(eventData.idSlot);
+        onEquipmentSlotClick = eventData => ReadAttributeInEquipment(eventData.idSlot);
     }
 
     private void Start()
     {
-        itemInfo.SetActive(false);
+        attributeItem.SetActive(false);
         ring1Ring2Menu.SetActive(false);
     }
 
     private void OnEnable()
     {
         GameManager.Instance.Register(this);
+
+        ObserverManager.Register(onInventorySlotClick);
+        ObserverManager.Register(onEquipmentSlotClick);
+
     }
     private void OnDisable()
     {
         if (GameManager.Instance != null)
-        {
             GameManager.Instance.Unregister(this);
-        }
+
+        ObserverManager.Unregister(onInventorySlotClick);
+        ObserverManager.Unregister(onEquipmentSlotClick);
     }
 
     public void OnUpdate()
@@ -135,11 +145,11 @@ public class ReadAttributesView : MonoBehaviour, IUpdatable
                     return;
 
                 nameItemText.text = equipmentAttributesResult.attributesData.nameItem0_1;
-                itemInfoText.text = "";
+                attributeItemText.text = "";
 
                 for (int i = 0; i < equipmentAttributesResult.attributesData.item0_Attributes.Count; i++)
                 {
-                    itemInfoText.text += $"{equipmentAttributesResult.attributesData.item0_Attributes[i].Value} {equipmentAttributesResult.attributesData.nameAttributes[i].NameAttribute} \n";
+                    attributeItemText.text += $"{equipmentAttributesResult.attributesData.item0_Attributes[i].Value} {equipmentAttributesResult.attributesData.nameAttributes[i].NameAttribute} \n";
                 }
 
                 cmdReadAttributes = null;
@@ -188,11 +198,11 @@ public class ReadAttributesView : MonoBehaviour, IUpdatable
                     return;
 
                 nameItemText.text = inventoryAttributesResult.attributesItem0Data.nameItem0;
-                itemInfoText.text = "";
+                attributeItemText.text = "";
 
                 for (int i = 0; i < inventoryAttributesResult.attributesItem0Data.item0_Attributes.Count; i++)
                 {
-                    itemInfoText.text += $"{inventoryAttributesResult.attributesItem0Data.item0_Attributes[i].Value} {inventoryAttributesResult.attributesItem0Data.nameAttributes[i].NameAttribute} \n";
+                    attributeItemText.text += $"{inventoryAttributesResult.attributesItem0Data.item0_Attributes[i].Value} {inventoryAttributesResult.attributesItem0Data.nameAttributes[i].NameAttribute} \n";
                 }
 
                 cmdReadAttributes = null;
@@ -220,37 +230,25 @@ public class ReadAttributesView : MonoBehaviour, IUpdatable
         if (idItem0_1 == 0 || idSlot >= equipmentInfo.Count) // Slot trống hoặc ngoài phạm vi
         {
             Debug.Log("Slot này chưa có item");
-            itemInfo.SetActive(false);
+            attributeItem.SetActive(false);
             return;
         }
 
-        ReadAttributesEquipmentRequestPacket equipmentAttributesRequestPacket = new ReadAttributesEquipmentRequestPacket
-        {
-            cmd = EnumCmdCode.equipmentAttributes,
-            idAccount = idAccount,
-            id = equipmentInfo[idSlot].id,
-            idItem0_1 = idItem0_1
-        };
-
         PacketWriterManager writer = new PacketWriterManager();
-        writer.WriteInt((int)equipmentAttributesRequestPacket.cmd);
-        writer.WriteInt(equipmentAttributesRequestPacket.idAccount);
-        writer.WriteInt(equipmentAttributesRequestPacket.id);
-        writer.WriteInt(equipmentAttributesRequestPacket.idItem0_1);
+        writer.WriteInt((int)EnumCmdCode.equipmentAttributes);
+        writer.WriteInt(idAccount);
+        writer.WriteInt(equipmentInfo[idSlot].id);
+        writer.WriteInt(idItem0_1);
 
         await socketManager.SendToServer(writer.ToArray());
 
-        itemInfo.SetActive(true);
-        itemInfoText.text = "";
+        attributeItem.SetActive(true);
+        attributeItemText.text = "";
 
         nameItem.SetActive(true);
         nameItemText.text = "";
 
         cmdReadAttributes = "equipmentAttributes";
-    }
-    public void ClickReadAttributeInEquipment(int idSlot)
-    {
-        ReadAttributeInEquipment(idSlot);
     }
 
     // Đọc attribute của item trong inventory
@@ -263,39 +261,27 @@ public class ReadAttributesView : MonoBehaviour, IUpdatable
         if (idSlot < 0 || idSlot >= inventoryInfo.Count)
         {
             Debug.Log("Slot không có item");
-            itemInfo.SetActive(false);
+            attributeItem.SetActive(false);
             return;
         }
 
         int idItem0 = inventoryInfo[idSlot].idItem0;
 
-        ReadAttributesInventoryRequestPacket inventoryAttributesRequestPacket = new ReadAttributesInventoryRequestPacket
-        {
-            cmd = EnumCmdCode.inventoryAttributes,
-            idAccount = idAccount,
-            id = inventoryInfo[idSlot].id,
-            idItem0 = inventoryInfo[idSlot].idItem0
-        };
-
         PacketWriterManager writer = new PacketWriterManager();
-        writer.WriteInt((int)inventoryAttributesRequestPacket.cmd);
-        writer.WriteInt(inventoryAttributesRequestPacket.idAccount);
-        writer.WriteInt(inventoryAttributesRequestPacket.id);
-        writer.WriteInt(inventoryAttributesRequestPacket.idItem0);
+        writer.WriteInt((int)EnumCmdCode.inventoryAttributes);
+        writer.WriteInt(idAccount);
+        writer.WriteInt(inventoryInfo[idSlot].id);
+        writer.WriteInt(inventoryInfo[idSlot].idItem0);
 
         await socketManager.SendToServer(writer.ToArray());
 
-        itemInfo.SetActive(true);
-        itemInfoText.text = "";
+        attributeItem.SetActive(true);
+        attributeItemText.text = "";
 
         nameItem.SetActive(true);
         nameItemText.text = "";
 
         cmdReadAttributes = "inventoryAttributes";
-    }
-    public void ClickReadAttributeInInventory(int idSlot)
-    {
-        ReadAttributeInInventory(idSlot);
     }
 
     // Trang bị item từ inventory vào equipment
@@ -376,8 +362,8 @@ public class ReadAttributesView : MonoBehaviour, IUpdatable
             await socketManager.SendToServer(writer.ToArray());
             
             ringSlot = null;
-            itemInfoText.text = "";
-            itemInfo.SetActive(false);
+            attributeItemText.text = "";
+            attributeItem.SetActive(false);
 
             nameItemText.text = "";
             nameItem.SetActive(false);

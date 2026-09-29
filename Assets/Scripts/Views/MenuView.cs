@@ -1,13 +1,16 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
 public class MenuView : MonoBehaviour, IUpdatable
 {
     [SerializeField] private GameObject nameItem;
-    [SerializeField] private GameObject itemInfo;
+    [SerializeField] private GameObject attributeItem;
 
-    [SerializeField] private List<GameObject> listDemo;
+    [SerializeField] private List<RectTransform> demoPlayerUIPrefabs;
+
+    [SerializeField] private RectTransform demoPlayerParentUIObject;
+    private RectTransform demoPlayerUI;
 
     private TMP_Text nameItemText;
     private TMP_Text infoText;
@@ -15,19 +18,26 @@ public class MenuView : MonoBehaviour, IUpdatable
 
     private void Awake()
     {
-        infoText = itemInfo.GetComponent<TMP_Text>();
+        infoText = attributeItem.GetComponent<TMP_Text>();
         nameItemText = nameItem.GetComponent<TMP_Text>();
     }
     private void Start()
     {
-        int idSchool = LogInView.GetIDSchool();
+        int idSchool = LogInView.GetIDSchool() - 1;
 
-        for (int i = 0; i < listDemo.Count; i++)
+        if (idSchool < 0)
+            idSchool = 0;
+
+        if (LogInView.GetIDAccount() != 0)
         {
-            if (i != idSchool - 1)
-            {
-                Destroy(listDemo[i]);
-            }
+            demoPlayerUI = PoolManager.Instance.Get(demoPlayerUIPrefabs[idSchool], demoPlayerParentUIObject);
+
+            demoPlayerUI.anchorMin = new Vector2(0.5f, 0.5f);
+            demoPlayerUI.anchorMax = new Vector2(0.5f, 0.5f);
+            demoPlayerUI.pivot = new Vector2(0.5f, 0.5f);
+
+            demoPlayerUI.anchoredPosition = Vector2.zero;
+            demoPlayerUI.localPosition = Vector3.zero;
         }
 
         gameObject.SetActive(isActive);
@@ -64,7 +74,7 @@ public class MenuView : MonoBehaviour, IUpdatable
         gameObject.SetActive(isActive);
 
         infoText.text = "";
-        itemInfo.SetActive(false);
+        attributeItem.SetActive(false);
 
         nameItemText.text = "";
         nameItem.SetActive(false);

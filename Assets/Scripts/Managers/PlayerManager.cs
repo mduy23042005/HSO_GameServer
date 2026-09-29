@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class PlayerManager : MonoBehaviour, IUpdatable
 {
-    [SerializeField] private List<GameObject> playerPrefab;
+    [SerializeField] private List<GameObject> playerPrefabs;
 
     // Key: (idSchool, idPartBody, Category, Label)
     public static Dictionary<(int, int, Category, Label), (PositionData, RotationData, ScaleData, ColorData)> bodyDatas;
@@ -23,6 +23,8 @@ public class PlayerManager : MonoBehaviour, IUpdatable
     private void OnEnable()
     {
         GameManager.Instance.Register(this);
+
+        ObserverManager.Register<LogOutClickEvent>(eventData => ReleasePlayer());
     }
     private void OnDisable()
     {
@@ -30,6 +32,8 @@ public class PlayerManager : MonoBehaviour, IUpdatable
         {
             GameManager.Instance.Unregister(this);
         }
+
+        ObserverManager.Unregister<LogOutClickEvent>(eventData => ReleasePlayer());
     }
 
     public void OnUpdate() 
@@ -89,13 +93,13 @@ public class PlayerManager : MonoBehaviour, IUpdatable
         switch (idSchool)
         {
             case 1: 
-                player = PoolManager.Instance.Get(playerPrefab[0]);
+                player = PoolManager.Instance.Get(playerPrefabs[0]);
                 break;
             case 2:
-                player = PoolManager.Instance.Get(playerPrefab[1]);
+                player = PoolManager.Instance.Get(playerPrefabs[1]);
                 break;
             case 3:
-                player = PoolManager.Instance.Get(playerPrefab[2]);
+                player = PoolManager.Instance.Get(playerPrefabs[2]);
                 break;
         }
         

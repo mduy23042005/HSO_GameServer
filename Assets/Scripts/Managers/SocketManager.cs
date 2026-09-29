@@ -63,6 +63,23 @@ public class SocketManager : MonoBehaviour, IUpdatable
             return;
         }
     }
+
+    private void OnEnable()
+    {
+        ObserverManager.Register<LogOutClickEvent>(evenData =>
+        {
+            ClearAllQueues();
+            CloseSocket();
+        });
+    }
+    private void OnDisable()
+    {
+        ObserverManager.Unregister<LogOutClickEvent>(evenData =>
+        {
+            ClearAllQueues();
+            CloseSocket();
+        });
+    }
     private string GetServerConfigPath()
     {
         return Path.Combine(Application.streamingAssetsPath, "ServerConfig.json");
@@ -252,7 +269,7 @@ public class SocketManager : MonoBehaviour, IUpdatable
         }
         catch
         {
-            GameObject.Find("LogOut").gameObject.GetComponent<LogOutController>().CLickLogOut();
+            GameObject.Find("LogOut").gameObject.GetComponent<LogOutController>().StartLogOut();
         }
     }
 

@@ -163,12 +163,28 @@ public class MobsManager : MonoBehaviour, IUpdatable
                     if (idAccount == LogInView.GetIDAccount())
                     {
                         if (injuredDamageUI != null && PlayerManager.player != null)
-                            injuredDamageUI.SetInjuredDamage(PlayerManager.player, damage, mob.mobObject, new Vector3(0.25f, 0.5f, 0f));
+                        {
+                            ObserverManager.Notify(new Injured
+                            {
+                                attackObject = PlayerManager.player,
+                                damage = damage,
+                                injuredObject = mob.mobObject,
+                                splatterBloodPosition = new Vector3(0.25f, 0.5f, 0f)
+                            });
+                        }
                     }
                     else
                     {
                         if (injuredDamageUI != null && SyncOtherPlayersManager.Instance.GetOtherPlayerByID(idAccount) != null && SyncOtherPlayersManager.Instance.GetOtherPlayerByID(idAccount).otherPlayerObject != null)
-                            injuredDamageUI.SetInjuredDamage(SyncOtherPlayersManager.Instance.GetOtherPlayerByID(idAccount).otherPlayerObject, damage, mob.mobObject, new Vector3(0.25f, 0.5f, 0f));
+                        {
+                            ObserverManager.Notify(new Injured
+                            {
+                                attackObject = SyncOtherPlayersManager.Instance.GetOtherPlayerByID(idAccount).otherPlayerObject,
+                                damage = damage,
+                                injuredObject = mob.mobObject,
+                                splatterBloodPosition = new Vector3(0.25f, 0.5f, 0f)
+                            });
+                        }
                     }
 
                     mob.mobData.hp = hpMobAfterAttack;

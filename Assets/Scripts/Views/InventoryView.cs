@@ -1,69 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-public class InventoryRequestPacket
-{
-    public EnumCmdCode cmd;
-    public int idAccount;
-}
-
-public class InventoryItem0Data
-{
-    public int id;
-    public int idItem0;
-    public string nameItem0;
-    public string typeItem0;
-    public int category;
-    public int idSchool;
-    public int level;
-    public List<Item0_Attribute> item0_Attributes;
-    public List<Attribute> nameAttributes;
-}
-public class InventoryItem1Data
-{
-    public int id;
-    public int idItem1;
-    public string nameItem1;
-    public string typeItem1;
-    public int level;
-    public List<Item1_Attribute> item1_Attributes;
-    public List<Attribute> nameAttributes;
-}
-public class InventoryItem2Data
-{
-    public int id;
-    public int idItem2;
-    public string nameItem2;
-    public int level;
-    public int quality;
-}
-public class InventoryItem3Data
-{
-    public int id;
-    public int idItem3;
-    public string nameItem3;
-    public int level;
-    public string details;
-    public int quality;
-}
-public class InventoryItem4Data
-{
-    public int id;
-    public int idItem4;
-    public string nameItem4;
-    public int level;
-    public string details;
-    public int quality;
-}
-public class InventoryResultPacket
-{
-    public EnumCmdCode cmd;
-    public List<InventoryItem0Data> inventoryItem0Data;
-    public List<InventoryItem1Data> inventoryItem1Data;
-    public List<InventoryItem2Data> inventoryItem2Data;
-    public List<InventoryItem3Data> inventoryItem3Data;
-    public List<InventoryItem4Data> inventoryItem4Data;
-}
 
 public class InventoryView : MonoBehaviour, IUpdatable
 {
@@ -102,6 +39,8 @@ public class InventoryView : MonoBehaviour, IUpdatable
     private void OnEnable()
     {
         GameManager.Instance.Register(this);
+
+        ObserverManager.Register<LogOutClickEvent>(eventData => ClearInventoryData());
     }
     private void OnDisable()
     {
@@ -109,6 +48,8 @@ public class InventoryView : MonoBehaviour, IUpdatable
         {
             GameManager.Instance.Unregister(this);
         }
+
+        ObserverManager.Unregister<LogOutClickEvent>(eventData => ClearInventoryData());
     }
 
     public void OnUpdate() // tạm thời chỉ có item0

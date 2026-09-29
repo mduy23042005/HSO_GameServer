@@ -76,14 +76,14 @@ public class UIBarsView : MonoBehaviour, IUpdatable
         canvasScaleInPlayer.x = PlayerManager.player.transform.localScale.x < 0 ? -Math.Abs(canvasScaleInPlayer.x) : Math.Abs(canvasScaleInPlayer.x);
         PlayerManager.player.GetComponentInChildren<Canvas>().transform.localScale = canvasScaleInPlayer;
 
-        PlayerInjured();
+        PlayerInjuredByMob();
         // tính năng heal sẽ cập nhật tiếp theo ở đây
     }
 
     public void OnLateUpdate() { }
     public void OnFixedUpdate() { }
 
-    private void PlayerInjured()
+    private void PlayerInjuredByMob()
     {
         byte[] data = socketManager.GetMobsAttackPlayerData();
 
@@ -113,8 +113,17 @@ public class UIBarsView : MonoBehaviour, IUpdatable
                 UpdateHPUIController injuredDamageUI = PoolManager.Instance.Get(updateHPUI).GetComponent<UpdateHPUIController>();
 
                 var mob = MobsManager.Instance != null ? MobsManager.Instance.GetMobByID(id) : null;
+
                 if (injuredDamageUI != null && mob != null && mob.mobObject != null && PlayerManager.player != null)
-                    injuredDamageUI.SetInjuredDamage(MobsManager.Instance.GetMobByID(id)?.mobObject, mobDamage, PlayerManager.player, new Vector3(0.25f, 1.5f, 0f));
+                {
+                    ObserverManager.Notify(new Injured
+                    {
+                        attackObject = MobsManager.Instance.GetMobByID(id)?.mobObject,
+                        damage = mobDamage,
+                        injuredObject = PlayerManager.player,
+                        splatterBloodPosition = new Vector3(0.25f, 1.5f, 0f)
+                    });
+                }
             }
             lastHP = playerHP;
         }

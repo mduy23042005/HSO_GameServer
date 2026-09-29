@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
@@ -158,10 +160,6 @@ public class MobController : MonoBehaviour, IUpdatable
                     lastIDStateDie = syncMobDataMovement.idState;
                     animator.SetTrigger("Die");
                 }
-
-                if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 1f)
-                    MobsManager.Instance.ApplyMobDead(syncMobDataMovement.id);
-
                 break;
         }
     }
@@ -170,10 +168,5 @@ public class MobController : MonoBehaviour, IUpdatable
     {
         if (syncMobDataMovement == null) return 0;
         return syncMobDataMovement.id;
-    }
-    public string GetNameMob()
-    {
-        if (syncMobDataMovement == null) return "";
-        return syncMobDataMovement.nameMob;
     }
 }

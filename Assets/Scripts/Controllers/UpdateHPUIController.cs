@@ -20,6 +20,13 @@ public class UpdateHPUIController : MonoBehaviour, IUpdatable
     private void OnEnable()
     {
         GameManager.Instance.Register(this);
+
+        ObserverManager.Register<Injured>(eventData => SetInjuredDamage(
+            eventData.attackObject,
+            eventData.damage,
+            eventData.injuredObject,
+            eventData.splatterBloodPosition
+        ));
     }
     private void OnDisable()
     {

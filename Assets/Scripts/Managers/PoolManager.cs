@@ -45,6 +45,12 @@ public class PoolManager : MonoBehaviour, IUpdatable
     private void OnEnable()
     {
         GameManager.Instance.Register(this);
+
+        ObserverManager.Register<LogOutClickEvent>(eventData =>
+        {
+            ClearObjectPools();
+            ClearUIObjectPools();
+        });
     }
     private void OnDisable()
     {
@@ -52,6 +58,12 @@ public class PoolManager : MonoBehaviour, IUpdatable
         {
             GameManager.Instance.Unregister(this);
         }
+
+        ObserverManager.Unregister<LogOutClickEvent>(eventData =>
+        {
+            ClearObjectPools();
+            ClearUIObjectPools();
+        });
     }
 
     public void OnUpdate() { }

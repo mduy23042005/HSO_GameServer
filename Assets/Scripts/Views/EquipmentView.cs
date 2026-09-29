@@ -2,27 +2,6 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EquipmentRequestPacket
-{
-    public EnumCmdCode cmd;
-    public int idAccount;
-}
-public class EquipmentData
-{
-    public int id;
-    public int idItem0_1;
-    public string nameItem0_1;
-    public int category;
-    public string slotName;
-    public List<Item0_Attribute> item0_Attributes;
-    public List<Attribute> nameAttributes;
-}
-public class EquipmentResultPacket
-{
-    public EnumCmdCode cmd;
-    public List<EquipmentData> equipmentData;
-}
-
 public class EquipmentView : MonoBehaviour, IUpdatable
 {
     [Header("Danh sách các ô hành trang")]
@@ -51,6 +30,12 @@ public class EquipmentView : MonoBehaviour, IUpdatable
     private void OnEnable()
     {
         GameManager.Instance.Register(this);
+
+        ObserverManager.Register<LogOutClickEvent>(eventData => 
+        { 
+            ClearEquipmentData();
+            ClearListImagesEquipmentSlots();
+        });
     }
     private void OnDisable()
     {
@@ -58,6 +43,12 @@ public class EquipmentView : MonoBehaviour, IUpdatable
         {
             GameManager.Instance.Unregister(this);
         }
+
+        ObserverManager.Unregister<LogOutClickEvent>(eventData =>
+        {
+            ClearEquipmentData();
+            ClearListImagesEquipmentSlots();
+        });
     }
     public void OnUpdate()
     {

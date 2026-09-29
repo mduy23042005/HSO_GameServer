@@ -4,28 +4,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class LogInRequestPacket
-{
-    public EnumCmdCode cmd;
-    public string username;
-    public string password;
-}
-public class LogInResultPacket
-{
-    public EnumCmdCode cmd;
-    public bool success;
-    public int idAccount;
-    public int idSchool;
-    public string nameChar;
-    public int hair;
-    public int level;
-    public int maxHP;
-    public int maxMP;
-    public int hp;
-    public int mp;
-    public string message;
-}
-
 public class LogInView : MonoBehaviour, IUpdatable
 {
     [SerializeField] private TMP_InputField inputUsername;
@@ -160,14 +138,10 @@ public class LogInView : MonoBehaviour, IUpdatable
 
             for (int i = 0; i < equipmentResult.equipmentData.Count; i++)
             {
-                if (i >= EquipmentView.equipments.Count)
-                {
-                    EquipmentView.equipments.Add(equipmentResult.equipmentData[i]);
-                }
-                else
-                {
+                if (i >= EquipmentView.equipments.Count)                
+                    EquipmentView.equipments.Add(equipmentResult.equipmentData[i]);               
+                else                
                     EquipmentView.equipments[i] = equipmentResult.equipmentData[i];
-                }
             }
         }
         while (InventoryView.inventoryItem0s == null || InventoryView.inventoryItem0s.Count == 0)
@@ -207,13 +181,9 @@ public class LogInView : MonoBehaviour, IUpdatable
             for (int i = 0; i < inventoryResult.inventoryItem0Data.Count; i++)
             {
                 if (i >= InventoryView.inventoryItem0s.Count)
-                {
-                    InventoryView.inventoryItem0s.Add(inventoryResult.inventoryItem0Data[i]);
-                }
+                    InventoryView.inventoryItem0s.Add(inventoryResult.inventoryItem0Data[i]);               
                 else
-                {
-                    InventoryView.inventoryItem0s[i] = inventoryResult.inventoryItem0Data[i];
-                }
+                    InventoryView.inventoryItem0s[i] = inventoryResult.inventoryItem0Data[i];               
             }
         }
 
@@ -229,17 +199,10 @@ public class LogInView : MonoBehaviour, IUpdatable
         string username = inputUsername.text.Trim();
         string password = inputPassword.text.Trim();
 
-        LogInRequestPacket logInRequestPacket = new LogInRequestPacket
-        {
-            cmd = EnumCmdCode.login,
-            username = username,
-            password = password
-        };
-
         PacketWriterManager writer = new PacketWriterManager();
-        writer.WriteInt((int)logInRequestPacket.cmd);
-        writer.WriteString(logInRequestPacket.username);
-        writer.WriteString(logInRequestPacket.password);
+        writer.WriteInt((int)EnumCmdCode.login);
+        writer.WriteString(username);
+        writer.WriteString(password);
 
         textMessage.color = Color.yellow;
         textMessage.text = "Đang đăng nhập...";

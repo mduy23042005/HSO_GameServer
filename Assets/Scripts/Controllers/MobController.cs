@@ -105,12 +105,23 @@ public class MobController : MonoBehaviour, IUpdatable
         syncMobDataMovement = data;
 
         if (lastHP == 0)
-            lastHP = syncMobDataMovement.hp;
-
-        if (lastHP > syncMobDataMovement.hp)
         {
-            syncMobDataMovement.state = State.Injured;
             lastHP = syncMobDataMovement.hp;
+        }
+        else
+        {
+            if (syncMobDataMovement.hp <= 0 || hpBar.value <= 0)
+            {
+                if (lastHP > 0)
+                    animator.SetTrigger("Die");
+                
+                lastHP = syncMobDataMovement.hp;
+            }
+            else if (lastHP > syncMobDataMovement.hp)
+            {
+                animator.SetTrigger("Injured");
+                lastHP = syncMobDataMovement.hp;
+            }
         }
 
         hpBar.maxValue = syncMobDataMovement.maxHP;
@@ -128,6 +139,9 @@ public class MobController : MonoBehaviour, IUpdatable
     }
     private void UpdateAnimation()
     {
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName("Atk") || animator.GetCurrentAnimatorStateInfo(0).IsName("Injured") || animator.GetCurrentAnimatorStateInfo(0).IsName("Die"))
+            return;
+
         switch (syncMobDataMovement.state)
         {
             case State.Stand:
@@ -143,22 +157,6 @@ public class MobController : MonoBehaviour, IUpdatable
                 {
                     lastIDStateAtk = syncMobDataMovement.idState;
                     animator.SetTrigger("Atk");
-                }
-                break;
-
-            case State.Injured:
-                if (syncMobDataMovement.idState != lastIDStateInjured)
-                {
-                    lastIDStateInjured = syncMobDataMovement.idState;
-                    animator.SetTrigger("Injured");
-                }
-                break;
-
-            case State.Die:
-                if (syncMobDataMovement.idState != lastIDStateDie)
-                {
-                    lastIDStateDie = syncMobDataMovement.idState;
-                    animator.SetTrigger("Die");
                 }
                 break;
         }

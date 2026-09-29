@@ -58,6 +58,9 @@ public class UpdateHPUIController : MonoBehaviour, IUpdatable
 
     public void SetInjuredDamage(GameObject attackObject, int damage, GameObject injuredObject, Vector3 splatterBloodPosition)
     {
+        if (!injuredObject.activeSelf)
+            return;
+
         var txt = GetComponentInChildren<TMP_Text>();
         if (txt != null)
             txt.text = $"- {damage}";

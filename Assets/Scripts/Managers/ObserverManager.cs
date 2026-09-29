@@ -30,11 +30,16 @@ public static class ObserverManager
         Type type = typeof(T);
 
         if (!observers.ContainsKey(type))
-        {
             return;
+        
+        List<Delegate> listenerList;
+
+        lock (observers[type])
+        {
+            listenerList = new List<Delegate>(observers[type]);
         }
 
-        foreach (var action in observers[type])
+        foreach (var action in listenerList)
         {
             try
             {

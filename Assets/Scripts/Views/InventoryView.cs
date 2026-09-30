@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,6 +11,8 @@ public class InventoryView : MonoBehaviour, IUpdatable
     public static List<InventoryItem0Data> inventoryItem0s;
 
     private SocketManager socketManager;
+
+    private Action<LogOutClickEvent> logoutObserver;
 
     private void Awake()
     {
@@ -34,13 +37,15 @@ public class InventoryView : MonoBehaviour, IUpdatable
             inventorySlots[i].sprite = null;
             inventorySlots[i].color = new Color(0f, 0f, 0f, 0f);
         }
+
+        logoutObserver = eventData => ClearInventoryData();
     }
 
     private void OnEnable()
     {
         GameManager.Instance.Register(this);
 
-        ObserverManager.Register<LogOutClickEvent>(eventData => ClearInventoryData());
+        ObserverManager.Register<LogOutClickEvent>(logoutObserver);
     }
     private void OnDisable()
     {
@@ -49,7 +54,7 @@ public class InventoryView : MonoBehaviour, IUpdatable
             GameManager.Instance.Unregister(this);
         }
 
-        ObserverManager.Unregister<LogOutClickEvent>(eventData => ClearInventoryData());
+        ObserverManager.Unregister<LogOutClickEvent>(logoutObserver);
     }
 
     public void OnUpdate() // tạm thời chỉ có item0

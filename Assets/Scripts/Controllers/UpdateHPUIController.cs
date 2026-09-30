@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using System;
+using TMPro;
 using UnityEngine;
 
 public class UpdateHPUIController : MonoBehaviour, IUpdatable
@@ -12,21 +13,24 @@ public class UpdateHPUIController : MonoBehaviour, IUpdatable
 
     private GameObject splatterBlood;
 
+    private Action<Injured> injuredObserver;
+
     private void Awake()
     {
         rect = GetComponent<RectTransform>();
+        injuredObserver = eventData => SetInjuredDamage(
+            eventData.attackObject,
+            eventData.damage,
+            eventData.injuredObject,
+            eventData.splatterBloodPosition
+        );
     }
 
     private void OnEnable()
     {
         GameManager.Instance.Register(this);
 
-        ObserverManager.Register<Injured>(eventData => SetInjuredDamage(
-            eventData.attackObject,
-            eventData.damage,
-            eventData.injuredObject,
-            eventData.splatterBloodPosition
-        ));
+        ObserverManager.Register<Injured>(injuredObserver);
     }
     private void OnDisable()
     {
@@ -34,6 +38,8 @@ public class UpdateHPUIController : MonoBehaviour, IUpdatable
         {
             GameManager.Instance.Unregister(this);
         }
+
+        ObserverManager.Unregister<Injured>(injuredObserver);
     }
 
     public void OnUpdate()

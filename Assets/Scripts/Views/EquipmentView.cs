@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,6 +12,8 @@ public class EquipmentView : MonoBehaviour, IUpdatable
     public static List<EquipmentData> equipments = new List<EquipmentData>();
 
     private SocketManager socketManager;
+
+    private Action<LogOutClickEvent> logoutObserver;
 
     private void Awake()
     {
@@ -25,17 +28,19 @@ public class EquipmentView : MonoBehaviour, IUpdatable
                 equipmentSlots[i].sprite = ItemController.Instance.GetItem0(itemId).iconItem0;
         }
         listImagesEquipment = equipmentSlots;
+
+        logoutObserver = eventData =>
+        {
+            ClearEquipmentData();
+            ClearListImagesEquipmentSlots();
+        };
     }
 
     private void OnEnable()
     {
         GameManager.Instance.Register(this);
 
-        ObserverManager.Register<LogOutClickEvent>(eventData => 
-        { 
-            ClearEquipmentData();
-            ClearListImagesEquipmentSlots();
-        });
+        ObserverManager.Register<LogOutClickEvent>(logoutObserver);
     }
     private void OnDisable()
     {
@@ -44,11 +49,7 @@ public class EquipmentView : MonoBehaviour, IUpdatable
             GameManager.Instance.Unregister(this);
         }
 
-        ObserverManager.Unregister<LogOutClickEvent>(eventData =>
-        {
-            ClearEquipmentData();
-            ClearListImagesEquipmentSlots();
-        });
+        ObserverManager.Unregister<LogOutClickEvent>(logoutObserver);
     }
     public void OnUpdate()
     {

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PoolManager : MonoBehaviour, IUpdatable
@@ -33,6 +34,8 @@ public class PoolManager : MonoBehaviour, IUpdatable
     private readonly Dictionary<RectTransform, UIPool> uiObjectPools = new();
     private readonly Dictionary<RectTransform, UIPool> activeUIObjects = new();
 
+    private Action<LogOutClickEvent> logoutObserver;
+
     private void Awake()
     {
         if (instance != null && instance != this)
@@ -41,16 +44,18 @@ public class PoolManager : MonoBehaviour, IUpdatable
             return;
         }
         instance = this;
+
+        logoutObserver = eventData =>
+        {
+            ClearObjectPools();
+            ClearUIObjectPools();
+        };
     }
     private void OnEnable()
     {
         GameManager.Instance.Register(this);
 
-        ObserverManager.Register<LogOutClickEvent>(eventData =>
-        {
-            ClearObjectPools();
-            ClearUIObjectPools();
-        });
+        ObserverManager.Register<LogOutClickEvent>(logoutObserver);
     }
     private void OnDisable()
     {
@@ -59,11 +64,7 @@ public class PoolManager : MonoBehaviour, IUpdatable
             GameManager.Instance.Unregister(this);
         }
 
-        ObserverManager.Unregister<LogOutClickEvent>(eventData =>
-        {
-            ClearObjectPools();
-            ClearUIObjectPools();
-        });
+        ObserverManager.Unregister<LogOutClickEvent>(logoutObserver);
     }
 
     public void OnUpdate() { }

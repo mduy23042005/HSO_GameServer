@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -14,17 +15,20 @@ public class PlayerManager : MonoBehaviour, IUpdatable
     public static GameObject player;
     private SocketManager socketManager;
 
+    private Action<LogOutClickEvent> logoutObserver;
+
     private void Awake()
     {
         socketManager = GameManager.Instance.GetComponent<SocketManager>();
         InitPartBodyData();
+        logoutObserver = eventData => ReleasePlayer();
     }
 
     private void OnEnable()
     {
         GameManager.Instance.Register(this);
 
-        ObserverManager.Register<LogOutClickEvent>(eventData => ReleasePlayer());
+        ObserverManager.Register<LogOutClickEvent>(logoutObserver);
     }
     private void OnDisable()
     {
@@ -33,7 +37,7 @@ public class PlayerManager : MonoBehaviour, IUpdatable
             GameManager.Instance.Unregister(this);
         }
 
-        ObserverManager.Unregister<LogOutClickEvent>(eventData => ReleasePlayer());
+        ObserverManager.Unregister<LogOutClickEvent>(logoutObserver);
     }
 
     public void OnUpdate() 

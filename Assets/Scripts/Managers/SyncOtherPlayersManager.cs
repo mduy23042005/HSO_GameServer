@@ -26,19 +26,23 @@ public class SyncOtherPlayersManager : MonoBehaviour, IUpdatable
 
     private SocketManager socketManager;
 
+    private Action<LogOutClickEvent> logoutObserver;
+
     private void Awake()
     {
         Instance = this;
         socketManager = GameManager.Instance.GetComponent<SocketManager>();
         syncTokenSource = new CancellationTokenSource();
         _ = ReadSyncPacketLoop(syncTokenSource.Token);
+
+        logoutObserver = eventData => PrepareForLogOut();
     }
 
     private void OnEnable()
     {
         GameManager.Instance.Register(this);
 
-        ObserverManager.Register<LogOutClickEvent>(eventData => PrepareForLogOut());
+        ObserverManager.Register<LogOutClickEvent>(logoutObserver);
     }
     private void OnDisable()
     {
@@ -47,7 +51,7 @@ public class SyncOtherPlayersManager : MonoBehaviour, IUpdatable
             GameManager.Instance.Unregister(this);
         }
 
-        ObserverManager.Unregister<LogOutClickEvent>(eventData => PrepareForLogOut());
+        ObserverManager.Unregister<LogOutClickEvent>(logoutObserver);
     }
 
     public async Task ReadSyncPacketLoop(CancellationToken token)

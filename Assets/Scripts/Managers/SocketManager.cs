@@ -54,6 +54,7 @@ public class SocketManager : MonoBehaviour, IUpdatable
     private MovementPlayerController playerMovementController;
     private SpritePlayerController playerSpriteController;
     private Animator playerAnimator;
+    private Action<LogOutClickEvent> logoutObserver;
 
     private void Awake()
     {
@@ -62,23 +63,21 @@ public class SocketManager : MonoBehaviour, IUpdatable
             Debug.LogError("Cannot load ServerConfig.json!");
             return;
         }
+
+        logoutObserver = evenData =>
+        {
+            ClearAllQueues();
+            CloseSocket();
+        };
     }
 
     private void OnEnable()
     {
-        ObserverManager.Register<LogOutClickEvent>(evenData =>
-        {
-            ClearAllQueues();
-            CloseSocket();
-        });
+        ObserverManager.Register<LogOutClickEvent>(logoutObserver);
     }
     private void OnDisable()
     {
-        ObserverManager.Unregister<LogOutClickEvent>(evenData =>
-        {
-            ClearAllQueues();
-            CloseSocket();
-        });
+        ObserverManager.Unregister<LogOutClickEvent>(logoutObserver);
     }
     private string GetServerConfigPath()
     {

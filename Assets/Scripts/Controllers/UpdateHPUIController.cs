@@ -11,6 +11,7 @@ public class UpdateHPUIController : MonoBehaviour, IUpdatable
     private float timer;
     private RectTransform rect;
 
+    private GameObject injuredObject;
     private GameObject splatterBlood;
 
     private Action<Injured> injuredObserver;
@@ -67,6 +68,8 @@ public class UpdateHPUIController : MonoBehaviour, IUpdatable
         if (!injuredObject.activeSelf)
             return;
 
+        this.injuredObject = injuredObject;
+
         var txt = GetComponentInChildren<TMP_Text>();
         if (txt != null)
             txt.text = $"- {damage}";
@@ -87,5 +90,18 @@ public class UpdateHPUIController : MonoBehaviour, IUpdatable
             splatterBlood.transform.localPosition = new Vector3(splatterBloodPosition.x, splatterBloodPosition.y, splatterBloodPosition.z);
             splatterBlood.transform.localScale = new Vector3(1, 1, 1);
         }
+    }
+
+    public void ClearInjuredUI()
+    {
+        if (splatterBlood != null)
+        {
+            PoolManager.Instance.Release(splatterBlood);
+            splatterBlood = null;
+        }
+
+        injuredObject = null;
+
+        PoolManager.Instance.Release(gameObject);
     }
 }

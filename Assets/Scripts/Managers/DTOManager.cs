@@ -272,3 +272,24 @@ public class Die
 {
     public int id;
 }
+
+public class SyncMobData
+{
+    public int id;
+    public int idMob;
+    public string nameMob;
+    public int maxHP;
+    public int hp;
+    public int level;
+    public float posX;
+    public float posY;
+    public State state;
+    public int idState;
+    public Direction direction;
+    public TileType currentTile;
+}
+public class SyncMobDataPacket
+{
+    public EnumCmdCode cmd;
+    public List<SyncMobData> mobsData;
+}

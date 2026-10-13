@@ -5,27 +5,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class SyncMobData
-{
-    public int id;
-    public int idMob;
-    public string nameMob;
-    public int maxHP;
-    public int hp;
-    public int level;
-    public float posX;
-    public float posY;
-    public State state;
-    public int idState;
-    public Direction direction;
-    public TileType currentTile;
-}
-public class SyncMobDataPacket
-{
-    public EnumCmdCode cmd;
-    public List<SyncMobData> mobsData;
-}
-
 public class Mob
 {
     public GameObject mobObject;
@@ -72,7 +51,7 @@ public class MobsManager : MonoBehaviour, IUpdatable
         }
     }
 
-    public async Task ReadMobsPacketLoop(CancellationToken token)
+    private async Task ReadMobsPacketLoop(CancellationToken token)
     {
         while (!token.IsCancellationRequested)
         {
@@ -124,7 +103,6 @@ public class MobsManager : MonoBehaviour, IUpdatable
             await Task.Yield();
         }
     }
-
     public void OnUpdate()
     {
         SyncMobDataPacket syncMobsData = null;
@@ -192,6 +170,30 @@ public class MobsManager : MonoBehaviour, IUpdatable
             }
         }
 
+        byte[] dropItemData = socketManager.GetDroppedItem0Data();
+        if (dropItemData != null && dropItemData.Length > 0)
+        {
+            PacketReaderManager reader = new PacketReaderManager(dropItemData);
+            EnumCmdCode cmd1 = (EnumCmdCode)reader.ReadInt();
+            int idMap = reader.ReadInt();
+            int id= reader.ReadInt();
+            int idItem0 = reader.ReadInt();
+            string nameItem0 = reader.ReadString();
+
+            if (mobs.TryGetValue(id, out Mob mob))
+            {
+                if (mob != null && mob.mobObject != null)
+                {
+                    ObserverManager.Notify(new DropItem0
+                    {
+                        droppedPosition = mob.mobObject.transform.position,
+                        idItem0 = idItem0,
+                        nameItem0 = nameItem0
+                    });
+                }
+            }
+        }
+
         HandleTimeoutMob();
     }
     public void OnLateUpdate() { }
@@ -248,12 +250,38 @@ public class MobsManager : MonoBehaviour, IUpdatable
             }
         }
     }
+    private void ClearMobInjuredUI(GameObject mobObject)
+    {
+        if (mobObject == null)
+            return;
+
+        // Xóa hiệu ứng máu và UI sát thương đang nằm trong Canvas của mob
+        Canvas canvas = mobObject.GetComponentInChildren<Canvas>();
+
+        if (canvas != null)
+        {
+            UpdateHPUIController[] hpUIs = canvas.GetComponentsInChildren<UpdateHPUIController>(true);
+            foreach (UpdateHPUIController hpUI in hpUIs)
+            {
+                hpUI.ClearInjuredUI();
+            }
+        }
+
+        // Xóa các hiệu ứng máu còn nằm trực tiếp trong mob
+        UpdateHPUIController[] childUIs = mobObject.GetComponentsInChildren<UpdateHPUIController>(true);
+        foreach (UpdateHPUIController hpUI in childUIs)
+        {
+            hpUI.ClearInjuredUI();
+        }
+    }
     public void ApplyMobDead(int id)
     {
         Mob mobDead;
 
         if (mobs.TryGetValue(id, out mobDead))
         {
+            ClearMobInjuredUI(mobDead.mobObject);
+
             PoolManager.Instance.Release(mobDead.mobObject);
             mobs.Remove(id);
         }

@@ -21,8 +21,6 @@ public class MobController : MonoBehaviour, IUpdatable
     private SyncMobData syncMobDataMovement;
     private int lastIDStateStand = -1;
     private int lastIDStateAtk = -1;
-    private int lastIDStateInjured = -1;
-    private int lastIDStateDie = -1;
     private bool isStandingInWater = false;
     private AStarManager astar = new AStarManager();
     private MapData mapData;

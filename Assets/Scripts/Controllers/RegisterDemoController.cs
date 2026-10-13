@@ -16,7 +16,6 @@ public class RegisterDemoController : MovementPlayerController
     private RegisterView register;
     private static int idSchool;
     private List<SpriteResolver> resolvers;
-    private bool isBusy = false;
 
     private int lastFrame = -1;
     private string lastState = "";
@@ -134,13 +133,11 @@ public class RegisterDemoController : MovementPlayerController
     private void TriggerAnimation(string anim, float duration)
     {
         animatorChild.SetTrigger(anim);
-        isBusy = true;
         StartCoroutine(ResetBusy(duration));
     }
     private IEnumerator ResetBusy(float duration)
     {
         yield return new WaitForSeconds(duration);
-        isBusy = false;
     }
 
     private int GetFrameByTime(float t, float[] changeTimes)

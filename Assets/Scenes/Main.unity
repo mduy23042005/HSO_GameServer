@@ -1081,6 +1081,7 @@ GameObject:
   - component: {fileID: 918182163}
   - component: {fileID: 918182167}
   - component: {fileID: 918182166}
+  - component: {fileID: 918182168}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1143,10 +1144,6 @@ MonoBehaviour:
   - {fileID: 1887108271017217227, guid: 52493cf958f36b04b8df545038d70e57, type: 3}
   - {fileID: 6138671254599840282, guid: f971d6e622030f64f9d65aa05b819f1c, type: 3}
   - {fileID: 8591692311120707276, guid: e99a1d3a75702a649a0708317c7d07b2, type: 3}
-  demoPlayerPrefabs:
-  - {fileID: 1887108271017217227, guid: 7bf689915841ccf4db4012e5e008b043, type: 3}
-  - {fileID: 4164682181217555614, guid: 1d1b7573ef2934745baed28eb7b656b0, type: 3}
-  - {fileID: 46529497035255687, guid: 650ce7f3ce62e1b4193512f15a541fb4, type: 3}
 --- !u!114 &918182167
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1159,6 +1156,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5c3a607bab432c4fa6dcbfead670162, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PoolManager
+--- !u!114 &918182168
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 918182158}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62b4360637c0f4b48bc2205ae3131db2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DropItemManager
+  dropItemPrefab: {fileID: 4766814107979339184, guid: aa85d9965a477ac4cb692d74fb5c7591, type: 3}
 --- !u!1 &1155686057
 GameObject:
   m_ObjectHideFlags: 0

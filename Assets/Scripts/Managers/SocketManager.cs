@@ -49,7 +49,9 @@ public class SocketManager : MonoBehaviour, IUpdatable
     private readonly ConcurrentQueue<byte[]> outfitSpritesQueue = new ConcurrentQueue<byte[]>();
 
     private readonly ConcurrentQueue<byte[]> playerAttackMobQueues = new ConcurrentQueue<byte[]>();
+
     private readonly ConcurrentQueue<byte[]> droppedItem0Queues = new ConcurrentQueue<byte[]>();
+    private readonly ConcurrentQueue<byte[]> droppedItem0sQueues = new ConcurrentQueue<byte[]>();
 
     private MovementPlayerController playerMovementController;
     private SpritePlayerController playerSpriteController;
@@ -407,6 +409,10 @@ public class SocketManager : MonoBehaviour, IUpdatable
                 droppedItem0Queues.Enqueue(data);
                 break;
 
+            case EnumCmdCode.dropItem0s:
+                droppedItem0sQueues.Enqueue(data);
+                break;
+
             default:
                 receiveQueue.Enqueue(data);
                 break;
@@ -551,6 +557,12 @@ public class SocketManager : MonoBehaviour, IUpdatable
     public byte[] GetDroppedItem0Data()
     {
         if (droppedItem0Queues.TryDequeue(out var data))
+            return data;
+        return null;
+    }
+    public byte[] GetDroppedItem0sData()
+    {
+        if (droppedItem0sQueues.TryDequeue(out var data))
             return data;
         return null;
     }

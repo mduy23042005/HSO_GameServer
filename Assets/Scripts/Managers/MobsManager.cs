@@ -170,30 +170,6 @@ public class MobsManager : MonoBehaviour, IUpdatable
             }
         }
 
-        byte[] dropItemData = socketManager.GetDroppedItem0Data();
-        if (dropItemData != null && dropItemData.Length > 0)
-        {
-            PacketReaderManager reader = new PacketReaderManager(dropItemData);
-            EnumCmdCode cmd1 = (EnumCmdCode)reader.ReadInt();
-            int idMap = reader.ReadInt();
-            int id= reader.ReadInt();
-            int idItem0 = reader.ReadInt();
-            string nameItem0 = reader.ReadString();
-
-            if (mobs.TryGetValue(id, out Mob mob))
-            {
-                if (mob != null && mob.mobObject != null)
-                {
-                    ObserverManager.Notify(new DropItem0
-                    {
-                        droppedPosition = mob.mobObject.transform.position,
-                        idItem0 = idItem0,
-                        nameItem0 = nameItem0
-                    });
-                }
-            }
-        }
-
         HandleTimeoutMob();
     }
     public void OnLateUpdate() { }

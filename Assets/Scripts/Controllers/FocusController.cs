@@ -39,9 +39,7 @@ public class FocusController : MonoBehaviour, IUpdatable
             }
         }
     }
-
     public void OnLateUpdate() { }
-
     public void OnUpdate() { }
 
     public void RegisterDontDestroyOnLoad()

@@ -5,12 +5,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class Mob
-{
-    public GameObject mobObject;
-    public SyncMobData mobData;
-}
-
 public class MobsManager : MonoBehaviour, IUpdatable
 {
     [SerializeField] private List<GameObject> mobPrefabs;

@@ -35,7 +35,6 @@ public class DroppedItemManager : MonoBehaviour, IUpdatable
         {
             PacketReaderManager reader = new PacketReaderManager(dropItem0Data);
             EnumCmdCode cmd1 = (EnumCmdCode)reader.ReadInt();
-            int id = reader.ReadInt();
             int idItem0 = reader.ReadInt();
             float posX = reader.ReadFloat();
             float posY = reader.ReadFloat();
@@ -104,7 +103,6 @@ public class DroppedItemManager : MonoBehaviour, IUpdatable
     }
 
     public void OnLateUpdate() { }
-
     public void OnFixedUpdate() { }
 
     public void RegisterDontDestroyOnLoad() { }

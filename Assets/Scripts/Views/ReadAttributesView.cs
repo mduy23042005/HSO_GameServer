@@ -374,6 +374,31 @@ public class ReadAttributesView : MonoBehaviour, IUpdatable
             return;
         }
     }
+
+    private async void DropItem0(int idSlot)
+    {
+        int idAccount = LogInView.GetIDAccount() ?? 0;
+        List<InventoryItem0Data> inventoryInfo = InventoryView.inventoryItem0s;
+        if (idSlot < 0 || idSlot >= inventoryInfo.Count)
+        {
+            Debug.Log("Index slot không hợp lệ");
+            return;
+        }
+        int idItem0 = inventoryInfo[idSlot].idItem0;
+        if (idItem0 == 0)
+        {
+            Debug.Log("Slot này chưa có item");
+            return;
+        }
+        
+        PacketWriterManager writer = new PacketWriterManager();
+        writer.WriteInt((int)EnumCmdCode.dropItem0);
+        writer.WriteInt(idAccount);
+        writer.WriteInt(inventoryInfo[idSlot].id);
+        writer.WriteInt(inventoryInfo[idSlot].idItem0);
+
+        await socketManager.SendToServer(writer.ToArray());
+    }
     public void ClickEquipItem0()
     {
         EquipItem0(indexSlot);
@@ -391,5 +416,9 @@ public class ReadAttributesView : MonoBehaviour, IUpdatable
         ringSlot = "Ring2";
 
         EquipItem0(indexSlot);
+    }
+    public void ClickDropItem()
+    {
+        DropItem0(indexSlot);
     }
 }

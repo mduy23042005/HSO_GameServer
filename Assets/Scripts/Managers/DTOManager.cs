@@ -293,3 +293,9 @@ public class SyncMobDataPacket
     public EnumCmdCode cmd;
     public List<SyncMobData> mobsData;
 }
+
+public class Mob
+{
+    public GameObject mobObject;
+    public SyncMobData mobData;
+}

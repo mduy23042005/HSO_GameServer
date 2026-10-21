@@ -9,13 +9,6 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
-public class PlayerAttackDataPacket 
-{ 
-    public EnumCmdCode cmd; 
-    public int idAccount; 
-    public int aimedMobID; 
-}
-
 public class MovementPlayerController : MonoBehaviour, IUpdatable
 {
     [SerializeField] private Animator animator;

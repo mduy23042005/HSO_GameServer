@@ -299,3 +299,28 @@ public class Mob
     public GameObject mobObject;
     public SyncMobData mobData;
 }
+
+public class ReadAttributesEquipmentResultPacket
+{
+    public EnumCmdCode cmd;
+    public EquipmentData attributesData;
+}
+
+public class ReadAttributesInventoryResultPacket
+{
+    public EnumCmdCode cmd;
+    public InventoryItem0Data attributesItem0Data;
+    public InventoryItem1Data attributesItem1Data;
+    public InventoryItem2Data attributesItem2Data;
+    public InventoryItem3Data attributesItem3Data;
+    public InventoryItem4Data attributesItem4Data;
+}
+
+public class EquipItem0RequestPacket
+{
+    public EnumCmdCode cmd;
+    public int idAccount;
+    public int id;
+    public int idItem0;
+    public string slotName;
+}

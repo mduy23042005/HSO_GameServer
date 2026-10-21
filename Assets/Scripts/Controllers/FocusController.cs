@@ -1,5 +1,23 @@
 ﻿using UnityEngine;
 
+public enum TargetType
+{
+    None,
+    DroppedItem,
+    Mob,
+    NPC,
+    Player
+}
+
+public class TargetableObject : MonoBehaviour
+{
+    [Header("Type Info")]
+    public TargetType targetType;
+    public string displayName;
+
+    public int uniqueId;
+}
+
 public class FocusController : MonoBehaviour, IUpdatable
 {
     [SerializeField] private GameObject focusUI; // prefab

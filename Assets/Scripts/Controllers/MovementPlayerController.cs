@@ -357,7 +357,7 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
     }
     public virtual void MoveToTargetPosition()
     {
-        if ((menu != null && menu.GetIsActive()) || isBusy)
+        if (isBusy)
             return;
 
         if (isMovingToTarget)

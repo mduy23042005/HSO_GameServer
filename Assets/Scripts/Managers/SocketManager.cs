@@ -253,7 +253,7 @@ public class SocketManager : MonoBehaviour, IUpdatable
         }
         catch (Exception e)
         {
-            Debug.LogError("StartSyncPlayerLoop error: " + e.Message);
+            GameObject.Find("LogOutButton").gameObject.GetComponent<LogOutController>().StartLogOut();
         }
     }
     public async Task SendToServer(byte[] data)
@@ -270,7 +270,7 @@ public class SocketManager : MonoBehaviour, IUpdatable
         }
         catch
         {
-            GameObject.Find("LogOut").gameObject.GetComponent<LogOutController>().StartLogOut();
+            GameObject.Find("LogOutButton").gameObject.GetComponent<LogOutController>().StartLogOut();
         }
     }
 

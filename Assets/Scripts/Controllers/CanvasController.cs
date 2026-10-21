@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class CanvasController : MonoBehaviour, IUpdatable
@@ -9,10 +10,9 @@ public class CanvasController : MonoBehaviour, IUpdatable
     private void OnDisable()
     {
         if (GameManager.Instance != null)
-        {
             GameManager.Instance.Unregister(this);
-        }
     }
+
     public void OnUpdate() { }
     public void OnLateUpdate() { }
     public void OnFixedUpdate() { }

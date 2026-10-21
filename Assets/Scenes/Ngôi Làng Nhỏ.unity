@@ -1182,8 +1182,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -18.000008}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -36.999992}
+  m_SizeDelta: {x: 229, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &42086429
 MonoBehaviour:
@@ -1420,7 +1420,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.ContentSizeFitter
-  m_HorizontalFit: 2
+  m_HorizontalFit: 0
   m_VerticalFit: 2
 --- !u!114 &42086433
 MonoBehaviour:
@@ -27679,7 +27679,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 2115790979}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.8536585
+  m_Size: 0.7394366
   m_NumberOfSteps: 1
   m_OnValueChanged:
     m_PersistentCalls:
@@ -54271,7 +54271,7 @@ Tilemap:
       m_AnimatedSprites:
       - {fileID: -413025458, guid: c4041bd80a99fe848a202672264a34e0, type: 3}
       - {fileID: -1180023014, guid: 0b47aaa31490e944aae87f0316379a0b, type: 3}
-      m_AnimationSpeed: 5.0000005
+      m_AnimationSpeed: 5
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 24, y: 0, z: 0}
@@ -54316,7 +54316,7 @@ Tilemap:
       m_AnimatedSprites:
       - {fileID: -413025458, guid: c4041bd80a99fe848a202672264a34e0, type: 3}
       - {fileID: -1180023014, guid: 0b47aaa31490e944aae87f0316379a0b, type: 3}
-      m_AnimationSpeed: 5
+      m_AnimationSpeed: 5.0000005
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 0, y: 1, z: 0}
@@ -54451,7 +54451,7 @@ Tilemap:
       m_AnimatedSprites:
       - {fileID: -413025458, guid: c4041bd80a99fe848a202672264a34e0, type: 3}
       - {fileID: -1180023014, guid: 0b47aaa31490e944aae87f0316379a0b, type: 3}
-      m_AnimationSpeed: 5
+      m_AnimationSpeed: 5.0000005
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 26, y: 1, z: 0}
@@ -54532,7 +54532,7 @@ Tilemap:
       m_AnimatedSprites:
       - {fileID: -413025458, guid: c4041bd80a99fe848a202672264a34e0, type: 3}
       - {fileID: -1180023014, guid: 0b47aaa31490e944aae87f0316379a0b, type: 3}
-      m_AnimationSpeed: 5.0000005
+      m_AnimationSpeed: 5
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 6, y: 2, z: 0}
@@ -54613,7 +54613,7 @@ Tilemap:
       m_AnimatedSprites:
       - {fileID: -413025458, guid: c4041bd80a99fe848a202672264a34e0, type: 3}
       - {fileID: -1180023014, guid: 0b47aaa31490e944aae87f0316379a0b, type: 3}
-      m_AnimationSpeed: 5
+      m_AnimationSpeed: 5.0000005
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 26, y: 2, z: 0}
@@ -54937,7 +54937,7 @@ Tilemap:
       m_AnimatedSprites:
       - {fileID: 608920470, guid: c4041bd80a99fe848a202672264a34e0, type: 3}
       - {fileID: 60552657, guid: 0b47aaa31490e944aae87f0316379a0b, type: 3}
-      m_AnimationSpeed: 5.0000005
+      m_AnimationSpeed: 5
       m_AnimationTimeOffset: 0
       m_Flags: 0
   m_TileAssetArray:

@@ -28,24 +28,7 @@ public class DroppedItemManager : MonoBehaviour, IUpdatable
 
     public void OnUpdate()
     {
-        byte[] dropItem0Data = socketManager.GetDroppedItem0Data();
         byte[] dropItem0sData = socketManager.GetDroppedItem0sData();
-
-        if (dropItem0Data != null && dropItem0Data.Length > 0)
-        {
-            PacketReaderManager reader = new PacketReaderManager(dropItem0Data);
-            EnumCmdCode cmd1 = (EnumCmdCode)reader.ReadInt();
-            int idItem0 = reader.ReadInt();
-            float posX = reader.ReadFloat();
-            float posY = reader.ReadFloat();
-            string nameItem0 = reader.ReadString();
-
-            GameObject dropItem = PoolManager.Instance.Get(dropItemPrefab);
-
-            dropItem.GetComponentInChildren<SpriteRenderer>().sprite = ItemController.Instance.GetItem0(idItem0).iconItem0;
-            dropItem.GetComponentInChildren<TMP_Text>().text = nameItem0;
-            dropItem.transform.position = new Vector3(posX, posY, 0f);
-        }
 
         if (dropItem0sData != null && dropItem0sData.Length > 0)
         {

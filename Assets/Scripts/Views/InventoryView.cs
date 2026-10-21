@@ -91,36 +91,23 @@ public class InventoryView : MonoBehaviour, IUpdatable
         if (inventoryItem0s == null)
             inventoryItem0s = new List<InventoryItem0Data>();
 
-        for (int i = 0; i < inventoryResult.inventoryItem0Data.Count; i++)
-        {
-            if (i >= inventoryItem0s.Count)
-            {
-                inventoryItem0s.Add(inventoryResult.inventoryItem0Data[i]);
-            }
-            else
-            {
-                inventoryItem0s[i] = inventoryResult.inventoryItem0Data[i];
-            }
-        }
+        inventoryItem0s.Clear();
+        inventoryItem0s.AddRange(inventoryResult.inventoryItem0Data);
 
         // Update UI
-        for (int i = 0; i < inventoryItem0s.Count; i++)
+        for (int i = 0; i < inventorySlots.Count; i++)
         {
-            int itemId = inventoryItem0s[i].idItem0;
-            if (itemId == 0)
+            if (i < inventoryItem0s.Count && inventoryItem0s[i].idItem0 != 0)
+            {
+                int itemId = inventoryItem0s[i].idItem0;
+                inventorySlots[i].sprite = ItemController.Instance.GetItem0(itemId).iconItem0;
+                inventorySlots[i].color = Color.white;
+            }
+            else
             {
                 inventorySlots[i].sprite = null;
                 inventorySlots[i].color = new Color(0f, 0f, 0f, 0f);
             }
-            else
-            {
-                inventorySlots[i].sprite = ItemController.Instance.GetItem0(itemId).iconItem0;
-            }
-        }
-        for (int i = inventoryResult.inventoryItem0Data.Count; i < inventorySlots.Count; i++)
-        {
-            inventorySlots[i].sprite = null;
-            inventorySlots[i].color = new Color(0f, 0f, 0f, 0f);
         }
     }
     public void OnLateUpdate() { }

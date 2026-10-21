@@ -4,49 +4,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-//Packet đọc attribute trong equipment
-public class ReadAttributesEquipmentRequestPacket
-{
-    public EnumCmdCode cmd;
-    public int idAccount;
-    public int id;
-    public int idItem0_1;
-}
-public class ReadAttributesEquipmentResultPacket
-{
-    public EnumCmdCode cmd;
-    public EquipmentData attributesData;
-}
-
-//Packet đọc attribute trong inventory
-public class ReadAttributesInventoryRequestPacket
-{
-    public EnumCmdCode cmd;
-    public int idAccount;
-    public int id;
-    public int idItem0;
-}
-public class ReadAttributesInventoryResultPacket
-{
-    public EnumCmdCode cmd;
-    public InventoryItem0Data attributesItem0Data;
-    public InventoryItem1Data attributesItem1Data;
-    public InventoryItem2Data attributesItem2Data;
-    public InventoryItem3Data attributesItem3Data;
-    public InventoryItem4Data attributesItem4Data;
-}
-
-//Packet trang bị item0 từ inventory vào equipment
-public class EquipItem0RequestPacket
-{
-    public EnumCmdCode cmd;
-    public int idAccount;
-    public int id;
-    public int idItem0;
-    public string slotName;
-}
-//Sử dụng 2 packet EquipmentResultPacket và InventoryResultPacket để cập nhật lại UI sau khi trang bị
-
 public class ReadAttributesView : MonoBehaviour, IUpdatable
 {
     [SerializeField] private GameObject nameItem;
@@ -377,28 +334,44 @@ public class ReadAttributesView : MonoBehaviour, IUpdatable
 
     private async void DropItem0(int idSlot)
     {
-        int idAccount = LogInView.GetIDAccount() ?? 0;
-        List<InventoryItem0Data> inventoryInfo = InventoryView.inventoryItem0s;
-        if (idSlot < 0 || idSlot >= inventoryInfo.Count)
+        try
         {
-            Debug.Log("Index slot không hợp lệ");
-            return;
-        }
-        int idItem0 = inventoryInfo[idSlot].idItem0;
-        if (idItem0 == 0)
-        {
-            Debug.Log("Slot này chưa có item");
-            return;
-        }
-        
-        PacketWriterManager writer = new PacketWriterManager();
-        writer.WriteInt((int)EnumCmdCode.dropItem0);
-        writer.WriteInt(idAccount);
-        writer.WriteInt(inventoryInfo[idSlot].id);
-        writer.WriteInt(inventoryInfo[idSlot].idItem0);
+            int idAccount = LogInView.GetIDAccount() ?? 0;
+            List<InventoryItem0Data> inventoryInfo = InventoryView.inventoryItem0s;
+            if (idSlot < 0 || idSlot >= inventoryInfo.Count)
+            {
+                Debug.Log("Index slot không hợp lệ");
+                return;
+            }
+            int idItem0 = inventoryInfo[idSlot].idItem0;
+            if (idItem0 == 0)
+            {
+                Debug.Log("Slot này chưa có item");
+                return;
+            }
 
-        await socketManager.SendToServer(writer.ToArray());
+            PacketWriterManager writer = new PacketWriterManager();
+            writer.WriteInt((int)EnumCmdCode.dropItem0);
+            writer.WriteInt(idAccount);
+            writer.WriteInt(idSlot);
+            writer.WriteInt(inventoryInfo[idSlot].idItem0);
+
+            await socketManager.SendToServer(writer.ToArray());
+
+            ringSlot = null;
+            attributeItemText.text = "";
+            attributeItem.SetActive(false);
+
+            nameItemText.text = "";
+            nameItem.SetActive(false);
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError("Lỗi khi vứt item: " + ex.Message);
+            return;
+        }
     }
+
     public void ClickEquipItem0()
     {
         EquipItem0(indexSlot);

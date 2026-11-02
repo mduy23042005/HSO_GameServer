@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.U2D.Animation;
 using UnityEngine.UI;
 
-public class SyncSpriteController : MonoBehaviour, IUpdatable
+public class OtherPlayerController : MonoBehaviour, IUpdatable
 {
     [SerializeField] private TMP_Text nameOtherPlayer;
     [SerializeField] private GameObject sprites;
@@ -355,7 +355,7 @@ public class SyncSpriteController : MonoBehaviour, IUpdatable
             return;
 
         Vector2 targetPos = new Vector2(otherPlayerTransform.positionData.x, otherPlayerTransform.positionData.y);
-        transform.position = Vector2.MoveTowards(transform.position, targetPos, 5f * Time.deltaTime);
+        transform.position = Vector2.MoveTowards(transform.position, targetPos, 6f * Time.deltaTime);
 
         Vector3 otherPlayerScale = sprites.transform.localScale;
         otherPlayerScale.x = otherPlayerTransform.scaleData.x;

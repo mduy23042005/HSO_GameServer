@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
@@ -29,6 +30,11 @@ public class LogInView : MonoBehaviour, IUpdatable
     private void Awake()
     { 
         socketManager = GameManager.Instance.GetComponent<SocketManager>();
+
+        if (EquipmentView.equipments != null)
+            EquipmentView.equipments.Clear();
+        if (InventoryView.inventoryItem0s != null)
+            InventoryView.inventoryItem0s.Clear();
     }
 
     private void OnEnable()

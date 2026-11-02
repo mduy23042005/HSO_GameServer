@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.IO;
-using System.Threading.Tasks;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -160,6 +156,10 @@ public class MobController : MonoBehaviour, IUpdatable
         }
     }
 
+    public GameObject GetSpriteObject()
+    {
+        return sprite;
+    }
     public int GetID()
     {
         if (syncMobDataMovement == null) return 0;

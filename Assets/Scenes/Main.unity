@@ -1082,6 +1082,8 @@ GameObject:
   - component: {fileID: 918182167}
   - component: {fileID: 918182166}
   - component: {fileID: 918182168}
+  - component: {fileID: 918182170}
+  - component: {fileID: 918182169}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1169,6 +1171,39 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DropItemManager
   dropItemPrefab: {fileID: 4766814107979339184, guid: aa85d9965a477ac4cb692d74fb5c7591, type: 3}
+--- !u!114 &918182169
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 918182158}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9aee7103022fd464ea30b11a804f79a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MobsManager
+  listMobAnimator:
+  - {fileID: 9100000, guid: 678b3a91dccf5a447ab72e6d9e991f30, type: 2}
+  mobPrefab: {fileID: 7256394505456260105, guid: 3201f3fba9987b04686a81558dd9e9a1, type: 3}
+  updateHPUI: {fileID: 2422661778410389371, guid: 5e93a4fbfcec88544ba942eda07152dd, type: 3}
+--- !u!114 &918182170
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 918182158}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afb47dbaaa8686c46ae9aea9370ae5c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SyncOtherPlayersManager
+  otherPlayersPrefab:
+  - {fileID: 4555938910356724988, guid: 61fdbda5b1923b64d97fa74a8971ade1, type: 3}
+  - {fileID: 6002207029804953653, guid: 11705f7deef20b14b89838112b746e1c, type: 3}
+  - {fileID: 5030301652225976667, guid: 762e9757c5f851b4eacfcb7d285540fc, type: 3}
+  updateHPUI: {fileID: 2422661778410389371, guid: 5e93a4fbfcec88544ba942eda07152dd, type: 3}
 --- !u!1 &1155686057
 GameObject:
   m_ObjectHideFlags: 0

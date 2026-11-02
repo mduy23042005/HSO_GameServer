@@ -161,7 +161,7 @@ public class OtherPlayer
 {
     public GameObject otherPlayerObject;
     public PlayerData otherPlayerData;
-    public SyncSpriteController syncSpriteController;
+    public OtherPlayerController syncSpriteController;
 }
 
 public class EquipmentData

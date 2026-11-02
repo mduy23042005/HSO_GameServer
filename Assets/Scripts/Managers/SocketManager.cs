@@ -15,11 +15,12 @@ public class ServerConfig
     public string serverIp;
     public int serverPort;
 }
-public class SocketManager : MonoBehaviour, IUpdatable
+public class SocketManager : MonoBehaviour
 {
+    public CancellationTokenSource shutdownCts { get; private set; }
+
     private ClientWebSocket socket;
     private Uri serverUri;
-    private CancellationTokenSource shutdownCts = new CancellationTokenSource();
 
     private readonly ConcurrentQueue<byte[]> sendQueue = new ConcurrentQueue<byte[]>();
     private readonly ConcurrentQueue<byte[]> receiveQueue = new ConcurrentQueue<byte[]>();
@@ -66,10 +67,12 @@ public class SocketManager : MonoBehaviour, IUpdatable
             return;
         }
 
+        shutdownCts = new CancellationTokenSource();
+
         logoutObserver = evenData =>
         {
             ClearAllQueues();
-            CloseSocket();
+            _ = CloseSocket();
         };
     }
 
@@ -175,12 +178,6 @@ public class SocketManager : MonoBehaviour, IUpdatable
         }
     }
 
-    public void OnUpdate() { }
-    public void OnLateUpdate() { }
-    public void OnFixedUpdate() { }
-
-    public void RegisterDontDestroyOnLoad() { }
-
     private byte[] GetSyncPlayerDataRequestByteArray()
     {
         if (PlayerManager.player == null)
@@ -247,11 +244,7 @@ public class SocketManager : MonoBehaviour, IUpdatable
                     await Task.Yield();
             }
         }
-        catch (TaskCanceledException)
-        {
-            Debug.Log("SyncPlayerLoop stopped.");
-        }
-        catch (Exception e)
+        catch
         {
             GameObject.Find("LogOutButton").gameObject.GetComponent<LogOutController>().StartLogOut();
         }
@@ -302,14 +295,10 @@ public class SocketManager : MonoBehaviour, IUpdatable
                 HandlePacket(fullMessage);
             }
         }
-        catch (OperationCanceledException)
-        {
-            Debug.Log("ReceiveLoop stopped.");
-        }
-        catch (Exception ex)
+        catch
         {
             //Dọn sạch danh sách quản lý Other Players trước khi chuyển về Main Scene
-            GameObject.Find("SyncManager").gameObject.GetComponent<SyncOtherPlayersManager>().PrepareForLogOut();
+            GameObject.Find("SyncManager").gameObject.GetComponent<OtherPlayersManager>().PrepareForLogOut();
 
             //Dọn sạch danh sách quản lý Queue nhận dữ liệu từ Server
             ClearAllQueues();

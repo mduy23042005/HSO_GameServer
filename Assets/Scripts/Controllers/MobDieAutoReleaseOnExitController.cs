@@ -6,6 +6,6 @@ public class MobDieAutoReleaseOnExitController : StateMachineBehaviour
     {
         MobController mob = animator.GetComponentInParent<MobController>();
         if (mob != null)
-            MobsManager.Instance.ApplyMobDead(mob.GetID());
+            GameManager.Instance.GetComponent<MobsManager>().ApplyMobDead(mob.GetID());
     }
 }

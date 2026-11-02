@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Concurrent;
+﻿using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -7,30 +6,31 @@ using UnityEngine;
 
 public class MobsManager : MonoBehaviour, IUpdatable
 {
-    [SerializeField] private List<GameObject> mobPrefabs;
+    [SerializeField] private List<RuntimeAnimatorController> listMobAnimator; // animator quyết định sprite của mob nên chỉ cần lưu mỗi animator
+    private Dictionary<int, RuntimeAnimatorController> mapMobAnimator = new Dictionary<int, RuntimeAnimatorController>();
+
+    [SerializeField] private GameObject mobPrefab;
     [SerializeField] private GameObject updateHPUI;
 
     private readonly ConcurrentQueue<SyncMobDataPacket> syncMobsResultPacketQueue = new ConcurrentQueue<SyncMobDataPacket>();
     private readonly ConcurrentQueue<(EnumCmdCode, int, int, int, int)> playerAttackMobResultPacketQueue = new ConcurrentQueue<(EnumCmdCode, int, int, int, int)>();
-
-    private CancellationTokenSource syncTokenSource;
 
     private Dictionary<int, Mob> mobs = new Dictionary<int, Mob>();
     private Dictionary<int, float> lastUpdateTime = new Dictionary<int, float>();
 
     private const float timeOut = 1.2f; // mob update chậm hơn player
 
-    public static MobsManager Instance;
-
     private SocketManager socketManager;
+    private OtherPlayersManager syncOtherPlayersManager;
 
     private void Awake()
     {
-        Instance = this;
         socketManager = GameManager.Instance.GetComponent<SocketManager>();
+        syncOtherPlayersManager = GameManager.Instance.GetComponent<OtherPlayersManager>();
 
-        syncTokenSource = new CancellationTokenSource();
-        _ = ReadMobsPacketLoop(syncTokenSource.Token);
+        ConvertListToMap();
+
+        _ = ReadMobsPacketLoop(socketManager.shutdownCts);
     }
 
     private void OnEnable()
@@ -45,7 +45,15 @@ public class MobsManager : MonoBehaviour, IUpdatable
         }
     }
 
-    private async Task ReadMobsPacketLoop(CancellationToken token)
+    private void ConvertListToMap()
+    {
+        for (int i = 0; i < listMobAnimator.Count; i++)
+        {
+            mapMobAnimator[i + 1] = listMobAnimator[i];
+        }
+    }   
+
+    private async Task ReadMobsPacketLoop(CancellationTokenSource token)
     {
         while (!token.IsCancellationRequested)
         {
@@ -99,6 +107,12 @@ public class MobsManager : MonoBehaviour, IUpdatable
     }
     public void OnUpdate()
     {
+        if (LogInView.GetIDAccount() == 0)
+        {
+            HandleTimeoutMob();
+            return;
+        }
+
         SyncMobDataPacket syncMobsData = null;
 
         EnumCmdCode cmd = default;
@@ -147,11 +161,11 @@ public class MobsManager : MonoBehaviour, IUpdatable
                     }
                     else
                     {
-                        if (injuredDamageUI != null && SyncOtherPlayersManager.Instance.GetOtherPlayerByID(idAccount) != null && SyncOtherPlayersManager.Instance.GetOtherPlayerByID(idAccount).otherPlayerObject != null)
+                        if (injuredDamageUI != null && syncOtherPlayersManager.GetOtherPlayerByID(idAccount) != null && syncOtherPlayersManager.GetOtherPlayerByID(idAccount).otherPlayerObject != null)
                         {
                             ObserverManager.Notify(new Injured
                             {
-                                attackObject = SyncOtherPlayersManager.Instance.GetOtherPlayerByID(idAccount).otherPlayerObject,
+                                attackObject = syncOtherPlayersManager.GetOtherPlayerByID(idAccount).otherPlayerObject,
                                 damage = damage,
                                 injuredObject = mob.mobObject,
                                 splatterBloodPosition = new Vector3(0.25f, 0.5f, 0f)
@@ -183,7 +197,12 @@ public class MobsManager : MonoBehaviour, IUpdatable
 
         foreach (var id in toRemove)
         {
-            RemoveMob(id);
+            if (mobs.TryGetValue(id, out Mob mob))
+            {
+                PoolManager.Instance.Release(mob.mobObject);
+                mobs.Remove(id);
+                lastUpdateTime.Remove(id);
+            }
         }
     }
     private void OnMobDataFromServer(SyncMobDataPacket data)
@@ -207,7 +226,12 @@ public class MobsManager : MonoBehaviour, IUpdatable
                 mob.mobData = mobData;
                 mobs.Add(mobData.id, mob);
 
-                mob.mobObject.GetComponent<MobController>().ApplyServerState(mobData);
+                MobController mobController = mob.mobObject.GetComponent<MobController>();
+
+                if (mobController.GetSpriteObject().GetComponent<Animator>().runtimeAnimatorController == null)
+                    mobController.GetSpriteObject().GetComponent<Animator>().runtimeAnimatorController = mapMobAnimator[mobData.idMob];
+
+                mobController.ApplyServerState(mobData);
                 lastUpdateTime[mobData.id] = Time.time;
                 continue;
             }
@@ -263,22 +287,12 @@ public class MobsManager : MonoBehaviour, IUpdatable
     private GameObject InitMob(SyncMobData mobData)
     {
         //GameObject prefab = mobPrefabs[mobData.idMob];
-        GameObject prefab = mobPrefabs[0];
+        GameObject prefab = mobPrefab;
         GameObject mob = PoolManager.Instance.Get(prefab); 
 
         mob.transform.SetPositionAndRotation(new Vector2(mobData.posX, mobData.posY), Quaternion.identity);
 
         return mob;
-    }
-
-    public void RemoveMob(int idMob)
-    {
-        if (mobs.TryGetValue(idMob, out Mob mob))
-        {
-            PoolManager.Instance.Release(mob.mobObject);
-            mobs.Remove(idMob);
-            lastUpdateTime.Remove(idMob);
-        }
     }
 
     public Dictionary<int, Mob> GetMobs()
@@ -297,14 +311,5 @@ public class MobsManager : MonoBehaviour, IUpdatable
     public void RegisterDontDestroyOnLoad()
     {
         GameManager.Instance.RegisterPersistent(this);
-    }
-
-    private void OnDestroy()
-    {
-        if (syncTokenSource != null)
-        {
-            syncTokenSource.Cancel();
-            syncTokenSource.Dispose();
-        }
     }
 }

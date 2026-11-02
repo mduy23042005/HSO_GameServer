@@ -5,7 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class SyncOtherPlayersManager : MonoBehaviour, IUpdatable
+public class OtherPlayersManager : MonoBehaviour, IUpdatable
 {
     [SerializeField] private List<GameObject> otherPlayersPrefab;
     [SerializeField] private GameObject updateHPUI;
@@ -15,25 +15,22 @@ public class SyncOtherPlayersManager : MonoBehaviour, IUpdatable
     private readonly ConcurrentQueue<SyncOtherPlayersResultPacket> syncOtherPlayersRealtimeResultPacketQueue = new ConcurrentQueue<SyncOtherPlayersResultPacket>();
     private readonly ConcurrentQueue<(EnumCmdCode, int, int, int, int)> syncUpdateHPUIQueue = new ConcurrentQueue<(EnumCmdCode, int, int, int, int)>();
 
-    private CancellationTokenSource syncTokenSource;
-
     private Dictionary<int, float> lastUpdateTime = new Dictionary<int, float>();
     private const float timeOut = 1f;
 
     private List<int> toRemove = new List<int>();
 
-    public static SyncOtherPlayersManager Instance;
-
     private SocketManager socketManager;
+    private MobsManager mobsManager;
 
     private Action<LogOutClickEvent> logoutObserver;
 
     private void Awake()
     {
-        Instance = this;
         socketManager = GameManager.Instance.GetComponent<SocketManager>();
-        syncTokenSource = new CancellationTokenSource();
-        _ = ReadSyncPacketLoop(syncTokenSource.Token);
+        mobsManager = GameManager.Instance.GetComponent<MobsManager>();
+
+        _ = ReadSyncPacketLoop(socketManager.shutdownCts);
 
         logoutObserver = eventData => PrepareForLogOut();
     }
@@ -54,7 +51,7 @@ public class SyncOtherPlayersManager : MonoBehaviour, IUpdatable
         ObserverManager.Unregister<LogOutClickEvent>(logoutObserver);
     }
 
-    public async Task ReadSyncPacketLoop(CancellationToken token)
+    public async Task ReadSyncPacketLoop(CancellationTokenSource token)
     {
         while (!token.IsCancellationRequested)
         {
@@ -154,24 +151,11 @@ public class SyncOtherPlayersManager : MonoBehaviour, IUpdatable
     }
     public void OnUpdate()
     {
-        foreach (var kv in lastUpdateTime)
+        if (LogInView.GetIDAccount() == 0)
         {
-            if (Time.time - kv.Value > timeOut)
-            {
-                toRemove.Add(kv.Key);
-            }
+            HandleTimeoutOtherPlayers();
+            return;
         }
-
-        foreach (var idOtherPlayer in toRemove)
-        {
-            if (otherPlayers.TryGetValue(idOtherPlayer, out OtherPlayer obj))
-            {
-                PoolManager.Instance.Release(obj.otherPlayerObject);
-                otherPlayers.Remove(idOtherPlayer);
-                lastUpdateTime.Remove(idOtherPlayer);
-            }
-        }
-        toRemove.Clear();
 
         SyncOtherPlayersResultPacket onlineData = null;
         SyncOtherPlayersResultPacket onlineRealtimeData = null;
@@ -236,11 +220,11 @@ public class SyncOtherPlayersManager : MonoBehaviour, IUpdatable
                 {
                     UpdateHPUIController injuredDamageUI = PoolManager.Instance.Get(updateHPUI).GetComponent<UpdateHPUIController>();
 
-                    if (injuredDamageUI != null && MobsManager.Instance.GetMobByID(id) != null && MobsManager.Instance.GetMobByID(id).mobObject != null)
+                    if (injuredDamageUI != null && mobsManager.GetMobByID(id) != null && mobsManager.GetMobByID(id).mobObject != null)
                     {
                         ObserverManager.Notify(new Injured
                         {
-                            attackObject = MobsManager.Instance.GetMobByID(id).mobObject,
+                            attackObject = mobsManager.GetMobByID(id).mobObject,
                             damage = mobDamage,
                             injuredObject = otherPlayer.otherPlayerObject,
                             splatterBloodPosition = new Vector3(0f, 1.8f, 0f)
@@ -251,6 +235,8 @@ public class SyncOtherPlayersManager : MonoBehaviour, IUpdatable
                 }
             }
         }
+
+        HandleTimeoutOtherPlayers();
     }
     public void OnLateUpdate() { }
     public void OnFixedUpdate() { }
@@ -282,7 +268,7 @@ public class SyncOtherPlayersManager : MonoBehaviour, IUpdatable
                     break;
             }
 
-            onlinePlayer.syncSpriteController = onlinePlayer.otherPlayerObject.GetComponent<SyncSpriteController>();
+            onlinePlayer.syncSpriteController = onlinePlayer.otherPlayerObject.GetComponent<OtherPlayerController>();
             onlinePlayer.syncSpriteController.ApplyServerData(data.otherPlayerData);
 
             otherPlayers.Add(data.otherPlayerData.idAccount, onlinePlayer);
@@ -309,6 +295,27 @@ public class SyncOtherPlayersManager : MonoBehaviour, IUpdatable
             lastUpdateTime[data.otherPlayerData.idAccount] = Time.time;
         }
     }
+    private void HandleTimeoutOtherPlayers()
+    {
+        foreach (var kv in lastUpdateTime)
+        {
+            if (Time.time - kv.Value > timeOut)
+            {
+                toRemove.Add(kv.Key);
+            }
+        }
+
+        foreach (var idOtherPlayer in toRemove)
+        {
+            if (otherPlayers.TryGetValue(idOtherPlayer, out OtherPlayer obj))
+            {
+                PoolManager.Instance.Release(obj.otherPlayerObject);
+                otherPlayers.Remove(idOtherPlayer);
+                lastUpdateTime.Remove(idOtherPlayer);
+            }
+        }
+        toRemove.Clear();
+    }
 
     public Dictionary<int, OtherPlayer> GetOtherPlayers()
     {
@@ -332,14 +339,5 @@ public class SyncOtherPlayersManager : MonoBehaviour, IUpdatable
             }
         }
         otherPlayers.Clear();
-    }
-
-    private void OnDestroy()
-    {
-        if (syncTokenSource != null)
-        {
-            syncTokenSource.Cancel();
-            syncTokenSource.Dispose();
-        }
     }
 }

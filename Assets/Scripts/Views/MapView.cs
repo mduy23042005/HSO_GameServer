@@ -72,8 +72,8 @@ public class MapView : MonoBehaviour, IUpdatable
         groundLookup = ConvertListToMap(groundTiles, groundMinimap);
         waterLookup = ConvertListToMap(waterTiles, waterMinimap);
         wallLookup = ConvertListToMap(wallTiles, wallMinimap);
-        mobs = GameObject.Find("SyncManager").GetComponent<MobsManager>().GetMobs();
-        otherPlayers = GameObject.Find("SyncManager").GetComponent<SyncOtherPlayersManager>().GetOtherPlayers();
+        mobs = GameManager.Instance.GetComponent<MobsManager>().GetMobs();
+        otherPlayers = GameManager.Instance.GetComponent<OtherPlayersManager>().GetOtherPlayers();
 
         string pathMapFile = Path.Combine(Application.streamingAssetsPath, $"Maps/{SceneManager.GetActiveScene().name}.bin");
 

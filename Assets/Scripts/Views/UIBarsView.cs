@@ -16,6 +16,7 @@ public class UIBarsView : MonoBehaviour, IUpdatable
     private int lastHP;
 
     private SocketManager socketManager;
+    private MobsManager mobsManager;
 
     private void Awake()
     {
@@ -30,6 +31,7 @@ public class UIBarsView : MonoBehaviour, IUpdatable
         Init(maxHP, maxMP, hp, mp);
 
         socketManager = GameManager.Instance.GetComponent<SocketManager>();
+        mobsManager = GameManager.Instance.GetComponent<MobsManager>();
     }
 
     private void OnEnable()
@@ -112,13 +114,13 @@ public class UIBarsView : MonoBehaviour, IUpdatable
 
                 UpdateHPUIController injuredDamageUI = PoolManager.Instance.Get(updateHPUI).GetComponent<UpdateHPUIController>();
 
-                var mob = MobsManager.Instance != null ? MobsManager.Instance.GetMobByID(id) : null;
+                var mob = mobsManager != null ? mobsManager.GetMobByID(id) : null;
 
                 if (injuredDamageUI != null && mob != null && mob.mobObject != null && PlayerManager.player != null)
                 {
                     ObserverManager.Notify(new Injured
                     {
-                        attackObject = MobsManager.Instance.GetMobByID(id)?.mobObject,
+                        attackObject = mob?.mobObject,
                         damage = mobDamage,
                         injuredObject = PlayerManager.player,
                         splatterBloodPosition = new Vector3(0.25f, 1.5f, 0f)

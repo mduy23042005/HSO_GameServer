@@ -610,7 +610,7 @@ Animator:
   m_GameObject: {fileID: 4932005711595654297}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 678b3a91dccf5a447ab72e6d9e991f30, type: 2}
+  m_Controller: {fileID: 0}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -671,7 +671,7 @@ SpriteRenderer:
   m_SortingLayer: 3
   m_SortingOrder: 1
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 2642053492378982893, guid: 4e23b89d1411eaa49bca9717f9427595, type: 3}
+  m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -679,7 +679,7 @@ SpriteRenderer:
   m_Size: {x: 1.1875, y: 1.0625}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_SpriteSortPoint: 0
 --- !u!1 &7256394505456260105
 GameObject:
@@ -694,7 +694,7 @@ GameObject:
   - component: {fileID: 5655434683433530151}
   - component: {fileID: 8948598502118132492}
   m_Layer: 7
-  m_Name: Slime
+  m_Name: Mob
   m_TagString: Mob
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

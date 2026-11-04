@@ -218,10 +218,8 @@ public class MobsManager : MonoBehaviour, IUpdatable
             {
                 mob = new Mob();
 
-                mob.mobObject = InitMob(mobData);
-
                 if (mob.mobObject == null)
-                    continue;
+                    mob.mobObject = InitMob(mobData);
 
                 mob.mobData = mobData;
                 mobs.Add(mobData.id, mob);
@@ -311,5 +309,18 @@ public class MobsManager : MonoBehaviour, IUpdatable
     public void RegisterDontDestroyOnLoad()
     {
         GameManager.Instance.RegisterPersistent(this);
+    }
+
+    public void ClearMobs()
+    {
+        foreach (var mob in mobs.Values)
+        {
+            if (mob.mobObject != null)
+            {
+                PoolManager.Instance.Release(mob.mobObject);
+            }
+        }
+        mobs.Clear();
+        lastUpdateTime.Clear();
     }
 }

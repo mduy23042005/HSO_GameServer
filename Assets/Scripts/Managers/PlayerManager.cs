@@ -78,10 +78,15 @@ public class PlayerManager : MonoBehaviour, IUpdatable
                     SceneManager.LoadScene("Rừng Ảo Giác");
                     break;
             }
+
+            GameManager.Instance.GetComponent<OtherPlayersManager>().ClearOtherPlayers();
+            GameManager.Instance.GetComponent<MobsManager>().ClearMobs();
         }
 
         if (player == null && LogInView.GetIDAccount() != 0 && idMap != 0)
+        {
             InitPlayer();
+        }
     }
     public void OnLateUpdate() { }
     public void OnFixedUpdate() { }

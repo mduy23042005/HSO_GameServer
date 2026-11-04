@@ -185,31 +185,11 @@ public class OtherPlayersManager : MonoBehaviour, IUpdatable
 
         if (onlineData != null)
         {
-            if (onlineData.otherPlayersData != null)
-            {
-                foreach (var playerData in onlineData.otherPlayersData)
-                {
-                    if (playerData == null || playerData.otherPlayerData == null)
-                        continue;
-
-                    if (playerData.otherPlayerData.idAccount != LogInView.GetIDAccount())
-                       OnDataFromServer(playerData);                  
-                }
-            }
+            OnDataFromServer(onlineData);
         }
         if (onlineRealtimeData != null)
         {
-            if (onlineRealtimeData.otherPlayersData != null)
-            {
-                foreach (var playerData in onlineRealtimeData.otherPlayersData)
-                {
-                    if (playerData == null || playerData.otherPlayerData == null)
-                        continue;
-
-                    if (playerData.otherPlayerData.idAccount != LogInView.GetIDAccount())
-                        OnRealtimeDataFromServer(playerData);                
-                }
-            }
+            OnRealtimeDataFromServer(onlineRealtimeData);
         }
 
         if (hasHPUpdate)
@@ -245,54 +225,71 @@ public class OtherPlayersManager : MonoBehaviour, IUpdatable
         GameManager.Instance.RegisterPersistent(this);
     }
 
-    private void OnDataFromServer(OtherPlayerSyncData data)
+    private void OnDataFromServer(SyncOtherPlayersResultPacket data)
     {
+        if (data == null || data.otherPlayersData== null)
+            return;
+
         OtherPlayer onlinePlayer;
 
         // Kiểm tra thêm nếu object đã bị destroy
-        if (!otherPlayers.TryGetValue(data.otherPlayerData.idAccount, out onlinePlayer))
+        foreach (var otherPlayerData in data.otherPlayersData)
         {
-            onlinePlayer = new OtherPlayer();
-            onlinePlayer.otherPlayerData = data.otherPlayerData;
-
-            switch (data.otherPlayerData.idSchool)
+            if (!otherPlayers.TryGetValue(otherPlayerData.otherPlayerData.idAccount, out onlinePlayer))
             {
-                case 1:
-                    onlinePlayer.otherPlayerObject = PoolManager.Instance.Get(otherPlayersPrefab[0]);
-                    break;
-                case 2:
-                    onlinePlayer.otherPlayerObject = PoolManager.Instance.Get(otherPlayersPrefab[1]);
-                    break;
-                case 3:
-                    onlinePlayer.otherPlayerObject = PoolManager.Instance.Get(otherPlayersPrefab[2]);
-                    break;
+                onlinePlayer = new OtherPlayer();
+                onlinePlayer.otherPlayerData = otherPlayerData.otherPlayerData;
+
+                if (onlinePlayer.otherPlayerObject == null)
+                {
+                    switch (otherPlayerData.otherPlayerData.idSchool)
+                    {
+                        case 1:
+                            onlinePlayer.otherPlayerObject = PoolManager.Instance.Get(otherPlayersPrefab[0]);
+                            break;
+                        case 2:
+                            onlinePlayer.otherPlayerObject = PoolManager.Instance.Get(otherPlayersPrefab[1]);
+                            break;
+                        case 3:
+                            onlinePlayer.otherPlayerObject = PoolManager.Instance.Get(otherPlayersPrefab[2]);
+                            break;
+                    }
+                }
+
+                onlinePlayer.syncSpriteController = onlinePlayer.otherPlayerObject.GetComponent<OtherPlayerController>();
+                onlinePlayer.syncSpriteController.ApplyServerData(otherPlayerData.otherPlayerData);
+
+                otherPlayers.Add(otherPlayerData.otherPlayerData.idAccount, onlinePlayer);
+                lastUpdateTime[otherPlayerData.otherPlayerData.idAccount] = Time.time;
             }
-
-            onlinePlayer.syncSpriteController = onlinePlayer.otherPlayerObject.GetComponent<OtherPlayerController>();
-            onlinePlayer.syncSpriteController.ApplyServerData(data.otherPlayerData);
-
-            otherPlayers.Add(data.otherPlayerData.idAccount, onlinePlayer);
+            else
+            {
+                onlinePlayer.otherPlayerData = otherPlayerData.otherPlayerData;
+                onlinePlayer.syncSpriteController.ApplyServerData(otherPlayerData.otherPlayerData);
+                lastUpdateTime[otherPlayerData.otherPlayerData.idAccount] = Time.time;
+            }
         }
-        else
-        {
-            onlinePlayer.otherPlayerData = data.otherPlayerData;
-            onlinePlayer.syncSpriteController.ApplyServerData(data.otherPlayerData);
-        }
-
-        lastUpdateTime[data.otherPlayerData.idAccount] = Time.time;
     }
-    private void OnRealtimeDataFromServer(OtherPlayerSyncData data)
+    private void OnRealtimeDataFromServer(SyncOtherPlayersResultPacket data)
     {
-        if (otherPlayers.TryGetValue(data.otherPlayerData.idAccount, out OtherPlayer onlinePlayer))
+        if (data == null || data.otherPlayersData == null)
+            return;
+
+        foreach (var otherPlayerData in data.otherPlayersData)
         {
-            onlinePlayer.otherPlayerData.maxHP = data.otherPlayerData.maxHP;
-            onlinePlayer.otherPlayerData.hp = data.otherPlayerData.hp;
-            onlinePlayer.otherPlayerData.currentTile = data.otherPlayerData.currentTile;
+            if (otherPlayers.TryGetValue(otherPlayerData.otherPlayerData.idAccount, out OtherPlayer onlinePlayer))
+            {
+                onlinePlayer.otherPlayerData.maxHP = otherPlayerData.otherPlayerData.maxHP;
+                onlinePlayer.otherPlayerData.hp = otherPlayerData.otherPlayerData.hp;
+                onlinePlayer.otherPlayerData.currentTile = otherPlayerData.otherPlayerData.currentTile;
+                if (onlinePlayer.otherPlayerObject != null)
+                {
+                    onlinePlayer.otherPlayerObject.transform.SetPositionAndRotation(new Vector2(otherPlayerData.otherPlayerTransformData.positionData.x, otherPlayerData.otherPlayerTransformData.positionData.y), Quaternion.identity);
+                    onlinePlayer.syncSpriteController.ApplyServerRealtimeData(otherPlayerData.otherPlayerData, otherPlayerData.otherPlayerTransformData, otherPlayerData.otherPlayerStateData);
+                }
 
-            onlinePlayer.otherPlayerObject.transform.SetPositionAndRotation(new Vector2(data.otherPlayerTransformData.positionData.x, data.otherPlayerTransformData.positionData.y), Quaternion.identity);
-            onlinePlayer.syncSpriteController.ApplyServerRealtimeData(data.otherPlayerData, data.otherPlayerTransformData, data.otherPlayerStateData);
-
-            lastUpdateTime[data.otherPlayerData.idAccount] = Time.time;
+                lastUpdateTime[otherPlayerData.otherPlayerData.idAccount] = Time.time;
+            }
         }
     }
     private void HandleTimeoutOtherPlayers()
@@ -339,5 +336,18 @@ public class OtherPlayersManager : MonoBehaviour, IUpdatable
             }
         }
         otherPlayers.Clear();
+        lastUpdateTime.Clear();
+    }
+    public void ClearOtherPlayers()
+    {
+        foreach (var kv in otherPlayers)
+        {
+            if (kv.Value != null)
+            {
+                PoolManager.Instance.Release(kv.Value.otherPlayerObject);
+            }
+        }
+        otherPlayers.Clear();
+        lastUpdateTime.Clear();
     }
 }

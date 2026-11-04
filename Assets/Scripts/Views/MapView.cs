@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NUnit.Framework;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -240,6 +241,9 @@ public class MapView : MonoBehaviour, IUpdatable
                 int id = kv.Key;
                 Mob mob = kv.Value;
 
+                if (mob == null || mob.mobObject == null)
+                    continue;
+
                 if (!lastMobsPositionFullMinimap.ContainsKey(id))
                 {
                     int size = (int)(groundMinimap[0].textureRect.width);
@@ -265,9 +269,11 @@ public class MapView : MonoBehaviour, IUpdatable
 
             foreach (var lastMobPosition in lastMobsPositionFullMinimap)
             {
-                if (!mobs.ContainsKey(lastMobPosition.Key))
+                bool dead = !mobs.TryGetValue(lastMobPosition.Key, out Mob mob) || mob == null || mob.mobObject == null;
+                if (dead)
                 {
-                    PoolManager.Instance.Release(lastMobPosition.Value);
+                    if (lastMobPosition.Value != null)
+                        PoolManager.Instance.Release(lastMobPosition.Value);
                     removeIds.Add(lastMobPosition.Key);
                 }
             }
@@ -283,6 +289,9 @@ public class MapView : MonoBehaviour, IUpdatable
             {
                 int id = kv.Key;
                 OtherPlayer otherPlayer = kv.Value;
+
+                if (otherPlayer == null || otherPlayer.otherPlayerObject == null)
+                    continue;
 
                 if (!lastOtherPlayersPositionFullMinimap.ContainsKey(id))
                 {
@@ -309,15 +318,18 @@ public class MapView : MonoBehaviour, IUpdatable
 
             foreach (var lastOtherPlayerPosition in lastOtherPlayersPositionFullMinimap)
             {
-                if (!otherPlayers.ContainsKey(lastOtherPlayerPosition.Key))
+                bool dead = !otherPlayers.TryGetValue(lastOtherPlayerPosition.Key, out OtherPlayer otherPlayer) || otherPlayer == null || otherPlayer.otherPlayerObject == null;
+                if (dead)
                 {
-                    PoolManager.Instance.Release(lastOtherPlayerPosition.Value);
+                    if (lastOtherPlayerPosition.Value != null)
+                        PoolManager.Instance.Release(lastOtherPlayerPosition.Value);
                     removeIds.Add(lastOtherPlayerPosition.Key);
                 }
             }
-
             foreach (int id in removeIds)
+            {
                 lastOtherPlayersPositionFullMinimap.Remove(id);
+            }
         }
     }
     private void UpdateMarkerMinimap()
@@ -350,6 +362,9 @@ public class MapView : MonoBehaviour, IUpdatable
                 int id = kv.Key;
                 Mob mob = kv.Value;
 
+                if (mob == null || mob.mobObject == null)
+                    continue;
+
                 if (!lastMobsPositionMinimap.ContainsKey(id))
                 {
                     int size = (int)(groundMinimap[0].textureRect.width);
@@ -377,13 +392,14 @@ public class MapView : MonoBehaviour, IUpdatable
 
             foreach (var lastMobPosition in lastMobsPositionMinimap)
             {
-                if (!mobs.ContainsKey(lastMobPosition.Key))
+                bool dead = !mobs.TryGetValue(lastMobPosition.Key, out Mob mob) || mob == null || mob.mobObject == null;
+                if (dead)
                 {
-                    PoolManager.Instance.Release(lastMobPosition.Value);
+                    if (lastMobPosition.Value != null)
+                        PoolManager.Instance.Release(lastMobPosition.Value);
                     removeIds.Add(lastMobPosition.Key);
                 }
             }
-
             foreach (int id in removeIds)
             {
                 lastMobsPositionMinimap.Remove(id);
@@ -396,6 +412,9 @@ public class MapView : MonoBehaviour, IUpdatable
             {
                 int id = kv.Key;
                 OtherPlayer otherPlayer = kv.Value;
+
+                if (otherPlayer == null || otherPlayer.otherPlayerObject == null)
+                    continue;
 
                 if (!lastOtherPlayersPositionMinimap.ContainsKey(id))
                 {
@@ -425,15 +444,19 @@ public class MapView : MonoBehaviour, IUpdatable
 
             foreach (var lastOtherPlayerPosition in lastOtherPlayersPositionMinimap)
             {
-                if (!otherPlayers.ContainsKey(lastOtherPlayerPosition.Key))
+                bool dead = !otherPlayers.TryGetValue(lastOtherPlayerPosition.Key, out OtherPlayer otherPlayer) || otherPlayer == null || otherPlayer.otherPlayerObject == null;
+                if (dead)
                 {
-                    PoolManager.Instance.Release(lastOtherPlayerPosition.Value);
+                    if (lastOtherPlayerPosition.Value != null)
+                        PoolManager.Instance.Release(lastOtherPlayerPosition.Value);
                     removeIds.Add(lastOtherPlayerPosition.Key);
                 }
             }
 
             foreach (int id in removeIds)
+            {
                 lastOtherPlayersPositionMinimap.Remove(id);
+            }
         }
     }
 

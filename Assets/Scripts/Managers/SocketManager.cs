@@ -297,9 +297,6 @@ public class SocketManager : MonoBehaviour
         }
         catch
         {
-            //Dọn sạch danh sách quản lý Other Players trước khi chuyển về Main Scene
-            GameObject.Find("SyncManager").gameObject.GetComponent<OtherPlayersManager>().PrepareForLogOut();
-
             //Dọn sạch danh sách quản lý Queue nhận dữ liệu từ Server
             ClearAllQueues();
 

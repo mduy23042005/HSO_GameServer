@@ -375,6 +375,7 @@ GameObject:
   - component: {fileID: 7406187157727187940}
   - component: {fileID: 8423126532372490692}
   - component: {fileID: 132011183232152837}
+  - component: {fileID: 8853987830146854281}
   m_Layer: 0
   m_Name: ChienBinh
   m_TagString: Untagged
@@ -552,6 +553,19 @@ SortingGroup:
   m_SortingOrder: 0
   m_SortAtRoot: 0
   m_Sort3DAs2D: 0
+--- !u!114 &8853987830146854281
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1887108271017217227}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 608018e346b81ff40bba9bae98ed03e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ObjectTypeController
+  objectType: 4
 --- !u!1 &3459168707093721001
 GameObject:
   m_ObjectHideFlags: 0

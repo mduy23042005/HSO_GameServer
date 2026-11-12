@@ -693,6 +693,7 @@ GameObject:
   - component: {fileID: 3996610361627264304}
   - component: {fileID: 5655434683433530151}
   - component: {fileID: 8948598502118132492}
+  - component: {fileID: 6103003028359309717}
   m_Layer: 7
   m_Name: Mob
   m_TagString: Mob
@@ -795,6 +796,19 @@ SortingGroup:
   m_SortingOrder: 0
   m_SortAtRoot: 0
   m_Sort3DAs2D: 0
+--- !u!114 &6103003028359309717
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7256394505456260105}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 608018e346b81ff40bba9bae98ed03e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ObjectTypeController
+  objectType: 2
 --- !u!1 &8198620928803195275
 GameObject:
   m_ObjectHideFlags: 0

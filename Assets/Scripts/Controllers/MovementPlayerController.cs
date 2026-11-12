@@ -193,7 +193,7 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
                 targetPosition = new Vector2(worldPos.x, worldPos.y);
                 isMovingToTarget = true;
                 path = null;
-                FocusController.focusedObject = null;
+                FocusController.focus.focusedObject = null;
                 return;
             }
             return;
@@ -208,9 +208,9 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
         Vector3 touchWorldPos = Camera.main.ScreenToWorldPoint(touchPos);
         Collider2D hit = Physics2D.OverlapPoint(touchWorldPos, focusLayer);
         if (hit != null)
-            FocusController.focusedObject = hit.gameObject;
+            FocusController.focus.focusedObject = hit.gameObject;
         else
-            FocusController.focusedObject = null;
+            FocusController.focus.focusedObject = null;
     }
     public virtual void LeftClick()
     {
@@ -236,9 +236,9 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
             Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Collider2D hit = Physics2D.OverlapPoint(mouseWorldPos, focusLayer);
             if (hit != null)       
-                FocusController.focusedObject = hit.gameObject;
+                FocusController.focus.focusedObject = hit.gameObject;
             else
-                FocusController.focusedObject = null;
+                FocusController.focus.focusedObject = null;
         }
     }
     public virtual void RightClick()
@@ -262,7 +262,7 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
                     targetPosition = new Vector2(worldPos.x, worldPos.y);
                     isMovingToTarget = true;
                     path = null;
-                    FocusController.focusedObject = null;
+                    FocusController.focus.focusedObject = null;
                     return;
                 }
                 return;
@@ -281,7 +281,7 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
             // nếu hợp lệ thì move
             targetPosition = clickPos;
             isMovingToTarget = true;
-            FocusController.focusedObject = null;
+            FocusController.focus.focusedObject = null;
         }
     }
     public virtual void MoveKeyboard()
@@ -445,31 +445,52 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
 
                 MoveStop();
 
-                // xử lý khi click vào quái
-                if (FocusController.focusedObject != null && FocusController.focusedObject.GetComponent<MobController>() != null)
+                if (FocusController.focus.focusedObject != null)
                 {
-                    targetPosition = new Vector2(FocusController.focusedObject.transform.position.x, FocusController.focusedObject.transform.position.y);
-
-                    var mobGrid = ToGrid(targetPosition);
-
-                    if (Vector2.Distance(transform.position, targetPosition) <= 1.5f)
+                    switch (FocusController.focus.focusedObjectType)
                     {
-                        path = null;
-                        isMovingToTarget = false;
-                        if (minimap != null)
-                            minimap.ClearAStarPath();
-                        movement = Vector2.zero;
+                        case ObjectType.Mob:
+                            if (Vector2.Distance(currentPosition, targetPosition) <= 1.5f)
+                            {
+                                path = null;
+                                isMovingToTarget = false;
+                                if (minimap != null)
+                                    minimap.ClearAStarPath();
+                                movement = Vector2.zero;
 
-                        UpdateAtkAnimation();
-                        return;
-                    }
+                                UpdateAtkAnimation();
+                                return;
+                            }
 
-                    var newMobGrid = ToGrid(targetPosition);
-                    if (newMobGrid != endMovementPosition)
-                    {
-                        path = null;
+                            var newMobGrid = ToGrid(targetPosition);
+                            if (newMobGrid != endMovementPosition)
+                            {
+                                path = null;
+                            }
+                            break;
+
+                        case ObjectType.DroppedItem:
+                            if (Vector2.Distance(currentPosition, targetPosition) <= 1f)
+                            {
+                                path = null;
+                                isMovingToTarget = false;
+                                if (minimap != null)
+                                    minimap.ClearAStarPath();
+                                movement = Vector2.zero;
+
+                                PacketWriterManager writer = new PacketWriterManager();
+                                writer.WriteInt((int)EnumCmdCode.pickupItem0);
+                                writer.WriteInt(LogInView.GetIDAccount() ?? 0);
+                                writer.WriteInt(FocusController.focus.focusedObject.GetComponent<ObjectTypeController>().GetID());
+                                writer.WriteFloat(FocusController.focus.focusedObject.transform.position.x);
+                                writer.WriteFloat(FocusController.focus.focusedObject.transform.position.y);
+
+                                _ = socketManager.SendToServer(writer.ToArray());
+                                return;
+                            }
+                            break;
                     }
-                }
+                }    
             }
 
             // kiểm tra chuyển đổi Node
@@ -565,25 +586,33 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
         }
         if (Input.GetKeyDown(KeyCode.J))
         {
-            ChaseAndAttack();
+            if (FocusController.focus.focusedObject != null)
+            {
+                switch (FocusController.focus.focusedObjectType)
+                {
+                    case ObjectType.Mob:
+                        ChaseAndAttack();
+                        break;
+
+                    case ObjectType.DroppedItem:
+                        GoAndPickDroppedItem();
+                        break;
+                }
+            }
         }
     }
     public void ChaseAndAttack()
     {
-        if (FocusController.focusedObject == null)
+        if (FocusController.focus.focusedObject == null)
             return;
 
-        var gridPos = ToGrid(FocusController.focusedObject.transform.position);
+        var gridPos = ToGrid(FocusController.focus.focusedObject.transform.position);
 
         if (!astar.IsWalkable(mapData, gridPos.x, gridPos.y))
             return;
 
-        if (FocusController.focusedObject != null && FocusController.focusedObject.GetComponent<MobController>() != null)
+        if (FocusController.focus.focusedObject != null)
         {
-            targetPosition = new Vector2(FocusController.focusedObject.transform.position.x, FocusController.focusedObject.transform.position.y);
-
-            var mobGrid = ToGrid(targetPosition);
-
             if (Vector2.Distance(transform.position, targetPosition) <= 1.5f)
             {
                 UpdateAtkAnimation();
@@ -591,7 +620,41 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
             }
             else
             {
-                targetPosition = FocusController.focusedObject.transform.position;
+                targetPosition = FocusController.focus.focusedObject.transform.position;
+                isMovingToTarget = true;
+                path = null;
+            }
+        }
+    }
+    private void GoAndPickDroppedItem()
+    {
+        if (FocusController.focus.focusedObject == null)
+            return;
+
+        var gridPos = ToGrid(FocusController.focus.focusedObject.transform.position);
+
+        if (!astar.IsWalkable(mapData, gridPos.x, gridPos.y))
+            return;
+
+        if (FocusController.focus.focusedObject != null)
+        {
+            if (Vector2.Distance(transform.position, targetPosition) <= 1f)
+            {
+                PacketWriterManager writer = new PacketWriterManager();
+                writer.WriteInt((int)EnumCmdCode.pickupItem0);
+                writer.WriteInt(LogInView.GetIDAccount() ?? 0);
+                writer.WriteInt(FocusController.focus.focusedObject.GetComponent<ObjectTypeController>().GetID());
+                writer.WriteFloat(FocusController.focus.focusedObject.transform.position.x);
+                writer.WriteFloat(FocusController.focus.focusedObject.transform.position.y);
+
+                Debug.Log($"Send pickup item command to server: {FocusController.focus.focusedObject.GetComponent<ObjectTypeController>().GetID()}");
+
+                _ = socketManager.SendToServer(writer.ToArray());
+                return;
+            }
+            else
+            {
+                targetPosition = FocusController.focus.focusedObject.transform.position;
                 isMovingToTarget = true;
                 path = null;
             }
@@ -613,7 +676,7 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
         yield return new WaitForSeconds(duration);
         isBusy = false;
     }
-    public void UpdateAtkAnimation()
+    private void UpdateAtkAnimation()
     {
         currentState = State.Attack;
         UpdateAttackAnimation("Atk", 0.5f);
@@ -621,7 +684,7 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
         PacketWriterManager writer = new PacketWriterManager();
         writer.WriteInt((int)(EnumCmdCode)EnumCmdCode.playerAttackMob); // sau này sẽ quy ước chung thành atk để có thể attack cả other player và mob
         writer.WriteInt(LogInView.GetIDAccount() ?? 0);
-        writer.WriteInt(FocusController.focusedObject.GetComponent<MobController>().GetID());
+        writer.WriteInt(FocusController.focus.focusedObject.GetComponent<MobController>().GetID());
 
         _ = socketManager.SendToServer(writer.ToArray());
     }

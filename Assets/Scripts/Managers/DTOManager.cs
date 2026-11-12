@@ -324,3 +324,20 @@ public class EquipItem0RequestPacket
     public int idItem0;
     public string slotName;
 }
+
+public enum ObjectType
+{
+    None,
+    DroppedItem,
+    Mob,
+    NPC,
+    Player,
+    OtherPlayer
+}
+
+public class FocusObject
+{
+    public GameObject focusedObjectUI;
+    public ObjectType focusedObjectType;
+    public GameObject focusedObject;
+}

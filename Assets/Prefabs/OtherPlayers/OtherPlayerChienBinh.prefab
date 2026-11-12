@@ -1497,6 +1497,7 @@ GameObject:
   - component: {fileID: 1607716004203031428}
   - component: {fileID: 2746472192839734756}
   - component: {fileID: 3301584016267893328}
+  - component: {fileID: 238255310850409702}
   m_Layer: 7
   m_Name: OtherPlayerChienBinh
   m_TagString: Untagged
@@ -1512,7 +1513,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4555938910356724988}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1619,6 +1620,19 @@ SortingGroup:
   m_SortingOrder: 0
   m_SortAtRoot: 0
   m_Sort3DAs2D: 0
+--- !u!114 &238255310850409702
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4555938910356724988}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 608018e346b81ff40bba9bae98ed03e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ObjectTypeController
+  objectType: 5
 --- !u!1 &4668916797416398653
 GameObject:
   m_ObjectHideFlags: 0

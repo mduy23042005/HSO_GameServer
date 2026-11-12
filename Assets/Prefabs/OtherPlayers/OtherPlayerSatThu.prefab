@@ -1251,6 +1251,7 @@ GameObject:
   - component: {fileID: 5485520976120586561}
   - component: {fileID: 6913172970931823014}
   - component: {fileID: 3533464449799642054}
+  - component: {fileID: 6463363181890376846}
   m_Layer: 7
   m_Name: OtherPlayerSatThu
   m_TagString: Untagged
@@ -1266,7 +1267,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6002207029804953653}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1373,6 +1374,19 @@ SortingGroup:
   m_SortingOrder: 0
   m_SortAtRoot: 0
   m_Sort3DAs2D: 0
+--- !u!114 &6463363181890376846
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6002207029804953653}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 608018e346b81ff40bba9bae98ed03e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ObjectTypeController
+  objectType: 5
 --- !u!1 &6324342669091926766
 GameObject:
   m_ObjectHideFlags: 0

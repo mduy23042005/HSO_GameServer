@@ -11,19 +11,27 @@ public class DroppedItemManager : MonoBehaviour, IUpdatable
 
     private SocketManager socketManager;
 
+    private Action<LogOutClickEvent> logoutObserver;
+
     private void Awake()
     {
         socketManager = GameManager.Instance.GetComponent<SocketManager>();
+
+        logoutObserver = eventData => ClearDroppedItem0s();
     }
 
     private void OnEnable()
     {
         GameManager.Instance.Register(this);
+
+        ObserverManager.Register<LogOutClickEvent>(logoutObserver);
     }
     private void OnDisable()
     {
         if (GameManager.Instance != null)
             GameManager.Instance.Unregister(this);
+
+        ObserverManager.Unregister<LogOutClickEvent>(logoutObserver);
     }
 
     public void OnUpdate()
@@ -81,6 +89,7 @@ public class DroppedItemManager : MonoBehaviour, IUpdatable
         dropItem.transform.position = new Vector3(posX, posY, 0f);
         dropItem.GetComponentInChildren<SpriteRenderer>().sprite = ItemController.Instance.GetItem0(idItem0).iconItem0;
         dropItem.GetComponentInChildren<TMP_Text>().text = nameItem0;
+        dropItem.GetComponent<ObjectTypeController>().SetID(id);
 
         droppedItem0s.Add(id, dropItem);
     }
@@ -89,4 +98,9 @@ public class DroppedItemManager : MonoBehaviour, IUpdatable
     public void OnFixedUpdate() { }
 
     public void RegisterDontDestroyOnLoad() { }
+
+    public void ClearDroppedItem0s()
+    {
+        droppedItem0s.Clear();
+    }
 }

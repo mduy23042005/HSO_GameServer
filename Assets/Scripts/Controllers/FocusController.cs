@@ -22,9 +22,7 @@ public class FocusController : MonoBehaviour, IUpdatable
 {
     [SerializeField] private GameObject focusUI; // prefab
 
-    private GameObject focusedObjectUI; // object chính điều khiển UI
-
-    public static GameObject focusedObject; // object bị chỉ định để object chính thay đổi vị trí
+    public static FocusObject focus = new FocusObject(); // object chính đang focus
 
     private void OnEnable()
     {
@@ -40,20 +38,25 @@ public class FocusController : MonoBehaviour, IUpdatable
 
     public void OnFixedUpdate()
     {
-        if (focusedObject != null && focusedObject.activeInHierarchy)
+        if (focus.focusedObject != null && focus.focusedObject.activeInHierarchy)
         {
-            if (focusedObjectUI == null)
-                focusedObjectUI = PoolManager.Instance.Get(focusUI);
+            if (focus.focusedObjectUI == null)
+                focus.focusedObjectUI = PoolManager.Instance.Get(focusUI);
 
-            focusedObjectUI.transform.position = new Vector3(focusedObject.transform.position.x, focusedObject.transform.position.y + 3.5f, 0);
+            focus.focusedObjectUI.transform.position = new Vector3(focus.focusedObject.transform.position.x, focus.focusedObject.transform.position.y + 3.5f, 0);
+
+            if (focus.focusedObject.GetComponent<ObjectTypeController>() != null)
+                focus.focusedObjectType = focus.focusedObject.GetComponent<ObjectTypeController>().GetObjectType();
         }
         else
         {
-            if (focusedObjectUI != null)
+            if (focus.focusedObjectUI != null)
             {
-                focusedObject = null;
-                PoolManager.Instance.Release(focusedObjectUI);
-                focusedObjectUI = null;
+                focus.focusedObject = null;
+                PoolManager.Instance.Release(focus.focusedObjectUI);
+
+                focus.focusedObjectUI = null;
+                focus.focusedObjectType = ObjectType.None;
             }
         }
     }

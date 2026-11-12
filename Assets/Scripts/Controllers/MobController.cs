@@ -14,7 +14,7 @@ public class MobController : MonoBehaviour, IUpdatable
 
     private Vector2 movement;
 
-    private SyncMobData syncMobDataMovement;
+    private SyncMobData syncMobData;
     private int lastIDStateStand = -1;
     private int lastIDStateAtk = -1;
     private bool isStandingInWater = false;
@@ -48,15 +48,15 @@ public class MobController : MonoBehaviour, IUpdatable
     public void RegisterDontDestroyOnLoad() { }
     public void OnUpdate()
     {
-        if (syncMobDataMovement == null)
+        if (syncMobData == null)
             return;
 
-        Vector2 targetPos = new Vector2(syncMobDataMovement.posX, syncMobDataMovement.posY);
+        Vector2 targetPos = new Vector2(syncMobData.posX, syncMobData.posY);
         movement = targetPos;
 
         ReadMap();
 
-        if (syncMobDataMovement.currentTile == TileType.Water && astar.IsStandInWater(mapData, transform.position.x, transform.position.y))
+        if (syncMobData.currentTile == TileType.Water && astar.IsStandInWater(mapData, transform.position.x, transform.position.y))
         {
             waterShadow.SetActive(true);
 
@@ -90,36 +90,38 @@ public class MobController : MonoBehaviour, IUpdatable
         if (animator.GetCurrentAnimatorStateInfo(0).IsName("Atk") || animator.GetCurrentAnimatorStateInfo(0).IsName("Injured") || animator.GetCurrentAnimatorStateInfo(0).IsName("Die"))
             return;
 
-        flipSprite.flipX = syncMobDataMovement.direction == Direction.Left;
+        flipSprite.flipX = syncMobData.direction == Direction.Left;
         transform.position = Vector2.MoveTowards(transform.position, movement, 2f * Time.fixedDeltaTime);
     }
 
     public void ApplyServerState(SyncMobData data)
     {
-        syncMobDataMovement = data;
+        syncMobData = data;
 
         if (lastHP == 0)
         {
-            lastHP = syncMobDataMovement.hp;
+            lastHP = syncMobData.hp;
         }
         else
         {
-            if (syncMobDataMovement.hp <= 0 || hpBar.value <= 0)
+            if (syncMobData.hp <= 0 || hpBar.value <= 0)
             {
                 if (lastHP > 0)
                     animator.SetTrigger("Die");
                 
-                lastHP = syncMobDataMovement.hp;
+                lastHP = syncMobData.hp;
             }
-            else if (lastHP > syncMobDataMovement.hp)
+            else if (lastHP > syncMobData.hp)
             {
                 animator.SetTrigger("Injured");
-                lastHP = syncMobDataMovement.hp;
+                lastHP = syncMobData.hp;
             }
         }
 
-        hpBar.maxValue = syncMobDataMovement.maxHP;
-        hpBar.value = syncMobDataMovement.hp;
+        uiNameMob.text = $"{syncMobData.id}";
+
+        hpBar.maxValue = syncMobData.maxHP;
+        hpBar.value = syncMobData.hp;
     }
     private void ReadMap()
     {
@@ -136,20 +138,20 @@ public class MobController : MonoBehaviour, IUpdatable
         if (animator.GetCurrentAnimatorStateInfo(0).IsName("Atk") || animator.GetCurrentAnimatorStateInfo(0).IsName("Injured") || animator.GetCurrentAnimatorStateInfo(0).IsName("Die"))
             return;
 
-        switch (syncMobDataMovement.state)
+        switch (syncMobData.state)
         {
             case State.Stand:
-                if (syncMobDataMovement.idState != lastIDStateStand)
+                if (syncMobData.idState != lastIDStateStand)
                 {
-                    lastIDStateStand = syncMobDataMovement.idState;
+                    lastIDStateStand = syncMobData.idState;
                     animator.SetTrigger("Stand");
                 }
                 break;
 
             case State.Attack:
-                if (syncMobDataMovement.idState != lastIDStateAtk)
+                if (syncMobData.idState != lastIDStateAtk)
                 {
-                    lastIDStateAtk = syncMobDataMovement.idState;
+                    lastIDStateAtk = syncMobData.idState;
                     animator.SetTrigger("Atk");
                 }
                 break;
@@ -162,7 +164,7 @@ public class MobController : MonoBehaviour, IUpdatable
     }
     public int GetID()
     {
-        if (syncMobDataMovement == null) return 0;
-        return syncMobDataMovement.id;
+        if (syncMobData == null) return 0;
+        return syncMobData.id;
     }
 }

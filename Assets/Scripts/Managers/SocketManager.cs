@@ -51,7 +51,6 @@ public class SocketManager : MonoBehaviour
 
     private readonly ConcurrentQueue<byte[]> playerAttackMobQueues = new ConcurrentQueue<byte[]>();
 
-    private readonly ConcurrentQueue<byte[]> droppedItem0Queues = new ConcurrentQueue<byte[]>();
     private readonly ConcurrentQueue<byte[]> droppedItem0sQueues = new ConcurrentQueue<byte[]>();
 
     private MovementPlayerController playerMovementController;
@@ -391,10 +390,6 @@ public class SocketManager : MonoBehaviour
                 playerAttackMobQueues.Enqueue(data);
                 break;
 
-            case EnumCmdCode.dropItem0:
-                droppedItem0Queues.Enqueue(data);
-                break;
-
             case EnumCmdCode.dropItem0s:
                 droppedItem0sQueues.Enqueue(data);
                 break;
@@ -534,18 +529,14 @@ public class SocketManager : MonoBehaviour
 
         return null;
     }
+
     public byte[] GetPlayerAttackMobData()
     {
         if (playerAttackMobQueues.TryDequeue(out var data))
             return data;
         return null;
     }
-    public byte[] GetDroppedItem0Data()
-    {
-        if (droppedItem0Queues.TryDequeue(out var data))
-            return data;
-        return null;
-    }
+
     public byte[] GetDroppedItem0sData()
     {
         if (droppedItem0sQueues.TryDequeue(out var data))
@@ -593,7 +584,6 @@ public class SocketManager : MonoBehaviour
         ClearQueue(outfitSpritesQueue);
 
         ClearQueue(playerAttackMobQueues);
-        ClearQueue(droppedItem0Queues);
     }
     private void ClearQueue(ConcurrentQueue<byte[]> queue)
     {

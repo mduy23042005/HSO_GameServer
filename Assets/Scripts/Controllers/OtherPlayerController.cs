@@ -309,25 +309,39 @@ public class OtherPlayerController : MonoBehaviour, IUpdatable
             weaponData = otherPlayerData.weapon;
             EquipWeapon(weaponData);
         }
+
         if (helmetData != otherPlayerData.helmet)
         {
             helmetData = otherPlayerData.helmet;
             EquipHelmet(helmetData);
         }
+
         if (armorData != otherPlayerData.armor)
         {
             armorData = otherPlayerData.armor;
             EquipArmor(armorData);
         }
+
         if (legArmorData != otherPlayerData.legArmor)
         {
             legArmorData = otherPlayerData.legArmor;
             EquipLegArmor(legArmorData);
         }
-        if (hairData != otherPlayerData.hair)
+
+        if (hairData != otherPlayerData.hair || spriteLibraries[5].spriteLibraryAsset == null)
         {
             hairData = otherPlayerData.hair;
             EquipHair(hairData, otherPlayerData.idSchool);
+        }
+
+        if (spriteLibraries[2].spriteLibraryAsset == null)
+        {
+            EquipHead(0);
+        }
+
+        if (spriteLibraries[4].spriteLibraryAsset == null)
+        {
+            EquipFace(0, otherPlayerData.idSchool);
         }
     }
     public void ApplyServerRealtimeData(PlayerData serverData, PlayerTransformData serverTransform, PlayerStateData serverState)
@@ -349,8 +363,8 @@ public class OtherPlayerController : MonoBehaviour, IUpdatable
             currentTileType = otherPlayerData.currentTile;
     }
 
-    public void OnUpdate() 
-    {   
+    public void OnUpdate()
+    {
         if (otherPlayerTransform.positionData == null || otherPlayerTransform.scaleData == null || otherPlayerState == null)
             return;
 
@@ -444,6 +458,31 @@ public class OtherPlayerController : MonoBehaviour, IUpdatable
     {
         spriteLibraries[6].spriteLibraryAsset = listItem0.GetItem0(id).weapon.weaponFrontLibraries;
         spriteLibraries[7].spriteLibraryAsset = listItem0.GetItem0(id).weapon.weaponBackLibraries;
+    }
+    public void EquipHead(int id)
+    {
+        spriteLibraries[2].spriteLibraryAsset = listItem0.GetHeadLibrary(id).headLibrariesAsset;
+    }
+    public void EquipFace(int id, int idSchool)
+    {
+        switch (idSchool)
+        {
+            case 1: //Chiến binh
+                spriteLibraries[4].spriteLibraryAsset = listItem0.GetMaleFaceLibrary(id).faceLibrariesAsset;
+                break;
+
+            case 2: //Sát thủ 
+                spriteLibraries[4].spriteLibraryAsset = listItem0.GetMaleFaceLibrary(id).faceLibrariesAsset;
+                break;
+
+            case 3: //Pháp sư
+                spriteLibraries[4].spriteLibraryAsset = listItem0.GetFemaleFaceLibrary(id).faceLibrariesAsset;
+                break;
+
+            case 4: //Xạ thủ 
+                spriteLibraries[4].spriteLibraryAsset = listItem0.GetFemaleFaceLibrary(id).faceLibrariesAsset;
+                break;
+        }
     }
     #endregion
 

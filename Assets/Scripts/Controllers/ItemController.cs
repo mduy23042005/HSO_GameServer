@@ -114,21 +114,43 @@ public class ListItem0Drawer : PropertyDrawer
 public class ItemController : MonoBehaviour, IUpdatable
 {
     [SerializeField] private List<ListItem0> listItem0Sprite;
+
     [SerializeField] private List<ListItem3> listItem3Sprite;
+
     [SerializeField] private List<Sprite> listDefaultItemSprite;
+
     [SerializeField] private List<HairLibraries> listMaleHairLibraries;
     [SerializeField] private List<HairLibraries> listFemaleHairLibraries;
 
+    [SerializeField] private List<FaceLibraries> listMaleFaceLibraries;
+    [SerializeField] private List<FaceLibraries> listFemaleFaceLibraries;
+
+    [SerializeField] private List<HeadLibraries> listHeadLibraries;
+
     private Dictionary<int, ListItem0> mapItem0Sprite;
+
     private Dictionary<int, HairLibraries> mapMaleHairLibraries;
     private Dictionary<int, HairLibraries> mapFemaleHairLibraries;
+
+    private Dictionary<int, FaceLibraries> mapMaleFaceLibraries;
+    private Dictionary<int, FaceLibraries> mapFemaleFaceLibraries;
+
+    private Dictionary<int, HeadLibraries> mapHeadLibraries;
+
     public static ItemController Instance;
 
     private void Awake()
     {
         mapItem0Sprite = ConvertListToMap(listItem0Sprite);
+
         mapMaleHairLibraries = ConvertListToMap(listMaleHairLibraries);
         mapFemaleHairLibraries = ConvertListToMap(listFemaleHairLibraries);
+
+        mapMaleFaceLibraries = ConvertListToMap(listMaleFaceLibraries);
+        mapFemaleFaceLibraries = ConvertListToMap(listFemaleFaceLibraries);
+
+        mapHeadLibraries = ConvertListToMap(listHeadLibraries);
+
         Instance = this;
     }
     private Dictionary<int, ListItem0> ConvertListToMap(List<ListItem0> list)
@@ -150,6 +172,32 @@ public class ItemController : MonoBehaviour, IUpdatable
     private Dictionary<int, HairLibraries> ConvertListToMap(List<HairLibraries> list)
     {
         Dictionary<int, HairLibraries> map = new Dictionary<int, HairLibraries>();
+        if (list == null)
+            return map;
+
+        for (int i = 0; i < list.Count; i++)
+        {
+            map.Add(i, list[i]);
+        }
+
+        return map;
+    }
+    private Dictionary<int, FaceLibraries> ConvertListToMap(List<FaceLibraries> list)
+    {
+        Dictionary<int, FaceLibraries> map = new Dictionary<int, FaceLibraries>();
+        if (list == null)
+            return map;
+
+        for (int i = 0; i < list.Count; i++)
+        {
+            map.Add(i, list[i]);
+        }
+
+        return map;
+    }
+    private Dictionary<int, HeadLibraries> ConvertListToMap(List<HeadLibraries> list)
+    {
+        Dictionary<int, HeadLibraries> map = new Dictionary<int, HeadLibraries>();
         if (list == null)
             return map;
 
@@ -205,7 +253,31 @@ public class ItemController : MonoBehaviour, IUpdatable
         }
         return null;
     }
-    public Sprite GetDefaultItemSprite(int id) 
+    public FaceLibraries GetMaleFaceLibrary(int id)
+    {
+        if (mapMaleFaceLibraries != null && mapMaleFaceLibraries.TryGetValue(id, out var item))
+        {
+            return item;
+        }
+        return null;
+    }
+    public FaceLibraries GetFemaleFaceLibrary(int id)
+    {
+        if (mapFemaleFaceLibraries != null && mapFemaleFaceLibraries.TryGetValue(id, out var item))
+        {
+            return item;
+        }
+        return null;
+    }
+    public HeadLibraries GetHeadLibrary(int id)
+    {
+        if (mapHeadLibraries != null && mapHeadLibraries.TryGetValue(id, out var item))
+        {
+            return item;
+        }
+        return null;
+    }
+    public Sprite GetDefaultItemSprite(int id)
     {
         return listDefaultItemSprite[id];
     }

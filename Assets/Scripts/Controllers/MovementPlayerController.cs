@@ -13,7 +13,7 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
 {
     [SerializeField] private Animator animator;
     [SerializeField] private TMP_Text namePlayer;
-    [SerializeField] private GameObject shadow; 
+    [SerializeField] private GameObject shadow;
     [SerializeField] private GameObject waterShadow;
     [SerializeField] private LayerMask focusLayer;
 
@@ -75,6 +75,10 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
 
     public virtual void OnUpdate()
     {
+        if (animator.runtimeAnimatorController == null)
+        {
+            return;
+        }
         InitMinimap();
 #if UNITY_ANDROID
         TouchScreen();
@@ -235,7 +239,7 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
 
             Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Collider2D hit = Physics2D.OverlapPoint(mouseWorldPos, focusLayer);
-            if (hit != null)       
+            if (hit != null)
                 FocusController.focus.focusedObject = hit.gameObject;
             else
                 FocusController.focus.focusedObject = null;
@@ -296,10 +300,10 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
 
             if (movement.x != 0)
                 movement.y = 0;
-            
+
             if (movement.y != 0)
                 movement.x = 0;
-            
+
             MoveStop();
 
             if (movement == Vector2.zero)
@@ -369,7 +373,7 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
             {
                 // nếu đang di chuyển mà click chỗ khác, lấy node kế tiếp làm điểm bắt đầu để tránh giật lùi
                 if (path != null && pathIndex < path.Count)
-                    startMovementPosition = path[pathIndex];        
+                    startMovementPosition = path[pathIndex];
                 else
                     startMovementPosition = ToGrid(currentPosition);
 
@@ -490,7 +494,7 @@ public class MovementPlayerController : MonoBehaviour, IUpdatable
                             }
                             break;
                     }
-                }    
+                }
             }
 
             // kiểm tra chuyển đổi Node

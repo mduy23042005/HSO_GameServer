@@ -1142,10 +1142,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa974be2cb6196c40abfacee2ebe40ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerPrefabs:
-  - {fileID: 1887108271017217227, guid: 52493cf958f36b04b8df545038d70e57, type: 3}
-  - {fileID: 6138671254599840282, guid: f971d6e622030f64f9d65aa05b819f1c, type: 3}
-  - {fileID: 8591692311120707276, guid: e99a1d3a75702a649a0708317c7d07b2, type: 3}
+  playerPrefab: {fileID: 1887108271017217227, guid: 52493cf958f36b04b8df545038d70e57, type: 3}
+  schoolAnimator:
+  - {fileID: 9100000, guid: cb86bdbb8cd5b7a44b2e780ff6a1f861, type: 2}
+  - {fileID: 9100000, guid: d5efba3c95e4e334d8cf1138583d5a60, type: 2}
+  - {fileID: 9100000, guid: 73c84fa46dd92174b8d905eb01ca82e7, type: 2}
 --- !u!114 &918182167
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1199,10 +1200,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afb47dbaaa8686c46ae9aea9370ae5c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SyncOtherPlayersManager
-  otherPlayersPrefab:
-  - {fileID: 4555938910356724988, guid: 61fdbda5b1923b64d97fa74a8971ade1, type: 3}
-  - {fileID: 6002207029804953653, guid: 11705f7deef20b14b89838112b746e1c, type: 3}
-  - {fileID: 5030301652225976667, guid: 762e9757c5f851b4eacfcb7d285540fc, type: 3}
+  otherPlayerPrefab: {fileID: 4555938910356724988, guid: 61fdbda5b1923b64d97fa74a8971ade1, type: 3}
   updateHPUI: {fileID: 2422661778410389371, guid: 5e93a4fbfcec88544ba942eda07152dd, type: 3}
 --- !u!1 &1155686057
 GameObject:
@@ -14031,6 +14029,13 @@ MonoBehaviour:
   - hairLibrariesAsset: {fileID: 7108339969198208228, guid: 06f3a3101abf87c4cb51415e20ed81ff, type: 3}
   - hairLibrariesAsset: {fileID: 7108339969198208228, guid: 3328206449cee874780e6043652ab171, type: 3}
   - hairLibrariesAsset: {fileID: 7108339969198208228, guid: bf1329db5a3b1b44cafe63eedbe8018d, type: 3}
+  listMaleFaceLibraries:
+  - faceLibrariesAsset: {fileID: 7108339969198208228, guid: 507e79c9b3aea9d41817fbfae20c9efa, type: 3}
+  listFemaleFaceLibraries:
+  - faceLibrariesAsset: {fileID: 7108339969198208228, guid: 0a013b0939b84a24694a9bb5f924b15d, type: 3}
+  listHeadLibraries:
+  - headLibrariesAsset: {fileID: 7108339969198208228, guid: d15fd74b82baa244bbda759c7e845b1c, type: 3}
+  - headLibrariesAsset: {fileID: 7108339969198208228, guid: 26b106a9cb3628a4aaac79d38e0c9bb8, type: 3}
 --- !u!4 &1989447618
 Transform:
   m_ObjectHideFlags: 0

@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class OtherPlayersManager : MonoBehaviour, IUpdatable
 {
-    [SerializeField] private List<GameObject> otherPlayersPrefab;
+    [SerializeField] private GameObject otherPlayerPrefab;
     [SerializeField] private GameObject updateHPUI;
 
     private Dictionary<int, OtherPlayer> otherPlayers = new Dictionary<int, OtherPlayer>();
@@ -227,7 +227,7 @@ public class OtherPlayersManager : MonoBehaviour, IUpdatable
 
     private void OnDataFromServer(SyncOtherPlayersResultPacket data)
     {
-        if (data == null || data.otherPlayersData== null)
+        if (data == null || data.otherPlayersData == null)
             return;
 
         OtherPlayer onlinePlayer;
@@ -241,20 +241,7 @@ public class OtherPlayersManager : MonoBehaviour, IUpdatable
                 onlinePlayer.otherPlayerData = otherPlayerData.otherPlayerData;
 
                 if (onlinePlayer.otherPlayerObject == null)
-                {
-                    switch (otherPlayerData.otherPlayerData.idSchool)
-                    {
-                        case 1:
-                            onlinePlayer.otherPlayerObject = PoolManager.Instance.Get(otherPlayersPrefab[0]);
-                            break;
-                        case 2:
-                            onlinePlayer.otherPlayerObject = PoolManager.Instance.Get(otherPlayersPrefab[1]);
-                            break;
-                        case 3:
-                            onlinePlayer.otherPlayerObject = PoolManager.Instance.Get(otherPlayersPrefab[2]);
-                            break;
-                    }
-                }
+                    onlinePlayer.otherPlayerObject = PoolManager.Instance.Get(otherPlayerPrefab);
 
                 onlinePlayer.syncSpriteController = onlinePlayer.otherPlayerObject.GetComponent<OtherPlayerController>();
                 onlinePlayer.syncSpriteController.ApplyServerData(otherPlayerData.otherPlayerData);

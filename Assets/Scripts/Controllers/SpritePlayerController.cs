@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -8,7 +9,6 @@ public class SpritePlayerController : MonoBehaviour, IUpdatable
 {
     [SerializeField] private Animator animator;
 
-    private SpriteResolver faceResolver;
     private string lastCategory;
     private string lastLabel;
     private MovementPlayerController movementPlayerController;
@@ -34,7 +34,6 @@ public class SpritePlayerController : MonoBehaviour, IUpdatable
     private int armorData = 0;
     private int legArmorData = 0;
     private int hairData = 0;
-    private int headData = 0;
 
     private int standStateHash;
     private int moveStateHash;
@@ -43,7 +42,6 @@ public class SpritePlayerController : MonoBehaviour, IUpdatable
 
     private void Awake()
     {
-        faceResolver = spriteResolvers.FirstOrDefault(r => r.gameObject.name == "4_0_0");
         movementPlayerController = GetComponent<MovementPlayerController>();
         listItem0 = ItemController.Instance;
 
@@ -84,9 +82,9 @@ public class SpritePlayerController : MonoBehaviour, IUpdatable
     {
         switch (label)
         {
-            case "StandFrontFrame0": 
+            case "StandFrontFrame0":
                 return Label.StandFrontFrame0;
-            case "StandFrontFrame1": 
+            case "StandFrontFrame1":
                 return Label.StandFrontFrame1;
             case "StandBackFrame0":
                 return Label.StandBackFrame0;
@@ -101,67 +99,67 @@ public class SpritePlayerController : MonoBehaviour, IUpdatable
             case "StandRightFrame1":
                 return Label.StandRightFrame1;
 
-            case "MoveFrontFrame0": 
+            case "MoveFrontFrame0":
                 return Label.MoveFrontFrame0;
-            case "MoveFrontFrame1": 
+            case "MoveFrontFrame1":
                 return Label.MoveFrontFrame1;
 
-            case "MoveBackFrame0": 
+            case "MoveBackFrame0":
                 return Label.MoveBackFrame0;
-            case "MoveBackFrame1": 
+            case "MoveBackFrame1":
                 return Label.MoveBackFrame1;
 
-            case "MoveLeftFrame0": 
+            case "MoveLeftFrame0":
                 return Label.MoveLeftFrame0;
-            case "MoveLeftFrame1": 
+            case "MoveLeftFrame1":
                 return Label.MoveLeftFrame1;
 
-            case "MoveRightFrame0": 
+            case "MoveRightFrame0":
                 return Label.MoveRightFrame0;
-            case "MoveRightFrame1": 
+            case "MoveRightFrame1":
                 return Label.MoveRightFrame1;
 
-            case "AtkFrontFrame0": 
+            case "AtkFrontFrame0":
                 return Label.AtkFrontFrame0;
-            case "AtkFrontFrame1": 
+            case "AtkFrontFrame1":
                 return Label.AtkFrontFrame1;
 
-            case "AtkBackFrame0": 
+            case "AtkBackFrame0":
                 return Label.AtkBackFrame0;
-            case "AtkBackFrame1": 
+            case "AtkBackFrame1":
                 return Label.AtkBackFrame1;
 
-            case "AtkLeftFrame0": 
+            case "AtkLeftFrame0":
                 return Label.AtkLeftFrame0;
-            case "AtkLeftFrame1": 
+            case "AtkLeftFrame1":
                 return Label.AtkLeftFrame1;
 
-            case "AtkRightFrame0": 
+            case "AtkRightFrame0":
                 return Label.AtkRightFrame0;
-            case "AtkRightFrame1": 
+            case "AtkRightFrame1":
                 return Label.AtkRightFrame1;
 
-            case "InjuredFrontFrame0": 
+            case "InjuredFrontFrame0":
                 return Label.InjuredFrontFrame0;
-            case "InjuredFrontFrame1": 
+            case "InjuredFrontFrame1":
                 return Label.InjuredFrontFrame1;
 
             case "InjuredBackFrame0":
                 return Label.InjuredBackFrame0;
-            case "InjuredBackFrame1": 
+            case "InjuredBackFrame1":
                 return Label.InjuredBackFrame1;
 
-            case "InjuredLeftFrame0": 
+            case "InjuredLeftFrame0":
                 return Label.InjuredLeftFrame0;
-            case "InjuredLeftFrame1": 
+            case "InjuredLeftFrame1":
                 return Label.InjuredLeftFrame1;
 
-            case "InjuredRightFrame0": 
+            case "InjuredRightFrame0":
                 return Label.InjuredRightFrame0;
-            case "InjuredRightFrame1": 
+            case "InjuredRightFrame1":
                 return Label.InjuredRightFrame1;
 
-            case "DieFrame0": 
+            case "DieFrame0":
                 return Label.DieFrame0;
 
             default:
@@ -201,6 +199,11 @@ public class SpritePlayerController : MonoBehaviour, IUpdatable
     }
     public void OnUpdate()
     {
+        if (animator.runtimeAnimatorController == null)
+        {
+            return;
+        }
+
         if (EquipmentView.equipments == null)
         {
             return;
@@ -230,50 +233,38 @@ public class SpritePlayerController : MonoBehaviour, IUpdatable
             legArmorData = outfitData.equipmentData[3].idItem0_1;
             EquipLegArmor(legArmorData);
         }
-        if (hairData != LogInView.GetHair())
+
+        if (hairData != LogInView.GetHair() || spriteLibraries[5].spriteLibraryAsset == null)
         {
             hairData = LogInView.GetHair();
             EquipHair(hairData);
         }
+
+        if (spriteLibraries[2].spriteLibraryAsset == null)
+        {
+            EquipHead(0);
+        }
+
+        if (spriteLibraries[4].spriteLibraryAsset == null)
+        {
+            EquipFace(0, LogInView.GetIDSchool());
+        }
     }
     public void OnLateUpdate()
     {
+        if (animator.runtimeAnimatorController == null)
+        {
+            return;
+        }
+
         UpdateSprite();
     }
     public void OnFixedUpdate() { }
 
     #region Getter lấy dữ liệu để gửi đến server
-    public int GetLegArmorData()
-    {
-        return legArmorData;
-    }
-    public int GetArmorData()
-    {
-        return armorData;
-    }
-    public int GetHelmetData()
-    {
-        return helmetData;
-    }
-    public int GetHairData()
-    {
-        return hairData;
-    }
-    public int GetWeaponData()
-    {
-        return weaponData;
-    }
-    public int GetHeadData()
-    {
-        return headData;
-    }
     public Direction GetCurrentDirection()
     {
         return currentDirection;
-    }
-    public List<SpriteLibrary> GetListSpriteLibrary()
-    {
-        return spriteLibraries;
     }
     public Dictionary<int, (Category, Label)> GetSpriteResolversInfos()
     {
@@ -331,6 +322,31 @@ public class SpritePlayerController : MonoBehaviour, IUpdatable
         spriteLibraries[6].spriteLibraryAsset = listItem0.GetItem0(id).weapon.weaponFrontLibraries;
         spriteLibraries[7].spriteLibraryAsset = listItem0.GetItem0(id).weapon.weaponBackLibraries;
     }
+    public void EquipHead(int id)
+    {
+        spriteLibraries[2].spriteLibraryAsset = listItem0.GetHeadLibrary(id).headLibrariesAsset;
+    }
+    public void EquipFace(int id, int idSchool)
+    {
+        switch (idSchool)
+        {
+            case 1: //Chiến binh
+                spriteLibraries[4].spriteLibraryAsset = listItem0.GetMaleFaceLibrary(id).faceLibrariesAsset;
+                break;
+
+            case 2: //Sát thủ 
+                spriteLibraries[4].spriteLibraryAsset = listItem0.GetMaleFaceLibrary(id).faceLibrariesAsset;
+                break;
+
+            case 3: //Pháp sư
+                spriteLibraries[4].spriteLibraryAsset = listItem0.GetFemaleFaceLibrary(id).faceLibrariesAsset;
+                break;
+
+            case 4: //Xạ thủ 
+                spriteLibraries[4].spriteLibraryAsset = listItem0.GetFemaleFaceLibrary(id).faceLibrariesAsset;
+                break;
+        }
+    }
     #endregion
 
     private string GetDirection(float h, float v)
@@ -379,7 +395,7 @@ public class SpritePlayerController : MonoBehaviour, IUpdatable
         {
             case "Front":
                 currentDirection = Direction.Front; break;
-              
+
             case "Back":
                 currentDirection = Direction.Back; break;
 
@@ -390,51 +406,67 @@ public class SpritePlayerController : MonoBehaviour, IUpdatable
                 currentDirection = Direction.Right; break;
         }
 
+        string category = $"Stand";
+        string label = "StandFrontFrame0";
+
         // Stand
         if (fullPathHash == standStateHash)
         {
             int frame = GetFrameByTime(t, moveChangeTimesInStandClip);
-
-            SetAllResolvers("Stand", $"Stand{direction}Frame{frame}");
-            if (!isInjured)
-            {
-                faceResolver.SetCategoryAndLabel("Stand", $"Stand{direction}Frame{frame}");
-                spriteResolversInfos[4] = (ConvertCategory("Stand"), ConvertLabel($"Stand{direction}Frame{frame}"));
-            }
+            category = $"Stand";
+            label = $"Stand{direction}Frame{frame}";
         }
         // Move
         if (fullPathHash == moveStateHash)
         {
             int frame = GetFrameByTime(t, moveChangeTimesInMoveClip);
-
-            SetAllResolvers("Move", $"Move{direction}Frame{frame}");
-            if (!isInjured)
-            {
-                faceResolver.SetCategoryAndLabel("Move", $"Move{direction}Frame{frame}");
-                spriteResolversInfos[4] = (ConvertCategory("Move"), ConvertLabel($"Move{direction}Frame{frame}"));
-            }
+            category = $"Move";
+            label = $"Move{direction}Frame{frame}";
         }
         // Attack
         if (fullPathHash == atkStateHash)
         {
             int frame = GetFrameByTime(t, moveChangeTimesInAtkClip);
-
-            SetAllResolvers("Atk", $"Atk{direction}Frame{frame}");
-            if (!isInjured)
-            {
-                faceResolver.SetCategoryAndLabel("Atk", $"Atk{direction}Frame{frame}");
-                spriteResolversInfos[4] = (ConvertCategory("Atk"), ConvertLabel($"Atk{direction}Frame{frame}"));
-            }
+            category = $"Atk";
+            label = $"Atk{direction}Frame{frame}";
         }
         // Die
         if (fullPathHash == dieStateHash)
         {
-            SetAllResolvers("Die", $"DieFrame0");
-            if (!isInjured)
+            category = $"Die";
+            label = $"DieFrame0";
+        }
+
+        for (int i = 0; i < spriteLibraries.Count; i++)
+        {
+            if (PlayerManager.bodyDatas.TryGetValue((LogInView.GetIDSchool(), i, ConvertCategory(category), ConvertLabel(label)), out var bodyData))
             {
-                faceResolver.SetCategoryAndLabel("Die", $"DieFrame0");
-                spriteResolversInfos[4] = (ConvertCategory("Die"), ConvertLabel($"DieFrame0"));
-            }    
+                Vector3 currentPositionPartBody = spriteResolvers[i].transform.localPosition;
+                currentPositionPartBody.x = bodyData.Item1.x;
+                currentPositionPartBody.y = bodyData.Item1.y;
+                currentPositionPartBody.z = bodyData.Item1.z;
+                spriteResolvers[i].transform.localPosition = currentPositionPartBody;
+
+                Quaternion currentRotationPartBody = spriteResolvers[i].transform.localRotation;
+                spriteResolvers[i].transform.localRotation = Quaternion.Euler(bodyData.Item2.x, bodyData.Item2.y, bodyData.Item2.z);
+
+                Vector3 currentScalePartBody = spriteResolvers[i].transform.localScale;
+                currentScalePartBody.x = bodyData.Item3.x;
+                currentScalePartBody.y = bodyData.Item3.y;
+                currentScalePartBody.z = bodyData.Item3.z;
+                spriteResolvers[i].transform.localScale = currentScalePartBody;
+
+                Color currentColorPartBody = spriteLibraries[i].GetComponent<SpriteRenderer>().color;
+                currentColorPartBody.a = bodyData.Item4.a;
+                spriteLibraries[i].GetComponent<SpriteRenderer>().color = currentColorPartBody;
+            }
+        }
+
+        SetAllResolvers(category, label);
+        if (!isInjured)
+        {
+            spriteResolvers[4].SetCategoryAndLabel(category, label);
+            spriteResolversInfos[4] = (ConvertCategory(category), ConvertLabel(label));
         }
     }
     private IEnumerator InjuredCoroutine()
@@ -477,7 +509,7 @@ public class SpritePlayerController : MonoBehaviour, IUpdatable
         StopCoroutine(nameof(InjuredCoroutine));
 
         isInjured = true;
-        faceResolver.SetCategoryAndLabel("Injured", $"Injured{direction}Frame1");
+        spriteResolvers[4].SetCategoryAndLabel("Injured", $"Injured{direction}Frame1");
         spriteResolversInfos[4] = (ConvertCategory("Injured"), ConvertLabel($"Injured{direction}Frame1"));
         StartCoroutine(InjuredCoroutine());
     }
@@ -503,7 +535,7 @@ public class SpritePlayerController : MonoBehaviour, IUpdatable
             {
                 r.SetCategoryAndLabel(category, label);
                 r.ResolveSpriteToSpriteRenderer();
-                   
+
                 spriteResolversInfos[i] = (enumCategory, enumLabel);
             }
         }

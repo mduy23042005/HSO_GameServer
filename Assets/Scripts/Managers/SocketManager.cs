@@ -212,7 +212,7 @@ public class SocketManager : MonoBehaviour
     }
     private async Task StartSyncPlayerLoop()
     {
-        const int targetTickRate = 30;
+        const int targetTickRate = 15;
         const int tickMS = 1000 / targetTickRate;
 
         var stopwatch = new System.Diagnostics.Stopwatch();

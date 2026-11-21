@@ -242,7 +242,7 @@ public class OtherPlayersManager : MonoBehaviour, IUpdatable
 
                 if (onlinePlayer.otherPlayerObject == null)
                     onlinePlayer.otherPlayerObject = PoolManager.Instance.Get(otherPlayerPrefab);
-
+                
                 onlinePlayer.syncSpriteController = onlinePlayer.otherPlayerObject.GetComponent<OtherPlayerController>();
                 onlinePlayer.syncSpriteController.ApplyServerData(otherPlayerData.otherPlayerData);
 
@@ -271,7 +271,6 @@ public class OtherPlayersManager : MonoBehaviour, IUpdatable
                 onlinePlayer.otherPlayerData.currentTile = otherPlayerData.otherPlayerData.currentTile;
                 if (onlinePlayer.otherPlayerObject != null)
                 {
-                    onlinePlayer.otherPlayerObject.transform.SetPositionAndRotation(new Vector2(otherPlayerData.otherPlayerTransformData.positionData.x, otherPlayerData.otherPlayerTransformData.positionData.y), Quaternion.identity);
                     onlinePlayer.syncSpriteController.ApplyServerRealtimeData(otherPlayerData.otherPlayerData, otherPlayerData.otherPlayerTransformData, otherPlayerData.otherPlayerStateData);
                 }
 
@@ -293,6 +292,7 @@ public class OtherPlayersManager : MonoBehaviour, IUpdatable
         {
             if (otherPlayers.TryGetValue(idOtherPlayer, out OtherPlayer obj))
             {
+                obj.otherPlayerObject.GetComponent<OtherPlayerController>().ResetRealtimeData();
                 PoolManager.Instance.Release(obj.otherPlayerObject);
                 otherPlayers.Remove(idOtherPlayer);
                 lastUpdateTime.Remove(idOtherPlayer);

@@ -21,16 +21,17 @@ public class OtherPlayerController : MonoBehaviour, IUpdatable
     private PlayerTransformData otherPlayerTransform = new PlayerTransformData();
     private PlayerStateData otherPlayerState = new PlayerStateData();
     private Dictionary<(int, int, Category, Label), (PositionData, RotationData, ScaleData, ColorData)> bodyDatas;
+    private Dictionary<int, (Category, Label)> spriteResolversInfos = new Dictionary<int, (Category, Label)>();
+
+    private ItemController listItem0;
 
     [Header("Chỉ định sprite nào của player sẽ bị thay thế")]
     [SerializeField] private List<SpriteLibrary> spriteLibraries;
     [SerializeField] private List<SpriteResolver> spriteResolvers;
 
-    private Dictionary<int, (Category, Label)> spriteResolversInfos = new Dictionary<int, (Category, Label)>();
-
     [SerializeField] private Slider hpBar;
 
-    private ItemController listItem0;
+    private bool isFirstRealtimeData = true;
 
     // id của trang bị thực tế từ database
     private int weaponData = 0;
@@ -346,6 +347,12 @@ public class OtherPlayerController : MonoBehaviour, IUpdatable
     }
     public void ApplyServerRealtimeData(PlayerData serverData, PlayerTransformData serverTransform, PlayerStateData serverState)
     {
+        if (isFirstRealtimeData)
+        {
+            transform.position = new Vector2(serverTransform.positionData.x, serverTransform.positionData.y);
+            isFirstRealtimeData = false;
+        }
+
         otherPlayerData.maxHP = serverData.maxHP;
         otherPlayerData.maxMP = serverData.maxMP;
         otherPlayerData.hp = serverData.hp;
@@ -497,9 +504,6 @@ public class OtherPlayerController : MonoBehaviour, IUpdatable
                     string category = ConvertCategory(otherPlayerState.partBodyTransforms[0].category);
                     string label = ConvertLabel(otherPlayerState.partBodyTransforms[0].label);
 
-                    spriteResolvers[i].SetCategoryAndLabel(category, label);
-                    spriteResolversInfos[i] = (otherPlayerState.partBodyTransforms[0].category, otherPlayerState.partBodyTransforms[0].label);
-
                     if (bodyDatas.TryGetValue((otherPlayerData.idSchool, i, otherPlayerState.partBodyTransforms[0].category, otherPlayerState.partBodyTransforms[0].label), out var bodyData))
                     {
                         Vector3 currentPositionPartBody = spriteResolvers[i].transform.localPosition;
@@ -521,6 +525,9 @@ public class OtherPlayerController : MonoBehaviour, IUpdatable
                         currentColorPartBody.a = bodyData.Item4.a;
                         spriteRenderers[i].color = currentColorPartBody;
                     }
+
+                    spriteResolvers[i].SetCategoryAndLabel(category, label);
+                    spriteResolversInfos[i] = (otherPlayerState.partBodyTransforms[0].category, otherPlayerState.partBodyTransforms[0].label);
                 }
             }
 
@@ -554,5 +561,10 @@ public class OtherPlayerController : MonoBehaviour, IUpdatable
                 }
             }
         }
+    }
+
+    public void ResetRealtimeData()
+    {
+        isFirstRealtimeData = true;
     }
 }
